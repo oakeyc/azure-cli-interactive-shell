@@ -1,22 +1,20 @@
-from cmd import Cmd
+import cmd
+from clint.textui import puts, indent, colored
 
-class MyPrompt(Cmd):
+class AzureShell(cmd.Cmd):
+    puts(colored.cyan("Welcome to Azure\n", bold=True))
+    prompt = 'azure>> '
+    file = None
     
-    def do_greet(self, args):
-        """Says hello. If you provide a name, it will greet you with it"""
-        if len(args) is 0:
-            name = 'User'
-        else:
-            name = args
-        print "Hello, %s" % name
+    def do_quit(self, arg):
+        'Quit the program'
+        print("Quiting, you quiter")
+        quit()
+    
+    def do_things(self, arg):
+        'Does things'
+        print("Doing things")
+        puts(colored.cyan("And now in cyan"))
         
-    def do_quit(self, args):
-        """Quits the program"""
-        print "Goodbye"
-        raise SystemExit
-    
 if __name__ == '__main__':
-    prompt = MyPrompt()
-    prompt.prompt = 'azure> '
-    prompt.cmdloop('Prompting...')
-    
+    AzureShell().cmdloop()
