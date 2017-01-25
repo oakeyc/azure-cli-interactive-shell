@@ -5,3 +5,8 @@
 
 # OS gen files #
 .DS_Store
+
+# Virtual Environments #
+env
+env27
+shell
