@@ -1,0 +1,773 @@
+az sql db restore-point list
+az redis list
+az network vnet check-ip-address
+az batch application create
+az network application-gateway show
+az sql db delete
+az iot device message complete
+az account show
+az group deployment validate
+az network nsg rule show
+az vm disk attach-existing
+az network nsg rule create
+az appservice web browse
+az network nsg rule delete
+az network dns record ptr remove
+az sql elastic-pools recommended show
+az network lb inbound-nat-rule create
+az vm start
+az batch account delete
+az network lb address-pool delete
+az storage blob show
+az storage table policy list
+az account set
+az vm show
+az network vpn-connection shared-key show
+az sql db replication-link failover
+az feature show
+az network application-gateway auth-cert list
+az redis patch-schedule delete
+az network traffic-manager endpoint show
+az appservice web deployment slot delete
+az appservice web restart
+az group export
+az storage entity replace
+az network dns zone export
+az vm extension image list-versions
+az network vnet-gateway update
+az network vnet peering list
+az storage blob delete
+az network vnet-gateway create
+az vmss extension set
+az network vpn-connection show
+az iot hub policy show
+az vmss reimage
+az iot device export
+az network nic delete
+az sql elastic-pools delete
+az storage account check-name
+az redis import-method
+az storage container policy list
+az storage file generate-sas
+az cloud unregister
+az appservice web deployment list-site-credentials
+az network dns record a remove
+az policy definition create
+az group create
+az appservice web show
+az network vnet-gateway revoked-cert delete
+az network dns record ptr add
+az network application-gateway waf-config set
+az storage blob update
+az keyvault certificate issuer show
+az network local-gateway create
+az network dns record ns remove
+az network route-table route update
+az sql db list
+az appservice web config hostname add
+az logout
+az storage cors add
+az storage table policy delete
+az storage directory show
+az acs scale
+az acr credential renew
+az storage share policy update
+az vm availability-set list-sizes
+az keyvault secret delete
+az vm disk detach
+az appservice plan update
+az network express-route peering create
+az storage entity query
+az batch account show
+az storage blob lease break
+az keyvault certificate delete
+az network express-route list-route-tables
+az network local-gateway list
+az storage container lease break
+az storage file copy cancel
+az vm open-port
+az network dns zone update
+az batch application delete
+az group deployment wait
+az storage message get
+az iot hub show-connection-string
+az sql server firewall list
+az container release create
+az vmss update
+az keyvault certificate create
+az storage blob copy cancel
+az vmss delete
+az sql elastic-pools recommended show-metrics
+az role definition list
+az network lb frontend-ip delete
+az acr repository show-tags
+az storage blob generate-sas
+az vmss restart
+az acs kubernetes install-cli
+az vm wait
+az network lb delete
+az network public-ip show
+az keyvault delete
+az keyvault certificate pending merge
+az vm delete
+az storage file upload-batch
+az iot device show-connection-string
+az acr create
+az network vnet update
+az storage share policy show
+az network application-gateway frontend-ip update
+az network application-gateway probe create
+az network lb show
+az network application-gateway ssl-cert update
+az network vpn-connection update
+az vm nic list
+az vm image list
+az network vnet-gateway revoked-cert create
+az role definition update
+az network vnet subnet show
+az network nic create
+az keyvault key backup
+az network express-route list-service-providers
+az appservice web stop
+az vm create
+az sql server firewall update
+az vm availability-set show
+az group deployment operation list
+az storage blob copy start-batch
+az keyvault certificate pending show
+az iot device update
+az appservice web create
+az appservice web deployment user show
+az tag create
+az network dns zone show
+az storage container exists
+az network application-gateway url-path-map list
+az storage file update
+az vm access delete-linux-user
+az keyvault key create
+az network application-gateway ssl-cert delete
+az storage file copy start
+az network nic show
+az redis force-reboot
+az network nsg show
+az storage entity insert
+az vm diagnostics get-default-config
+az vmss diagnostics set
+az storage account show
+az network vnet delete
+az account list-locations
+az sql db service-tier-advisor list
+az storage container policy show
+az account clear
+az storage blob upload
+az network express-route show
+az storage share create
+az network vnet subnet create
+az network application-gateway url-path-map show
+az network application-gateway list
+az keyvault certificate contact add
+az network application-gateway http-settings update
+az vm list-ip-addresses
+az storage share metadata update
+az storage queue policy show
+az network application-gateway address-pool delete
+az network traffic-manager profile show
+az keyvault list
+az vm diagnostics set
+az storage file delete
+az iot hub show
+az storage table policy show
+az appservice web config container update
+az network lb inbound-nat-rule list
+az redis delete
+az storage share delete
+az network application-gateway ssl-cert show
+az network vpn-connection delete
+az network vpn-connection shared-key reset
+az redis list-keys
+az acr show
+az network lb inbound-nat-pool show
+az keyvault key restore
+az network lb inbound-nat-pool create
+az network route-table update
+az network lb inbound-nat-pool update
+az storage file exists
+az network dns zone list
+az network dns record-set create
+az sql elastic-pools recommended database list
+az storage queue exists
+az network vnet-gateway root-cert create
+az vm access set-linux-user
+az sql server create
+az keyvault set-policy
+az ad sp create-for-rbac
+az appservice web config appsettings update
+az storage table stats
+az keyvault certificate show
+az storage account keys renew
+az sql elastic-pools database show
+az network express-route update
+az vm list
+az network route-table delete
+az network application-gateway auth-cert update
+az storage directory metadata show
+az network nic list-effective-nsg
+az network application-gateway probe list
+az storage account delete
+az group deployment delete
+az iot device message reject
+az network lb address-pool list
+az storage container lease renew
+az storage container delete
+az network lb probe show
+az account list
+az network route-table create
+az network dns record txt add
+az storage directory delete
+az keyvault key list-versions
+az storage share policy list
+az storage container lease release
+az policy assignment list
+az network dns zone delete
+az vmss extension image list-versions
+az acs delete
+az iot hub policy delete
+az iot device import
+az vm stop
+az network traffic-manager profile create
+az network dns record mx remove
+az network dns record mx add
+az appservice web deployment slot list
+az network application-gateway rule delete
+az network vnet-gateway list
+az keyvault secret list-versions
+az provider unregister
+az network lb inbound-nat-rule show
+az storage container policy create
+az iot hub show-quota-metrics
+az network vnet-gateway delete
+az network express-route auth list
+az network application-gateway frontend-ip delete
+az ad group list
+az vm extension list
+az network vnet subnet delete
+az storage queue metadata update
+az resource list
+az network dns zone create
+az vmss extension image list-names
+az network application-gateway http-listener show
+az network public-ip create
+az network traffic-manager endpoint delete
+az sql db transparent-data-encryption show-activity
+az vm availability-set update
+az network vnet subnet update
+az context show
+az vm image list-publishers
+az iot hub policy list
+az storage message clear
+az acs create
+az acr check-name
+az network application-gateway address-pool list
+az storage table generate-sas
+az vm generalize
+az provider register
+az group update
+az container build create
+az component remove
+az cloud show
+az batch application show
+az acr update
+az iot device message receive
+az vm availability-set create
+az network express-route auth create
+az network traffic-manager profile check-dns
+az network application-gateway stop
+az sql server show-usage
+az iot hub list
+az storage file list
+az iot hub consumer-group list
+az network list-usages
+az vmss extension delete
+az vm image list-skus
+az sql db data-warehouse resume
+az provider show
+az network nic update
+az keyvault key list
+az storage account update
+az sql db create
+az batch account set
+az sql elastic-pools database list
+az storage logging show
+az keyvault certificate list
+az iot device list
+az network dns record txt remove
+az cloud register
+az network application-gateway address-pool show
+az policy definition delete
+az network vnet subnet list
+az network application-gateway frontend-port list
+az vm extension delete
+az vm nic add
+az keyvault certificate download
+az network lb frontend-ip list
+az redis regenerate-keys
+az storage table create
+az appservice web log tail
+az sql server service-objective show
+az appservice web config show
+az storage account create
+az group wait
+az sql db replication-link show
+az appservice web source-control config
+az storage blob service-properties show
+az iot hub list-skus
+az network vpn-connection create
+az network application-gateway delete
+az vm extension image show
+az storage blob metadata update
+az sql server show
+az network traffic-manager profile list
+az keyvault delete-policy
+az network vnet show
+az vm disk list
+az vmss extension list
+az sql elastic-pools update
+az context modify
+az network express-route peering list
+az provider list
+az ad sp delete
+az storage cors clear
+az batch account keys renew
+az iot device message send
+az network application-gateway http-settings create
+az network application-gateway frontend-port delete
+az tag remove-value
+az network lb list
+az storage account keys list
+az sql db update
+az vmss get-instance-view
+az network application-gateway probe update
+az storage file download-batch
+az keyvault certificate import
+az appservice web source-control delete
+az network application-gateway ssl-policy set
+az redis show
+az redis update-settings
+az storage queue policy create
+az ad group delete
+az network vnet peering create
+az network route-table route show
+az network dns record ns add
+az network nic ip-config address-pool remove
+az keyvault secret list
+az network nic list
+az network express-route auth show
+az storage queue metadata show
+az network express-route auth delete
+az component list-available
+az network lb probe list
+az storage share update
+az resource show
+az sql elastic-pools recommended database show
+az acr credential show
+az storage entity delete
+az network nic ip-config address-pool add
+az batch location quotas show
+az appservice web deployment slot swap
+az sql db service-tier-advisor show
+az storage blob lease acquire
+az policy definition show
+az network application-gateway address-pool create
+az sql elastic-pools recommended list
+az vm list-sizes
+az acs install-cli
+az network application-gateway frontend-ip list
+az vm availability-set delete
+az resource tag
+az appservice web config container delete
+az policy assignment create
+az vmss delete-instances
+az network application-gateway auth-cert delete
+az ad app delete
+az feedback
+az storage container create
+az storage logging update
+az network vnet-gateway show
+az network express-route peering delete
+az vm image list-offers
+az network dns record-set update
+az ad app create
+az network application-gateway rule update
+az network dns record srv remove
+az storage blob snapshot
+az sql server update
+az batch account autostorage-keys sync
+az storage directory exists
+az network dns record cname add
+az network lb rule show
+az vmss nic list-vm-nics
+az network application-gateway url-path-map delete
+az sql db transparent-data-encryption create
+az keyvault key import
+az vm extension image list-names
+az sql db transparent-data-encryption show-configuration
+az group list
+az storage account list
+az network nic ip-config update
+az acs kubernetes browse
+az network application-gateway http-listener update
+az appservice web config appsettings show
+az appservice plan create
+az network application-gateway url-path-map update
+az ad sp create
+az resource delete
+az network vnet-gateway root-cert delete
+az role definition create
+az sql server firewall create
+az network lb inbound-nat-pool delete
+az storage container generate-sas
+az vm nic show
+az network vnet list
+az storage cors list
+az network dns record aaaa add
+az acs show
+az storage directory metadata update
+az network application-gateway auth-cert create
+az storage queue policy delete
+az network dns record-set show
+az network vnet peering show
+az storage metrics show
+az sql server firewall show
+az iot hub consumer-group show
+az storage table list
+az storage container lease change
+az redis export
+az network traffic-manager endpoint update
+az storage container metadata show
+az iot device create
+az storage queue policy update
+az context delete
+az storage container lease acquire
+az acs dcos install-cli
+az component list
+az network nsg create
+az keyvault show
+az keyvault certificate contact list
+az vm boot-diagnostics disable
+az appservice plan list
+az taskhelp deploy-arm-template
+az network application-gateway http-settings show
+az network application-gateway probe delete
+az iot hub policy create
+az batch application set
+az network vpn-connection list
+az storage file metadata update
+az appservice web deployment slot create
+az network lb rule delete
+az storage container show-permission
+az keyvault certificate pending delete
+az network lb rule create
+az acr repository list
+az network application-gateway frontend-ip show
+az policy definition update
+az login
+az keyvault secret set
+az appservice web delete
+az storage share policy delete
+az acs kubernetes get-credentials
+az appservice web config appsettings delete
+az network lb probe update
+az network nic ip-config delete
+az storage directory create
+az network vpn-connection shared-key update
+az network application-gateway show-backend-health
+az network application-gateway create
+az iot hub consumer-group create
+az network route-table show
+az network route-table route list
+az batch account keys list
+az vm access reset-windows-admin
+az batch account list
+az ad app show
+az network application-gateway http-listener delete
+az vm extension image list
+az acs dcos browse
+az vm list-vm-resize-options
+az keyvault key show
+az network lb frontend-ip show
+az storage file metadata show
+az feature list
+az storage container show
+az role assignment list
+az storage blob upload-batch
+az vmss create
+az iot hub job list
+az storage share exists
+az vmss start
+az vmss nic list
+az network application-gateway http-settings delete
+az network lb frontend-ip update
+az vm image show
+az vmss stop
+az ad user show
+az iot device show
+az storage message peek
+az container release list
+az network lb address-pool show
+az role assignment create
+az redis patch-schedule show
+az sql elastic-pools database show-activity
+az network vnet peering update
+az storage account show-usage
+az network nsg list
+az context create
+az vmss deallocate
+az network public-ip delete
+az group deployment list
+az policy assignment delete
+az network application-gateway http-listener list
+az network dns zone import
+az appservice web config container show
+az tag delete
+az network express-route list
+az network vnet peering delete
+az storage file resize
+az batch application package activate
+az network route-table route create
+az tag list
+az storage container policy update
+az vmss nic show
+az vm redeploy
+az keyvault create
+az storage metrics update
+az keyvault certificate issuer admin list
+az batch account create
+az group deployment show
+az storage account generate-sas
+az storage queue list
+az sql db show
+az batch application list
+az role assignment delete
+az storage queue delete
+az network express-route peering show
+az network application-gateway rule show
+az network public-ip list
+az network application-gateway frontend-port create
+az network application-gateway address-pool update
+az vmss extension image show
+az network application-gateway update
+az network nic ip-config show
+az keyvault certificate issuer list
+az iot hub job cancel
+az iot hub update
+az ad sp show
+az storage entity merge
+az keyvault certificate issuer admin delete
+az network application-gateway ssl-policy show
+az network traffic-manager endpoint list
+az keyvault certificate issuer update
+az storage container policy delete
+az storage message update
+az storage file show
+az acr list
+az storage file copy start-batch
+az sql elastic-pools create
+az storage message delete
+az network nsg rule update
+az appservice web config update
+az keyvault secret show
+az batch application package create
+az network lb update
+az storage share metadata show
+az vmss list
+az redis create
+az appservice web source-control show
+az network nic show-effective-route-table
+az vm extension show
+az network express-route peering update
+az network route-table route delete
+az batch application package delete
+az appservice web config hostname list
+az ad app list
+az network local-gateway update
+az appservice web source-control config-local-git
+az storage file url
+az storage table delete
+az network lb frontend-ip create
+az storage share stats
+az storage container set-permission
+az ad user list
+az storage entity show
+az network lb inbound-nat-rule update
+az vm availability-set list
+az acs browse
+az sql server service-objective list
+az keyvault certificate issuer create
+az network application-gateway auth-cert show
+az sql elastic-pools list
+az storage container metadata update
+az context switch
+az storage message put
+az policy definition list
+az keyvault certificate issuer admin add
+az storage table exists
+az sql db show-usage
+az network local-gateway show
+az storage blob copy start
+az group exists
+az keyvault key delete
+az network nsg update
+az ad sp reset-credentials
+az resource move
+az iot hub job show
+az ad group show
+az sql server list
+az group show
+az storage queue generate-sas
+az iot device message abandon
+az appservice web config hostname delete
+az network dns record-set list
+az network dns record-set delete
+az network dns record aaaa remove
+az network application-gateway frontend-port show
+az appservice plan show
+az sql db replication-link list
+az network application-gateway http-settings list
+az network nic ip-config create
+az network dns record cname remove
+az ad app update
+az vm update
+az network application-gateway frontend-port update
+az tag add-value
+az network nic ip-config inbound-nat-rule add
+az vm extension set
+az network lb inbound-nat-rule delete
+az storage file download
+az storage table policy create
+az iot hub consumer-group delete
+az storage share list
+az storage table policy update
+az policy assignment show
+az appservice list-locations
+az network application-gateway wait
+az vm resize
+az context list
+az network lb inbound-nat-pool list
+az appservice web log config
+az ad sp list
+az network vnet-gateway reset
+az vmss extension show
+az group deployment operation show
+az iot hub show-stats
+az storage blob lease change
+az network nsg delete
+az vm boot-diagnostics enable
+az network lb address-pool create
+az keyvault key set-attributes
+az storage blob download-batch
+az storage blob lease renew
+az storage blob download
+az network application-gateway ssl-cert create
+az keyvault certificate contact delete
+az storage blob lease release
+az network lb rule list
+az group deployment create
+az network local-gateway delete
+az ad user delete
+az storage queue create
+az sql server firewall delete
+az iot hub delete
+az network application-gateway url-path-map rule delete
+az vm capture
+az network nic ip-config inbound-nat-rule remove
+az vm nic remove
+az sql elastic-pools show
+az sql db data-warehouse pause
+az component update
+az storage blob list
+az appservice web source-control sync
+az network application-gateway frontend-ip create
+az vmss extension image list
+az vm deallocate
+az appservice web log download
+az batch application package show
+az iot hub create
+az storage share show
+az acr delete
+az network application-gateway probe show
+az network dns record srv add
+az keyvault certificate set-attributes
+az vmss list-instances
+az redis list-all
+az cloud list
+az storage share generate-sas
+az vm list-usage
+az storage queue policy list
+az storage blob exists
+az storage file upload
+az network public-ip update
+az sql db replication-link delete
+az network express-route list-arp-tables
+az keyvault certificate list-versions
+az keyvault update
+az vmss show
+az network application-gateway rule list
+az appservice web start
+az network application-gateway url-path-map create
+az network traffic-manager profile delete
+az vm disk attach-new
+az storage container list
+az storage share policy create
+az network application-gateway start
+az network traffic-manager endpoint create
+az sql db replication-link force-failover
+az network application-gateway rule create
+az network express-route delete
+az network nic ip-config list
+az feature register
+az network vnet-gateway wait
+az vm nic set
+az vmss list-skus
+az role definition delete
+az iot device delete
+az storage queue stats
+az vmss scale
+az network lb probe create
+az network express-route create
+az appservice plan delete
+az appservice web list
+az storage blob url
+az vm boot-diagnostics get-boot-log
+az network application-gateway url-path-map rule create
+az network dns record a add
+az vmss update-instances
+az keyvault certificate issuer delete
+az sql server delete
+az network traffic-manager profile update
+az vm restart
+az network application-gateway http-listener create
+az network lb create
+az network vnet create
+az storage account show-connection-string
+az network lb rule update
+az keyvault secret download
+az network dns record update-soa
+az network nsg rule list
+az network route-table list
+az appservice web deployment user set
+az resource update
+az group deployment export
+az appservice web deployment slot auto-swap
+az group delete
+az keyvault secret set-attributes
+az acs list
+az network lb probe delete
+az ad user create
+az storage blob metadata show
+az network application-gateway waf-config show
+az vmss diagnostics get-default-config
+az configure
+az network application-gateway ssl-cert list
+az vm get-instance-view
+az network express-route get-stats
+az redis patch-schedule set

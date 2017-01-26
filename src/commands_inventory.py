@@ -1,18 +1,18 @@
 
 class CompletionIndex(object):
     def __init__(self):
-        self.commands = ['az', 'help']
-        self.subcommands = [
-            'configure',
-            'account',
-            'login',
-            'storage',
-            'vm'
-            'help'
-        ]
-        self.args_opts = ['--name', '--account-name', '--account-key',
-                          '--verbose', '--container']
+        self.com = open("dump.txt", 'r')
+        self.commands = ['az']
+        self.subcommands = []
+        self.args_opts = []
 
     def load_completions(self):
-        # dump the commands here
-        print "LOADING...\n"
+        for line in self.com:
+            sent = line.strip("\n").strip('az').split()
+            if len(sent) % 2 == 0: #TODO fix this to make actual sense
+                for word in sent:
+                    self.subcommands.append(word)
+            else:
+                for word in sent:
+                    self.args_opts.append(word)
+        self.com.close()
