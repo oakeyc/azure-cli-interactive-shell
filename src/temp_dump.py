@@ -27,10 +27,11 @@ def _dump_command_table(**kwargs):
     dic_meta = {}
     f = open("dump.txt", 'w')
     m = open("meta_dump.txt", 'w')
+    pa = open("params_dump.txt", 'w')
 
     for command_name, metadata in cmd_table.items():
-        f.write('az ' + str(command_name) + "\n")
-        m.write('az ' + str(command_name) + ":" + str(metadata.description) + "\n" )
+        f.write(str(command_name) + "\n")
+        m.write(str(command_name) + ":" + str(metadata.description) + "\n" )
         los_names.append(str(command_name))
 
     f.close()
@@ -72,16 +73,22 @@ def _dump_command_table(**kwargs):
     
     # output results to STDOUT
     result_dict = {'commands': table_entries}
-    print(json.dumps(result_dict, indent=2, sort_keys=True))
+    # print(json.dumps(result_dict, indent=2, sort_keys=True))
     
     # display summary info with STDERR
-    print('\n===RESULTS===', file=sys.stderr)
-    print('{} commands dumped within {} scope with {} parameters'.format(len(table_entries),
-        cmd_set_names or '*', param_names or 'ANY'), file=sys.stderr)
-    for param, commands in param_dict.items():
-        print('\nPARAM: "{}" - {} commands - scope "{}" - {}'.format(
-            param, len(commands), _get_parameter_scope(param, commands), commands), file=sys.stderr)
-
+ #   print('\n===RESULTS===', file=sys.stderr)
+ #   print('{} commands dumped within {} scope with {} parameters'.format(len(table_entries),
+  #      cmd_set_names or '*', param_names or 'ANY'), file=sys.stderr)
+    # for param, commands in param_dict.items():
+        # print('\nPARAM: "{}" - {} commands - scope "{}" - {}'.format(
+        #     param, len(commands), _get_parameter_scope(param, commands), commands), file=sys.stderr)
+    for cmd_name in filtered_cmd_list:
+        entry = cmd_table[cmd_name]
+        pa.write(str(cmd_name) + ":")
+        for key in entry.arguments:
+            pa.write("--" + str(key) + " ")
+        pa.write("\n")
+    pa.close()
     sys.exit(0)
 
 def _format_entry(obj):

@@ -1,0 +1,775 @@
+sql db restore-point list:--resource_group_name --database_name --server_name 
+redis list:--resource_group_name 
+network vnet check-ip-address:--virtual_network_name --resource_group_name --ip_address 
+batch application create:--resource_group_name --application_id --account_name --display_name --allow_updates 
+network application-gateway show:--resource_group_name --application_gateway_name 
+sql db delete:--resource_group_name --database_name --server_name 
+iot device message complete:--hub_name --resource_group_name --lock_token --device_id 
+account show:--expanded_view --subscription 
+group deployment validate:--resource_group_name --mode --parameters --template_file --template_uri 
+network nsg rule show:--network_security_group_name --resource_group_name --security_rule_name 
+vm disk attach-existing:--vm_name --resource_group_name --lun --caching --vhd --disk_name 
+network nsg rule create:--resource_group_name --destination_address_prefix --protocol --description --access --direction --source_address_prefix --source_port_range --network_security_group_name --security_rule_name --destination_port_range --priority 
+appservice web browse:--slot --resource_group_name --name 
+network nsg rule delete:--network_security_group_name --resource_group_name --security_rule_name 
+network dns record ptr remove:--dname --resource_group_name --record_set_name --zone_name 
+sql elastic-pools recommended show:--resource_group_name --recommended_elastic_pool_name --server_name 
+network lb inbound-nat-rule create:--resource_group_name --protocol --item_name --load_balancer_name --floating_ip --idle_timeout --frontend_ip_name --frontend_port --backend_port 
+vm start:--vm_name --resource_group_name 
+batch account delete:--resource_group_name --account_name 
+network lb address-pool delete:--item_name --resource_group_name --resource_name --no_wait 
+storage blob show:--lease_id --if_none_match --if_modified_since --if_unmodified_since --sas_token --account_key --snapshot --timeout --container_name --connection_string --if_match --blob_name --account_name 
+storage table policy list:--connection_string --sas_token --account_name --account_key --container_name 
+account set:--subscription 
+vm show:--vm_name --resource_group_name --show_details 
+network vpn-connection shared-key show:--resource_group_name --virtual_network_gateway_connection_name 
+sql db replication-link failover:--resource_group_name --database_name --server_name --link_id 
+feature show:--resource_provider_namespace --feature_name 
+network application-gateway auth-cert list:--resource_group_name --resource_name 
+redis patch-schedule delete:--resource_group_name --name 
+network traffic-manager endpoint show:--resource_group_name --profile_name --endpoint_name --endpoint_type 
+appservice web deployment slot delete:--slot --resource_group_name --webapp 
+appservice web restart:--slot --resource_group_name --name 
+group export:--resource_group_name --include_parameter_default_value --include_comments 
+storage entity replace:--sas_token --account_key --entity --table_name --timeout --connection_string --if_match --account_name 
+network dns zone export:--file_name --resource_group_name --zone_name 
+vm extension image list-versions:--orderby --publisher_name --top --filter --location --type 
+network vnet-gateway update:--properties_to_add --public_ip_address --vpn_type --bgp_peering_address --enable_bgp --raw --properties_to_set --asn --sku --resource_group_name --properties_to_remove --tags --peer_weight --virtual_network_gateway_name --gateway_type --virtual_network --address_prefixes 
+network vnet peering list:--virtual_network_name --resource_group_name 
+storage blob delete:--lease_id --if_match --if_none_match --if_modified_since --if_unmodified_since --sas_token --account_key --snapshot --timeout --container_name --connection_string --delete_snapshots --blob_name --account_name 
+network vnet-gateway create:--sku --resource_group_name --vpn_type --public_ip_address --deployment_name --location --bgp_peering_address --enable_bgp --tags --peer_weight --virtual_network_gateway_name --create_client_configuration --public_ip_address_type --virtual_network_type --gateway_type --raw --virtual_network --asn --address_prefixes 
+vmss extension set:--resource_group_name --vmss_name --publisher --extension_name --settings --no_auto_upgrade --version --protected_settings 
+network vpn-connection show:--resource_group_name --virtual_network_gateway_connection_name 
+iot hub policy show:--hub_name --resource_group_name --policy_name 
+vmss reimage:--vm_scale_set_name --resource_group_name --instance_id 
+iot device export:--blob_container_uri --hub_name --resource_group_name --include_keys 
+network nic delete:--resource_group_name --network_interface_name 
+sql elastic-pools db list:--resource_group_name --elastic_pool_name --server_name 
+sql elastic-pools delete:--resource_group_name --elastic_pool_name --server_name 
+storage account check-name:--name 
+redis import-method:--files --resource_group_name --name --file_format 
+storage container policy list:--connection_string --sas_token --account_name --account_key --container_name 
+storage file generate-sas:--protocol --cache_control --share_name --file_name --permission --sas_token --account_key --expiry --start --content_language --content_encoding --content_type --ip --id --connection_string --directory_name --content_disposition --account_name 
+cloud unregister:--cloud_name 
+appservice web deployment list-site-credentials:--resource_group_name --name 
+network dns record a remove:--ipv4_address --resource_group_name --record_set_name --zone_name 
+policy definition create:--rules --display_name --name --description 
+group create:--resource_group_name --location --tags 
+appservice web show:--slot --resource_group_name --name 
+network vnet-gateway revoked-cert delete:--resource_group_name --gateway_name --cert_name 
+network dns record ptr add:--dname --resource_group_name --record_set_name --zone_name 
+network application-gateway waf-config set:--resource_group_name --no_wait --firewall_mode --enabled --application_gateway_name 
+storage blob update:--lease_id --if_none_match --if_modified_since --if_unmodified_since --sas_token --account_key --timeout --container_name --content_settings --connection_string --if_match --blob_name --account_name 
+keyvault certificate issuer show:--vault_base_url --issuer_name 
+network local-gateway create:--resource_group_name --deployment_name --use_bgp_settings --bgp_peering_address --local_address_prefix --peer_weight --gateway_ip_address --local_network_gateway_name --asn --tags 
+network dns record ns remove:--dname --resource_group_name --record_set_name --zone_name 
+network route-table route update:--resource_group_name --next_hop_type --properties_to_add --next_hop_ip_address --properties_to_remove --route_name --route_table_name --properties_to_set --address_prefix 
+sql db list:--resource_group_name --server_name 
+appservice web config hostname add:--slot --resource_group_name --name --webapp 
+logout:--username 
+storage cors add:--max_age --exposed_headers --methods --origins --sas_token --account_key --allowed_headers --timeout --services --connection_string --account_name 
+storage table policy delete:--sas_token --account_key --policy_name --container_name --connection_string --account_name 
+storage directory show:--share_name --sas_token --account_key --timeout --connection_string --directory_name --account_name 
+acs scale:--resource_group_name --new_agent_count --container_service_name 
+acr credential renew:--resource_group_name --registry_name 
+storage share policy update:--permission --sas_token --account_key --policy_name --start --container_name --connection_string --expiry --account_name 
+vm availability-set list-sizes:--resource_group_name --availability_set_name 
+keyvault secret delete:--vault_base_url --secret_name 
+vm disk detach:--vm_name --resource_group_name --disk_name 
+appservice plan update:--sku --resource_group_name --allow_pending_state --properties_to_add --name --properties_to_remove --properties_to_set --admin_site_name --number_of_workers 
+network express-route peering create:--advertised_public_prefixes --resource_group_name --primary_peer_address_prefix --customer_asn --shared_key --routing_registry_name --secondary_peer_address_prefix --circuit_name --peer_asn --vlan_id --peering_type 
+storage entity query:--num_results --sas_token --account_key --filter --property_resolver --table_name --accept --timeout --marker --connection_string --account_name --select 
+batch account show:--resource_group_name --account_name 
+storage blob lease break:--if_none_match --if_modified_since --if_unmodified_since --sas_token --account_key --lease_break_period --timeout --container_name --connection_string --if_match --blob_name --account_name 
+keyvault certificate delete:--vault_base_url --certificate_name 
+network express-route list-route-tables:--resource_group_name --peering_name --device_path --circuit_name 
+network local-gateway list:--resource_group_name 
+storage container lease break:--if_modified_since --sas_token --account_key --lease_break_period --timeout --container_name --connection_string --if_unmodified_since --account_name 
+storage file copy cancel:--share_name --file_name --sas_token --account_key --copy_id --timeout --connection_string --directory_name --account_name 
+vm open-port:--vm_name --resource_group_name --network_security_group_name --apply_to_subnet 
+network dns zone update:--resource_group_name --properties_to_add --properties_to_set --properties_to_remove --zone_name --if_match --if_none_match 
+batch application delete:--resource_group_name --application_id --account_name 
+group deployment wait:--resource_group_name --updated --deployment_name --exists --created --deleted --interval --custom --timeout 
+storage message get:--num_messages --queue_name --sas_token --account_key --timeout --connection_string --account_name --visibility_timeout 
+iot hub show-connection-string:--key_type --hub_name --policy_name --resource_group_name 
+sql server firewall list:--resource_group_name --server_name 
+container release create:--registry_resource_id --registry_name --target_name --remote_branch --vsts_account_name --remote_access_token --target_resource_group --remote_url --vsts_project_name 
+vmss update:--properties_to_remove --resource_group_name --properties_to_add --properties_to_set --name 
+keyvault certificate create:--vault_base_url --certificate_policy --tags --certificate_name --expires --disabled --not_before 
+storage blob copy cancel:--lease_id --sas_token --account_key --copy_id --timeout --container_name --connection_string --blob_name --account_name 
+vmss delete:--vm_scale_set_name --resource_group_name 
+sql elastic-pools recommended show-metrics:--resource_group_name --recommended_elastic_pool_name --server_name 
+role definition list:--resource_group_name --custom_role_only --name --scope 
+network lb frontend-ip delete:--item_name --resource_group_name --resource_name --no_wait 
+acr repository show-tags:--username --password --registry_name --repository 
+storage blob generate-sas:--protocol --cache_control --permission --ip --sas_token --account_key --expiry --start --content_language --content_encoding --content_type --container_name --id --connection_string --content_disposition --blob_name --account_name 
+vmss restart:--vm_scale_set_name --resource_group_name --instance_ids 
+acs kubernetes install-cli:--install_location --client_version 
+vm wait:--vm_name --resource_group_name --updated --exists --created --deleted --interval --custom --timeout 
+network lb delete:--resource_group_name --load_balancer_name 
+network public-ip show:--public_ip_address_name --resource_group_name --expand 
+keyvault delete:--resource_group_name --vault_name 
+keyvault certificate pending merge:--vault_base_url --certificate_name --certificate_attributes --x509_certificates --tags 
+storage file upload-batch:--dryrun --pattern --destination --sas_token --account_key --source --validate_content --content_settings --connection_string --metadata --account_name --max_connections 
+iot device show-connection-string:--key_type --hub_name --top --resource_group_name --device_id 
+acr create:--resource_group_name --storage_account_name --registry_name --location --admin_enabled 
+network vnet update:--resource_group_name --properties_to_add --properties_to_set --properties_to_remove --virtual_network_name --address_prefixes 
+storage share policy show:--sas_token --account_key --policy_name --container_name --connection_string --account_name 
+network application-gateway frontend-ip update:--raw --resource_group_name --properties_to_add --public_ip_address --subnet --properties_to_remove --application_gateway_name --item_name --properties_to_set --private_ip_address --virtual_network_name 
+network application-gateway probe create:--resource_group_name --protocol --item_name --interval --no_wait --application_gateway_name --host --timeout --threshold --path 
+network lb show:--resource_group_name --load_balancer_name --expand 
+network application-gateway ssl-cert update:--resource_group_name --properties_to_add --properties_to_remove --cert_password --application_gateway_name --raw --properties_to_set --item_name --cert_data 
+network vpn-connection update:--resource_group_name --properties_to_add --tags --properties_to_remove --enable_bgp --shared_key --routing_weight --properties_to_set --virtual_network_gateway_connection_name 
+vm nic list:--vm_name --resource_group_name 
+vm image list:--sku --image_location --all --publisher_name --offer 
+network vnet-gateway revoked-cert create:--resource_group_name --gateway_name --cert_name --thumbprint 
+role definition update:--role_definition_id --properties_to_add --properties_to_set --role_definition --properties_to_remove --scope 
+network vnet subnet show:--virtual_network_name --resource_group_name --subnet_name --expand 
+network nic create:--resource_group_name --network_interface_name --use_dns_settings --private_ip_address_version --deployment_name --subnet --virtual_network_name --subnet_type --private_ip_address_allocation --tags --enable_ip_forwarding --public_ip_address_type --load_balancer_backend_address_pool_ids --location --private_ip_address --load_balancer_inbound_nat_rule_ids --internal_dns_name_label --public_ip_address --network_security_group_type --network_security_group 
+keyvault key backup:--vault_base_url --key_name --file_path 
+network express-route list-service-providers:
+appservice web stop:--slot --resource_group_name --name 
+vm create:--nic_type --public_ip_address_dns_name --image --no_wait --storage_sku --nsg --public_ip_type --vnet_type --os_disk_name --storage_container_name --size --subnet --storage_profile --availability_set --nsg_rule --os_version --nics --storage_account_type --authentication_type --os_offer --admin_password --storage_caching --location --vm_name --public_ip_address --vnet_name --tags --ssh_key_value --os_sku --storage_account --validate --nsg_type --subnet_address_prefix --resource_group_name --public_ip_address_allocation --os_publisher --admin_username --ssh_dest_key_path --vnet_address_prefix --private_ip_address --os_type 
+sql server firewall update:--start_ip_address --resource_group_name --end_ip_address --server_name --firewall_rule_name 
+vm availability-set show:--resource_group_name --availability_set_name 
+group deployment operation list:--resource_group_name --top --deployment_name 
+storage blob copy start-batch:--source_account --exclude_new --recursive --exclude_old --sas_token --account_key --source_container --prefix --snapshots --connection_string --source_sas --account_name --destination_container 
+keyvault certificate pending show:--vault_base_url --certificate_name 
+iot device update:--resource_group_name --properties_to_add --properties_to_set --properties_to_remove --hub_name --device_id 
+appservice web create:--resource_group_name --name --plan 
+appservice web deployment user show:
+tag create:--tag_name 
+network dns zone show:--resource_group_name --zone_name 
+storage container exists:--sas_token --account_key --snapshot --timeout --container_name --connection_string --blob_name --account_name 
+network application-gateway url-path-map list:--resource_group_name --resource_name 
+storage file update:--share_name --file_name --sas_token --account_key --timeout --content_settings --connection_string --directory_name --account_name 
+vm access delete-linux-user:--vm_name --resource_group_name --username 
+keyvault key create:--vault_base_url --key_ops --tags --key_name --destination --expires --disabled --key_size --not_before 
+network application-gateway ssl-cert delete:--item_name --resource_group_name --resource_name --no_wait 
+storage file copy start:--share_name --file_name --sas_token --account_key --copy_source --timeout --connection_string --directory_name --account_name --metadata 
+network nic show:--resource_group_name --network_interface_name --expand 
+redis force-reboot:--shard_id --resource_group_name --name --reboot_type 
+network nsg show:--network_security_group_name --resource_group_name --expand 
+storage entity insert:--if_exists --sas_token --account_key --entity --table_name --timeout --connection_string --account_name 
+vm diagnostics get-default-config:--is_windows_os 
+vmss diagnostics set:--resource_group_name --vmss_name --version --settings --no_auto_upgrade --protected_settings 
+storage account show:--resource_group_name --account_name 
+network vnet delete:--virtual_network_name --resource_group_name 
+account list-locations:
+sql db service-tier-advisor list:--resource_group_name --database_name --server_name 
+storage container policy show:--sas_token --account_key --policy_name --container_name --connection_string --account_name 
+account clear:
+storage blob upload:--lease_id --if_match --if_none_match --maxsize_condition --if_modified_since --if_unmodified_since --sas_token --blob_type --account_key --file_path --validate_content --timeout --container_name --content_settings --connection_string --max_connections --blob_name --account_name --metadata 
+network express-route show:--resource_group_name --circuit_name 
+storage share create:--fail_on_exist --share_name --sas_token --quota --account_key --timeout --connection_string --account_name --metadata 
+network vnet subnet create:--resource_group_name --virtual_network_name --subnet_name --route_table --network_security_group --address_prefix 
+network application-gateway url-path-map show:--item_name --resource_group_name --resource_name 
+network application-gateway list:--resource_group_name 
+keyvault certificate contact add:--vault_base_url --contact_phone --contact_name --contact_email 
+network application-gateway http-settings update:--resource_group_name --properties_to_add --raw --properties_to_remove --probe --cookie_based_affinity --application_gateway_name --item_name --properties_to_set --timeout --protocol --port 
+vm list-ip-addresses:--vm_name --resource_group_name 
+storage share metadata update:--share_name --sas_token --account_key --timeout --connection_string --account_name --metadata 
+storage queue policy show:--sas_token --account_key --policy_name --container_name --connection_string --account_name 
+network application-gateway address-pool delete:--item_name --resource_group_name --resource_name --no_wait 
+network traffic-manager profile show:--resource_group_name --profile_name 
+keyvault list:--resource_group_name 
+vm diagnostics set:--vm_name --resource_group_name --version --settings --no_auto_upgrade --protected_settings 
+storage file delete:--share_name --file_name --sas_token --account_key --timeout --connection_string --directory_name --account_name 
+iot hub show:--hub_name --resource_group_name 
+storage table policy show:--sas_token --account_key --policy_name --container_name --connection_string --account_name 
+appservice web config container update:--slot --resource_group_name --docker_registry_server_url --name --docker_custom_image_name --docker_registry_server_password --docker_registry_server_user 
+network lb inbound-nat-rule list:--resource_group_name --resource_name 
+redis delete:--resource_group_name --name 
+storage share delete:--fail_not_exist --share_name --sas_token --account_key --timeout --connection_string --account_name 
+network application-gateway ssl-cert show:--item_name --resource_group_name --resource_name 
+network vpn-connection delete:--resource_group_name --virtual_network_gateway_connection_name 
+network vpn-connection shared-key reset:--resource_group_name --virtual_network_gateway_connection_name --key_length 
+redis list-keys:--resource_group_name --name 
+acr show:--resource_group_name --registry_name 
+network lb inbound-nat-pool show:--item_name --resource_group_name --resource_name 
+keyvault key restore:--vault_base_url --file_path 
+network lb inbound-nat-pool create:--frontend_port_range_start --resource_group_name --protocol --item_name --load_balancer_name --frontend_ip_name --frontend_port_range_end --backend_port 
+network route-table update:--resource_group_name --properties_to_add --properties_to_set --tags --properties_to_remove --route_table_name 
+network lb inbound-nat-pool update:--frontend_port_range_start --resource_group_name --properties_to_add --properties_to_remove --load_balancer_name --item_name --frontend_ip_name --properties_to_set --protocol --frontend_port_range_end --backend_port 
+storage file exists:--share_name --file_name --sas_token --account_key --timeout --connection_string --directory_name --account_name 
+network dns zone list:--resource_group_name 
+network dns record-set create:--resource_group_name --if_none_match --metadata --ttl --zone_name --if_match --record_set_type --record_set_name 
+storage queue exists:--queue_name --sas_token --account_key --timeout --connection_string --account_name 
+network vnet-gateway root-cert create:--resource_group_name --public_cert_data --gateway_name --cert_name 
+vm access set-linux-user:--vm_name --resource_group_name --username --password --ssh_key_value 
+sql server create:--resource_group_name --parameters --server_name 
+keyvault set-policy:--upn --resource_group_name --certificate_permissions --secret_permissions --object_id --vault_name --spn --key_permissions 
+ad sp create-for-rbac:--scopes --name --years --expanded_view --role --password 
+appservice web config appsettings update:--slot --resource_group_name --name --settings 
+storage table stats:--connection_string --timeout --sas_token --account_name --account_key 
+keyvault certificate show:--vault_base_url --certificate_name --certificate_version 
+storage account keys renew:--resource_group_name --account_name --key_name 
+storage directory create:--fail_on_exist --share_name --sas_token --account_key --timeout --connection_string --directory_name --account_name --metadata 
+network express-route update:--resource_group_name --properties_to_add --bandwidth_in_mbps --properties_to_remove --tags --peering_location --sku_family --properties_to_set --sku_tier --circuit_name --service_provider_name 
+vm list:--resource_group_name --show_details 
+network route-table delete:--resource_group_name --route_table_name 
+network application-gateway auth-cert update:--resource_group_name --properties_to_add --properties_to_remove --application_gateway_name --raw --properties_to_set --item_name --cert_data 
+storage directory metadata show:--share_name --sas_token --account_key --timeout --connection_string --directory_name --account_name 
+network nic list-effective-nsg:--resource_group_name --network_interface_name 
+network application-gateway probe list:--resource_group_name --resource_name 
+storage account delete:--resource_group_name --force --account_name 
+group deployment delete:--resource_group_name --deployment_name 
+iot device message reject:--hub_name --resource_group_name --lock_token --device_id 
+network lb address-pool list:--resource_group_name --resource_name 
+storage container lease renew:--lease_id --if_modified_since --sas_token --account_key --timeout --container_name --connection_string --if_unmodified_since --account_name 
+storage container delete:--fail_not_exist --lease_id --if_modified_since --sas_token --account_key --timeout --container_name --connection_string --if_unmodified_since --account_name 
+network lb probe show:--item_name --resource_group_name --resource_name 
+account list:--list_all 
+network route-table create:--resource_group_name --route_table_name --parameters 
+network dns record txt add:--resource_group_name --record_set_name --value --zone_name 
+storage directory delete:--fail_not_exist --share_name --sas_token --account_key --timeout --connection_string --directory_name --account_name 
+keyvault key list-versions:--vault_base_url --key_name --maxresults 
+storage share policy list:--connection_string --sas_token --account_name --account_key --container_name 
+storage container lease release:--lease_id --if_modified_since --sas_token --account_key --timeout --container_name --connection_string --if_unmodified_since --account_name 
+policy assignment list:--resource_group_name --scope --disable_scope_strict_match 
+sql elastic-pools db show-activity:--resource_group_name --elastic_pool_name --server_name 
+network dns zone delete:--resource_group_name --if_match --force --if_none_match --zone_name 
+vmss extension image list-versions:--orderby --publisher_name --top --filter --location --type 
+acs delete:--resource_group_name --container_service_name 
+iot hub policy delete:--hub_name --resource_group_name --policy_name 
+iot device import:--hub_name --output_blob_container_uri --resource_group_name --input_blob_container_uri 
+vm stop:--vm_name --resource_group_name 
+network traffic-manager profile create:--routing_method --resource_group_name --monitor_port --deployment_name --unique_dns_name --monitor_path --traffic_manager_profile_name --status --location --ttl --monitor_protocol 
+network dns record mx remove:--resource_group_name --record_set_name --preference --exchange --zone_name 
+network dns record mx add:--resource_group_name --record_set_name --preference --exchange --zone_name 
+appservice web deployment slot list:--resource_group_name --name --properties_to_include 
+network application-gateway rule delete:--item_name --resource_group_name --resource_name --no_wait 
+network vnet-gateway list:--resource_group_name 
+keyvault secret list-versions:--vault_base_url --secret_name --maxresults 
+provider unregister:--resource_provider_namespace 
+network lb inbound-nat-rule show:--item_name --resource_group_name --resource_name 
+storage container policy create:--permission --sas_token --account_key --policy_name --start --container_name --connection_string --expiry --account_name 
+iot hub show-quota-metrics:--hub_name --resource_group_name 
+network vnet-gateway delete:--resource_group_name --virtual_network_gateway_name 
+network express-route auth list:--resource_group_name --circuit_name 
+network application-gateway frontend-ip delete:--item_name --resource_group_name --resource_name --no_wait 
+ad group list:--display_name --query_filter 
+vm extension list:--vm_name --resource_group_name 
+network vnet subnet delete:--virtual_network_name --resource_group_name --subnet_name 
+storage queue metadata update:--queue_name --sas_token --account_key --timeout --connection_string --account_name --metadata 
+resource list:--resource_group_name --name --tag --location --resource_provider_namespace --resource_type 
+network dns zone create:--resource_group_name --if_none_match --tags --location --zone_name 
+vmss extension image list-names:--publisher_name --location 
+network application-gateway http-listener show:--item_name --resource_group_name --resource_name 
+network public-ip create:--resource_group_name --name --deployment_name --tags --dns_name --reverse_fqdn --idle_timeout --version --location --allocation_method --dns_name_type 
+network traffic-manager endpoint delete:--resource_group_name --profile_name --endpoint_name --endpoint_type 
+sql db transparent-data-encryption show-activity:--resource_group_name --database_name --server_name 
+vm availability-set update:--properties_to_remove --resource_group_name --properties_to_add --properties_to_set --name 
+network vnet subnet update:--resource_group_name --properties_to_add --properties_to_remove --virtual_network_name --subnet_name --properties_to_set --route_table --network_security_group --address_prefix 
+context show:--context_name 
+vm image list-publishers:--location 
+iot hub policy list:--hub_name --resource_group_name 
+storage message clear:--queue_name --sas_token --account_key --timeout --connection_string --account_name 
+acs create:--resource_group_name --orchestrator_type --name --deployment_name --tags --ssh_key_value --admin_username --agent_count --master_count --location --client_secret --agent_vm_size --service_principal --dns_name_prefix 
+acr check-name:--registry_name 
+network application-gateway address-pool list:--resource_group_name --resource_name 
+storage table generate-sas:--protocol --permission --start_pk --ip --end_pk --sas_token --account_key --expiry --start --start_rk --table_name --end_rk --id --connection_string --account_name 
+vm generalize:--vm_name --resource_group_name 
+provider register:--resource_provider_namespace 
+group update:--properties_to_remove --resource_group_name --properties_to_add --properties_to_set 
+container build create:--registry_resource_id --registry_name --target_name --remote_branch --vsts_account_name --remote_access_token --target_resource_group --remote_url --vsts_project_name 
+component remove:--component_name 
+cloud show:--cloud_name 
+batch application show:--resource_group_name --application_id --account_name 
+acr update:--resource_group_name --properties_to_add --tags --properties_to_remove --properties_to_set --registry_name --storage_account_name --admin_enabled 
+iot device message receive:--hub_name --resource_group_name --lock_timeout --device_id 
+vm availability-set create:--resource_group_name --name --deployment_name --tags --platform_update_domain_count --platform_fault_domain_count --location 
+network express-route auth create:--resource_group_name --authorization_parameters --authorization_name --circuit_name 
+network traffic-manager profile check-dns:--type --name 
+network application-gateway stop:--resource_group_name --application_gateway_name 
+sql server show-usage:--resource_group_name --server_name 
+iot hub list:--resource_group_name 
+storage file list:--exclude_dir --share_name --sas_token --account_key --timeout --connection_string --directory_name --account_name 
+iot hub consumer-group list:--event_hub_name --hub_name --resource_group_name 
+network list-usages:--location 
+vmss extension delete:--resource_group_name --vmss_name --extension_name 
+vm image list-skus:--publisher_name --location --offer 
+sql db data-warehouse resume:--resource_group_name --database_name --server_name 
+provider show:--resource_provider_namespace --expand 
+network nic update:--resource_group_name --network_interface_name --properties_to_add --properties_to_remove --enable_ip_forwarding --properties_to_set --internal_dns_name_label --network_security_group 
+keyvault key list:--vault_base_url --maxresults 
+storage account update:--sku --resource_group_name --custom_domain --tags --encryption --access_tier --account_name 
+sql db create:--resource_group_name --database_name --parameters --server_name 
+batch account set:--resource_group_name --storage_account_id --account_name --tags 
+storage logging show:--sas_token --account_key --timeout --services --connection_string --account_name 
+keyvault certificate list:--vault_base_url --maxresults 
+iot device list:--hub_name --top --resource_group_name 
+network dns record txt remove:--resource_group_name --record_set_name --value --zone_name 
+cloud register:--cloud_config --endpoint_resource_manager --suffix_azure_datalake_store_file_system_endpoint --endpoint_sql_management --endpoint_management --endpoint_gallery --cloud_name --suffix_keyvault_dns --suffix_storage_endpoint --endpoint_active_directory --suffix_sql_server_hostname --endpoint_active_directory_resource_id --endpoint_active_directory_graph_resource_id --suffix_azure_datalake_analytics_catalog_and_job_endpoint 
+network application-gateway address-pool show:--item_name --resource_group_name --resource_name 
+policy definition delete:--policy_definition_name 
+network vnet subnet list:--virtual_network_name --resource_group_name 
+network application-gateway frontend-port list:--resource_group_name --resource_name 
+vm extension delete:--vm_name --resource_group_name --vm_extension_name 
+vm nic add:--vm_name --resource_group_name --primary_nic --nics 
+keyvault certificate download:--vault_base_url --certificate_name --certificate_version --file_path --encoding 
+network lb frontend-ip list:--resource_group_name --resource_name 
+redis regenerate-keys:--key_type --resource_group_name --name 
+storage table create:--fail_on_exist --sas_token --account_key --table_name --timeout --connection_string --account_name 
+appservice web log tail:--slot --resource_group_name --name --provider 
+sql server service-objective show:--resource_group_name --server_name --service_objective_name 
+appservice web config show:--slot --resource_group_name --name 
+storage account create:--sku --resource_group_name --kind --custom_domain --tags --encryption --location --access_tier --account_name 
+group wait:--resource_group_name --updated --exists --created --deleted --interval --custom --timeout 
+sql db replication-link show:--resource_group_name --database_name --server_name --link_id 
+appservice web source-control config:--slot --resource_group_name --name --manual_integration --repo_url --branch --repository_type 
+storage blob service-properties show:--connection_string --timeout --sas_token --account_name --account_key 
+iot hub list-skus:--hub_name --resource_group_name 
+network vpn-connection create:--connection_type --resource_group_name --authorization_key --vnet_gateway1_id --deployment_name --tags --enable_bgp --shared_key --vnet_gateway2_id --routing_weight --virtual_network_gateway_connection_name --local_gateway2_id --express_route_circuit2_id --location 
+network application-gateway delete:--resource_group_name --application_gateway_name --raw 
+vm extension image show:--type --version --publisher_name --location 
+storage blob metadata update:--lease_id --if_none_match --if_modified_since --if_unmodified_since --sas_token --account_key --timeout --container_name --connection_string --if_match --blob_name --account_name --metadata 
+sql server show:--resource_group_name --server_name 
+network traffic-manager profile list:--resource_group_name 
+keyvault delete-policy:--upn --resource_group_name --vault_name --spn --object_id 
+network vnet show:--virtual_network_name --resource_group_name --expand 
+vm disk list:--vm_name --resource_group_name 
+vmss extension list:--resource_group_name --vmss_name 
+sql elastic-pools update:--resource_group_name --properties_to_add --properties_to_set --server_name --properties_to_remove --elastic_pool_name 
+context modify:--context_name --default_subscription --cloud_name 
+network express-route peering list:--resource_group_name --circuit_name 
+provider list:--top --expand 
+ad sp delete:--identifier 
+storage cors clear:--sas_token --account_key --timeout --services --connection_string --account_name 
+batch account keys renew:--resource_group_name --account_name --key_name 
+iot device message send:--resource_group_name --user_id --correlation_id --hub_name --data --message_id --device_id 
+network application-gateway http-settings create:--resource_group_name --protocol --item_name --no_wait --probe --cookie_based_affinity --application_gateway_name --timeout --port 
+network application-gateway frontend-port delete:--item_name --resource_group_name --resource_name --no_wait 
+tag remove-value:--tag_name --tag_value 
+network lb list:--resource_group_name 
+storage account keys list:--resource_group_name --account_name 
+sql db update:--resource_group_name --properties_to_add --properties_to_set --server_name --properties_to_remove --database_name 
+vmss get-instance-view:--vm_scale_set_name --resource_group_name --instance_id 
+network application-gateway probe update:--resource_group_name --properties_to_add --raw --properties_to_remove --interval --application_gateway_name --item_name --host --properties_to_set --timeout --path --threshold --protocol 
+storage file download-batch:--dryrun --pattern --destination --sas_token --account_key --source --validate_content --connection_string --account_name --max_connections 
+keyvault certificate import:--vault_base_url --certificate_policy --tags --certificate_name --certificate_attributes --base64_encoded_certificate --password 
+appservice web source-control delete:--slot --resource_group_name --name 
+network application-gateway ssl-policy set:--resource_group_name --clear --disabled_ssl_protocols --no_wait --application_gateway_name 
+redis show:--resource_group_name --name 
+redis update-settings:--resource_group_name --name --redis_configuration 
+storage queue policy create:--permission --sas_token --account_key --policy_name --start --container_name --connection_string --expiry --account_name 
+ad group delete:--group_object_id 
+network vnet peering create:--resource_group_name --allow_gateway_transit --virtual_network_name --virtual_network_peering_name --remote_virtual_network --allow_forwarded_traffic --use_remote_gateways --allow_virtual_network_access 
+network route-table route show:--resource_group_name --route_table_name --route_name 
+network dns record ns add:--dname --resource_group_name --record_set_name --zone_name 
+network nic ip-config address-pool remove:--ip_config_name --resource_group_name --network_interface_name --load_balancer_name --backend_address_pool 
+keyvault secret list:--vault_base_url --maxresults 
+network nic list:--resource_group_name 
+network express-route auth show:--resource_group_name --authorization_name --circuit_name 
+storage queue metadata show:--queue_name --sas_token --account_key --timeout --connection_string --account_name 
+network express-route auth delete:--resource_group_name --authorization_name --circuit_name 
+component list-available:
+network lb probe list:--resource_group_name --resource_name 
+storage share update:--share_name --sas_token --quota --account_key --timeout --connection_string --account_name 
+resource show:--resource_group_name --parent_resource_path --resource_id --resource_name --api_version --resource_provider_namespace --resource_type 
+acr credential show:--resource_group_name --registry_name 
+storage entity delete:--if_match --sas_token --account_key --row_key --table_name --timeout --connection_string --partition_key --account_name 
+network nic ip-config address-pool add:--ip_config_name --resource_group_name --network_interface_name --load_balancer_name --backend_address_pool 
+batch location quotas show:--location_name 
+appservice web deployment slot swap:--slot --resource_group_name --target_slot --webapp 
+sql db service-tier-advisor show:--resource_group_name --database_name --service_tier_advisor_name --server_name 
+storage blob lease acquire:--proposed_lease_id --if_none_match --if_modified_since --if_unmodified_since --sas_token --account_key --lease_duration --timeout --container_name --connection_string --if_match --blob_name --account_name 
+policy definition show:--policy_definition_name 
+network application-gateway address-pool create:--item_name --resource_group_name --no_wait --application_gateway_name --servers 
+sql elastic-pools recommended list:--resource_group_name --server_name 
+vm list-sizes:--location 
+acs install-cli:--install_location --client_version --name --resource_group 
+network application-gateway frontend-ip list:--resource_group_name --resource_name 
+vm availability-set delete:--resource_group_name --availability_set_name 
+resource tag:--resource_group_name --resource_name --tags --parent_resource_path --resource_id --api_version --resource_provider_namespace --resource_type 
+appservice web config container delete:--slot --resource_group_name --name 
+policy assignment create:--policy --resource_group_name --display_name --name --scope 
+vmss delete-instances:--vm_scale_set_name --resource_group_name --instance_ids 
+network application-gateway auth-cert delete:--item_name --resource_group_name --resource_name --no_wait 
+ad app delete:--identifier 
+feedback:
+storage container create:--public_access --fail_on_exist --sas_token --account_key --timeout --container_name --connection_string --account_name --metadata 
+storage logging update:--log --sas_token --account_key --timeout --services --connection_string --account_name --retention 
+network vnet-gateway show:--resource_group_name --virtual_network_gateway_name 
+network express-route peering delete:--resource_group_name --peering_name --circuit_name 
+vm image list-offers:--publisher_name --location 
+network dns record-set update:--resource_group_name --properties_to_add --if_none_match --properties_to_remove --relative_record_set_name --record_type --properties_to_set --zone_name --if_match --metadata 
+ad app create:--identifier_uris --display_name --end_date --reply_urls --key_value --key_type --key_usage --available_to_other_tenants --password --homepage --start_date 
+network application-gateway rule update:--rule_type --resource_group_name --properties_to_add --raw --properties_to_remove --application_gateway_name --http_listener --http_settings --url_path_map --properties_to_set --item_name --address_pool 
+network dns record srv remove:--resource_group_name --target --weight --priority --zone_name --port --record_set_name 
+storage blob snapshot:--lease_id --if_none_match --if_modified_since --if_unmodified_since --sas_token --account_key --timeout --container_name --connection_string --if_match --blob_name --account_name --metadata 
+sql server update:--properties_to_remove --resource_group_name --properties_to_add --properties_to_set --server_name 
+batch account autostorage-keys sync:--resource_group_name --account_name 
+storage directory exists:--share_name --file_name --sas_token --account_key --timeout --connection_string --directory_name --account_name 
+network dns record cname add:--resource_group_name --cname --record_set_name --zone_name 
+network lb rule show:--item_name --resource_group_name --resource_name 
+vmss nic list-vm-nics:--resource_group_name --virtual_machine_scale_set_name --virtualmachine_index 
+network application-gateway url-path-map delete:--item_name --resource_group_name --resource_name --no_wait 
+storage share metadata show:--share_name --sas_token --account_key --timeout --connection_string --account_name 
+sql db transparent-data-encryption create:--status --resource_group_name --database_name --server_name 
+keyvault key import:--vault_base_url --pem_password --key_ops --tags --key_name --destination --expires --pem_file --disabled --byok_file --not_before 
+vm extension image list-names:--publisher_name --location 
+sql db transparent-data-encryption show-configuration:--resource_group_name --database_name --server_name 
+group list:--tag 
+storage account list:--resource_group_name 
+network nic ip-config update:--load_balancer_inbound_nat_rule_ids --properties_to_add --public_ip_address --resource_group_name --virtual_network_name --private_ip_address_allocation --ip_config_name --properties_to_set --make_primary --subnet --network_interface_name --private_ip_address_version --properties_to_remove --load_balancer_name --load_balancer_backend_address_pool_ids --private_ip_address 
+acs kubernetes browse:--disable_browser --ssh_key_file --name --resource_group 
+network application-gateway http-listener update:--resource_group_name --ssl_cert --properties_to_add --raw --properties_to_remove --application_gateway_name --item_name --frontend_ip --properties_to_set --protocol --frontend_port 
+appservice web config appsettings show:--slot --resource_group_name --name 
+appservice plan create:--sku --resource_group_name --name --location --is_linux --number_of_workers 
+network application-gateway url-path-map update:--resource_group_name --properties_to_add --properties_to_remove --no_wait --application_gateway_name --default_address_pool --raw --properties_to_set --item_name --default_http_settings 
+ad sp create:--identifier 
+resource delete:--resource_group_name --parent_resource_path --resource_id --resource_name --api_version --resource_provider_namespace --resource_type 
+network vnet-gateway root-cert delete:--resource_group_name --gateway_name --cert_name 
+role definition create:--role_definition 
+sql server firewall create:--start_ip_address --resource_group_name --end_ip_address --server_name --firewall_rule_name 
+network lb inbound-nat-pool delete:--item_name --resource_group_name --resource_name --no_wait 
+storage container generate-sas:--protocol --cache_control --permission --ip --sas_token --account_key --expiry --start --content_language --content_encoding --content_type --container_name --id --connection_string --content_disposition --account_name 
+vm nic show:--vm_name --resource_group_name --nic 
+network vnet list:--resource_group_name 
+storage cors list:--sas_token --account_key --timeout --services --connection_string --account_name 
+network dns record aaaa add:--resource_group_name --ipv6_address --record_set_name --zone_name 
+acs show:--resource_group_name --container_service_name 
+storage directory metadata update:--share_name --sas_token --account_key --timeout --connection_string --directory_name --account_name --metadata 
+network application-gateway auth-cert create:--item_name --resource_group_name --no_wait --cert_data --application_gateway_name 
+storage queue policy delete:--sas_token --account_key --policy_name --container_name --connection_string --account_name 
+network dns record-set show:--resource_group_name --record_type --relative_record_set_name --zone_name 
+network vnet peering show:--virtual_network_name --resource_group_name --virtual_network_peering_name 
+storage metrics show:--interval --sas_token --account_key --timeout --services --connection_string --account_name 
+sql server firewall show:--resource_group_name --server_name --firewall_rule_name 
+iot hub consumer-group show:--event_hub_name --hub_name --resource_group_name --consumer_group_name 
+storage table list:--num_results --sas_token --account_key --timeout --marker --connection_string --account_name 
+storage container lease change:--lease_id --if_modified_since --sas_token --proposed_lease_id --account_key --timeout --container_name --connection_string --if_unmodified_since --account_name 
+redis export:--resource_group_name --prefix --container --name --file_format 
+network traffic-manager endpoint update:--resource_group_name --endpoint_location --properties_to_add --weight --endpoint_name --min_child_endpoints --properties_to_remove --endpoint_monitor_status --priority --profile_name --properties_to_set --target_resource_id --endpoint_type --endpoint_status --target 
+storage container metadata show:--lease_id --sas_token --account_key --timeout --container_name --connection_string --account_name 
+iot device create:--resource_group_name --x509 --valid_days --primary_thumbprint --secondary_thumbprint --output_dir --hub_name --device_id 
+storage queue policy update:--permission --sas_token --account_key --policy_name --start --container_name --connection_string --expiry --account_name 
+context delete:--context_name 
+storage container lease acquire:--proposed_lease_id --if_modified_since --sas_token --account_key --lease_duration --timeout --container_name --connection_string --if_unmodified_since --account_name 
+acs dcos install-cli:--install_location --client_version 
+component list:
+network nsg create:--resource_group_name --tags --name --deployment_name --location 
+storage table delete:--fail_not_exist --sas_token --account_key --table_name --timeout --connection_string --account_name 
+keyvault show:--resource_group_name --vault_name 
+keyvault certificate contact list:--vault_base_url 
+vm boot-diagnostics disable:--vm_name --resource_group_name 
+appservice plan list:--resource_group_name 
+taskhelp deploy-arm-template:
+network application-gateway http-settings show:--item_name --resource_group_name --resource_name 
+network application-gateway probe delete:--item_name --resource_group_name --resource_name --no_wait 
+iot hub policy create:--hub_name --permissions --resource_group_name --policy_name 
+batch application set:--resource_group_name --application_id --default_version --allow_updates --display_name --account_name 
+network vpn-connection list:--resource_group_name 
+storage file metadata update:--share_name --file_name --sas_token --account_key --timeout --connection_string --directory_name --account_name --metadata 
+appservice web deployment slot create:--slot --resource_group_name --configuration_source --webapp 
+network lb rule delete:--item_name --resource_group_name --resource_name --no_wait 
+storage container show-permission:--lease_id --sas_token --account_key --timeout --container_name --connection_string --account_name 
+keyvault certificate pending delete:--vault_base_url --certificate_name 
+network lb rule create:--resource_group_name --protocol --item_name --load_balancer_name --backend_address_pool_name --floating_ip --idle_timeout --frontend_ip_name --probe_name --load_distribution --frontend_port --backend_port 
+acr repository list:--username --password --registry_name 
+network application-gateway frontend-ip show:--item_name --resource_group_name --resource_name 
+policy definition update:--rules --policy_definition_name --display_name --description 
+login:--username --service_principal --password --tenant 
+keyvault secret set:--vault_base_url --tags --value --secret_attributes --content_type --secret_name 
+appservice web delete:--slot --resource_group_name --name 
+storage share policy delete:--sas_token --account_key --policy_name --container_name --connection_string --account_name 
+acs kubernetes get-credentials:--resource_group_name --ssh_key_file --name --path 
+appservice web config appsettings delete:--slot --resource_group_name --setting_names --name 
+network lb probe update:--resource_group_name --load_balancer_name --properties_to_add --properties_to_remove --interval --item_name --properties_to_set --path --threshold --protocol --port 
+network nic ip-config delete:--item_name --resource_group_name --resource_name --no_wait 
+network vpn-connection shared-key update:--resource_group_name --properties_to_add --properties_to_set --properties_to_remove --value --virtual_network_gateway_connection_name 
+network application-gateway show-backend-health:--resource_group_name --application_gateway_name --expand 
+network application-gateway create:--deployment_name --servers --raw --sku_tier --http_settings_port --public_ip_address_type --subnet --capacity --tags --http_listener_protocol --http_settings_cookie_based_affinity --location --routing_rule_type --public_ip_address --subnet_type --virtual_network_name --private_ip_address_allocation --sku_name --cert_password --frontend_port --cert_data --frontend_type --subnet_address_prefix --resource_group_name --public_ip_address_allocation --http_settings_protocol --application_gateway_name --vnet_address_prefix --private_ip_address 
+iot hub consumer-group create:--event_hub_name --hub_name --resource_group_name --consumer_group_name 
+network route-table show:--resource_group_name --route_table_name --expand 
+network route-table route list:--resource_group_name --route_table_name 
+batch account keys list:--resource_group_name --account_name 
+vm access reset-windows-admin:--vm_name --resource_group_name --username --password 
+batch account list:--resource_group_name 
+ad app show:--identifier 
+network application-gateway http-listener delete:--item_name --resource_group_name --resource_name --no_wait 
+vm extension image list:--image_location --version --publisher_name --name --latest 
+acs dcos browse:--disable_browser --ssh_key_file --name --resource_group 
+vm list-vm-resize-options:--vm_name --resource_group_name 
+keyvault key show:--vault_base_url --key_name --key_version 
+network lb frontend-ip show:--item_name --resource_group_name --resource_name 
+storage file metadata show:--share_name --file_name --sas_token --account_key --timeout --connection_string --directory_name --account_name 
+feature list:--resource_provider_namespace 
+storage container show:--lease_id --sas_token --account_key --timeout --container_name --connection_string --account_name 
+role assignment list:--resource_group_name --show_all --assignee --role --include_groups --scope --include_inherited 
+storage blob upload-batch:--lease_id --account_key --connection_string --content_settings --account_name --max_connections --if_modified_since --pattern --destination --blob_type --source --validate_content --source_files --if_match --metadata --destination_container_name --dryrun --if_none_match --maxsize_condition --sas_token --timeout --if_unmodified_since 
+vmss create:--public_ip_address_dns_name --image --no_wait --storage_sku --load_balancer_type --vnet_type --os_disk_name --storage_container_name --backend_port --public_ip_address --subnet --storage_profile --os_version --authentication_type --os_offer --location --storage_caching --admin_password --load_balancer --disable_overprovision --nat_pool_name --vnet_name --tags --ssh_key_value --upgrade_policy_mode --instance_count --os_sku --vmss_name --validate --subnet_address_prefix --resource_group_name --backend_pool_name --public_ip_address_allocation --os_publisher --public_ip_type --admin_username --ssh_dest_key_path --vnet_address_prefix --os_type --vm_sku 
+iot hub job list:--hub_name --resource_group_name 
+storage share exists:--share_name --file_name --sas_token --account_key --timeout --connection_string --directory_name --account_name 
+vmss start:--vm_scale_set_name --resource_group_name --instance_ids 
+vmss nic list:--resource_group_name --virtual_machine_scale_set_name 
+network application-gateway http-settings delete:--item_name --resource_group_name --resource_name --no_wait 
+network lb frontend-ip update:--resource_group_name --properties_to_add --public_ip_address --subnet --properties_to_remove --private_ip_address_allocation --load_balancer_name --item_name --properties_to_set --private_ip_address --virtual_network_name 
+vm image show:--version --publisher_name --location --skus --offer 
+vmss stop:--vm_scale_set_name --resource_group_name --instance_ids 
+ad user show:--upn_or_object_id 
+iot device show:--hub_name --resource_group_name --device_id 
+storage message peek:--num_messages --queue_name --sas_token --account_key --timeout --connection_string --account_name 
+container release list:--target_name --target_resource_group 
+network lb address-pool show:--item_name --resource_group_name --resource_name 
+role assignment create:--assignee --role --scope --resource_group_name 
+redis patch-schedule show:--resource_group_name --name 
+vm delete:--vm_name --resource_group_name 
+network vnet peering update:--resource_group_name --properties_to_add --properties_to_set --virtual_network_peering_name --properties_to_remove --virtual_network_name 
+storage account show-usage:
+network nsg list:--resource_group_name 
+context create:--context_name --use_later --cloud_name 
+vmss deallocate:--vm_scale_set_name --resource_group_name --instance_ids 
+network public-ip delete:--public_ip_address_name --resource_group_name 
+group deployment list:--filter --resource_group_name --top 
+policy assignment delete:--resource_group_name --name --scope 
+network application-gateway http-listener list:--resource_group_name --resource_name 
+network dns zone import:--file_name --resource_group_name --location --zone_name 
+appservice web config container show:--slot --resource_group_name --name 
+tag delete:--tag_name 
+network express-route list:--resource_group_name 
+network vnet peering delete:--virtual_network_name --resource_group_name --virtual_network_peering_name 
+storage file resize:--content_length --share_name --file_name --sas_token --account_key --timeout --connection_string --directory_name --account_name 
+batch application package activate:--resource_group_name --version --application_id --account_name --format 
+network route-table route create:--resource_group_name --next_hop_type --next_hop_ip_address --route_name --route_table_name --address_prefix 
+tag list:
+storage container policy update:--permission --sas_token --account_key --policy_name --start --container_name --connection_string --expiry --account_name 
+vmss nic show:--resource_group_name --network_interface_name --virtual_machine_scale_set_name --virtualmachine_index --expand 
+vm redeploy:--vm_name --resource_group_name 
+keyvault create:--sku --resource_group_name --tags --enabled_for_disk_encryption --enabled_for_template_deployment --vault_name --location --no_self_perms --enabled_for_deployment 
+storage metrics update:--hour --sas_token --account_key --api --timeout --services --connection_string --account_name --minute --retention 
+keyvault certificate issuer admin list:--vault_base_url --issuer_name 
+batch account create:--resource_group_name --tags --account_name --storage_account_id --location 
+group deployment show:--resource_group_name --deployment_name 
+storage account generate-sas:--resource_types --permission --ip --sas_token --account_key --expiry --start --services --connection_string --account_name --protocol 
+storage queue list:--num_results --include_metadata --sas_token --account_key --prefix --timeout --marker --connection_string --account_name 
+sql db show:--resource_group_name --database_name --expand --server_name 
+batch application list:--resource_group_name --account_name --maxresults 
+role assignment delete:--resource_group_name --ids --assignee --role --scope --include_inherited 
+storage queue delete:--fail_not_exist --queue_name --sas_token --account_key --timeout --connection_string --account_name 
+network express-route peering show:--resource_group_name --peering_name --circuit_name 
+network application-gateway rule show:--item_name --resource_group_name --resource_name 
+network public-ip list:--resource_group_name 
+network application-gateway frontend-port create:--item_name --resource_group_name --no_wait --application_gateway_name --port 
+network application-gateway address-pool update:--resource_group_name --properties_to_add --properties_to_remove --application_gateway_name --servers --raw --properties_to_set --item_name 
+vmss extension image show:--type --version --publisher_name --location 
+network application-gateway update:--resource_group_name --properties_to_add --tags --properties_to_remove --sku_name --application_gateway_name --raw --properties_to_set --sku_tier --capacity 
+network nic ip-config show:--item_name --resource_group_name --resource_name 
+keyvault certificate issuer list:--vault_base_url --maxresults 
+iot hub job cancel:--hub_name --job_id --resource_group_name 
+iot hub update:--properties_to_remove --hub_name --properties_to_add --properties_to_set --resource_group_name 
+ad sp show:--identifier 
+storage entity merge:--sas_token --account_key --entity --table_name --timeout --connection_string --if_match --account_name 
+keyvault certificate issuer admin delete:--vault_base_url --email --issuer_name 
+network application-gateway ssl-policy show:--resource_group_name --application_gateway_name 
+network traffic-manager endpoint list:--resource_group_name --profile_name --endpoint_type 
+keyvault certificate issuer update:--vault_base_url --account_id --enabled --organization_id --issuer_name --provider_name --password 
+storage container policy delete:--sas_token --account_key --policy_name --container_name --connection_string --account_name 
+storage message update:--queue_name --sas_token --account_key --message_id --content --timeout --connection_string --pop_receipt --account_name --visibility_timeout 
+storage file show:--share_name --file_name --sas_token --account_key --timeout --connection_string --directory_name --account_name 
+acr list:--resource_group_name 
+storage file copy start-batch:--destination_share --source_sas --dryrun --pattern --destination_path --sas_token --account_key --source_container --source_client --timeout --connection_string --source_share --account_name --metadata 
+sql elastic-pools create:--resource_group_name --parameters --elastic_pool_name --server_name 
+storage message delete:--queue_name --sas_token --account_key --message_id --timeout --connection_string --pop_receipt --account_name 
+network nsg rule update:--resource_group_name --destination_address_prefix --properties_to_add --description --properties_to_remove --direction --access --source_port_range --properties_to_set --network_security_group_name --protocol --source_address_prefix --security_rule_name --destination_port_range --priority 
+appservice web config update:--slot --resource_group_name --java_container_version --auto_heal_enabled --name --app_command_line --java_version --net_framework_version --node_version --remote_debugging_enabled --always_on --php_version --use32_bit_worker_process --web_sockets_enabled --java_container --python_version 
+keyvault secret show:--vault_base_url --secret_name --secret_version 
+batch application package create:--resource_group_name --version --application_id --account_name --package_file 
+network lb update:--properties_to_remove --resource_group_name --load_balancer_name --properties_to_add --properties_to_set 
+sql elastic-pools db show:--resource_group_name --database_name --elastic_pool_name --server_name 
+vmss list:--resource_group_name 
+redis create:--resource_group_name --shard_count --name --sku_capacity --tags --sku_family --sku_name --redis_configuration --static_ip --subnet_id --location --tenant_settings --enable_non_ssl_port 
+appservice web source-control show:--slot --resource_group_name --name 
+network nic show-effective-route-table:--resource_group_name --network_interface_name 
+vm extension show:--vm_name --resource_group_name --expand --vm_extension_name 
+network express-route peering update:--advertised_public_prefixes --resource_group_name --peering_name --secondary_peer_address_prefix --properties_to_add --properties_to_remove --shared_key --primary_peer_address_prefix --customer_asn --routing_registry_name --properties_to_set --circuit_name --vlan_id --peer_asn 
+network route-table route delete:--resource_group_name --route_table_name --route_name 
+batch application package delete:--resource_group_name --version --application_id --account_name 
+appservice web config hostname list:--slot --resource_group_name --webapp 
+ad app list:--identifier_uri --display_name --app_id --query_filter 
+network local-gateway update:--resource_group_name --properties_to_add --tags --properties_to_remove --local_address_prefix --peer_weight --asn --bgp_peering_address --properties_to_set --local_network_gateway_name --gateway_ip_address 
+appservice web source-control config-local-git:--slot --resource_group_name --name 
+storage file url:--protocol --share_name --file_name --sas_token --account_key --connection_string --directory_name --account_name 
+storage directory list:--share_name --sas_token --account_key --timeout --connection_string --directory_name --account_name 
+network lb frontend-ip create:--resource_group_name --public_ip_address --subnet --item_name --private_ip_address_allocation --load_balancer_name --virtual_network_name --private_ip_address 
+storage share stats:--share_name --sas_token --account_key --timeout --connection_string --account_name 
+storage container set-permission:--public_access --if_modified_since --sas_token --lease_id --account_key --signed_identifiers --timeout --container_name --connection_string --if_unmodified_since --account_name 
+ad user list:--upn --display_name --query_filter 
+storage entity show:--sas_token --account_key --row_key --property_resolver --table_name --accept --timeout --connection_string --partition_key --account_name --select 
+network lb inbound-nat-rule update:--resource_group_name --properties_to_add --properties_to_remove --load_balancer_name --floating_ip --idle_timeout --item_name --frontend_ip_name --properties_to_set --protocol --frontend_port --backend_port 
+vm availability-set list:--resource_group_name 
+acs browse:--disable_browser --ssh_key_file --name --resource_group 
+sql server service-objective list:--resource_group_name --server_name 
+keyvault certificate issuer create:--vault_base_url --organization_id --account_id --disabled --issuer_name --provider_name --password 
+network application-gateway auth-cert show:--item_name --resource_group_name --resource_name 
+sql elastic-pools list:--resource_group_name --server_name 
+storage container metadata update:--lease_id --if_modified_since --sas_token --account_key --timeout --container_name --connection_string --account_name --metadata 
+context switch:--context_name 
+storage message put:--queue_name --sas_token --account_key --content --time_to_live --timeout --connection_string --account_name --visibility_timeout 
+policy definition list:--filter 
+keyvault certificate issuer admin add:--vault_base_url --first_name --last_name --phone --issuer_name --email 
+storage table exists:--sas_token --account_key --table_name --timeout --connection_string --account_name 
+sql db show-usage:--resource_group_name --database_name --server_name 
+network local-gateway show:--resource_group_name --local_network_gateway_name 
+storage blob copy start:--destination_if_none_match --source_if_none_match --destination_lease_id --source_if_unmodified_since --sas_token --destination_if_unmodified_since --account_key --copy_source --source_if_modified_since --source_if_match --timeout --container_name --destination_if_match --connection_string --destination_if_modified_since --source_lease_id --blob_name --account_name --metadata 
+group exists:--resource_group_name 
+keyvault key delete:--vault_base_url --key_name 
+network nsg update:--properties_to_remove --resource_group_name --network_security_group_name --properties_to_add --properties_to_set 
+ad sp reset-credentials:--password --name --years 
+resource move:--destination_subscription_id --ids --destination_group 
+iot hub job show:--hub_name --job_id --resource_group_name 
+ad group show:--object_id 
+sql server list:--resource_group_name 
+group show:--resource_group_name 
+storage queue generate-sas:--protocol --permission --ip --queue_name --sas_token --account_key --expiry --start --id --connection_string --account_name 
+iot device message abandon:--hub_name --resource_group_name --lock_token --device_id 
+appservice web config hostname delete:--slot --resource_group_name --name --webapp 
+network dns record-set list:--resource_group_name --record_type --zone_name 
+network dns record-set delete:--resource_group_name --if_none_match --relative_record_set_name --record_type --zone_name --if_match 
+network dns record aaaa remove:--resource_group_name --ipv6_address --record_set_name --zone_name 
+network application-gateway frontend-port show:--item_name --resource_group_name --resource_name 
+appservice plan show:--resource_group_name --name 
+sql db replication-link list:--resource_group_name --database_name --server_name 
+network application-gateway http-settings list:--resource_group_name --resource_name 
+network nic ip-config create:--resource_group_name --network_interface_name --public_ip_address --subnet --virtual_network_name --private_ip_address_allocation --load_balancer_name --load_balancer_backend_address_pool_ids --ip_config_name --private_ip_address --make_primary --load_balancer_inbound_nat_rule_ids --private_ip_address_version 
+network dns record cname remove:--resource_group_name --cname --record_set_name --zone_name 
+ad app update:--identifier_uris --identifier --display_name --end_date --reply_urls --key_value --key_type --key_usage --password --homepage --start_date 
+vm update:--vm_name --resource_group_name --properties_to_add --properties_to_set --raw --properties_to_remove 
+network application-gateway frontend-port update:--resource_group_name --properties_to_add --properties_to_remove --application_gateway_name --raw --properties_to_set --item_name --port 
+sql elastic-pools recommended db list:--resource_group_name --recommended_elastic_pool_name --server_name 
+tag add-value:--tag_name --tag_value 
+network nic ip-config inbound-nat-rule add:--ip_config_name --resource_group_name --network_interface_name --load_balancer_name --inbound_nat_rule 
+vm extension set:--vm_name --resource_group_name --publisher --settings --vm_extension_name --no_auto_upgrade --version --protected_settings 
+network lb inbound-nat-rule delete:--item_name --resource_group_name --resource_name --no_wait 
+storage file download:--end_range --progress_callback --share_name --file_name --sas_token --account_key --file_path --validate_content --timeout --start_range --connection_string --open_mode --directory_name --account_name --max_connections 
+storage table policy create:--permission --sas_token --account_key --policy_name --start --container_name --connection_string --expiry --account_name 
+iot hub consumer-group delete:--event_hub_name --hub_name --resource_group_name --consumer_group_name 
+storage share list:--num_results --include_metadata --sas_token --account_key --prefix --timeout --marker --connection_string --account_name 
+storage table policy update:--permission --sas_token --account_key --policy_name --start --container_name --connection_string --expiry --account_name 
+policy assignment show:--resource_group_name --name --scope 
+appservice list-locations:--sku --linux_workers_enabled 
+network application-gateway wait:--resource_group_name --updated --exists --created --deleted --interval --application_gateway_name --custom --timeout 
+vm resize:--vm_name --resource_group_name --size 
+context list:
+network lb inbound-nat-pool list:--resource_group_name --resource_name 
+appservice web log config:--slot --resource_group_name --name --application_logging --web_server_logging --level --failed_request_tracing --detailed_error_messages 
+ad sp list:--display_name --query_filter --spn 
+network vnet-gateway reset:--resource_group_name --virtual_network_gateway_name --gateway_vip 
+vmss extension show:--resource_group_name --vmss_name --extension_name 
+group deployment operation show:--resource_group_name --deployment_name --operation_ids 
+iot hub show-stats:--hub_name --resource_group_name 
+storage blob lease change:--lease_id --if_none_match --if_modified_since --if_unmodified_since --sas_token --proposed_lease_id --account_key --timeout --container_name --connection_string --if_match --blob_name --account_name 
+network nsg delete:--network_security_group_name --resource_group_name 
+vm boot-diagnostics enable:--vm_name --resource_group_name --storage 
+network lb address-pool create:--item_name --resource_group_name --load_balancer_name 
+keyvault key set-attributes:--vault_base_url --key_ops --tags --key_name --key_attributes --key_version 
+storage blob download-batch:--source_container_name --dryrun --pattern --destination --sas_token --account_key --source --connection_string --account_name 
+storage blob lease renew:--lease_id --if_none_match --if_modified_since --if_unmodified_since --sas_token --account_key --timeout --container_name --connection_string --if_match --blob_name --account_name 
+storage blob download:--start_range --end_range --lease_id --validate_content --progress_callback --if_none_match --if_modified_since --if_unmodified_since --sas_token --account_key --file_path --snapshot --timeout --container_name --if_match --connection_string --open_mode --blob_name --account_name --max_connections 
+network application-gateway ssl-cert create:--resource_group_name --item_name --no_wait --application_gateway_name --cert_password --cert_data 
+keyvault certificate contact delete:--vault_base_url --contact_email 
+storage blob lease release:--lease_id --if_none_match --if_modified_since --if_unmodified_since --sas_token --account_key --timeout --container_name --connection_string --if_match --blob_name --account_name 
+network lb rule list:--resource_group_name --resource_name 
+group deployment create:--resource_group_name --deployment_name --parameters --no_wait --template_uri --mode --template_file 
+network local-gateway delete:--resource_group_name --local_network_gateway_name 
+ad user delete:--upn_or_object_id 
+storage queue create:--fail_on_exist --queue_name --sas_token --account_key --timeout --connection_string --account_name --metadata 
+sql server firewall delete:--resource_group_name --server_name --firewall_rule_name 
+iot hub delete:--hub_name --resource_group_name 
+network application-gateway url-path-map rule delete:--item_name --resource_group_name --application_gateway_name --url_path_map_name 
+vm capture:--vm_name --resource_group_name --storage_container --vhd_name_prefix --overwrite 
+network nic ip-config inbound-nat-rule remove:--ip_config_name --resource_group_name --network_interface_name --load_balancer_name --inbound_nat_rule 
+vm nic remove:--vm_name --resource_group_name --primary_nic --nics 
+sql elastic-pools show:--resource_group_name --elastic_pool_name --server_name 
+sql db data-warehouse pause:--resource_group_name --database_name --server_name 
+component update:--pre --additional_components --link --private 
+storage blob list:--num_results --sas_token --delimiter --account_key --prefix --timeout --container_name --marker --connection_string --include --account_name 
+appservice web source-control sync:--slot --resource_group_name --name 
+network application-gateway frontend-ip create:--resource_group_name --public_ip_address --subnet --item_name --private_ip_address_allocation --no_wait --application_gateway_name --virtual_network_name --private_ip_address 
+vmss extension image list:--image_location --version --publisher_name --name --latest 
+vm deallocate:--vm_name --resource_group_name 
+appservice web log download:--slot --resource_group_name --log_file --name 
+batch application package show:--resource_group_name --version --application_id --account_name 
+iot hub create:--sku --hub_name --location --unit --resource_group_name 
+storage share show:--share_name --sas_token --account_key --timeout --connection_string --account_name 
+acr delete:--resource_group_name --registry_name 
+network application-gateway probe show:--item_name --resource_group_name --resource_name 
+network dns record srv add:--resource_group_name --target --weight --priority --zone_name --port --record_set_name 
+keyvault certificate set-attributes:--vault_base_url --certificate_policy --tags --certificate_name --certificate_attributes --certificate_version 
+vmss list-instances:--filter --resource_group_name --virtual_machine_scale_set_name --expand --select 
+redis list-all:
+cloud list:
+storage share generate-sas:--protocol --cache_control --permission --ip --share_name --sas_token --account_key --expiry --start --content_language --content_encoding --content_type --id --connection_string --content_disposition --account_name 
+vm list-usage:--location 
+storage queue policy list:--connection_string --sas_token --account_name --account_key --container_name 
+storage blob exists:--sas_token --account_key --snapshot --timeout --container_name --connection_string --blob_name --account_name 
+storage file upload:--max_connections --progress_callback --share_name --file_name --sas_token --account_key --validate_content --timeout --local_file_path --content_settings --connection_string --directory_name --account_name --metadata 
+network public-ip update:--public_ip_address_name --resource_group_name --properties_to_add --tags --properties_to_remove --dns_name --reverse_fqdn --idle_timeout --version --properties_to_set --allocation_method 
+sql db replication-link delete:--resource_group_name --database_name --server_name --link_id 
+network express-route list-arp-tables:--resource_group_name --peering_name --device_path --circuit_name 
+keyvault certificate list-versions:--vault_base_url --certificate_name --maxresults 
+keyvault update:--properties_to_remove --resource_group_name --properties_to_add --properties_to_set --vault_name 
+vmss show:--vm_scale_set_name --resource_group_name --instance_id 
+network application-gateway rule list:--resource_group_name --resource_name 
+appservice web start:--slot --resource_group_name --name 
+network application-gateway url-path-map create:--resource_group_name --paths --item_name --no_wait --http_settings --application_gateway_name --rule_name --address_pool --default_address_pool --default_http_settings 
+network traffic-manager profile delete:--resource_group_name --profile_name 
+vm access reset-linux-ssh:--vm_name --resource_group_name 
+vm disk attach-new:--vm_name --resource_group_name --disk_size --lun --caching --vhd --disk_name 
+storage container list:--num_results --include_metadata --sas_token --account_key --prefix --timeout --marker --connection_string --account_name 
+storage share policy create:--permission --sas_token --account_key --policy_name --start --container_name --connection_string --expiry --account_name 
+network application-gateway start:--resource_group_name --application_gateway_name 
+network traffic-manager endpoint create:--resource_group_name --endpoint_location --target_resource_id --target --endpoint_name --min_child_endpoints --weight --priority --profile_name --endpoint_monitor_status --endpoint_type --endpoint_status 
+sql db replication-link force-failover:--resource_group_name --database_name --server_name --link_id 
+network application-gateway rule create:--rule_type --resource_group_name --item_name --no_wait --http_settings --http_listener --application_gateway_name --url_path_map --address_pool 
+network express-route delete:--resource_group_name --circuit_name 
+network nic ip-config list:--resource_group_name --resource_name 
+feature register:--resource_provider_namespace --feature_name 
+network vnet-gateway wait:--resource_group_name --updated --exists --created --deleted --interval --virtual_network_gateway_name --custom --timeout 
+vm nic set:--vm_name --resource_group_name --primary_nic --nics 
+vmss list-skus:--vm_scale_set_name --resource_group_name 
+role definition delete:--resource_group_name --custom_role_only --name --scope 
+iot device delete:--hub_name --resource_group_name --etag --device_id 
+storage queue stats:--connection_string --timeout --sas_token --account_name --account_key 
+vmss scale:--vm_scale_set_name --resource_group_name --new_capacity 
+network lb probe create:--resource_group_name --interval --protocol --item_name --load_balancer_name --threshold --path --port 
+network express-route create:--resource_group_name --deployment_name --bandwidth_in_mbps --sku_family --tags --peering_location --location --sku_tier --circuit_name --service_provider_name 
+appservice plan delete:--resource_group_name --force --name 
+appservice web list:--resource_group_name 
+storage blob url:--protocol --sas_token --account_key --container_name --connection_string --blob_name --account_name 
+vm boot-diagnostics get-boot-log:--vm_name --resource_group_name 
+network application-gateway url-path-map rule create:--resource_group_name --paths --item_name --no_wait --application_gateway_name --http_settings --address_pool --url_path_map_name 
+network dns record a add:--ipv4_address --resource_group_name --record_set_name --zone_name 
+vmss update-instances:--vm_scale_set_name --resource_group_name --instance_ids 
+keyvault certificate issuer delete:--vault_base_url --issuer_name 
+sql server delete:--resource_group_name --server_name 
+network traffic-manager profile update:--routing_method --resource_group_name --properties_to_add --monitor_protocol --tags --properties_to_remove --monitor_port --monitor_path --profile_name --properties_to_set --ttl --profile_status 
+vm restart:--vm_name --resource_group_name 
+network application-gateway http-listener create:--resource_group_name --ssl_cert --item_name --no_wait --application_gateway_name --frontend_ip --frontend_port 
+network lb create:--subnet_address_prefix --resource_group_name --backend_pool_name --public_ip_address --deployment_name --subnet --virtual_network_name --private_ip_address_allocation --load_balancer_name --subnet_type --frontend_ip_name --location --vnet_address_prefix --public_ip_dns_name --private_ip_address --dns_name_type --public_ip_address_type --tags --public_ip_address_allocation 
+network vnet create:--resource_group_name --dns_servers --deployment_name --tags --virtual_network_name --subnet_prefix --virtual_network_prefix --create_subnet --subnet_name --location 
+storage account show-connection-string:--resource_group_name --protocol --queue_endpoint --key_name --table_endpoint --file_endpoint --blob_endpoint --account_name 
+network lb rule update:--resource_group_name --frontend_port --properties_to_add --frontend_ip_name --properties_to_remove --load_balancer_name --floating_ip --backend_address_pool_name --item_name --idle_timeout --properties_to_set --protocol --probe_name --load_distribution --backend_port 
+keyvault secret download:--vault_base_url --encoding --secret_version --secret_name --file_path 
+network dns record update-soa:--resource_group_name --refresh_time --minimum_ttl --expire_time --zone_name --retry_time --serial_number --email 
+network nsg rule list:--network_security_group_name --resource_group_name 
+network route-table list:--resource_group_name 
+appservice web deployment user set:--password --user_name 
+resource update:--resource_group_name --resource_name --properties_to_add --properties_to_remove --resource_provider_namespace --api_version --properties_to_set --parent_resource_path --resource_type 
+sql elastic-pools recommended db show:--resource_group_name --database_name --recommended_elastic_pool_name --server_name 
+group deployment export:--resource_group_name --deployment_name 
+appservice web deployment slot auto-swap:--slot --resource_group_name --disable --auto_swap_slot --webapp 
+group delete:--resource_group_name --force --raw 
+keyvault secret set-attributes:--vault_base_url --tags --secret_attributes --content_type --secret_name --secret_version 
+acs list:--resource_group_name 
+network lb probe delete:--item_name --resource_group_name --resource_name --no_wait 
+ad user create:--mail_nickname --user_principal_name --display_name --immutable_id --force_change_password_next_login --password 
+storage blob metadata show:--lease_id --if_none_match --if_modified_since --if_unmodified_since --sas_token --account_key --snapshot --timeout --container_name --connection_string --if_match --blob_name --account_name 
+network application-gateway waf-config show:--resource_group_name --application_gateway_name 
+vmss diagnostics get-default-config:--is_windows_os 
+configure:
+network application-gateway ssl-cert list:--resource_group_name --resource_name 
+vm get-instance-view:--vm_name --resource_group_name 
+network express-route get-stats:--resource_group_name --circuit_name 
+redis patch-schedule set:--resource_group_name --schedule_entries --name 

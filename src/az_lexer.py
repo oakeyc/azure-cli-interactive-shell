@@ -1,7 +1,8 @@
 from pygments.lexer import RegexLexer
 from pygments.lexer import words
-from pygments.token import Name, Literal, Keyword, Operator, Text
+from pygments.token import Name, Literal, Keyword, Operator, Text, Number
 from commands_inventory import CompletionIndex
+
 
 """
 Az_Lexer is a lexer for Microsoft Azure
@@ -17,7 +18,7 @@ class Az_Lexer(RegexLexer):
                 tuple(completion_index.commands),
                 prefix=r'\b',
                 suffix=r'\b'),
-             Literal.String),
+             Keyword),
             # describe-instances
             (words(
                 tuple(completion_index.subcommands),
@@ -27,7 +28,7 @@ class Az_Lexer(RegexLexer):
             # --instance-ids
             (words(
                 tuple(list(completion_index.args_opts)),
-                prefix=r'',
+                prefix=r'\b',
                 suffix=r'\b'),
              Keyword.Declaration),
             # Everything else
