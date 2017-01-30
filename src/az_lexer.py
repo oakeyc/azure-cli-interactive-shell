@@ -1,19 +1,22 @@
-from pygments.lexer import RegexLexer
-from pygments.lexer import words
+from pygments.lexer import RegexLexer, words
 from pygments.token import Name, Literal, Keyword, Operator, Text, Number
 from commands_inventory import CompletionIndex
+from prompt_toolkit.layout.lexers import PygmentsLexer
 
 
-"""
-Az_Lexer is a lexer for Microsoft Azure
-"""
-class Az_Lexer(RegexLexer):
+class AzLexer(RegexLexer):
+    """
+    A custom lexer for Azure CLI
+    """
+
+    def __init__(self):
+        RegexLexer.__init__(self)
+
     # should be the commandlist dump
     completion_index = CompletionIndex()
     completion_index.load_completions()
     tokens = {
         'root': [
-            # 
             (words(
                 tuple(completion_index.commands),
                 prefix=r'\b',

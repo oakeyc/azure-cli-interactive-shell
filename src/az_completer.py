@@ -1,6 +1,6 @@
 import sys
 from prompt_toolkit.contrib.completers import WordCompleter
-from prompt_toolkit.completion import Completer
+from prompt_toolkit.completion import Completer, Completion
 
 # import the command table
 
