@@ -7,8 +7,8 @@ from prompt_toolkit.completion import Completer
 class Az_Completer(Completer):
     def __init__(self):
         words = []
-        d = {}
-        param_dict = {}
+        self.descrip = {}
+        self.param_dict = {}
         command = open("dump.txt", 'r')
         meta = open("meta_dump.txt", 'r')
         param = open("params_dump.txt", 'r')
@@ -18,8 +18,8 @@ class Az_Completer(Completer):
         words.append("quit")
         words.append("exit")
 
-        d["quit"] = "Exits the program"
-        d["exit"] = "Exits the program"
+        self.descrip["quit"] = "Exits the program"
+        self.descrip["exit"] = "Exits the program"
         for line in meta:
             com = ""
             description = ""
@@ -31,17 +31,24 @@ class Az_Completer(Completer):
                     description += char
                 else:
                     com += char
-            d[com] = description.strip("\n")
+            self.descrip[com] = description.strip("\n")
 
         for line in param:
-            param_dict[str(line.partition(":")[0])] = str(line.partition(":")[2]).split()
+            # list_of_args = str(line.partition(":")[2]).split()
+            self.param_dict[str(line.partition(":")[0])] = str(line.partition(":")[2]).strip("\n")
 
         command.close()
         meta.close()
         param.close()
 
-        self.completer = WordCompleter(words, False, d, False, True, False)
+        self.completer = WordCompleter(words, False, self.param_dict, False, True, False)
 
     def get_completions(self, document, complete_event):
         return self.completer.get_completions(document, complete_event)
+
+    def get_param(self, command):
+        return self.param_dict[command]
+
+    def get_description(self, command):
+        return self.descrip[command]
         
