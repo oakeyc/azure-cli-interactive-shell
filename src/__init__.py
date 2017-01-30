@@ -8,6 +8,7 @@ from az_completer import Az_Completer
 def main(db):
     completer = Az_Completer()
     shell_app = create_shell(completer)
+    # shell_app.run()
     shell_app.run(db)
 
 if __name__ == '__main__':
