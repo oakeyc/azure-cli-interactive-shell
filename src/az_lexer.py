@@ -27,7 +27,7 @@ class Az_Lexer(RegexLexer):
              Name.Class),
             # --instance-ids
             (words(
-                tuple(list(completion_index.args_opts)),
+                tuple(completion_index.args_opts),
                 prefix=r'\b',
                 suffix=r'\b'),
              Keyword.Declaration),

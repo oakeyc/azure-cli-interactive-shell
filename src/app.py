@@ -9,7 +9,7 @@ from prompt_toolkit.contrib.completers import WordCompleter
 from prompt_toolkit.styles import style_from_dict
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 from pygments.style import Style
-from pygments.token import Token, Name, Keyword
+from pygments.token import Token, Name, Keyword, Text
 from pygments.lexers.c_like import ArduinoLexer
 from pygments.styles.default import DefaultStyle
 from az_completer import Az_Completer
@@ -23,13 +23,13 @@ styles = style_from_dict({
     Token.Menu.Completions.ProgressButton: 'bg:#b78991',
     Token.Menu.Completions.ProgressBar: 'bg:#ffc0cb',
     # Prompt
-    Token.Az: '#7e70ff',
+    Token.Az: '#7c2c80',
     # Toolbar
     Token.Toolbar: 'bg:#000000 #00b700',
     # Pretty Words
     Token.Keyword: '#ff0000 bold',
     Token.Name.Class:'#e050e5',
-    Token.Keyword.Declaration: '#f5a3f5',
+    Token.Text: '#ec96ef',
 })
 
 def get_prompt_tokens(cli):
@@ -42,7 +42,8 @@ def get_bottom_toolbar_tokens(cli):
 def get_rprompt_tokens(cli):
     param = open("params_dump.txt", 'r')
     param_dict = {}
-    for line in param:
+    for line_pre in param:
+        line = line_pre.strip("\n")
         param_dict[str(line.partition(":")[0])] = str(line.partition(":")[2]).split()
 
 def main(database):
@@ -55,8 +56,8 @@ def main(database):
             text = prompt(get_prompt_tokens=get_prompt_tokens, lexer=az_lexer,
                           completer=az_completer, style=styles, history=history,
                           on_abort=AbortAction.RETRY, auto_suggest=AutoSuggestFromHistory(),
-                          get_bottom_toolbar_tokens=get_bottom_toolbar_tokens,
-                          get_rprompt_tokens=get_rprompt_tokens)
+                          get_bottom_toolbar_tokens=get_bottom_toolbar_tokens)
+                        #   get_rprompt_tokens=get_rprompt_tokens)
         except EOFError:
             break  # Control-D pressed.
         if text == "quit" or text == "exit":
