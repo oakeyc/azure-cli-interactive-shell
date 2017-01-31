@@ -58,18 +58,19 @@ class Shell(object):
             Token.Menu.Completions.Completion: 'bg:#00b7b7 #ffffff',
             Token.Menu.Completions.ProgressButton: 'bg:#b78991',
             Token.Menu.Completions.ProgressBar: 'bg:#ffc0cb',
-            # Prompt
-            Token.Az: '#7e70ff',
+            Token.Az: '#7c2c80',
+            # Toolbar
+            Token.Toolbar: 'bg:#000000 #00b700',
+            # Pretty Words
+            Token.Keyword: '#ff0000 bold',
+            Token.Keyword.Declaration: '#f5a3f5',
+            Token.Name.Class:'#e050e5',
+            Token.Text: '#ec96ef',
             # Temperary
             Token.Hello: '#008080',
             # Toolbar
             Token.Toolbar: 'bg:#000000 #00b700',
             Token.RPrompt: 'bg:#ffffff #800080',
-            # Pretty Words
-            Token.Keyword: '#ff0000 bold',
-            Token.Name.Class: '#e050e5',
-            Token.Keyword.Declaration: '#f5a3f5',
-            Token.Text: '#008080',
         })
         self.completer = completer
         self.history = InMemoryHistory()
