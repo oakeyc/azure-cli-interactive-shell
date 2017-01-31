@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 import sys
 import subprocess
+import os
 
 from prompt_toolkit import prompt, AbortAction
 from prompt_toolkit.buffer import Buffer
@@ -28,13 +29,21 @@ from prompt_toolkit.layout.dimension import LayoutDimension as D
 from prompt_toolkit.layout.lexers import PygmentsLexer
 
 
-manager = KeyBindingManager()
+manager = KeyBindingManager(
+    enable_system_bindings=True,
+    enable_auto_suggest_bindings=True,
+)
 registry = manager.registry
+
 
 @registry.add_binding(Keys.ControlQ, eager=True)
 def exit_(event):
     event.cli.set_return_value(None)
 
+@registry.add_binding(Keys.Enter, eager=True)
+def enter_(event):
+    event.cli.set_return_value(event.cli.current_buffer)
+    # event.cli.set_return_value(event.cli.current_doc)
 
 def create_shell(completer):
     return Shell(completer)
@@ -69,6 +78,7 @@ class Shell(object):
         self.lexer = AzLexer
         self.layout = None
         self.current_docs = u''
+        self._env = os.environ.copy()
 
     @property
     def cli(self):
@@ -87,7 +97,7 @@ class Shell(object):
     def on_input_timeout(self, cli):
         document = cli.current_buffer.document
         text = document.text
-        # self.current_docs = "Descriptions and such"
+        # self.current_docs = u'Descriptions and such'
         # if text.strip():
         #     command = "account show"
         #     last_option = False
@@ -100,7 +110,7 @@ class Shell(object):
         #     else:
         #         # self.current_docs = self._docs.extract_description(key_name)
         #         # # get the metadata
-        #         self.current_docs = '.'.join(self.completer.get_description(command).split()).encode('utf-8')
+        #         self.current_docs = self.completer.get_description(command).encode('utf-8')
         # else:
         #     self.current_docs = u''
         # cli.buffers['description'].reset( # not in six.text_type
@@ -122,7 +132,7 @@ class Shell(object):
             key_bindings_registry=registry,
             layout=layout.create_layout(self.lexer),
             buffers=buffers,
-            )
+        )
 
     def create_buffer(self, completer, history):
         return Buffer(
@@ -141,18 +151,25 @@ class Shell(object):
     def run(self, database):
         while True:
             try:
+                # hangs here on run
                 document = self.cli.run(reset_current_buffer=True)
                 text = document.text
             except EOFError:
                 break  # Control-D pressed.
             except KeyboardInterrupt:
                 break
-            cmd = "az " + text
-            self.history.append(cmd)
-            self.cli.buffers["description"].reset(
-                initial_document=Document(self.current_docs,
-                                          cursor_position=0))
-            self.cli.request_redraw()
-            p = subprocess.Popen(cmd, shell=True)
-            p.communicate()
+            except AttributeError:
+                break
+            else:
+                if text == "quit" or text == "exit":
+                    break
+                cmd = "az " + text
+                self.history.append(text)
+                self.current_docs = u''
+                self.cli.buffers["description"].reset(
+                    initial_document=Document(self.current_docs,
+                                              cursor_position=0))
+                self.cli.request_redraw()
+                proc = subprocess.Popen(cmd, shell=True, env=self._env)
+                proc.communicate()
         print('Have a lovely day!!')
