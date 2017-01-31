@@ -9,16 +9,19 @@ from prompt_toolkit.layout.menus import CompletionsMenu, MultiColumnCompletionsM
 from prompt_toolkit.layout.processors import PasswordProcessor, \
     HighlightSearchProcessor, HighlightSelectionProcessor, \
     ConditionalProcessor, AppendAutoSuggestion
+from prompt_toolkit.layout.prompt import DefaultPrompt
 
+from pygments.lexers.sql import SqlLexer
 from pygments.token import Token
 # from az_lexer import AzLexer
 
 
-def get_options_tokens(self):
-    return[(
-        Token.Hello, "Hello",
-        Token.World, "World"
-    )]
+def get_prompt_tokens(cli):
+    return [(Token.Az, 'az>> ')]
+
+def get_options_tokens(cli):
+    return[(Token.Hello, "Hello"),
+        (Token.World, "World")]
 input_processors = [
     ConditionalProcessor(
             # By default, only highlight search when the search
@@ -32,21 +35,28 @@ input_processors = [
         ConditionalProcessor(
         AppendAutoSuggestion(), HasFocus(DEFAULT_BUFFER)),
 ]
+# input_processors.append(DefaultPrompt(get_prompt_tokens()))
 
 def get_height(cli):
-    return D(min=8)
+    if not cli.is_done:
+        return D(min=8)
 
 def create_layout(lexer):
-    try:
-        if isinstance(lexer, Lexer):
-            lexer = PygmentsLexer(lexer)
-    except TypeError:
-        pass  # no lexer
+    lexer = PygmentsLexer(SqlLexer)
+
+    # try:
+    #     if isinstance(lexer, Lexer):
+    #         lexer = PygmentsLexer(lexer)
+    # except TypeError:
+    #     pass  # no lexer
     layout = HSplit([
         # One window that holds the BufferControl with the default buffer on the
         # left.
         Window(content=BufferControl(buffer_name=DEFAULT_BUFFER)),
-
+        Window(
+            TokenListControl(get_prompt_tokens),
+            dont_extend_height=True
+        ),
         # Window(
         #     BufferControl(
         #         # lexer=PygmentsLexer(lexer)

@@ -20,8 +20,7 @@ from pygments.lexer import Lexer, RegexLexer
 from pygments.token import Token, Name, Keyword
 from az_completer import Az_Completer
 from az_lexer import AzLexer
-from layout import create_layout
-
+import layout
 from prompt_toolkit.enums import DEFAULT_BUFFER
 from prompt_toolkit.layout.containers import VSplit, HSplit, Window, FloatContainer, Float
 from prompt_toolkit.layout.controls import BufferControl, FillControl, TokenListControl
@@ -76,9 +75,6 @@ class Shell(object):
             self.refresh_cli = False
         return self._cli
 
-    def get_prompt_tokens(self, cli):
-        return [(Token.Az, 'az>> ')]
-
     def get_bottom_toolbar_tokens(self, cli):
         return [(Token.Toolbar, "HELP IS ON THE WAY")]
 
@@ -111,14 +107,16 @@ class Shell(object):
             DEFAULT_BUFFER: Buffer(is_multiline=True),
             'description': Buffer(read_only=True)
         }
+
+        assert isinstance(self.lexer, Lexer)
         return Application(
             mouse_support=False,
             style=self.styles,
             buffer=self.create_buffer(self.completer, self.history),
             on_input_timeout=self.on_input_timeout,
             key_bindings_registry=registry,
-            layout=create_layout(self.lexer),
-            buffers=buffers
+            layout=layout.create_layout(self.lexer),
+            buffers=buffers,
             )
 
     def create_buffer(self, completer, history):
@@ -141,19 +139,16 @@ class Shell(object):
         # margin = PromptMargin(get_margin_tokens)
         while True:
             try:
-                # document = self.cli.run(reset_current_buffer=True)
-                # text = document.text
-
-                text = prompt(get_prompt_tokens=self.get_prompt_tokens,
-                              #  lexer=az_lexer,
-                              #   get_bottom_toolbar_tokens=self.get_bottom_toolbar_tokens,
-                              #   on_input_timeout=self.on_input_timeout, # application time?
-                              #   get_rprompt_tokens=self.get_rprompt_tokens
-                              )
+                document = self.cli.run(reset_current_buffer=True)
+                text = document.text
+                cmd = "az " + text
+                self.history.append(cmd)
+                # self.cli.buffers["description"].reset
+                self.cli.request_redraw()
             except EOFError:
                 break  # Control-D pressed.
             if text == "quit" or text == "exit":
                 break
-            p = subprocess.Popen("az " + text, shell=True)
+            p = subprocess.Popen(cmd, shell=True)
             p.communicate()
         print('Have a lovely day!!')
