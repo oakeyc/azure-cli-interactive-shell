@@ -31,7 +31,6 @@ from prompt_toolkit.layout.lexers import PygmentsLexer
 manager = KeyBindingManager()
 registry = manager.registry
 
-
 @registry.add_binding(Keys.ControlQ, eager=True)
 def exit_(event):
     event.cli.set_return_value(None)
@@ -52,6 +51,8 @@ class Shell(object):
             Token.Menu.Completions.ProgressBar: 'bg:#ffc0cb',
             # Prompt
             Token.Az: '#7e70ff',
+            # Temperary
+            Token.Hello: '#008080',
             # Toolbar
             Token.Toolbar: 'bg:#000000 #00b700',
             Token.RPrompt: 'bg:#ffffff #800080',
@@ -65,8 +66,9 @@ class Shell(object):
         self.history = InMemoryHistory()
         self._cli = None
         self.refresh_cli = False
-        self.lexer = AzLexer()
+        self.lexer = AzLexer
         self.layout = None
+        self.current_docs = u''
 
     @property
     def cli(self):
@@ -85,21 +87,24 @@ class Shell(object):
     def on_input_timeout(self, cli):
         document = cli.current_buffer.document
         text = document.text
-        if text.strip():
-            command = self.completer.current_command
-            last_option = self.completer.last_option
-            if last_option:
-                # self.current_docs = self._docs.extract_param( # get the parameters
-                #     key_name, last_option)
-                self.current_docs = self.completer.get_param(command)
-            else:
-                # self.current_docs = self._docs.extract_description(key_name)
-                # # get the metadata
-                self.current_docs = self.completer.get_description(command)
-        else:
-            self.current_docs = u''
-        cli.buffers['description'].reset(
-            initial_document=Document(self.current_docs, cursor_position=0))
+        # self.current_docs = "Descriptions and such"
+        # if text.strip():
+        #     command = "account show"
+        #     last_option = False
+        #     # command = self.completer.current_command
+        #     # last_option = self.completer.last_option
+        #     if last_option:
+        #         # self.current_docs = self._docs.extract_param( # get the parameters
+        #         #     key_name, last_option)
+        #         self.current_docs = self.completer.get_param(command)
+        #     else:
+        #         # self.current_docs = self._docs.extract_description(key_name)
+        #         # # get the metadata
+        #         self.current_docs = '.'.join(self.completer.get_description(command).split()).encode('utf-8')
+        # else:
+        #     self.current_docs = u''
+        # cli.buffers['description'].reset( # not in six.text_type
+        #     initial_document=Document(self.current_docs, cursor_position=0))
         cli.request_redraw()
 
     def create_application(self):
@@ -108,7 +113,7 @@ class Shell(object):
             'description': Buffer(read_only=True)
         }
 
-        assert isinstance(self.lexer, Lexer)
+        # assert isinstance(self.lexer, Lexer)
         return Application(
             mouse_support=False,
             style=self.styles,
@@ -134,21 +139,20 @@ class Shell(object):
         return CommandLineInterface(application=app, eventloop=run_loop)
 
     def run(self, database):
-        # connection = azure.connect(database) TODO fix this
-        az_lexer = AzLexer
-        # margin = PromptMargin(get_margin_tokens)
         while True:
             try:
                 document = self.cli.run(reset_current_buffer=True)
                 text = document.text
-                cmd = "az " + text
-                self.history.append(cmd)
-                # self.cli.buffers["description"].reset
-                self.cli.request_redraw()
             except EOFError:
                 break  # Control-D pressed.
-            if text == "quit" or text == "exit":
+            except KeyboardInterrupt:
                 break
+            cmd = "az " + text
+            self.history.append(cmd)
+            self.cli.buffers["description"].reset(
+                initial_document=Document(self.current_docs,
+                                          cursor_position=0))
+            self.cli.request_redraw()
             p = subprocess.Popen(cmd, shell=True)
             p.communicate()
         print('Have a lovely day!!')

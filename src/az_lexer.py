@@ -8,10 +8,7 @@ class AzLexer(RegexLexer):
     """
     A custom lexer for Azure CLI
     """
-
-    def __init__(self):
-        RegexLexer.__init__(self)
-
+    
     # should be the commandlist dump
     completion_index = CompletionIndex()
     completion_index.load_completions()

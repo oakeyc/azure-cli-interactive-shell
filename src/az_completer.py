@@ -9,6 +9,9 @@ class Az_Completer(Completer):
         words = []
         self.descrip = {}
         self.param_dict = {}
+        self.current_comamand = ""
+        self.last_option = ""
+
         command = open("dump.txt", 'r')
         meta = open("meta_dump.txt", 'r')
         param = open("params_dump.txt", 'r')

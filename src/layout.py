@@ -20,8 +20,8 @@ def get_prompt_tokens(cli):
     return [(Token.Az, 'az>> ')]
 
 def get_options_tokens(cli):
-    return[(Token.Hello, "Hello"),
-        (Token.World, "World")]
+    return[(Token.Hello, "Put Descriptions "),
+        (Token.World, "Here")]
 input_processors = [
     ConditionalProcessor(
             # By default, only highlight search when the search
@@ -35,33 +35,16 @@ input_processors = [
         ConditionalProcessor(
         AppendAutoSuggestion(), HasFocus(DEFAULT_BUFFER)),
 ]
-# input_processors.append(DefaultPrompt(get_prompt_tokens()))
 
 def get_height(cli):
     if not cli.is_done:
         return D(min=8)
 
 def create_layout(lexer):
-    lexer = PygmentsLexer(SqlLexer)
+    lexer = PygmentsLexer(lexer)
+    input_processors.append(DefaultPrompt(get_prompt_tokens))
 
-    # try:
-    #     if isinstance(lexer, Lexer):
-    #         lexer = PygmentsLexer(lexer)
-    # except TypeError:
-    #     pass  # no lexer
     layout = HSplit([
-        # One window that holds the BufferControl with the default buffer on the
-        # left.
-        Window(content=BufferControl(buffer_name=DEFAULT_BUFFER)),
-        Window(
-            TokenListControl(get_prompt_tokens),
-            dont_extend_height=True
-        ),
-        # Window(
-        #     BufferControl(
-        #         # lexer=PygmentsLexer(lexer)
-        #     )
-        # ),
           FloatContainer(
                 Window(
                     BufferControl(
@@ -78,24 +61,19 @@ def create_layout(lexer):
                           content=CompletionsMenu(
                               max_height=16,
                               scroll_offset=1,
-                              extra_filter=(HasFocus(DEFAULT_BUFFER)))),
-                    # Float(xcursor=True,
-                    #       ycursor=True,
-                    #       content=MultiColumnCompletionsMenu(
-                    #           extra_filter=(HasFocus(DEFAULT_BUFFER)),
-                    #           show_meta=Always()))
+                              extra_filter=(HasFocus(DEFAULT_BUFFER))))
                 ]
             ),
 
-        Window(width=D.exact(1),
-                content=FillControl(' ', token=Token.Line)),
+        # Window(width=D.exact(1),
+        #         content=FillControl(' ', token=Token.Line)),
 
-        # A vertical line in the middle. We explicitely specify the width, to make
-        # sure that the layout engine will not try to divide the whole width by
-        # three for all these windows. The `FillControl` will simply fill the whole
-        # window by repeating this character.
-        Window(width=D.exact(1),
-                content=FillControl('-', token=Token.Line)),
+        # # A vertical line in the middle. We explicitely specify the width, to make
+        # # sure that the layout engine will not try to divide the whole width by
+        # # three for all these windows. The `FillControl` will simply fill the whole
+        # # window by repeating this character.
+        # Window(width=D.exact(1),
+        #         content=FillControl('-', token=Token.Line)),
 
         Window(width=D.exact(1),
                 content=TokenListControl(get_options_tokens, align_center=True)),
