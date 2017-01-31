@@ -2,74 +2,175 @@ from __future__ import unicode_literals
 
 import sys
 import subprocess
+import os
 
 from prompt_toolkit import prompt, AbortAction
+from prompt_toolkit.buffer import Buffer
+from prompt_toolkit.shortcuts import create_eventloop
 from prompt_toolkit.history import InMemoryHistory
 from prompt_toolkit.contrib.completers import WordCompleter
 from prompt_toolkit.styles import style_from_dict
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
+from prompt_toolkit.document import Document
+from prompt_toolkit.interface import CommandLineInterface, Application
+from prompt_toolkit.key_binding.manager import KeyBindingManager
+from prompt_toolkit.filters import Always
+from prompt_toolkit.keys import Keys
 from pygments.style import Style
-from pygments.token import Token, Name, Keyword, Text
-from pygments.lexers.c_like import ArduinoLexer
-from pygments.styles.default import DefaultStyle
+from pygments.lexer import Lexer, RegexLexer
+from pygments.token import Token, Name, Keyword
 from az_completer import Az_Completer
-from az_lexer import Az_Lexer
+from az_lexer import AzLexer
+import layout
+from prompt_toolkit.enums import DEFAULT_BUFFER
+from prompt_toolkit.layout.containers import VSplit, HSplit, Window, FloatContainer, Float
+from prompt_toolkit.layout.controls import BufferControl, FillControl, TokenListControl
+from prompt_toolkit.layout.dimension import LayoutDimension as D
+from prompt_toolkit.layout.lexers import PygmentsLexer
 
 
-styles = style_from_dict({
-    # Completion colors
-    Token.Menu.Completions.Completion.Current: 'bg:#ffc0cb #000000',
-    Token.Menu.Completions.Completion: 'bg:#00b7b7 #ffffff',
-    Token.Menu.Completions.ProgressButton: 'bg:#b78991',
-    Token.Menu.Completions.ProgressBar: 'bg:#ffc0cb',
-    # Prompt
-    Token.Az: '#7c2c80',
-    # Toolbar
-    Token.Toolbar: 'bg:#000000 #00b700',
-    # Pretty Words
-    Token.Keyword: '#ff0000 bold',
-    Token.Name.Class:'#e050e5',
-    Token.Text: '#ec96ef',
-})
-
-def get_prompt_tokens(cli):
-    return [(Token.Az, 'az>> ')]
-
-def get_bottom_toolbar_tokens(cli):
-    return [(Token.Toolbar, "HELP IS ON THE WAY")]
+manager = KeyBindingManager(
+    enable_system_bindings=True,
+    enable_auto_suggest_bindings=True,
+)
+registry = manager.registry
 
 
-def get_rprompt_tokens(cli):
-    param = open("params_dump.txt", 'r')
-    param_dict = {}
-    for line_pre in param:
-        line = line_pre.strip("\n")
-        param_dict[str(line.partition(":")[0])] = str(line.partition(":")[2]).split()
+@registry.add_binding(Keys.ControlQ, eager=True)
+def exit_(event):
+    event.cli.set_return_value(None)
 
-def main(database):
-    history = InMemoryHistory()
-    az_completer = Az_Completer()
-   # connection = azure.connect(database) TODO fix this
-    az_lexer = Az_Lexer
-    while True:
-        try:
-            text = prompt(get_prompt_tokens=get_prompt_tokens, lexer=az_lexer,
-                          completer=az_completer, style=styles, history=history,
-                          on_abort=AbortAction.RETRY, auto_suggest=AutoSuggestFromHistory(),
-                          get_bottom_toolbar_tokens=get_bottom_toolbar_tokens)
-                        #   get_rprompt_tokens=get_rprompt_tokens)
-        except EOFError:
-            break  # Control-D pressed.
-        if text == "quit" or text == "exit":
-            break
-        p = subprocess.Popen("az " + text, shell=True)
-        p.communicate()
-    print('Have a lovely day!!')
+@registry.add_binding(Keys.Enter, eager=True)
+def enter_(event):
+    event.cli.set_return_value(event.cli.current_buffer)
+    # event.cli.set_return_value(event.cli.current_doc)
 
-if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        db = ':memory:'
-    else:
-        db = sys.argv[1]
+def create_shell(completer):
+    return Shell(completer)
 
-    main(db)
+
+class Shell(object):
+
+    def __init__(self, completer):
+        self.styles = style_from_dict({
+            # Completion colors
+            Token.Menu.Completions.Completion.Current: 'bg:#ffc0cb #000000',
+            Token.Menu.Completions.Completion: 'bg:#00b7b7 #ffffff',
+            Token.Menu.Completions.ProgressButton: 'bg:#b78991',
+            Token.Menu.Completions.ProgressBar: 'bg:#ffc0cb',
+            Token.Az: '#7c2c80',
+            # Toolbar
+            Token.Toolbar: 'bg:#000000 #00b700',
+            # Pretty Words
+            Token.Keyword: '#ff0000 bold',
+            Token.Keyword.Declaration: '#f5a3f5',
+            Token.Name.Class:'#e050e5',
+            Token.Text: '#ec96ef',
+            # Temperary
+            Token.Hello: '#008080',
+            # Toolbar
+            Token.Toolbar: 'bg:#000000 #00b700',
+            Token.RPrompt: 'bg:#ffffff #800080',
+        })
+        self.completer = completer
+        self.history = InMemoryHistory()
+        self._cli = None
+        self.refresh_cli = False
+        self.lexer = AzLexer
+        self.layout = None
+        self.current_docs = u''
+        self._env = os.environ.copy()
+
+    @property
+    def cli(self):
+        if self._cli is None or self.refresh_cli:
+            self._cli = self.create_interface()
+            self.refresh_cli = False
+        return self._cli
+
+    def get_bottom_toolbar_tokens(self, cli):
+        return [(Token.Toolbar, "HELP IS ON THE WAY")]
+
+    def get_rprompt_tokens(self, cli):
+        return [(Token.RPrompt, "For help --help")]
+
+    # hook up to the meta data
+    def on_input_timeout(self, cli):
+        document = cli.current_buffer.document
+        text = document.text
+        # self.current_docs = u'Descriptions and such'
+        # if text.strip():
+        #     command = "account show"
+        #     last_option = False
+        #     # command = self.completer.current_command
+        #     # last_option = self.completer.last_option
+        #     if last_option:
+        #         # self.current_docs = self._docs.extract_param( # get the parameters
+        #         #     key_name, last_option)
+        #         self.current_docs = self.completer.get_param(command)
+        #     else:
+        #         # self.current_docs = self._docs.extract_description(key_name)
+        #         # # get the metadata
+        #         self.current_docs = self.completer.get_description(command).encode('utf-8')
+        # else:
+        #     self.current_docs = u''
+        # cli.buffers['description'].reset( # not in six.text_type
+        #     initial_document=Document(self.current_docs, cursor_position=0))
+        cli.request_redraw()
+
+    def create_application(self):
+        buffers = {
+            DEFAULT_BUFFER: Buffer(is_multiline=True),
+            'description': Buffer(read_only=True)
+        }
+
+        # assert isinstance(self.lexer, Lexer)
+        return Application(
+            mouse_support=False,
+            style=self.styles,
+            buffer=self.create_buffer(self.completer, self.history),
+            on_input_timeout=self.on_input_timeout,
+            key_bindings_registry=registry,
+            layout=layout.create_layout(self.lexer),
+            buffers=buffers,
+        )
+
+    def create_buffer(self, completer, history):
+        return Buffer(
+            history=self.history,
+            auto_suggest=AutoSuggestFromHistory(),
+            enable_history_search=True,
+            completer=self.completer,
+            complete_while_typing=Always()
+        )
+
+    def create_interface(self):
+        run_loop = create_eventloop()
+        app = self.create_application()
+        return CommandLineInterface(application=app, eventloop=run_loop)
+
+    def run(self, database):
+        while True:
+            try:
+                # hangs here on run
+                document = self.cli.run(reset_current_buffer=True)
+                text = document.text
+            except EOFError:
+                break  # Control-D pressed.
+            except KeyboardInterrupt:
+                break
+            except AttributeError:
+                break
+            else:
+                if text == "quit" or text == "exit":
+                    break
+                cmd = "az " + text
+                self.history.append(text)
+                self.current_docs = u''
+                self.cli.buffers["description"].reset(
+                    initial_document=Document(self.current_docs,
+                                              cursor_position=0))
+                self.cli.request_redraw()
+                proc = subprocess.Popen(cmd, shell=True, env=self._env)
+                proc.communicate()
+        print('Have a lovely day!!')

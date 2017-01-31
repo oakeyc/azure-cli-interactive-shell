@@ -46,7 +46,7 @@ iot device export:
 network nic delete:The delete netwokInterface operation deletes the specified netwokInterface.
 sql elastic-pools db list:Returns information about an Azure SQL database inside of an Azure SQL elastic pool.
 sql elastic-pools delete:Deletes the Azure SQL elastic pool.
-storage account check-name:Checks that account name is valid and is not in use.
+storage account check-name:Checks that the storage account name is valid and is not already in use.
 redis import-method:
 storage container policy list:List stored access policies on a containing object
 storage file generate-sas:Generates a shared access signature for the file. Use the returned signature with the sas_token parameter of FileService.
@@ -153,7 +153,7 @@ network nsg show:The Get NetworkSecurityGroups operation retrieves information a
 storage entity insert:
 vm diagnostics get-default-config:show the default config file which defines data to be collected
 vmss diagnostics set:Enable diagnostics on a virtual machine scale set     
-storage account show:Returns the properties for the specified storage account including but not limited to name, account type, location, and account status. The ListKeys operation should be used to retrieve storage keys.
+storage account show:Returns the properties for the specified storage account including but not limited to name, SKU name, location, and account status. The ListKeys operation should be used to retrieve storage keys.
 network vnet delete:The Delete VirtualNetwork operation deletes the specified virtual network.
 account list-locations:
 sql db service-tier-advisor list:Returns information about service tier advisors for specified database.
@@ -203,7 +203,7 @@ ad sp create-for-rbac:create a service principal and configure its access to Azu
 appservice web config appsettings update:
 storage table stats:Retrieves statistics related to replication for the Table service. It is  only available when read-access geo-redundant replication is enabled for  the storage account.  With geo-redundant replication, Azure Storage maintains your data durable  in two locations. In both locations, Azure Storage constantly maintains  multiple healthy replicas of your data. The location where you read,  create, update, or delete data is the primary storage account location.  The primary location exists in the region you choose at the time you  create an account via the Azure Management Azure classic portal, for  example, North Central US. The location to which your data is replicated  is the secondary location. The secondary location is automatically  determined based on the location of the primary; it is in a second data  center that resides in the same region as the primary location. Read-only  access is available from the secondary location, if read-access geo-redundant  replication is enabled for your storage account.
 keyvault certificate show:Gets a Certificate.
-storage account keys renew:Regenerates the access keys for the specified storage account.
+storage account keys renew:Regenerates one of the access keys for the specified storage account.
 storage directory create:Creates a new directory under the specified share or parent directory.  If the directory with the same name already exists, the operation fails on the service. By default, the exception is swallowed by the client. To expose the exception, specify True for fail_on_exists.
 network express-route update:None
 vm list:List Virtual Machines. 
