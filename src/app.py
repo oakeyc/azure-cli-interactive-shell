@@ -98,6 +98,7 @@ class Shell(object):
     def on_input_timeout(self, cli):
         document = cli.current_buffer.document
         text = document.text
+        self.current_docs = cli.current_buffer.document.text
         # self.current_docs = u'Descriptions and such'
         # if text.strip():
         #     command = "account show"
@@ -114,8 +115,8 @@ class Shell(object):
         #         self.current_docs = self.completer.get_description(command).encode('utf-8')
         # else:
         #     self.current_docs = u''
-        # cli.buffers['description'].reset( # not in six.text_type
-        #     initial_document=Document(self.current_docs, cursor_position=0))
+        cli.buffers['description'].reset( # not in six.text_type
+            initial_document=Document(self.current_docs, cursor_position=0))
         cli.request_redraw()
 
     def create_application(self):

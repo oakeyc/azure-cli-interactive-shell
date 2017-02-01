@@ -72,11 +72,12 @@ def create_layout(lexer):
         # # sure that the layout engine will not try to divide the whole width by
         # # three for all these windows. The `FillControl` will simply fill the whole
         # # window by repeating this character.
-        # Window(width=D.exact(1),
-        #         content=FillControl('-', token=Token.Line)),
 
-        Window(width=D.exact(1),
-                content=TokenListControl(get_options_tokens, align_center=True)),
+        Window(width=D.exact(1), height=D.exact(1), content=FillControl('-', token=Token.Line)),
+        Window(content=BufferControl(buffer_name="description")),
+
+        # Window(width=D.exact(1),
+        #         content=TokenListControl(get_options_tokens, align_center=True)),
     ])
     return layout
  
