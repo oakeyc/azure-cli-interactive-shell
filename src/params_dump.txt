@@ -25,6 +25,7 @@ vm show:--vm_name --resource_group_name --show_details
 network vpn-connection shared-key show:--resource_group_name --virtual_network_gateway_connection_name 
 sql db replication-link failover:--resource_group_name --database_name --server_name --link_id 
 feature show:--resource_provider_namespace --feature_name 
+vm nic remove:--vm_name --resource_group_name --primary_nic --nics 
 network application-gateway auth-cert list:--resource_group_name --resource_name 
 redis patch-schedule delete:--resource_group_name --name 
 network traffic-manager endpoint show:--resource_group_name --profile_name --endpoint_name --endpoint_type 
@@ -129,7 +130,7 @@ network nic create:--resource_group_name --network_interface_name --use_dns_sett
 keyvault key backup:--vault_base_url --key_name --file_path 
 network express-route list-service-providers:
 appservice web stop:--slot --resource_group_name --name 
-vm create:--nic_type --public_ip_address_dns_name --image --no_wait --storage_sku --nsg --public_ip_type --vnet_type --os_disk_name --storage_container_name --size --subnet --storage_profile --availability_set --nsg_rule --os_version --nics --storage_account_type --authentication_type --os_offer --admin_password --storage_caching --location --vm_name --public_ip_address --vnet_name --tags --ssh_key_value --os_sku --storage_account --validate --nsg_type --subnet_address_prefix --resource_group_name --public_ip_address_allocation --os_publisher --admin_username --ssh_dest_key_path --vnet_address_prefix --private_ip_address --os_type 
+vm create:--nic_type --public_ip_address_dns_name --image --no_wait --storage_sku --nsg --public_ip_type --vnet_type --os_disk_name --storage_container_name --size --subnet --storage_profile --availability_set --nsg_rule --os_version --nics --storage_account_type --authentication_type --os_offer --admin_password --storage_caching --location --vm_name --public_ip_address --vnet_name --tags --ssh_key_value --os_sku --storage_account --validate --nsg_type --generate_ssh_keys --subnet_address_prefix --resource_group_name --public_ip_address_allocation --os_publisher --admin_username --ssh_dest_key_path --vnet_address_prefix --private_ip_address --os_type 
 sql server firewall update:--start_ip_address --resource_group_name --end_ip_address --server_name --firewall_rule_name 
 vm availability-set show:--resource_group_name --availability_set_name 
 group deployment operation list:--resource_group_name --top --deployment_name 
@@ -296,6 +297,7 @@ keyvault key list:--vault_base_url --maxresults
 storage account update:--sku --resource_group_name --custom_domain --tags --encryption --access_tier --account_name 
 sql db create:--resource_group_name --database_name --parameters --server_name 
 batch account set:--resource_group_name --storage_account_id --account_name --tags 
+lock list:--resource_group_name --resource_provider_namespace --parent_resource_path --resource_name --filter_string --resource_type 
 storage logging show:--sas_token --account_key --timeout --services --connection_string --account_name 
 keyvault certificate list:--vault_base_url --maxresults 
 iot device list:--hub_name --top --resource_group_name 
@@ -343,7 +345,7 @@ network application-gateway frontend-port delete:--item_name --resource_group_na
 tag remove-value:--tag_name --tag_value 
 network lb list:--resource_group_name 
 storage account keys list:--resource_group_name --account_name 
-sql db update:--resource_group_name --properties_to_add --properties_to_set --server_name --properties_to_remove --database_name 
+lock create:--lock_id --resource_group_name --parent_resource_path --name --level --lock_type --notes --resource_name --resource_provider_namespace --resource_type 
 vmss get-instance-view:--vm_scale_set_name --resource_group_name --instance_id 
 network application-gateway probe update:--resource_group_name --properties_to_add --raw --properties_to_remove --interval --application_gateway_name --item_name --host --properties_to_set --timeout --path --threshold --protocol 
 storage file download-batch:--dryrun --pattern --destination --sas_token --account_key --source --validate_content --connection_string --account_name --max_connections 
@@ -430,6 +432,7 @@ network vnet list:--resource_group_name
 storage cors list:--sas_token --account_key --timeout --services --connection_string --account_name 
 network dns record aaaa add:--resource_group_name --ipv6_address --record_set_name --zone_name 
 acs show:--resource_group_name --container_service_name 
+vmss list:--resource_group_name 
 storage directory metadata update:--share_name --sas_token --account_key --timeout --connection_string --directory_name --account_name --metadata 
 network application-gateway auth-cert create:--item_name --resource_group_name --no_wait --cert_data --application_gateway_name 
 storage queue policy delete:--sas_token --account_key --policy_name --container_name --connection_string --account_name 
@@ -499,7 +502,7 @@ feature list:--resource_provider_namespace
 storage container show:--lease_id --sas_token --account_key --timeout --container_name --connection_string --account_name 
 role assignment list:--resource_group_name --show_all --assignee --role --include_groups --scope --include_inherited 
 storage blob upload-batch:--lease_id --account_key --connection_string --content_settings --account_name --max_connections --if_modified_since --pattern --destination --blob_type --source --validate_content --source_files --if_match --metadata --destination_container_name --dryrun --if_none_match --maxsize_condition --sas_token --timeout --if_unmodified_since 
-vmss create:--public_ip_address_dns_name --image --no_wait --storage_sku --load_balancer_type --vnet_type --os_disk_name --storage_container_name --backend_port --public_ip_address --subnet --storage_profile --os_version --authentication_type --os_offer --location --storage_caching --admin_password --load_balancer --disable_overprovision --nat_pool_name --vnet_name --tags --ssh_key_value --upgrade_policy_mode --instance_count --os_sku --vmss_name --validate --subnet_address_prefix --resource_group_name --backend_pool_name --public_ip_address_allocation --os_publisher --public_ip_type --admin_username --ssh_dest_key_path --vnet_address_prefix --os_type --vm_sku 
+vmss create:--public_ip_address_dns_name --image --no_wait --storage_sku --load_balancer_type --vnet_type --os_disk_name --storage_container_name --backend_port --public_ip_address --subnet --storage_profile --os_version --authentication_type --os_offer --location --storage_caching --admin_password --load_balancer --disable_overprovision --nat_pool_name --vnet_name --tags --ssh_key_value --upgrade_policy_mode --instance_count --os_sku --vmss_name --validate --generate_ssh_keys --subnet_address_prefix --resource_group_name --backend_pool_name --public_ip_address_allocation --os_publisher --public_ip_type --admin_username --ssh_dest_key_path --vnet_address_prefix --os_type --vm_sku 
 iot hub job list:--hub_name --resource_group_name 
 storage share exists:--share_name --file_name --sas_token --account_key --timeout --connection_string --directory_name --account_name 
 vmss start:--vm_scale_set_name --resource_group_name --instance_ids 
@@ -515,7 +518,7 @@ container release list:--target_name --target_resource_group
 network lb address-pool show:--item_name --resource_group_name --resource_name 
 role assignment create:--assignee --role --scope --resource_group_name 
 redis patch-schedule show:--resource_group_name --name 
-vm delete:--vm_name --resource_group_name 
+vm delete:--vm_name --resource_group_name --force 
 network vnet peering update:--resource_group_name --properties_to_add --properties_to_set --virtual_network_peering_name --properties_to_remove --virtual_network_name 
 storage account show-usage:
 network nsg list:--resource_group_name 
@@ -548,6 +551,7 @@ sql db show:--resource_group_name --database_name --expand --server_name
 batch application list:--resource_group_name --account_name --maxresults 
 role assignment delete:--resource_group_name --ids --assignee --role --scope --include_inherited 
 storage queue delete:--fail_not_exist --queue_name --sas_token --account_key --timeout --connection_string --account_name 
+sql db update:--resource_group_name --properties_to_add --properties_to_set --server_name --properties_to_remove --database_name 
 network express-route peering show:--resource_group_name --peering_name --circuit_name 
 network application-gateway rule show:--item_name --resource_group_name --resource_name 
 network public-ip list:--resource_group_name 
@@ -578,7 +582,7 @@ keyvault secret show:--vault_base_url --secret_name --secret_version
 batch application package create:--resource_group_name --version --application_id --account_name --package_file 
 network lb update:--properties_to_remove --resource_group_name --load_balancer_name --properties_to_add --properties_to_set 
 sql elastic-pools db show:--resource_group_name --database_name --elastic_pool_name --server_name 
-vmss list:--resource_group_name 
+lock delete:--resource_group_name --parent_resource_path --name --resource_name --resource_provider_namespace --resource_type 
 redis create:--resource_group_name --shard_count --name --sku_capacity --tags --sku_family --sku_name --redis_configuration --static_ip --subnet_id --location --tenant_settings --enable_non_ssl_port 
 appservice web source-control show:--slot --resource_group_name --name 
 network nic show-effective-route-table:--resource_group_name --network_interface_name 
@@ -638,6 +642,7 @@ ad app update:--identifier_uris --identifier --display_name --end_date --reply_u
 vm update:--vm_name --resource_group_name --properties_to_add --properties_to_set --raw --properties_to_remove 
 network application-gateway frontend-port update:--resource_group_name --properties_to_add --properties_to_remove --application_gateway_name --raw --properties_to_set --item_name --port 
 sql elastic-pools recommended db list:--resource_group_name --recommended_elastic_pool_name --server_name 
+lock update:--lock_id --resource_group_name --name --level --lock_type --notes 
 tag add-value:--tag_name --tag_value 
 network nic ip-config inbound-nat-rule add:--ip_config_name --resource_group_name --network_interface_name --load_balancer_name --inbound_nat_rule 
 vm extension set:--vm_name --resource_group_name --publisher --settings --vm_extension_name --no_auto_upgrade --version --protected_settings 
@@ -680,7 +685,7 @@ iot hub delete:--hub_name --resource_group_name
 network application-gateway url-path-map rule delete:--item_name --resource_group_name --application_gateway_name --url_path_map_name 
 vm capture:--vm_name --resource_group_name --storage_container --vhd_name_prefix --overwrite 
 network nic ip-config inbound-nat-rule remove:--ip_config_name --resource_group_name --network_interface_name --load_balancer_name --inbound_nat_rule 
-vm nic remove:--vm_name --resource_group_name --primary_nic --nics 
+lock show:--resource_group_name --name 
 sql elastic-pools show:--resource_group_name --elastic_pool_name --server_name 
 sql db data-warehouse pause:--resource_group_name --database_name --server_name 
 component update:--pre --additional_components --link --private 

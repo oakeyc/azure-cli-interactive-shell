@@ -64,7 +64,24 @@ def create_layout(lexer):
                           extra_filter=(HasFocus(DEFAULT_BUFFER))))
             ]),
         Window(width=D.exact(1), height=D.exact(1), content=FillControl('-', token=Token.Line)),
-        Window(content=BufferControl(buffer_name="description")),
+        Window(
+            content=BufferControl(
+                buffer_name="description"),
+            height=D(max=13),
+            allow_scroll_beyond_bottom=True),
+
+        # FloatContainer(
+        #     Window(
+        #         BufferControl(
+        #             buffer_name="description",
+        #             preview_search=Always()),
+        #         get_height=get_height,
+        #     ),
+        #     [
+        #         Float(xcursor=True,
+        #               ycursor=True,
+        #               content=BufferControl(buffer_name="description")),
+        #     ]),
     ])
     return layout
  

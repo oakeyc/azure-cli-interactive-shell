@@ -93,6 +93,17 @@ class Shell(object):
         """
         document = cli.current_buffer.document
         text = document.text
+        # counter = 0
+        # for i in reversed(range(len(pad_text))):
+        #     if pad_text[i] is " ":
+        #         counter += 1
+        #     else:
+        #         break
+        # if counter == 0:
+        #     text = pad_text
+        # else:
+        #     text = pad_text[:-counter]
+
         if self.completer.is_command(text):
             self.current_docs = unicode(self.completer.get_description(text))
         else:
@@ -105,7 +116,7 @@ class Shell(object):
         """ makes the application object and the buffers """
         buffers = {
             DEFAULT_BUFFER: Buffer(is_multiline=True),
-            'description': Buffer(read_only=True)
+            'description': Buffer(is_multiline=True, read_only=True)
         }
 
         return Application(
@@ -145,7 +156,10 @@ class Shell(object):
             else:
                 if text == "quit" or text == "exit":
                     break
-                cmd = "az " + text
+                if text[0] == "#":
+                    cmd = text[1:]
+                else:
+                    cmd = "az " + text
                 self.history.append(text)
                 self.current_docs = u''
                 self.cli.buffers["description"].reset(

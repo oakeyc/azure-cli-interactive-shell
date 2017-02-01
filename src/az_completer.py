@@ -11,8 +11,9 @@ class AzCompleter(Completer):
         self.last_option = ""
 
         command = open("dump.txt", 'r')
-        meta = open("meta_dump.txt", 'r')
+        meta = open("help_dump.txt", 'r')
         param = open("params_dump.txt", 'r')
+        # description = open("help_dump.txt", 'r')
 
         for line in command:
             self.words.append(line.strip("\n"))
@@ -25,14 +26,22 @@ class AzCompleter(Completer):
             com = ""
             description = ""
             desc = False
+            count = 0
+            convenient_space = False
             for char in line:
                 if char == ':':
                     desc = True
                 elif desc:
+                    count += 1
+                    if count % 60 == 0:  # arbitrarly add new lines so it doesn't over extend
+                        convenient_space = True
+                    if convenient_space and char == " ":
+                        description += "\n"
+                        convenient_space = False
                     description += char
                 else:
                     com += char
-            self.descrip[com] = description.strip("\n")
+            self.descrip[com] = description
 
         for line in param:
             self.param_dict[str(line.partition(":")[0])] = str(line.partition(":")[2]).strip("\n")

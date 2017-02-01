@@ -10,8 +10,20 @@ import inspect
 import json
 import re
 import types
+import os
 import sys
+
+from cStringIO import StringIO
+from docutils import nodes
+from docutils.statemachine import ViewList
+from sphinx.util.compat import Directive
+from sphinx.util.nodes import nested_parse_with_titles
+
 from azure.cli.core.application import APPLICATION, Application
+from azure.cli.core.application import Configuration
+
+import azure.cli.core._help as _help
+app = APPLICATION
 
 class Exporter(json.JSONEncoder):
 
@@ -28,7 +40,7 @@ def _dump_command_table(**kwargs):
     f = open("dump.txt", 'w')
     m = open("meta_dump.txt", 'w')
     pa = open("params_dump.txt", 'w')
-
+    
     for command_name, metadata in cmd_table.items():
         f.write(str(command_name) + "\n")
         m.write(str(command_name) + ":" + str(metadata.description) + "\n" )
@@ -141,6 +153,7 @@ def _process_null_values(dict_):
 def _dashed_to_camel(string):
     return string.replace('-', '_')
 
+
 parser = argparse.ArgumentParser(description='Command Table Parser')
 parser.add_argument('--commands', metavar='N', nargs='+', help='Filter by first level command (OR)')
 parser.add_argument('--params', metavar='N', nargs='+', help='Filter by parameters (OR)')
@@ -152,6 +165,22 @@ hide_nulls = args.hide_nulls
 
 PRIMITIVES = (str, int, bool, float)
 IGNORE_ARGS = ['help', 'help_file', 'base_type', 'arguments_loader']
+sys.argv = sys.argv[:1]
+config = Configuration([])
+cmd_table = config.get_command_table()
+# cmd_list = sorted([cmd_name for cmd_name in cmd_table.keys() if cmd_set_names is None or cmd_name.split()[0] in cmd_set_names])
 
+help = open("help_dump.txt", 'w')
+for cmd in cmd_table:
+    # cmd_string = 'az {} -h'.format(cmd)
+    # output = StringIO()
+    # sys.stdout = output
+    # os.system(cmd_string)
+    descrip = cmd_table[cmd].description
+    help.write(cmd + ":" + str(descrip) + "\n")
+help.close()
+
+    # print('\n===============================', flush=True)
 APPLICATION.register(Application.COMMAND_PARSER_LOADED, _dump_command_table)
+
 APPLICATION.execute([])

@@ -25,6 +25,7 @@ vm show
 network vpn-connection shared-key show
 sql db replication-link failover
 feature show
+vm nic remove
 network application-gateway auth-cert list
 redis patch-schedule delete
 network traffic-manager endpoint show
@@ -296,6 +297,7 @@ keyvault key list
 storage account update
 sql db create
 batch account set
+lock list
 storage logging show
 keyvault certificate list
 iot device list
@@ -343,7 +345,7 @@ network application-gateway frontend-port delete
 tag remove-value
 network lb list
 storage account keys list
-sql db update
+lock create
 vmss get-instance-view
 network application-gateway probe update
 storage file download-batch
@@ -430,6 +432,7 @@ network vnet list
 storage cors list
 network dns record aaaa add
 acs show
+vmss list
 storage directory metadata update
 network application-gateway auth-cert create
 storage queue policy delete
@@ -548,6 +551,7 @@ sql db show
 batch application list
 role assignment delete
 storage queue delete
+sql db update
 network express-route peering show
 network application-gateway rule show
 network public-ip list
@@ -578,7 +582,7 @@ keyvault secret show
 batch application package create
 network lb update
 sql elastic-pools db show
-vmss list
+lock delete
 redis create
 appservice web source-control show
 network nic show-effective-route-table
@@ -638,6 +642,7 @@ ad app update
 vm update
 network application-gateway frontend-port update
 sql elastic-pools recommended db list
+lock update
 tag add-value
 network nic ip-config inbound-nat-rule add
 vm extension set
@@ -680,7 +685,7 @@ iot hub delete
 network application-gateway url-path-map rule delete
 vm capture
 network nic ip-config inbound-nat-rule remove
-vm nic remove
+lock show
 sql elastic-pools show
 sql db data-warehouse pause
 component update

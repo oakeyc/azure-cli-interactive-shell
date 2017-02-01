@@ -25,6 +25,7 @@ vm show:
 network vpn-connection shared-key show:The Get VirtualNetworkGatewayConnectionSharedKey operation retrieves information about the specified virtual network gateway connection shared key through Network resource provider.
 sql db replication-link failover:Failover the Azure SQL database replication link with the given ID.
 feature show:Get all features under the subscription.
+vm nic remove:Remove network interface configurations from the virtual machine
 network application-gateway auth-cert list:
 redis patch-schedule delete:Deletes the patching schedule for redis cache.
 network traffic-manager endpoint show:Gets a Traffic Manager endpoint.
@@ -296,6 +297,7 @@ keyvault key list:List keys in the specified vault.
 storage account update:Update storage account property (only one at a time).
 sql db create:Creates a new Azure SQL database or updates an existing Azure SQL database. Location is a required property in the request body, and it must be the same as the location of the SQL server.
 batch account set:The properties related to auto storage account.
+lock list:
 storage logging show:
 keyvault certificate list:List certificates in the specified vault.
 iot device list:
@@ -343,7 +345,7 @@ network application-gateway frontend-port delete:
 tag remove-value:Delete a subscription resource tag value.
 network lb list:
 storage account keys list:Lists the access keys for the specified storage account.
-sql db update:None
+lock create:
 vmss get-instance-view:get instance view for a scale set or its VM instances
 network application-gateway probe update:None
 storage file download-batch:Download files from file share to local directory in batch
@@ -430,6 +432,7 @@ network vnet list:
 storage cors list:
 network dns record aaaa add:
 acs show:Gets the properties of the specified container service.  Gets the properties of the specified container service in the specified subscription and resource group. The operation returns the properties including state, orchestrator, number of masters and agents, and FQDNs of masters and agents. .
+vmss list:list scale sets
 storage directory metadata update:Sets one or more user-defined name-value pairs for the specified directory. Each call to this operation replaces all existing metadata attached to the directory. To remove all metadata from the directory, call this operation with no metadata dict.
 network application-gateway auth-cert create:
 storage queue policy delete:Delete a stored access policy on a containing object 
@@ -548,6 +551,7 @@ sql db show:Gets information about an Azure SQL database.
 batch application list:Lists all of the applications in the specified account.
 role assignment delete:
 storage queue delete:Deletes the specified queue and any messages it contains.  When a queue is successfully deleted, it is immediately marked for deletion  and is no longer accessible to clients. The queue is later removed from  the Queue service during garbage collection.  Note that deleting a queue is likely to take at least 40 seconds to complete.  If an operation is attempted against the queue while it was being deleted,  an :class:`AzureConflictHttpError` will be thrown.
+sql db update:None
 network express-route peering show:The GET peering operation retrieves the specified authorization from the ExpressRouteCircuit.
 network application-gateway rule show:
 network public-ip list:
@@ -578,7 +582,7 @@ keyvault secret show:Gets a secret.
 batch application package create:Creates an application package record.
 network lb update:None
 sql elastic-pools db show:Gets information about an Azure SQL database inside of an Azure SQL elastic pool.
-vmss list:list scale sets
+lock delete:
 redis create:Create new Redis Cache instance
 appservice web source-control show:
 network nic show-effective-route-table:The get effective routetable operation retrieves all the route tables applied on a networkInterface.
@@ -638,6 +642,7 @@ ad app update:
 vm update:None
 network application-gateway frontend-port update:None
 sql elastic-pools recommended db list:Returns information about an Azure SQL database inside of an Azure SQL Recommended Elastic Pool.
+lock update:
 tag add-value:Create a subscription resource tag value.
 network nic ip-config inbound-nat-rule add:
 vm extension set:create/update extensions for a VM in a resource group. You can use 'extension image list' to get extension details
@@ -680,7 +685,7 @@ iot hub delete:
 network application-gateway url-path-map rule delete:
 vm capture:Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create similar VMs.
 network nic ip-config inbound-nat-rule remove:
-vm nic remove:Remove network interface configurations from the virtual machine
+lock show:
 sql elastic-pools show:Gets information about an Azure SQL elastic pool.
 sql db data-warehouse pause:Pause an Azure SQL Data Warehouse database.
 component update:Update the CLI and all installed components 
