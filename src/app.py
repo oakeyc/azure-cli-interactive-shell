@@ -93,19 +93,14 @@ class Shell(object):
         """
         document = cli.current_buffer.document
         text = document.text
-        # counter = 0
-        # for i in reversed(range(len(pad_text))):
-        #     if pad_text[i] is " ":
-        #         counter += 1
-        #     else:
-        #         break
-        # if counter == 0:
-        #     text = pad_text
-        # else:
-        #     text = pad_text[:-counter]
-
-        if self.completer.is_command(text):
-            self.current_docs = unicode(self.completer.get_description(text))
+        split_text = text.split()
+        command = ""
+        for word in split_text:
+            command += str(word) + " "
+            if self.completer.is_command(command.rstrip()):
+                self.current_docs = unicode(self.completer.get_description(command.rstrip()) +
+                                            "\n\n" + self.completer.get_param(command.rstrip()))
+                break
         else:
             self.current_docs = u''
         cli.buffers['description'].reset(
@@ -156,10 +151,13 @@ class Shell(object):
             else:
                 if text == "quit" or text == "exit":
                     break
-                if text[0] == "#":
-                    cmd = text[1:]
-                else:
-                    cmd = "az " + text
+                try:
+                    if text[0] == "#":
+                        cmd = text[1:]
+                    else:
+                        cmd = "az " + text
+                except IndexError:  # enter blank for welcome message
+                    cmd = "az"
                 self.history.append(text)
                 self.current_docs = u''
                 self.cli.buffers["description"].reset(

@@ -13,7 +13,6 @@ class AzCompleter(Completer):
         command = open("dump.txt", 'r')
         meta = open("help_dump.txt", 'r')
         param = open("params_dump.txt", 'r')
-        # description = open("help_dump.txt", 'r')
 
         for line in command:
             self.words.append(line.strip("\n"))
@@ -22,6 +21,11 @@ class AzCompleter(Completer):
 
         self.descrip["quit"] = "Exits the program"
         self.descrip["exit"] = "Exits the program"
+
+        self.param_dict["quit"] = ""
+        self.param_dict["exit"] = ""
+
+
         for line in meta:
             com = ""
             description = ""
@@ -44,13 +48,17 @@ class AzCompleter(Completer):
             self.descrip[com] = description
 
         for line in param:
-            self.param_dict[str(line.partition(":")[0])] = str(line.partition(":")[2]).strip("\n")
+            key = str(line.partition("|")[0])
+            args = ""
+            for arg in line.partition("|")[2].split():
+                args += str(arg) + "\n"
+            self.param_dict[key] = args
 
         command.close()
         meta.close()
         param.close()
 
-        self.completer = WordCompleter(self.words, False, self.param_dict, False, True, False)
+        self.completer = WordCompleter(words=self.words, sentence=True)
 
     def get_completions(self, document, complete_event):
         return self.completer.get_completions(document, complete_event)

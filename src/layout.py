@@ -11,7 +11,7 @@ from prompt_toolkit.layout.processors import HighlightSearchProcessor, \
 from prompt_toolkit.layout.prompt import DefaultPrompt
 from pygments.token import Token
 from pygments.lexer import Lexer
-
+from args_lexer import ArgsLexer
 
 def get_prompt_tokens(cli):
     """ returns prompt tokens """
@@ -66,8 +66,9 @@ def create_layout(lexer):
         Window(width=D.exact(1), height=D.exact(1), content=FillControl('-', token=Token.Line)),
         Window(
             content=BufferControl(
-                buffer_name="description"),
-            height=D(max=13),
+                buffer_name="description",),
+                # lexer=PygmentsLexer(ArgsLexer())),
+            height=D(max=17),
             allow_scroll_beyond_bottom=True),
 
         # FloatContainer(

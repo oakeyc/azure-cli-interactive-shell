@@ -38,16 +38,15 @@ def _dump_command_table(**kwargs):
     los_names = []
     dic_meta = {}
     f = open("dump.txt", 'w')
-    m = open("meta_dump.txt", 'w')
-    pa = open("params_dump.txt", 'w')
+    # m = open("meta_dump.txt", 'w')
     
     for command_name, metadata in cmd_table.items():
         f.write(str(command_name) + "\n")
-        m.write(str(command_name) + ":" + str(metadata.description) + "\n" )
+        # m.write(str(command_name) + ":" + str(metadata.description) + "\n" )
         los_names.append(str(command_name))
 
     f.close()
-    m.close()
+    # m.close()
 
     #return los_names, dic_meta
     cmd_list = []
@@ -94,13 +93,13 @@ def _dump_command_table(**kwargs):
     # for param, commands in param_dict.items():
         # print('\nPARAM: "{}" - {} commands - scope "{}" - {}'.format(
         #     param, len(commands), _get_parameter_scope(param, commands), commands), file=sys.stderr)
-    for cmd_name in filtered_cmd_list:
-        entry = cmd_table[cmd_name]
-        pa.write(str(cmd_name) + ":")
-        for key in entry.arguments:
-            pa.write("--" + str(key) + " ")
-        pa.write("\n")
-    pa.close()
+    # for cmd_name in filtered_cmd_list:
+    #     entry = cmd_table[cmd_name]
+    #     pa.write(str(cmd_name) + ":")
+    #     for key in entry.arguments:
+    #         pa.write("--" + str(key) + " ")
+    #     pa.write("\n")
+    # pa.close()
     sys.exit(0)
 
 def _format_entry(obj):
@@ -170,6 +169,7 @@ config = Configuration([])
 cmd_table = config.get_command_table()
 # cmd_list = sorted([cmd_name for cmd_name in cmd_table.keys() if cmd_set_names is None or cmd_name.split()[0] in cmd_set_names])
 
+param_file = open("params_dump.txt", 'w')
 help = open("help_dump.txt", 'w')
 for cmd in cmd_table:
     # cmd_string = 'az {} -h'.format(cmd)
@@ -177,8 +177,23 @@ for cmd in cmd_table:
     # sys.stdout = output
     # os.system(cmd_string)
     descrip = cmd_table[cmd].description
+    param_file.write(cmd + "|")
+    for key in cmd_table[cmd].arguments:
+        # param_file.write(cmd_table[cmd].arguments[key].options + " ")
+        opts = cmd_table[cmd].arguments[key].__getattr__('options')
+        # param_file.write(opts)
+        # for o in opts:
+        if 'required' in opts:
+            param_file.write("[required]")
+        if 'dest' in opts:
+            param_file.write("--" + opts['dest'] + " ")
+        # if 'help' in opts:
+        #     param_file.write("*" + opts['help'])
+    param_file.write("\n")
+
     help.write(cmd + ":" + str(descrip) + "\n")
 help.close()
+param_file.close()
 
     # print('\n===============================', flush=True)
 APPLICATION.register(Application.COMMAND_PARSER_LOADED, _dump_command_table)

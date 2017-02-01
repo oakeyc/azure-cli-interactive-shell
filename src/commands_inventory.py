@@ -13,6 +13,6 @@ class CompletionIndex(object):
         for line in self.com:
             self.subcommands.append(line.strip("\n"))
         for line in self.param:
-            self.args_opts.append(line.partition(":")[2])
+            self.args_opts.append(line.partition("|")[2])
         self.com.close()
         self.param.close()
