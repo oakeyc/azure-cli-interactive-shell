@@ -6,7 +6,7 @@ from prompt_toolkit.completion import Completer, Completion
 
 class Az_Completer(Completer):
     def __init__(self):
-        words = []
+        self.words = []
         self.descrip = {}
         self.param_dict = {}
         self.current_comamand = ""
@@ -17,9 +17,9 @@ class Az_Completer(Completer):
         param = open("params_dump.txt", 'r')
 
         for line in command:
-            words.append(line.strip("\n"))
-        words.append("quit")
-        words.append("exit")
+            self.words.append(line.strip("\n"))
+        self.words.append("quit")
+        self.words.append("exit")
 
         self.descrip["quit"] = "Exits the program"
         self.descrip["exit"] = "Exits the program"
@@ -44,7 +44,7 @@ class Az_Completer(Completer):
         meta.close()
         param.close()
 
-        self.completer = WordCompleter(words, False, self.param_dict, False, True, False)
+        self.completer = WordCompleter(self.words, False, self.param_dict, False, True, False)
 
     def get_completions(self, document, complete_event):
         return self.completer.get_completions(document, complete_event)
@@ -54,4 +54,7 @@ class Az_Completer(Completer):
 
     def get_description(self, command):
         return self.descrip[command]
+
+    def is_command(self, command):
+        return command in self.words
         

@@ -98,23 +98,12 @@ class Shell(object):
     def on_input_timeout(self, cli):
         document = cli.current_buffer.document
         text = document.text
-        self.current_docs = cli.current_buffer.document.text
-        # self.current_docs = u'Descriptions and such'
-        # if text.strip():
-        #     command = "account show"
-        #     last_option = False
-        #     # command = self.completer.current_command
-        #     # last_option = self.completer.last_option
-        #     if last_option:
-        #         # self.current_docs = self._docs.extract_param( # get the parameters
-        #         #     key_name, last_option)
-        #         self.current_docs = self.completer.get_param(command)
-        #     else:
-        #         # self.current_docs = self._docs.extract_description(key_name)
-        #         # # get the metadata
-        #         self.current_docs = self.completer.get_description(command).encode('utf-8')
-        # else:
-        #     self.current_docs = u''
+        # self.current_docs = cli.current_buffer.document.text
+        if self.completer.is_command(text):
+            self.current_docs = unicode(self.completer.get_description(text))
+            # self.current_docs = u'do spaces count'
+        else:
+            self.current_docs = u''
         cli.buffers['description'].reset( # not in six.text_type
             initial_document=Document(self.current_docs, cursor_position=0))
         cli.request_redraw()
