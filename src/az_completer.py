@@ -1,10 +1,8 @@
-import sys
 from prompt_toolkit.contrib.completers import WordCompleter
 from prompt_toolkit.completion import Completer, Completion
 
-# import the command table
-
-class Az_Completer(Completer):
+class AzCompleter(Completer):
+    """ Completes Azure CLI commands """
     def __init__(self):
         self.words = []
         self.descrip = {}
@@ -37,7 +35,6 @@ class Az_Completer(Completer):
             self.descrip[com] = description.strip("\n")
 
         for line in param:
-            # list_of_args = str(line.partition(":")[2]).split()
             self.param_dict[str(line.partition(":")[0])] = str(line.partition(":")[2]).strip("\n")
 
         command.close()
@@ -50,11 +47,14 @@ class Az_Completer(Completer):
         return self.completer.get_completions(document, complete_event)
 
     def get_param(self, command):
+        """ returns the parameters for a given command """
         return self.param_dict[command]
 
     def get_description(self, command):
+        """ returns the description for a given command """
         return self.descrip[command]
 
     def is_command(self, command):
+        """ returns whether given command is valid """
         return command in self.words
         

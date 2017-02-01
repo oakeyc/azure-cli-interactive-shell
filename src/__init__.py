@@ -3,12 +3,12 @@ import sys
 import subprocess
 
 from app import create_shell
-from az_completer import Az_Completer
+from az_completer import AzCompleter
 
 def main(db):
-    completer = Az_Completer()
+    """ the main function """
+    completer = AzCompleter()
     shell_app = create_shell(completer)
-    # shell_app.run()
     shell_app.run(db)
 
 if __name__ == '__main__':

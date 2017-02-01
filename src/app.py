@@ -1,14 +1,11 @@
 from __future__ import unicode_literals
 
-import sys
 import subprocess
 import os
 
-from prompt_toolkit import prompt, AbortAction
 from prompt_toolkit.buffer import Buffer
 from prompt_toolkit.shortcuts import create_eventloop
 from prompt_toolkit.history import InMemoryHistory
-from prompt_toolkit.contrib.completers import WordCompleter
 from prompt_toolkit.styles import style_from_dict
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 from prompt_toolkit.document import Document
@@ -16,18 +13,10 @@ from prompt_toolkit.interface import CommandLineInterface, Application
 from prompt_toolkit.key_binding.manager import KeyBindingManager
 from prompt_toolkit.filters import Always
 from prompt_toolkit.keys import Keys
-from pygments.style import Style
-from pygments.lexer import Lexer, RegexLexer
-from pygments.token import Token, Name, Keyword
-from az_completer import Az_Completer
-from az_lexer import AzLexer
-import layout
 from prompt_toolkit.enums import DEFAULT_BUFFER
-from prompt_toolkit.layout.containers import VSplit, HSplit, Window, FloatContainer, Float
-from prompt_toolkit.layout.controls import BufferControl, FillControl, TokenListControl
-from prompt_toolkit.layout.dimension import LayoutDimension as D
-from prompt_toolkit.layout.lexers import PygmentsLexer
-
+from pygments.token import Token, Name, Keyword
+from az_lexer import AzLexer
+from layout import create_layout
 
 manager = KeyBindingManager(
     enable_system_bindings=True,
@@ -38,20 +27,27 @@ registry = manager.registry
 
 @registry.add_binding(Keys.ControlQ, eager=True)
 def exit_(event):
+    """ exits the program when Control Q is pressed """
     event.cli.set_return_value(None)
+
 
 @registry.add_binding(Keys.Enter, eager=True)
 def enter_(event):
+    """ Sends the command to the terminal"""
     event.cli.set_return_value(event.cli.current_buffer)
     # event.cli.set_return_value(event.cli.current_doc)
 
+
 def create_shell(completer):
+    """ creates the shell """
     return Shell(completer)
 
 
 class Shell(object):
+    """ represents the shell """
 
     def __init__(self, completer):
+        # TODO abstract styles
         self.styles = style_from_dict({
             # Completion colors
             Token.Menu.Completions.Completion.Current: 'bg:#ffc0cb #000000',
@@ -64,7 +60,7 @@ class Shell(object):
             # Pretty Words
             Token.Keyword: '#ff0000 bold',
             Token.Keyword.Declaration: '#f5a3f5',
-            Token.Name.Class:'#e050e5',
+            Token.Name.Class: '#e050e5',
             Token.Text: '#ec96ef',
             # Temperary
             Token.Hello: '#008080',
@@ -83,73 +79,68 @@ class Shell(object):
 
     @property
     def cli(self):
+        """ Makes the interface or refreshes it """
         if self._cli is None or self.refresh_cli:
             self._cli = self.create_interface()
             self.refresh_cli = False
         return self._cli
 
-    def get_bottom_toolbar_tokens(self, cli):
-        return [(Token.Toolbar, "HELP IS ON THE WAY")]
-
-    def get_rprompt_tokens(self, cli):
-        return [(Token.RPrompt, "For help --help")]
-
-    # hook up to the meta data
     def on_input_timeout(self, cli):
+        """
+        When there is a pause in typing
+        Brings up the metadata for the command if
+        there is a valid command already typed
+        """
         document = cli.current_buffer.document
         text = document.text
-        # self.current_docs = cli.current_buffer.document.text
         if self.completer.is_command(text):
             self.current_docs = unicode(self.completer.get_description(text))
-            # self.current_docs = u'do spaces count'
         else:
             self.current_docs = u''
-        cli.buffers['description'].reset( # not in six.text_type
+        cli.buffers['description'].reset(
             initial_document=Document(self.current_docs, cursor_position=0))
         cli.request_redraw()
 
     def create_application(self):
+        """ makes the application object and the buffers """
         buffers = {
             DEFAULT_BUFFER: Buffer(is_multiline=True),
             'description': Buffer(read_only=True)
         }
 
-        # assert isinstance(self.lexer, Lexer)
         return Application(
             mouse_support=False,
             style=self.styles,
             buffer=self.create_buffer(self.completer, self.history),
             on_input_timeout=self.on_input_timeout,
             key_bindings_registry=registry,
-            layout=layout.create_layout(self.lexer),
+            layout=create_layout(self.lexer),
             buffers=buffers,
         )
 
     def create_buffer(self, completer, history):
+        """ makes the buffer """
         return Buffer(
-            history=self.history,
+            history=history,
             auto_suggest=AutoSuggestFromHistory(),
             enable_history_search=True,
-            completer=self.completer,
+            completer=completer,
             complete_while_typing=Always()
         )
 
     def create_interface(self):
+        """ instantiates the intereface """
         run_loop = create_eventloop()
         app = self.create_application()
         return CommandLineInterface(application=app, eventloop=run_loop)
 
     def run(self, database):
+        """ runs the CLI """
         while True:
             try:
-                # hangs here on run
                 document = self.cli.run(reset_current_buffer=True)
                 text = document.text
-            except EOFError:
-                break  # Control-D pressed.
-            except KeyboardInterrupt:
-                break
-            except AttributeError:
+            except AttributeError:  # when the user pressed Control Q
                 break
             else:
                 if text == "quit" or text == "exit":
