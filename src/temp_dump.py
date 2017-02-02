@@ -21,6 +21,7 @@ from sphinx.util.nodes import nested_parse_with_titles
 
 from azure.cli.core.application import APPLICATION, Application
 from azure.cli.core.application import Configuration
+from azure.cli.core.commands import load_params
 
 import azure.cli.core._help as _help
 app = APPLICATION
@@ -40,7 +41,7 @@ def _dump_command_table(**kwargs):
     f = open("dump.txt", 'w')
     # m = open("meta_dump.txt", 'w')
     
-    for command_name, metadata in cmd_table.items():
+    for command_name in cmd_table.keys():
         f.write(str(command_name) + "\n")
         # m.write(str(command_name) + ":" + str(metadata.description) + "\n" )
         los_names.append(str(command_name))
@@ -83,23 +84,18 @@ def _dump_command_table(**kwargs):
         table_entries.append(_format_entry(cmd_table[cmd_name]))
     
     # output results to STDOUT
-    result_dict = {'commands': table_entries}
+    # result_dict = {'commands': table_entries}
     # print(json.dumps(result_dict, indent=2, sort_keys=True))
-    
+    # for name in cmd_table.keys():
+        # print(str(cmd_table[name].arguments) + "\n")
     # display summary info with STDERR
- #   print('\n===RESULTS===', file=sys.stderr)
- #   print('{} commands dumped within {} scope with {} parameters'.format(len(table_entries),
-  #      cmd_set_names or '*', param_names or 'ANY'), file=sys.stderr)
-    # for param, commands in param_dict.items():
-        # print('\nPARAM: "{}" - {} commands - scope "{}" - {}'.format(
-        #     param, len(commands), _get_parameter_scope(param, commands), commands), file=sys.stderr)
-    # for cmd_name in filtered_cmd_list:
-    #     entry = cmd_table[cmd_name]
-    #     pa.write(str(cmd_name) + ":")
-    #     for key in entry.arguments:
-    #         pa.write("--" + str(key) + " ")
-    #     pa.write("\n")
-    # pa.close()
+    # print('\n===RESULTS===', file=sys.stderr)
+    # print('{} commands dumped within {} scope with {} parameters'.format(len(table_entries),
+    #     cmd_set_names or '*', param_names or 'ANY'), file=sys.stderr)
+    for param, commands in param_dict.items():
+        print('\nPARAM: "{}" - {} commands - scope "{}" - {}'.format(
+            param, len(commands), _get_parameter_scope(param, commands), commands), file=sys.stderr)
+
     sys.exit(0)
 
 def _format_entry(obj):
@@ -152,7 +148,6 @@ def _process_null_values(dict_):
 def _dashed_to_camel(string):
     return string.replace('-', '_')
 
-
 parser = argparse.ArgumentParser(description='Command Table Parser')
 parser.add_argument('--commands', metavar='N', nargs='+', help='Filter by first level command (OR)')
 parser.add_argument('--params', metavar='N', nargs='+', help='Filter by parameters (OR)')
@@ -160,6 +155,16 @@ parser.add_argument('--hide-nulls', action='store_true', default=False, help='Sh
 args = parser.parse_args()
 cmd_set_names = args.commands
 param_names = [_dashed_to_camel(x) for x in args.params or []]
+
+
+# for c in args.commands:
+# print("command: " + str(cmd_set_names))
+
+# # for p in args.params:
+# print("params: {}".format(p))
+
+
+
 hide_nulls = args.hide_nulls
 
 PRIMITIVES = (str, int, bool, float)
@@ -172,24 +177,27 @@ cmd_table = config.get_command_table()
 param_file = open("params_dump.txt", 'w')
 help = open("help_dump.txt", 'w')
 for cmd in cmd_table:
+    # load_params(cmd)
     # cmd_string = 'az {} -h'.format(cmd)
     # output = StringIO()
     # sys.stdout = output
     # os.system(cmd_string)
     descrip = cmd_table[cmd].description
     param_file.write(cmd + "|")
-    for key in cmd_table[cmd].arguments:
+    for key in cmd_table[cmd].arguments:  # parameters
         # param_file.write(cmd_table[cmd].arguments[key].options + " ")
         opts = cmd_table[cmd].arguments[key].__getattr__('options')
         # param_file.write(opts)
         # for o in opts:
-        if 'required' in opts:
-            param_file.write("[required]")
-        if 'dest' in opts:
-            param_file.write("--" + opts['dest'] + " ")
-        if 'help' in opts:
-            param_file.write("*" + opts['help'])
+        for opt in opts:
+            if 'required' in opts:
+                param_file.write("[required]")
+            if 'dest' in opts:
+                param_file.write("--" + opts['dest'] + " ")
+            # if 'help' in opts:
+            #     param_file.write("*" + opts['help'])
     param_file.write("\n")
+
 
     help.write(cmd + ":" + str(descrip) + "\n")
 help.close()
