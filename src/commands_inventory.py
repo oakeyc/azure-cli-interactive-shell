@@ -12,7 +12,10 @@ class CompletionIndex(object):
         """ loads the commands from files """
         for line in self.com:
             self.subcommands.append(line.strip("\n"))
+
         for line in self.param:
-            self.args_opts.append(line.partition("|")[2])
+            for arg in line.partition("|")[2].partition("*")[0].split():
+                self.args_opts.append(arg.replace("[required]", ""))
+
         self.com.close()
         self.param.close()

@@ -58,8 +58,8 @@ class Shell(object):
             # Toolbar
             Token.Toolbar: 'bg:#000000 #00b700',
             # Pretty Words
-            Token.Keyword: '#ff0000 bold',
-            Token.Keyword.Declaration: '#f5a3f5',
+            Token.Keyword: '#ff0000',
+            Token.Keyword.Declaration: '#b27cb2',
             Token.Name.Class: '#e050e5',
             Token.Text: '#ec96ef',
             # Temperary
@@ -97,9 +97,12 @@ class Shell(object):
         command = ""
         for word in split_text:
             command += str(word) + " "
-            if self.completer.is_command(command.rstrip()):
-                self.current_docs = unicode(self.completer.get_description(command.rstrip()) +
-                                            "\n\n" + self.completer.get_param(command.rstrip()))
+            if self.completer.is_completable(command.rstrip()):
+                if self.completer.is_command(command.rstrip()):
+                    self.current_docs = unicode(self.completer.get_description(command.rstrip()) +
+                                                "\n\n" + self.completer.get_param(command.rstrip()))
+                else:
+                    self.current_docs = unicode(self.completer.get_description(command.rstrip()))
                 break
         else:
             self.current_docs = u''

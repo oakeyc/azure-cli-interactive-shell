@@ -1,21 +1,28 @@
 from prompt_toolkit.contrib.completers import WordCompleter
-from prompt_toolkit.completion import Completer, Completion
+from prompt_toolkit.completion import Completer, Completer
+import math
 
 class AzCompleter(Completer):
     """ Completes Azure CLI commands """
     def __init__(self):
+        # everything that is completable
         self.words = []
+        # a completable to the description of what is does
         self.descrip = {}
+        # from a command to a list of parameters
         self.param_dict = {}
         self.current_comamand = ""
         self.last_option = ""
+        self.gather_from_files()
 
+    def gather_from_files(self):
         command = open("dump.txt", 'r')
-        meta = open("help_dump.txt", 'r')
+        help_file = open("help_dump.txt", 'r')
         param = open("params_dump.txt", 'r')
 
         for line in command:
             self.words.append(line.strip("\n"))
+        # add exiting
         self.words.append("quit")
         self.words.append("exit")
 
@@ -25,43 +32,52 @@ class AzCompleter(Completer):
         self.param_dict["quit"] = ""
         self.param_dict["exit"] = ""
 
-
-        for line in meta:
-            com = ""
-            description = ""
-            desc = False
-            count = 0
-            convenient_space = False
-            for char in line:
-                if char == ':':
-                    desc = True
-                elif desc:
-                    count += 1
-                    if count % 60 == 0:  # arbitrarly add new lines so it doesn't over extend
-                        convenient_space = True
-                    if convenient_space and char == " ":
-                        description += "\n"
-                        convenient_space = False
-                    description += char
-                else:
-                    com += char
-            self.descrip[com] = description
+        for line in help_file:
+            description = line.partition(":")[2]
+            description_with_newline = description
+            if len(description) > 50:
+                for num in range(int(math.ceil(len(description) / 60))):
+                    index = (num + 1) * 60
+                    while index < len(description) and \
+                    not description_with_newline[index].isspace():
+                        index += 1
+                    description_with_newline = description_with_newline[:index] + "\n" \
+                    + description_with_newline[index + 1:]
+            self.descrip[line.partition(":")[0]] = description_with_newline
 
         for line in param:
             key = str(line.partition("|")[0])
             args = ""
-            for arg in line.partition("|")[2].split():
-                args += str(arg) + "\n"
-            self.param_dict[key] = args
+            if "*" in line:  # if there is a help
+                for arg in line.partition("|")[2].partition("*")[0].split():
+                    args += str(arg) + "\n"
+                    self.descrip[arg] = str(line.partition("|")[2].partition("*")[2])
+                self.param_dict[key] = args
+            else:
+                for arg in line.partition("|")[2].split():
+                    args += str(arg) + "\n"
+                    self.descrip[arg] = ""
+                self.param_dict[key] = args
 
-        command.close()
-        meta.close()
-        param.close()
+        # for key in self.param_dict:
+        #     for arg in self.param_dict[key]:
+        #         self.words.append(arg)
+
+        # for key in self.words:
+        #     print key
 
         self.completer = WordCompleter(words=self.words, sentence=True)
 
+        command.close()
+        help_file.close()
+        param.close()
+
     def get_completions(self, document, complete_event):
         return self.completer.get_completions(document, complete_event)
+
+    def is_completable(self, command):
+        """ whether the command can be completed """
+        return command in self.words
 
     def get_param(self, command):
         """ returns the parameters for a given command """
@@ -73,5 +89,5 @@ class AzCompleter(Completer):
 
     def is_command(self, command):
         """ returns whether given command is valid """
-        return command in self.words
+        return command in self.param_dict.keys()
         

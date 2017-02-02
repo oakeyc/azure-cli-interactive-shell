@@ -187,8 +187,8 @@ for cmd in cmd_table:
             param_file.write("[required]")
         if 'dest' in opts:
             param_file.write("--" + opts['dest'] + " ")
-        # if 'help' in opts:
-        #     param_file.write("*" + opts['help'])
+        if 'help' in opts:
+            param_file.write("*" + opts['help'])
     param_file.write("\n")
 
     help.write(cmd + ":" + str(descrip) + "\n")

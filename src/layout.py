@@ -61,7 +61,8 @@ def create_layout(lexer):
                       content=CompletionsMenu(
                           max_height=16,
                           scroll_offset=1,
-                          extra_filter=(HasFocus(DEFAULT_BUFFER))))
+                          extra_filter=(HasFocus(DEFAULT_BUFFER))
+                          ))
             ]),
         Window(width=D.exact(1), height=D.exact(1), content=FillControl('-', token=Token.Line)),
         Window(

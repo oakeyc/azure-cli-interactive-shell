@@ -18,8 +18,8 @@ network lb inbound-nat-rule create|
 vm start|
 batch account delete|
 network lb address-pool delete|
-storage blob show|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-storage table policy list|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage blob show|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+storage table policy list|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 account set|
 vm show|
 network vpn-connection shared-key show|
@@ -32,12 +32,12 @@ network traffic-manager endpoint show|
 appservice web deployment slot delete|
 appservice web restart|
 group export|
-storage entity replace|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage entity replace|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network dns zone export|
 vm extension image list-versions|
-network vnet-gateway update|--properties_to_remove --properties_to_add --properties_to_set 
+network vnet-gateway update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 network vnet peering list|
-storage blob delete|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage blob delete|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network vnet-gateway create|
 vmss extension set|
 network vpn-connection show|
@@ -49,8 +49,8 @@ sql elastic-pools db list|
 sql elastic-pools delete|
 storage account check-name|
 redis import-method|
-storage container policy list|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-storage file generate-sas|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage container policy list|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+storage file generate-sas|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 cloud unregister|
 appservice web deployment list-site-credentials|
 network dns record a remove|
@@ -60,71 +60,71 @@ appservice web show|
 network vnet-gateway revoked-cert delete|
 network dns record ptr add|
 network application-gateway waf-config set|
-storage blob update|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage blob update|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 keyvault certificate issuer show|
 network local-gateway create|
 network dns record ns remove|
-network route-table route update|--properties_to_remove --properties_to_add --properties_to_set 
+network route-table route update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 sql db list|
 appservice web config hostname add|
 logout|
-storage cors add|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-storage table policy delete|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-storage directory show|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage cors add|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+storage table policy delete|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+storage directory show|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 acs scale|
 acr credential renew|
-storage share policy update|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage share policy update|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 vm availability-set list-sizes|
 keyvault secret delete|
 vm disk detach|
-appservice plan update|--properties_to_remove --properties_to_add --properties_to_set 
+appservice plan update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 network express-route peering create|
-storage entity query|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage entity query|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 batch account show|
-storage blob lease break|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage blob lease break|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 keyvault certificate delete|
 network express-route list-route-tables|
 network local-gateway list|
-storage container lease break|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-storage file copy cancel|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage container lease break|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+storage file copy cancel|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 vm open-port|
-network dns zone update|--properties_to_remove --properties_to_add --properties_to_set 
+network dns zone update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 batch application delete|
-group deployment wait|--updated --exists --created --deleted --interval --custom --timeout 
-storage message get|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+group deployment wait|--updated *wait till updated with provisioningState at 'Succeeded'--exists *wait till the resource exists--created *wait till created with 'provisioningState' at 'Succeeded'--deleted *wait till deleted--interval *polling interval in seconds--custom *Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running']--timeout *maximum wait in seconds
+storage message get|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 iot hub show-connection-string|
 sql server firewall list|
 container release create|
-vmss update|--properties_to_remove --properties_to_add --properties_to_set 
+vmss update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 keyvault certificate create|
-storage blob copy cancel|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage blob copy cancel|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 vmss delete|
 sql elastic-pools recommended show-metrics|
 role definition list|
 network lb frontend-ip delete|
 acr repository show-tags|
-storage blob generate-sas|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage blob generate-sas|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 vmss restart|
 acs kubernetes install-cli|
-vm wait|--updated --exists --created --deleted --interval --custom --timeout 
+vm wait|--updated *wait till updated with provisioningState at 'Succeeded'--exists *wait till the resource exists--created *wait till created with 'provisioningState' at 'Succeeded'--deleted *wait till deleted--interval *polling interval in seconds--custom *Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running']--timeout *maximum wait in seconds
 network lb delete|
 network public-ip show|
 keyvault delete|
 keyvault certificate pending merge|
-storage file upload-batch|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage file upload-batch|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 iot device show-connection-string|
 acr create|
-network vnet update|--properties_to_remove --properties_to_add --properties_to_set 
-storage share policy show|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-network application-gateway frontend-ip update|--properties_to_remove --properties_to_add --properties_to_set 
+network vnet update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
+storage share policy show|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+network application-gateway frontend-ip update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 network application-gateway probe create|
 network lb show|
-network application-gateway ssl-cert update|--properties_to_remove --properties_to_add --properties_to_set 
-network vpn-connection update|--properties_to_remove --properties_to_add --properties_to_set 
+network application-gateway ssl-cert update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
+network vpn-connection update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 vm nic list|
 vm image list|
 network vnet-gateway revoked-cert create|
-role definition update|--properties_to_remove --properties_to_add --properties_to_set 
+role definition update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 network vnet subnet show|
 network nic create|
 keyvault key backup|
@@ -134,54 +134,54 @@ vm create|
 sql server firewall update|
 vm availability-set show|
 group deployment operation list|
-storage blob copy start-batch|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage blob copy start-batch|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 keyvault certificate pending show|
-iot device update|--properties_to_remove --properties_to_add --properties_to_set 
+iot device update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 appservice web create|
 appservice web deployment user show|
 tag create|
 network dns zone show|
-storage container exists|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage container exists|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network application-gateway url-path-map list|
-storage file update|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage file update|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 vm access delete-linux-user|
 keyvault key create|
 network application-gateway ssl-cert delete|
-storage file copy start|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage file copy start|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network nic show|
 redis force-reboot|
 network nsg show|
-storage entity insert|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage entity insert|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 vm diagnostics get-default-config|
 vmss diagnostics set|
 storage account show|
 network vnet delete|
 account list-locations|
 sql db service-tier-advisor list|
-storage container policy show|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage container policy show|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 account clear|
-storage blob upload|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage blob upload|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network express-route show|
-storage share create|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage share create|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network vnet subnet create|
 network application-gateway url-path-map show|
 network application-gateway list|
 keyvault certificate contact add|
-network application-gateway http-settings update|--properties_to_remove --properties_to_add --properties_to_set 
+network application-gateway http-settings update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 vm list-ip-addresses|
-storage share metadata update|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-storage queue policy show|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage share metadata update|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+storage queue policy show|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network application-gateway address-pool delete|
 network traffic-manager profile show|
 keyvault list|
 vm diagnostics set|
-storage file delete|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage file delete|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 iot hub show|
-storage table policy show|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage table policy show|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 appservice web config container update|
 network lb inbound-nat-rule list|
 redis delete|
-storage share delete|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage share delete|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network application-gateway ssl-cert show|
 network vpn-connection delete|
 network vpn-connection shared-key reset|
@@ -190,46 +190,46 @@ acr show|
 network lb inbound-nat-pool show|
 keyvault key restore|
 network lb inbound-nat-pool create|
-network route-table update|--properties_to_remove --properties_to_add --properties_to_set 
-network lb inbound-nat-pool update|--properties_to_remove --properties_to_add --properties_to_set 
-storage file exists|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+network route-table update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
+network lb inbound-nat-pool update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
+storage file exists|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network dns zone list|
 network dns record-set create|
-storage queue exists|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage queue exists|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network vnet-gateway root-cert create|
 vm access set-linux-user|
 sql server create|
 keyvault set-policy|
 ad sp create-for-rbac|
 appservice web config appsettings update|
-storage table stats|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage table stats|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 keyvault certificate show|
 storage account keys renew|
-storage directory create|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-network express-route update|--properties_to_remove --properties_to_add --properties_to_set 
+storage directory create|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+network express-route update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 vm list|
 network route-table delete|
-network application-gateway auth-cert update|--properties_to_remove --properties_to_add --properties_to_set 
-storage directory metadata show|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+network application-gateway auth-cert update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
+storage directory metadata show|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network nic list-effective-nsg|
 network application-gateway probe list|
-storage account delete|--force 
+storage account delete|--force *Do not prompt for confirmation
 group deployment delete|
 iot device message reject|
 network lb address-pool list|
-storage container lease renew|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-storage container delete|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage container lease renew|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+storage container delete|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network lb probe show|
 account list|
 network route-table create|
 network dns record txt add|
-storage directory delete|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage directory delete|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 keyvault key list-versions|
-storage share policy list|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-storage container lease release|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage share policy list|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+storage container lease release|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 policy assignment list|
 sql elastic-pools db show-activity|
-network dns zone delete|--force 
+network dns zone delete|--force *Do not prompt for confirmation
 vmss extension image list-versions|
 acs delete|
 iot hub policy delete|
@@ -244,7 +244,7 @@ network vnet-gateway list|
 keyvault secret list-versions|
 provider unregister|
 network lb inbound-nat-rule show|
-storage container policy create|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage container policy create|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 iot hub show-quota-metrics|
 network vnet-gateway delete|
 network express-route auth list|
@@ -252,7 +252,7 @@ network application-gateway frontend-ip delete|
 ad group list|
 vm extension list|
 network vnet subnet delete|
-storage queue metadata update|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage queue metadata update|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 resource list|
 network dns zone create|
 vmss extension image list-names|
@@ -260,24 +260,24 @@ network application-gateway http-listener show|
 network public-ip create|
 network traffic-manager endpoint delete|
 sql db transparent-data-encryption show-activity|
-vm availability-set update|--properties_to_remove --properties_to_add --properties_to_set 
-network vnet subnet update|--properties_to_remove --properties_to_add --properties_to_set 
+vm availability-set update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
+network vnet subnet update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 context show|
 vm image list-publishers|
 iot hub policy list|
-storage message clear|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage message clear|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 acs create|
 acr check-name|
 network application-gateway address-pool list|
-storage table generate-sas|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage table generate-sas|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 vm generalize|
 provider register|
-group update|--properties_to_remove --properties_to_add --properties_to_set 
+group update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 container build create|
 component remove|
 cloud show|
 batch application show|
-acr update|--properties_to_remove --properties_to_add --properties_to_set 
+acr update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 iot device message receive|
 vm availability-set create|
 network express-route auth create|
@@ -285,20 +285,20 @@ network traffic-manager profile check-dns|
 network application-gateway stop|
 sql server show-usage|
 iot hub list|
-storage file list|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage file list|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 iot hub consumer-group list|
 network list-usages|
 vmss extension delete|
 vm image list-skus|
 sql db data-warehouse resume|
 provider show|
-network nic update|--properties_to_remove --properties_to_add --properties_to_set 
+network nic update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 keyvault key list|
 storage account update|
 sql db create|
 batch account set|
 lock list|
-storage logging show|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage logging show|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 keyvault certificate list|
 iot device list|
 network dns record txt remove|
@@ -312,32 +312,32 @@ vm nic add|
 keyvault certificate download|
 network lb frontend-ip list|
 redis regenerate-keys|
-storage table create|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage table create|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 appservice web log tail|
 sql server service-objective show|
 appservice web config show|
 storage account create|
-group wait|--updated --exists --created --deleted --interval --custom --timeout 
+group wait|--updated *wait till updated with provisioningState at 'Succeeded'--exists *wait till the resource exists--created *wait till created with 'provisioningState' at 'Succeeded'--deleted *wait till deleted--interval *polling interval in seconds--custom *Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running']--timeout *maximum wait in seconds
 sql db replication-link show|
 appservice web source-control config|
-storage blob service-properties show|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage blob service-properties show|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 iot hub list-skus|
 network vpn-connection create|
 network application-gateway delete|
 vm extension image show|
-storage blob metadata update|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage blob metadata update|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 sql server show|
 network traffic-manager profile list|
 keyvault delete-policy|
 network vnet show|
 vm disk list|
 vmss extension list|
-sql elastic-pools update|--properties_to_remove --properties_to_add --properties_to_set 
+sql elastic-pools update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 context modify|
 network express-route peering list|
 provider list|
 ad sp delete|
-storage cors clear|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage cors clear|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 batch account keys renew|
 iot device message send|
 network application-gateway http-settings create|
@@ -347,14 +347,14 @@ network lb list|
 storage account keys list|
 lock create|
 vmss get-instance-view|
-network application-gateway probe update|--properties_to_remove --properties_to_add --properties_to_set 
-storage file download-batch|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+network application-gateway probe update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
+storage file download-batch|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 keyvault certificate import|
 appservice web source-control delete|
 network application-gateway ssl-policy set|
 redis show|
 redis update-settings|
-storage queue policy create|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage queue policy create|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 ad group delete|
 network vnet peering create|
 network route-table route show|
@@ -363,19 +363,19 @@ network nic ip-config address-pool remove|
 keyvault secret list|
 network nic list|
 network express-route auth show|
-storage queue metadata show|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage queue metadata show|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network express-route auth delete|
 component list-available|
 network lb probe list|
-storage share update|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage share update|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 resource show|
 acr credential show|
-storage entity delete|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage entity delete|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network nic ip-config address-pool add|
 batch location quotas show|
 appservice web deployment slot swap|
 sql db service-tier-advisor show|
-storage blob lease acquire|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage blob lease acquire|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 policy definition show|
 network application-gateway address-pool create|
 sql elastic-pools recommended list|
@@ -390,70 +390,70 @@ vmss delete-instances|
 network application-gateway auth-cert delete|
 ad app delete|
 feedback|
-storage container create|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-storage logging update|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage container create|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+storage logging update|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network vnet-gateway show|
 network express-route peering delete|
 vm image list-offers|
-network dns record-set update|--properties_to_remove --properties_to_add --properties_to_set 
+network dns record-set update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 ad app create|
-network application-gateway rule update|--properties_to_remove --properties_to_add --properties_to_set 
+network application-gateway rule update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 network dns record srv remove|
-storage blob snapshot|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-sql server update|--properties_to_remove --properties_to_add --properties_to_set 
+storage blob snapshot|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+sql server update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 batch account autostorage-keys sync|
-storage directory exists|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage directory exists|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network dns record cname add|
 network lb rule show|
 vmss nic list-vm-nics|
 network application-gateway url-path-map delete|
-storage share metadata show|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage share metadata show|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 sql db transparent-data-encryption create|
 keyvault key import|
 vm extension image list-names|
 sql db transparent-data-encryption show-configuration|
 group list|
 storage account list|
-network nic ip-config update|--properties_to_remove --properties_to_add --properties_to_set 
+network nic ip-config update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 acs kubernetes browse|
-network application-gateway http-listener update|--properties_to_remove --properties_to_add --properties_to_set 
+network application-gateway http-listener update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 appservice web config appsettings show|
 appservice plan create|
-network application-gateway url-path-map update|--properties_to_remove --properties_to_add --properties_to_set 
+network application-gateway url-path-map update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 ad sp create|
 resource delete|
 network vnet-gateway root-cert delete|
 role definition create|
 sql server firewall create|
 network lb inbound-nat-pool delete|
-storage container generate-sas|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage container generate-sas|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 vm nic show|
 network vnet list|
-storage cors list|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage cors list|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network dns record aaaa add|
 acs show|
 vmss list|
-storage directory metadata update|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage directory metadata update|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network application-gateway auth-cert create|
-storage queue policy delete|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage queue policy delete|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network dns record-set show|
 network vnet peering show|
-storage metrics show|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage metrics show|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 sql server firewall show|
 iot hub consumer-group show|
-storage table list|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-storage container lease change|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage table list|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+storage container lease change|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 redis export|
-network traffic-manager endpoint update|--properties_to_remove --properties_to_add --properties_to_set 
-storage container metadata show|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+network traffic-manager endpoint update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
+storage container metadata show|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 iot device create|
-storage queue policy update|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage queue policy update|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 context delete|
-storage container lease acquire|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage container lease acquire|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 acs dcos install-cli|
 component list|
 network nsg create|
-storage table delete|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage table delete|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 keyvault show|
 keyvault certificate contact list|
 vm boot-diagnostics disable|
@@ -464,10 +464,10 @@ network application-gateway probe delete|
 iot hub policy create|
 batch application set|
 network vpn-connection list|
-storage file metadata update|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage file metadata update|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 appservice web deployment slot create|
 network lb rule delete|
-storage container show-permission|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage container show-permission|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 keyvault certificate pending delete|
 network lb rule create|
 acr repository list|
@@ -476,12 +476,12 @@ policy definition update|
 login|
 keyvault secret set|
 appservice web delete|
-storage share policy delete|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage share policy delete|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 acs kubernetes get-credentials|
 appservice web config appsettings delete|
-network lb probe update|--properties_to_remove --properties_to_add --properties_to_set 
+network lb probe update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 network nic ip-config delete|
-network vpn-connection shared-key update|--properties_to_remove --properties_to_add --properties_to_set 
+network vpn-connection shared-key update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 network application-gateway show-backend-health|
 network application-gateway create|
 iot hub consumer-group create|
@@ -497,29 +497,29 @@ acs dcos browse|
 vm list-vm-resize-options|
 keyvault key show|
 network lb frontend-ip show|
-storage file metadata show|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage file metadata show|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 feature list|
-storage container show|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage container show|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 role assignment list|
-storage blob upload-batch|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage blob upload-batch|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 vmss create|
 iot hub job list|
-storage share exists|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage share exists|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 vmss start|
 vmss nic list|
 network application-gateway http-settings delete|
-network lb frontend-ip update|--properties_to_remove --properties_to_add --properties_to_set 
+network lb frontend-ip update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 vm image show|
 vmss stop|
 ad user show|
 iot device show|
-storage message peek|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage message peek|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 container release list|
 network lb address-pool show|
 role assignment create|
 redis patch-schedule show|
-vm delete|--force 
-network vnet peering update|--properties_to_remove --properties_to_add --properties_to_set 
+vm delete|--force *Do not prompt for confirmation
+network vnet peering update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 storage account show-usage|
 network nsg list|
 context create|
@@ -533,100 +533,100 @@ appservice web config container show|
 tag delete|
 network express-route list|
 network vnet peering delete|
-storage file resize|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage file resize|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 batch application package activate|
 network route-table route create|
 tag list|
-storage container policy update|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage container policy update|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 vmss nic show|
 vm redeploy|
 keyvault create|
-storage metrics update|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage metrics update|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 keyvault certificate issuer admin list|
 batch account create|
 group deployment show|
-storage account generate-sas|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-storage queue list|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage account generate-sas|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+storage queue list|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 sql db show|
 batch application list|
 role assignment delete|
-storage queue delete|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-sql db update|--properties_to_remove --properties_to_add --properties_to_set 
+storage queue delete|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+sql db update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 network express-route peering show|
 network application-gateway rule show|
 network public-ip list|
 network application-gateway frontend-port create|
-network application-gateway address-pool update|--properties_to_remove --properties_to_add --properties_to_set 
+network application-gateway address-pool update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 vmss extension image show|
-network application-gateway update|--properties_to_remove --properties_to_add --properties_to_set 
+network application-gateway update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 network nic ip-config show|
 keyvault certificate issuer list|
 iot hub job cancel|
-iot hub update|--properties_to_remove --properties_to_add --properties_to_set 
+iot hub update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 ad sp show|
-storage entity merge|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage entity merge|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 keyvault certificate issuer admin delete|
 network application-gateway ssl-policy show|
 network traffic-manager endpoint list|
 keyvault certificate issuer update|
-storage container policy delete|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-storage message update|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-storage file show|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage container policy delete|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+storage message update|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+storage file show|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 acr list|
-storage file copy start-batch|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage file copy start-batch|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 sql elastic-pools create|
-storage message delete|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-network nsg rule update|--properties_to_remove --properties_to_add --properties_to_set 
+storage message delete|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+network nsg rule update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 appservice web config update|
 keyvault secret show|
 batch application package create|
-network lb update|--properties_to_remove --properties_to_add --properties_to_set 
+network lb update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 sql elastic-pools db show|
 lock delete|
 redis create|
 appservice web source-control show|
 network nic show-effective-route-table|
 vm extension show|
-network express-route peering update|--properties_to_remove --properties_to_add --properties_to_set 
+network express-route peering update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 network route-table route delete|
 batch application package delete|
 appservice web config hostname list|
 ad app list|
-network local-gateway update|--properties_to_remove --properties_to_add --properties_to_set 
+network local-gateway update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 appservice web source-control config-local-git|
-storage file url|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-storage directory list|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage file url|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+storage directory list|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network lb frontend-ip create|
-storage share stats|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-storage container set-permission|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage share stats|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+storage container set-permission|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 ad user list|
-storage entity show|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-network lb inbound-nat-rule update|--properties_to_remove --properties_to_add --properties_to_set 
+storage entity show|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+network lb inbound-nat-rule update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 vm availability-set list|
 acs browse|
 sql server service-objective list|
 keyvault certificate issuer create|
 network application-gateway auth-cert show|
 sql elastic-pools list|
-storage container metadata update|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage container metadata update|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 context switch|
-storage message put|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage message put|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 policy definition list|
 keyvault certificate issuer admin add|
-storage table exists|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage table exists|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 sql db show-usage|
 network local-gateway show|
-storage blob copy start|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage blob copy start|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 group exists|
 keyvault key delete|
-network nsg update|--properties_to_remove --properties_to_add --properties_to_set 
+network nsg update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 ad sp reset-credentials|
 resource move|
 iot hub job show|
 ad group show|
 sql server list|
 group show|
-storage queue generate-sas|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage queue generate-sas|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 iot device message abandon|
 appservice web config hostname delete|
 network dns record-set list|
@@ -639,22 +639,22 @@ network application-gateway http-settings list|
 network nic ip-config create|
 network dns record cname remove|
 ad app update|
-vm update|--properties_to_remove --properties_to_add --properties_to_set 
-network application-gateway frontend-port update|--properties_to_remove --properties_to_add --properties_to_set 
+vm update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
+network application-gateway frontend-port update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 sql elastic-pools recommended db list|
 lock update|
 tag add-value|
 network nic ip-config inbound-nat-rule add|
 vm extension set|
 network lb inbound-nat-rule delete|
-storage file download|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-storage table policy create|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage file download|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+storage table policy create|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 iot hub consumer-group delete|
-storage share list|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-storage table policy update|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage share list|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+storage table policy update|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 policy assignment show|
 appservice list-locations|
-network application-gateway wait|--updated --exists --created --deleted --interval --custom --timeout 
+network application-gateway wait|--updated *wait till updated with provisioningState at 'Succeeded'--exists *wait till the resource exists--created *wait till created with 'provisioningState' at 'Succeeded'--deleted *wait till deleted--interval *polling interval in seconds--custom *Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running']--timeout *maximum wait in seconds
 vm resize|
 context list|
 network lb inbound-nat-pool list|
@@ -664,22 +664,22 @@ network vnet-gateway reset|
 vmss extension show|
 group deployment operation show|
 iot hub show-stats|
-storage blob lease change|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage blob lease change|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network nsg delete|
 vm boot-diagnostics enable|
 network lb address-pool create|
 keyvault key set-attributes|
-storage blob download-batch|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-storage blob lease renew|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-storage blob download|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage blob download-batch|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+storage blob lease renew|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+storage blob download|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network application-gateway ssl-cert create|
 keyvault certificate contact delete|
-storage blob lease release|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage blob lease release|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network lb rule list|
 group deployment create|
 network local-gateway delete|
 ad user delete|
-storage queue create|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage queue create|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 sql server firewall delete|
 iot hub delete|
 network application-gateway url-path-map rule delete|
@@ -689,7 +689,7 @@ lock show|
 sql elastic-pools show|
 sql db data-warehouse pause|
 component update|
-storage blob list|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage blob list|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 appservice web source-control sync|
 network application-gateway frontend-ip create|
 vmss extension image list|
@@ -697,7 +697,7 @@ vm deallocate|
 appservice web log download|
 batch application package show|
 iot hub create|
-storage share show|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage share show|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 acr delete|
 network application-gateway probe show|
 network dns record srv add|
@@ -705,16 +705,16 @@ keyvault certificate set-attributes|
 vmss list-instances|
 redis list-all|
 cloud list|
-storage share generate-sas|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage share generate-sas|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 vm list-usage|
-storage queue policy list|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-storage blob exists|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-storage file upload|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-network public-ip update|--properties_to_remove --properties_to_add --properties_to_set 
+storage queue policy list|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+storage blob exists|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+storage file upload|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+network public-ip update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 sql db replication-link delete|
 network express-route list-arp-tables|
 keyvault certificate list-versions|
-keyvault update|--properties_to_remove --properties_to_add --properties_to_set 
+keyvault update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 vmss show|
 network application-gateway rule list|
 appservice web start|
@@ -722,8 +722,8 @@ network application-gateway url-path-map create|
 network traffic-manager profile delete|
 vm access reset-linux-ssh|
 vm disk attach-new|
-storage container list|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
-storage share policy create|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage container list|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
+storage share policy create|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network application-gateway start|
 network traffic-manager endpoint create|
 sql db replication-link force-failover|
@@ -731,46 +731,46 @@ network application-gateway rule create|
 network express-route delete|
 network nic ip-config list|
 feature register|
-network vnet-gateway wait|--updated --exists --created --deleted --interval --custom --timeout 
+network vnet-gateway wait|--updated *wait till updated with provisioningState at 'Succeeded'--exists *wait till the resource exists--created *wait till created with 'provisioningState' at 'Succeeded'--deleted *wait till deleted--interval *polling interval in seconds--custom *Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running']--timeout *maximum wait in seconds
 vm nic set|
 vmss list-skus|
 role definition delete|
 iot device delete|
-storage queue stats|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage queue stats|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 vmss scale|
 network lb probe create|
 network express-route create|
-appservice plan delete|--force 
+appservice plan delete|--force *Do not prompt for confirmation
 appservice web list|
-storage blob url|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage blob url|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 vm boot-diagnostics get-boot-log|
 network application-gateway url-path-map rule create|
 network dns record a add|
 vmss update-instances|
 keyvault certificate issuer delete|
 sql server delete|
-network traffic-manager profile update|--properties_to_remove --properties_to_add --properties_to_set 
+network traffic-manager profile update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 vm restart|
 network application-gateway http-listener create|
 network lb create|
 network vnet create|
 storage account show-connection-string|
-network lb rule update|--properties_to_remove --properties_to_add --properties_to_set 
+network lb rule update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 keyvault secret download|
 network dns record update-soa|
 network nsg rule list|
 network route-table list|
 appservice web deployment user set|
-resource update|--properties_to_remove --properties_to_add --properties_to_set 
+resource update|--properties_to_remove *Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove--properties_to_add *Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>--properties_to_set *Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>
 sql elastic-pools recommended db show|
 group deployment export|
 appservice web deployment slot auto-swap|
-group delete|--force 
+group delete|--force *Do not prompt for confirmation
 keyvault secret set-attributes|
 acs list|
 network lb probe delete|
 ad user create|
-storage blob metadata show|[required]--connection_string [required]--sas_token [required]--account_name [required]--account_key 
+storage blob metadata show|[required]--connection_string *Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING[required]--sas_token *A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN[required]--account_name *Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT[required]--account_key *Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY
 network application-gateway waf-config show|
 vmss diagnostics get-default-config|
 configure|
