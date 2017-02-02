@@ -5,7 +5,12 @@
 
 # Cache files #
 *.pyc
-__pycache__
+__pycache__/
+
+# in src folder #
+src/__pycache/
+src/*.pyc
+src/shell/
 
 # OS gen files #
 .DS_Store
