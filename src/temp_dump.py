@@ -96,6 +96,43 @@ def _dump_command_table(**kwargs):
         print('\nPARAM: "{}" - {} commands - scope "{}" - {}'.format(
             param, len(commands), _get_parameter_scope(param, commands), commands), file=sys.stderr)
 
+    param_file = open("params_dump.txt", 'w')
+    help = open("help_dump.txt", 'w')
+    for cmd in cmd_table:
+        # load_params(cmd)
+        # cmd_string = 'az {} -h'.format(cmd)
+        # output = StringIO()
+        # sys.stdout = output
+        # os.system(cmd_string)
+        descrip = cmd_table[cmd].description
+
+        param_file.write(cmd + "|")
+        for key in cmd_table[cmd].arguments:
+            if cmd_table[cmd].arguments[key].type.settings.get('required'):
+                param_file.write("[required]")
+            param_file.write("--" + _dashed_to_camel(key) + " ")
+            # if key.settings.get('required'):
+            #     param_file.write("[required]")
+            # for opt in key.settings.get('options_list'):
+            #     param_file.write(opt + " ")
+        # for key in cmd_table[cmd].arguments:  # parameters
+        #     # param_file.write(cmd_table[cmd].arguments[key].options + " ")
+        #     opts = cmd_table[cmd].arguments[key]
+        #     # param_file.write(opts)
+        #     # for o in opts:
+        #     for opt in opts:
+        #         if 'required' in opts:
+        #             param_file.write("[required]")
+        #         if 'dest' in opts:
+        #             param_file.write("--" + opts['dest'] + " ")
+                # if 'help' in opts:
+                #     param_file.write("*" + opts['help'])
+        param_file.write("\n")
+
+
+        help.write(cmd + ":" + str(descrip) + "\n")
+    help.close()
+    param_file.close()
     sys.exit(0)
 
 def _format_entry(obj):
@@ -174,34 +211,7 @@ config = Configuration([])
 cmd_table = config.get_command_table()
 # cmd_list = sorted([cmd_name for cmd_name in cmd_table.keys() if cmd_set_names is None or cmd_name.split()[0] in cmd_set_names])
 
-param_file = open("params_dump.txt", 'w')
-help = open("help_dump.txt", 'w')
-for cmd in cmd_table:
-    # load_params(cmd)
-    # cmd_string = 'az {} -h'.format(cmd)
-    # output = StringIO()
-    # sys.stdout = output
-    # os.system(cmd_string)
-    descrip = cmd_table[cmd].description
-    param_file.write(cmd + "|")
-    for key in cmd_table[cmd].arguments:  # parameters
-        # param_file.write(cmd_table[cmd].arguments[key].options + " ")
-        opts = cmd_table[cmd].arguments[key].__getattr__('options')
-        # param_file.write(opts)
-        # for o in opts:
-        for opt in opts:
-            if 'required' in opts:
-                param_file.write("[required]")
-            if 'dest' in opts:
-                param_file.write("--" + opts['dest'] + " ")
-            # if 'help' in opts:
-            #     param_file.write("*" + opts['help'])
-    param_file.write("\n")
 
-
-    help.write(cmd + ":" + str(descrip) + "\n")
-help.close()
-param_file.close()
 
     # print('\n===============================', flush=True)
 APPLICATION.register(Application.COMMAND_PARSER_LOADED, _dump_command_table)

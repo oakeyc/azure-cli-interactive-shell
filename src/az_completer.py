@@ -49,9 +49,9 @@ class AzCompleter(Completer):
             key = str(line.partition("|")[0])
             args = ""
             if "*" in line:  # if there is a help
-                for arg in line.partition("|")[2].partition("*")[0].split():
+                for arg in line.partition("|")[2].split():
                     args += str(arg) + "\n"
-                    self.descrip[arg] = str(line.partition("|")[2].partition("*")[2])
+                    self.descrip[arg] = str(line.partition("|")[2])
                 self.param_dict[key] = args
             else:
                 for arg in line.partition("|")[2].split():

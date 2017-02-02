@@ -27,8 +27,8 @@ class AzLexer(RegexLexer):
             # --instance-ids
             (words(
                 tuple(completion_index.args_opts),
-                prefix='',
-                suffix=''),
+                prefix=r'',
+                suffix=r'\b'),
              Keyword.Declaration),
             # Everything else
             (r'.*\n', Text),

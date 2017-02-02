@@ -1,780 +1,780 @@
-sql db restore-point list|
-redis list|
-network vnet check-ip-address|
-batch application create|
-network application-gateway show|
-sql db delete|
-iot device message complete|
-account show|
-group deployment validate|
-network nsg rule show|
-vm disk attach-existing|
-network nsg rule create|
-appservice web browse|
-network nsg rule delete|
-network dns record ptr remove|
-sql elastic-pools recommended show|
-network lb inbound-nat-rule create|
-vm start|
-batch account delete|
-network lb address-pool delete|
-storage blob show|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-storage table policy list|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-account set|
-vm show|
-network vpn-connection shared-key show|
-sql db replication-link failover|
-feature show|
-vm nic remove|
-network application-gateway auth-cert list|
-redis patch-schedule delete|
-network traffic-manager endpoint show|
-appservice web deployment slot delete|
-appservice web restart|
-group export|
-storage entity replace|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network dns zone export|
-vm extension image list-versions|
-network vnet-gateway update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-network vnet peering list|
-storage blob delete|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network vnet-gateway create|
-vmss extension set|
-network vpn-connection show|
-iot hub policy show|
-vmss reimage|
-iot device export|
-network nic delete|
-sql elastic-pools db list|
-sql elastic-pools delete|
-storage account check-name|
-redis import-method|
-storage container policy list|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-storage file generate-sas|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-cloud unregister|
-appservice web deployment list-site-credentials|
-network dns record a remove|
-policy definition create|
-group create|
-appservice web show|
-network vnet-gateway revoked-cert delete|
-network dns record ptr add|
-network application-gateway waf-config set|
-storage blob update|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-keyvault certificate issuer show|
-network local-gateway create|
-network dns record ns remove|
-network route-table route update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-sql db list|
-appservice web config hostname add|
-logout|
-storage cors add|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-storage table policy delete|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-storage directory show|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-acs scale|
-acr credential renew|
-storage share policy update|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-vm availability-set list-sizes|
-keyvault secret delete|
-vm disk detach|
-appservice plan update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-network express-route peering create|
-storage entity query|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-batch account show|
-storage blob lease break|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-keyvault certificate delete|
-network express-route list-route-tables|
-network local-gateway list|
-storage container lease break|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-storage file copy cancel|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-vm open-port|
-network dns zone update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-batch application delete|
-group deployment wait|--updated --updated --updated --exists --exists --exists --created --created --created --deleted --deleted --deleted --interval --interval --interval --interval --custom --custom --timeout --timeout --timeout --timeout 
-storage message get|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-iot hub show-connection-string|
-sql server firewall list|
-container release create|
-vmss update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-keyvault certificate create|
-storage blob copy cancel|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-vmss delete|
-sql elastic-pools recommended show-metrics|
-role definition list|
-network lb frontend-ip delete|
-acr repository show-tags|
-storage blob generate-sas|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-vmss restart|
-acs kubernetes install-cli|
-vm wait|--updated --updated --updated --exists --exists --exists --created --created --created --deleted --deleted --deleted --interval --interval --interval --interval --custom --custom --timeout --timeout --timeout --timeout 
-network lb delete|
-network public-ip show|
-keyvault delete|
-keyvault certificate pending merge|
-storage file upload-batch|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-iot device show-connection-string|
-acr create|
-network vnet update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-storage share policy show|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network application-gateway frontend-ip update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-network application-gateway probe create|
-network lb show|
-network application-gateway ssl-cert update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-network vpn-connection update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-vm nic list|
-vm image list|
-network vnet-gateway revoked-cert create|
-role definition update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-network vnet subnet show|
-network nic create|
-keyvault key backup|
+sql db restore-point list|[required]--resource_group_name [required]--database_name [required]--server_name 
+redis list|[required]--resource_group_name 
+network vnet check-ip-address|[required]--virtual_network_name [required]--resource_group_name --ip_address 
+batch application create|[required]--resource_group_name [required]--application_id [required]--account_name --display_name --allow_updates 
+network application-gateway show|[required]--resource_group_name [required]--application_gateway_name 
+sql db delete|[required]--resource_group_name [required]--database_name [required]--server_name 
+iot device message complete|[required]--hub_name --resource_group_name [required]--lock_token [required]--device_id 
+account show|--expanded_view --subscription 
+group deployment validate|[required]--resource_group_name --mode --parameters --template_file --template_uri 
+network nsg rule show|[required]--network_security_group_name [required]--resource_group_name [required]--security_rule_name 
+vm disk attach-existing|[required]--vm_name [required]--resource_group_name --lun --caching [required]--vhd --disk_name 
+network nsg rule create|[required]--resource_group_name [required]--destination_address_prefix [required]--protocol --description [required]--access [required]--direction [required]--source_address_prefix [required]--source_port_range [required]--network_security_group_name [required]--security_rule_name [required]--destination_port_range --priority 
+appservice web browse|--slot [required]--resource_group_name [required]--name 
+network nsg rule delete|[required]--network_security_group_name [required]--resource_group_name [required]--security_rule_name 
+network dns record ptr remove|[required]--dname [required]--resource_group_name [required]--record_set_name [required]--zone_name 
+sql elastic-pools recommended show|[required]--resource_group_name [required]--recommended_elastic_pool_name [required]--server_name 
+network lb inbound-nat-rule create|[required]--resource_group_name [required]--protocol [required]--item_name [required]--load_balancer_name --floating_ip --idle_timeout [required]--frontend_ip_name [required]--frontend_port [required]--backend_port 
+vm start|[required]--vm_name [required]--resource_group_name 
+batch account delete|[required]--resource_group_name [required]--account_name 
+network lb address-pool delete|[required]--item_name [required]--resource_group_name [required]--resource_name --no_wait 
+storage blob show|--lease_id --if_none_match --if_modified_since --if_unmodified_since --sas_token --account_key --snapshot --timeout [required]--container_name --connection_string --if_match [required]--blob_name --account_name 
+storage table policy list|--connection_string --sas_token --account_name --account_key [required]--container_name 
+account set|[required]--subscription 
+vm show|[required]--vm_name [required]--resource_group_name --show_details 
+network vpn-connection shared-key show|[required]--resource_group_name [required]--virtual_network_gateway_connection_name 
+sql db replication-link failover|[required]--resource_group_name [required]--database_name [required]--server_name [required]--link_id 
+feature show|[required]--resource_provider_namespace [required]--feature_name 
+vm nic remove|[required]--vm_name [required]--resource_group_name --primary_nic [required]--nics 
+network application-gateway auth-cert list|[required]--resource_group_name [required]--resource_name 
+redis patch-schedule delete|[required]--resource_group_name [required]--name 
+network traffic-manager endpoint show|[required]--resource_group_name [required]--profile_name [required]--endpoint_name [required]--endpoint_type 
+appservice web deployment slot delete|[required]--slot [required]--resource_group_name [required]--webapp 
+appservice web restart|--slot [required]--resource_group_name [required]--name 
+group export|[required]--resource_group_name --include_parameter_default_value --include_comments 
+storage entity replace|--sas_token --account_key [required]--entity [required]--table_name --timeout --connection_string --if_match --account_name 
+network dns zone export|[required]--file_name [required]--resource_group_name [required]--zone_name 
+vm extension image list-versions|--orderby [required]--publisher_name --top --filter [required]--location [required]--type 
+network vnet-gateway update|--properties_to_add --public_ip_address --vpn_type --bgp_peering_address --enable_bgp --raw --properties_to_set --asn --sku [required]--resource_group_name --properties_to_remove --tags --peer_weight [required]--virtual_network_gateway_name --gateway_type --virtual_network --address_prefixes 
+network vnet peering list|[required]--virtual_network_name [required]--resource_group_name 
+storage blob delete|--lease_id --if_match --if_none_match --if_modified_since --if_unmodified_since --sas_token --account_key --snapshot --timeout [required]--container_name --connection_string --delete_snapshots [required]--blob_name --account_name 
+network vnet-gateway create|--sku [required]--resource_group_name --vpn_type [required]--public_ip_address [required]--deployment_name --location --bgp_peering_address --enable_bgp --tags --peer_weight [required]--virtual_network_gateway_name --create_client_configuration --public_ip_address_type --virtual_network_type --gateway_type --raw [required]--virtual_network --asn --address_prefixes 
+vmss extension set|[required]--resource_group_name [required]--vmss_name [required]--publisher [required]--extension_name --settings --no_auto_upgrade --version --protected_settings 
+network vpn-connection show|[required]--resource_group_name [required]--virtual_network_gateway_connection_name 
+iot hub policy show|[required]--hub_name --resource_group_name [required]--policy_name 
+vmss reimage|[required]--vm_scale_set_name [required]--resource_group_name --instance_id 
+iot device export|[required]--blob_container_uri [required]--hub_name --resource_group_name --include_keys 
+network nic delete|[required]--resource_group_name [required]--network_interface_name 
+sql elastic-pools db list|[required]--resource_group_name [required]--elastic_pool_name [required]--server_name 
+sql elastic-pools delete|[required]--resource_group_name [required]--elastic_pool_name [required]--server_name 
+storage account check-name|[required]--name 
+redis import-method|[required]--files [required]--resource_group_name [required]--name [required]--file_format 
+storage container policy list|--connection_string --sas_token --account_name --account_key [required]--container_name 
+storage file generate-sas|--protocol --cache_control [required]--share_name --file_name --permission --sas_token --account_key --expiry --start --content_language --content_encoding --content_type --ip --id --connection_string --directory_name --content_disposition --account_name 
+cloud unregister|[required]--cloud_name 
+appservice web deployment list-site-credentials|[required]--resource_group_name [required]--name 
+network dns record a remove|[required]--ipv4_address [required]--resource_group_name [required]--record_set_name [required]--zone_name 
+policy definition create|[required]--rules --display_name [required]--name --description 
+group create|[required]--resource_group_name [required]--location --tags 
+appservice web show|--slot [required]--resource_group_name [required]--name 
+network vnet-gateway revoked-cert delete|[required]--resource_group_name [required]--gateway_name [required]--cert_name 
+network dns record ptr add|[required]--dname [required]--resource_group_name [required]--record_set_name [required]--zone_name 
+network application-gateway waf-config set|[required]--resource_group_name --no_wait --firewall_mode [required]--enabled [required]--application_gateway_name 
+storage blob update|--lease_id --if_none_match --if_modified_since --if_unmodified_since --sas_token --account_key --timeout [required]--container_name --content_settings --connection_string --if_match [required]--blob_name --account_name 
+keyvault certificate issuer show|[required]--vault_base_url [required]--issuer_name 
+network local-gateway create|[required]--resource_group_name [required]--deployment_name --use_bgp_settings --bgp_peering_address --local_address_prefix --peer_weight [required]--gateway_ip_address [required]--local_network_gateway_name --asn --tags 
+network dns record ns remove|[required]--dname [required]--resource_group_name [required]--record_set_name [required]--zone_name 
+network route-table route update|[required]--resource_group_name --next_hop_type --properties_to_add --next_hop_ip_address --properties_to_remove [required]--route_name [required]--route_table_name --properties_to_set --address_prefix 
+sql db list|[required]--resource_group_name [required]--server_name 
+appservice web config hostname add|--slot [required]--resource_group_name [required]--name [required]--webapp 
+logout|--username 
+storage cors add|--max_age --exposed_headers [required]--methods [required]--origins --sas_token --account_key --allowed_headers --timeout [required]--services --connection_string --account_name 
+storage table policy delete|--sas_token --account_key [required]--policy_name [required]--container_name --connection_string --account_name 
+storage directory show|[required]--share_name --sas_token --account_key --timeout --connection_string [required]--directory_name --account_name 
+acs scale|[required]--resource_group_name [required]--new_agent_count [required]--container_service_name 
+acr credential renew|--resource_group_name [required]--registry_name 
+storage share policy update|--permission --sas_token --account_key [required]--policy_name --start [required]--container_name --connection_string --expiry --account_name 
+vm availability-set list-sizes|[required]--resource_group_name [required]--availability_set_name 
+keyvault secret delete|[required]--vault_base_url [required]--secret_name 
+vm disk detach|[required]--vm_name [required]--resource_group_name [required]--disk_name 
+appservice plan update|--sku [required]--resource_group_name --allow_pending_state --properties_to_add [required]--name --properties_to_remove --properties_to_set --admin_site_name --number_of_workers 
+network express-route peering create|--advertised_public_prefixes [required]--resource_group_name [required]--primary_peer_address_prefix --customer_asn --shared_key --routing_registry_name [required]--secondary_peer_address_prefix [required]--circuit_name [required]--peer_asn [required]--vlan_id [required]--peering_type 
+storage entity query|--num_results --sas_token --account_key --filter --property_resolver [required]--table_name --accept --timeout --marker --connection_string --account_name --select 
+batch account show|[required]--resource_group_name [required]--account_name 
+storage blob lease break|--if_none_match --if_modified_since --if_unmodified_since --sas_token --account_key --lease_break_period --timeout [required]--container_name --connection_string --if_match [required]--blob_name --account_name 
+keyvault certificate delete|[required]--vault_base_url [required]--certificate_name 
+network express-route list-route-tables|[required]--resource_group_name [required]--peering_name [required]--device_path [required]--circuit_name 
+network local-gateway list|[required]--resource_group_name 
+storage container lease break|--if_modified_since --sas_token --account_key --lease_break_period --timeout [required]--container_name --connection_string --if_unmodified_since --account_name 
+storage file copy cancel|[required]--share_name [required]--file_name --sas_token --account_key [required]--copy_id --timeout --connection_string [required]--directory_name --account_name 
+vm open-port|[required]--vm_name [required]--resource_group_name --network_security_group_name --apply_to_subnet 
+network dns zone update|[required]--resource_group_name --properties_to_add --properties_to_set --properties_to_remove [required]--zone_name --if_match --if_none_match 
+batch application delete|[required]--resource_group_name [required]--application_id [required]--account_name 
+group deployment wait|[required]--resource_group_name --updated [required]--deployment_name --exists --created --deleted --interval --custom --timeout 
+storage message get|--num_messages [required]--queue_name --sas_token --account_key --timeout --connection_string --account_name --visibility_timeout 
+iot hub show-connection-string|--key_type --hub_name --policy_name --resource_group_name 
+sql server firewall list|[required]--resource_group_name [required]--server_name 
+container release create|--registry_resource_id --registry_name [required]--target_name --remote_branch --vsts_account_name --remote_access_token [required]--target_resource_group --remote_url --vsts_project_name 
+vmss update|--properties_to_remove [required]--resource_group_name --properties_to_add --properties_to_set [required]--name 
+keyvault certificate create|[required]--vault_base_url [required]--certificate_policy --tags [required]--certificate_name --expires --disabled --not_before 
+storage blob copy cancel|--lease_id --sas_token --account_key [required]--copy_id --timeout [required]--container_name --connection_string [required]--blob_name --account_name 
+vmss delete|[required]--vm_scale_set_name [required]--resource_group_name 
+sql elastic-pools recommended show-metrics|[required]--resource_group_name [required]--recommended_elastic_pool_name [required]--server_name 
+role definition list|--resource_group_name --custom_role_only --name --scope 
+network lb frontend-ip delete|[required]--item_name [required]--resource_group_name [required]--resource_name --no_wait 
+acr repository show-tags|--username --password [required]--registry_name [required]--repository 
+storage blob generate-sas|--protocol --cache_control --permission --ip --sas_token --account_key --expiry --start --content_language --content_encoding --content_type [required]--container_name --id --connection_string --content_disposition [required]--blob_name --account_name 
+vmss restart|[required]--vm_scale_set_name [required]--resource_group_name --instance_ids 
+acs kubernetes install-cli|--install_location --client_version 
+vm wait|[required]--vm_name [required]--resource_group_name --updated --exists --created --deleted --interval --custom --timeout 
+network lb delete|[required]--resource_group_name [required]--load_balancer_name 
+network public-ip show|[required]--public_ip_address_name [required]--resource_group_name --expand 
+keyvault delete|[required]--resource_group_name [required]--vault_name 
+keyvault certificate pending merge|[required]--vault_base_url [required]--certificate_name --certificate_attributes [required]--x509_certificates --tags 
+storage file upload-batch|--dryrun --pattern [required]--destination --sas_token --account_key [required]--source --validate_content --content_settings --connection_string --metadata --account_name --max_connections 
+iot device show-connection-string|--key_type [required]--hub_name --top --resource_group_name --device_id 
+acr create|[required]--resource_group_name --storage_account_name [required]--registry_name [required]--location --admin_enabled 
+network vnet update|[required]--resource_group_name --properties_to_add --properties_to_set --properties_to_remove [required]--virtual_network_name --address_prefixes 
+storage share policy show|--sas_token --account_key [required]--policy_name [required]--container_name --connection_string --account_name 
+network application-gateway frontend-ip update|--raw [required]--resource_group_name --properties_to_add --public_ip_address --subnet --properties_to_remove [required]--application_gateway_name [required]--item_name --properties_to_set --private_ip_address --virtual_network_name 
+network application-gateway probe create|[required]--resource_group_name [required]--protocol [required]--item_name --interval --no_wait [required]--application_gateway_name [required]--host --timeout --threshold [required]--path 
+network lb show|[required]--resource_group_name [required]--load_balancer_name --expand 
+network application-gateway ssl-cert update|[required]--resource_group_name --properties_to_add --properties_to_remove --cert_password [required]--application_gateway_name --raw --properties_to_set [required]--item_name --cert_data 
+network vpn-connection update|[required]--resource_group_name --properties_to_add --tags --properties_to_remove --enable_bgp --shared_key --routing_weight --properties_to_set [required]--virtual_network_gateway_connection_name 
+vm nic list|[required]--vm_name [required]--resource_group_name 
+vm image list|--sku --image_location --all --publisher_name --offer 
+network vnet-gateway revoked-cert create|[required]--resource_group_name [required]--gateway_name [required]--cert_name [required]--thumbprint 
+role definition update|[required]--role_definition_id --properties_to_add --properties_to_set [required]--role_definition --properties_to_remove [required]--scope 
+network vnet subnet show|[required]--virtual_network_name [required]--resource_group_name [required]--subnet_name --expand 
+network nic create|[required]--resource_group_name [required]--network_interface_name --use_dns_settings --private_ip_address_version [required]--deployment_name [required]--subnet --virtual_network_name --subnet_type --private_ip_address_allocation --tags --enable_ip_forwarding --public_ip_address_type --load_balancer_backend_address_pool_ids --location --private_ip_address --load_balancer_inbound_nat_rule_ids --internal_dns_name_label --public_ip_address --network_security_group_type --network_security_group 
+keyvault key backup|[required]--vault_base_url [required]--key_name [required]--file_path 
 network express-route list-service-providers|
-appservice web stop|
-vm create|
-sql server firewall update|
-vm availability-set show|
-group deployment operation list|
-storage blob copy start-batch|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-keyvault certificate pending show|
-iot device update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-appservice web create|
+appservice web stop|--slot [required]--resource_group_name [required]--name 
+vm create|--nic_type --public_ip_address_dns_name [required]--image --no_wait --storage_sku --nsg --public_ip_type --vnet_type --os_disk_name --storage_container_name --size --subnet --storage_profile --availability_set --nsg_rule --os_version --nics --storage_account_type --authentication_type --os_offer --admin_password --storage_caching --location [required]--vm_name --public_ip_address --vnet_name --tags --ssh_key_value --os_sku --storage_account --validate --nsg_type --generate_ssh_keys --subnet_address_prefix [required]--resource_group_name --public_ip_address_allocation --os_publisher --admin_username --ssh_dest_key_path --vnet_address_prefix --private_ip_address --os_type 
+sql server firewall update|--start_ip_address [required]--resource_group_name --end_ip_address [required]--server_name [required]--firewall_rule_name 
+vm availability-set show|[required]--resource_group_name [required]--availability_set_name 
+group deployment operation list|[required]--resource_group_name --top [required]--deployment_name 
+storage blob copy start-batch|[required]--source_account --exclude_new --recursive --exclude_old --sas_token --account_key [required]--source_container --prefix --snapshots --connection_string --source_sas --account_name [required]--destination_container 
+keyvault certificate pending show|[required]--vault_base_url [required]--certificate_name 
+iot device update|--resource_group_name --properties_to_add --properties_to_set --properties_to_remove [required]--hub_name [required]--device_id 
+appservice web create|[required]--resource_group_name [required]--name [required]--plan 
 appservice web deployment user show|
-tag create|
-network dns zone show|
-storage container exists|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network application-gateway url-path-map list|
-storage file update|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-vm access delete-linux-user|
-keyvault key create|
-network application-gateway ssl-cert delete|
-storage file copy start|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network nic show|
-redis force-reboot|
-network nsg show|
-storage entity insert|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-vm diagnostics get-default-config|
-vmss diagnostics set|
-storage account show|
-network vnet delete|
+tag create|[required]--tag_name 
+network dns zone show|[required]--resource_group_name [required]--zone_name 
+storage container exists|--sas_token --account_key --snapshot --timeout [required]--container_name --connection_string --blob_name --account_name 
+network application-gateway url-path-map list|[required]--resource_group_name [required]--resource_name 
+storage file update|[required]--share_name [required]--file_name --sas_token --account_key --timeout [required]--content_settings --connection_string [required]--directory_name --account_name 
+vm access delete-linux-user|[required]--vm_name [required]--resource_group_name [required]--username 
+keyvault key create|[required]--vault_base_url --key_ops --tags [required]--key_name [required]--destination --expires --disabled --key_size --not_before 
+network application-gateway ssl-cert delete|[required]--item_name [required]--resource_group_name [required]--resource_name --no_wait 
+storage file copy start|[required]--share_name [required]--file_name --sas_token --account_key [required]--copy_source --timeout --connection_string [required]--directory_name --account_name --metadata 
+network nic show|[required]--resource_group_name [required]--network_interface_name --expand 
+redis force-reboot|--shard_id [required]--resource_group_name [required]--name [required]--reboot_type 
+network nsg show|[required]--network_security_group_name [required]--resource_group_name --expand 
+storage entity insert|--if_exists --sas_token --account_key [required]--entity [required]--table_name --timeout --connection_string --account_name 
+vm diagnostics get-default-config|--is_windows_os 
+vmss diagnostics set|[required]--resource_group_name [required]--vmss_name --version [required]--settings --no_auto_upgrade --protected_settings 
+storage account show|[required]--resource_group_name [required]--account_name 
+network vnet delete|[required]--virtual_network_name [required]--resource_group_name 
 account list-locations|
-sql db service-tier-advisor list|
-storage container policy show|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
+sql db service-tier-advisor list|[required]--resource_group_name [required]--database_name [required]--server_name 
+storage container policy show|--sas_token --account_key [required]--policy_name [required]--container_name --connection_string --account_name 
 account clear|
-storage blob upload|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network express-route show|
-storage share create|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network vnet subnet create|
-network application-gateway url-path-map show|
-network application-gateway list|
-keyvault certificate contact add|
-network application-gateway http-settings update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-vm list-ip-addresses|
-storage share metadata update|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-storage queue policy show|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network application-gateway address-pool delete|
-network traffic-manager profile show|
-keyvault list|
-vm diagnostics set|
-storage file delete|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-iot hub show|
-storage table policy show|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-appservice web config container update|
-network lb inbound-nat-rule list|
-redis delete|
-storage share delete|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network application-gateway ssl-cert show|
-network vpn-connection delete|
-network vpn-connection shared-key reset|
-redis list-keys|
-acr show|
-network lb inbound-nat-pool show|
-keyvault key restore|
-network lb inbound-nat-pool create|
-network route-table update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-network lb inbound-nat-pool update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-storage file exists|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network dns zone list|
-network dns record-set create|
-storage queue exists|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network vnet-gateway root-cert create|
-vm access set-linux-user|
-sql server create|
-keyvault set-policy|
-ad sp create-for-rbac|
-appservice web config appsettings update|
-storage table stats|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-keyvault certificate show|
-storage account keys renew|
-storage directory create|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network express-route update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-vm list|
-network route-table delete|
-network application-gateway auth-cert update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-storage directory metadata show|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network nic list-effective-nsg|
-network application-gateway probe list|
-storage account delete|--force --force --force 
-group deployment delete|
-iot device message reject|
-network lb address-pool list|
-storage container lease renew|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-storage container delete|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network lb probe show|
-account list|
-network route-table create|
-network dns record txt add|
-storage directory delete|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-keyvault key list-versions|
-storage share policy list|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-storage container lease release|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-policy assignment list|
-sql elastic-pools db show-activity|
-network dns zone delete|--force --force --force 
-vmss extension image list-versions|
-acs delete|
-iot hub policy delete|
-iot device import|
-vm stop|
-network traffic-manager profile create|
-network dns record mx remove|
-network dns record mx add|
-appservice web deployment slot list|
-network application-gateway rule delete|
-network vnet-gateway list|
-keyvault secret list-versions|
-provider unregister|
-network lb inbound-nat-rule show|
-storage container policy create|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-iot hub show-quota-metrics|
-network vnet-gateway delete|
-network express-route auth list|
-network application-gateway frontend-ip delete|
-ad group list|
-vm extension list|
-network vnet subnet delete|
-storage queue metadata update|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-resource list|
-network dns zone create|
-vmss extension image list-names|
-network application-gateway http-listener show|
-network public-ip create|
-network traffic-manager endpoint delete|
-sql db transparent-data-encryption show-activity|
-vm availability-set update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-network vnet subnet update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-context show|
-vm image list-publishers|
-iot hub policy list|
-storage message clear|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-acs create|
-acr check-name|
-network application-gateway address-pool list|
-storage table generate-sas|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-vm generalize|
-provider register|
-group update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-container build create|
-component remove|
-cloud show|
-batch application show|
-acr update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-iot device message receive|
-vm availability-set create|
-network express-route auth create|
-network traffic-manager profile check-dns|
-network application-gateway stop|
-sql server show-usage|
-iot hub list|
-storage file list|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-iot hub consumer-group list|
-network list-usages|
-vmss extension delete|
-vm image list-skus|
-sql db data-warehouse resume|
-provider show|
-network nic update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-keyvault key list|
-storage account update|
-sql db create|
-batch account set|
-lock list|
-storage logging show|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-keyvault certificate list|
-iot device list|
-network dns record txt remove|
-cloud register|
-network application-gateway address-pool show|
-policy definition delete|
-network vnet subnet list|
-network application-gateway frontend-port list|
-vm extension delete|
-vm nic add|
-keyvault certificate download|
-network lb frontend-ip list|
-redis regenerate-keys|
-storage table create|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-appservice web log tail|
-sql server service-objective show|
-appservice web config show|
-storage account create|
-group wait|--updated --updated --updated --exists --exists --exists --created --created --created --deleted --deleted --deleted --interval --interval --interval --interval --custom --custom --timeout --timeout --timeout --timeout 
-sql db replication-link show|
-appservice web source-control config|
-storage blob service-properties show|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-iot hub list-skus|
-network vpn-connection create|
-network application-gateway delete|
-vm extension image show|
-storage blob metadata update|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-sql server show|
-network traffic-manager profile list|
-keyvault delete-policy|
-network vnet show|
-vm disk list|
-vmss extension list|
-sql elastic-pools update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-context modify|
-network express-route peering list|
-provider list|
-ad sp delete|
-storage cors clear|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-batch account keys renew|
-iot device message send|
-network application-gateway http-settings create|
-network application-gateway frontend-port delete|
-tag remove-value|
-network lb list|
-storage account keys list|
-lock create|
-vmss get-instance-view|
-network application-gateway probe update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-storage file download-batch|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-keyvault certificate import|
-appservice web source-control delete|
-network application-gateway ssl-policy set|
-redis show|
-redis update-settings|
-storage queue policy create|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-ad group delete|
-network vnet peering create|
-network route-table route show|
-network dns record ns add|
-network nic ip-config address-pool remove|
-keyvault secret list|
-network nic list|
-network express-route auth show|
-storage queue metadata show|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network express-route auth delete|
+storage blob upload|--lease_id --if_match --if_none_match --maxsize_condition --if_modified_since --if_unmodified_since --sas_token --blob_type --account_key [required]--file_path --validate_content --timeout [required]--container_name --content_settings --connection_string --max_connections [required]--blob_name --account_name --metadata 
+network express-route show|[required]--resource_group_name [required]--circuit_name 
+storage share create|--fail_on_exist [required]--share_name --sas_token --quota --account_key --timeout --connection_string --account_name --metadata 
+network vnet subnet create|[required]--resource_group_name [required]--virtual_network_name [required]--subnet_name --route_table --network_security_group [required]--address_prefix 
+network application-gateway url-path-map show|[required]--item_name [required]--resource_group_name [required]--resource_name 
+network application-gateway list|--resource_group_name 
+keyvault certificate contact add|[required]--vault_base_url --contact_phone --contact_name [required]--contact_email 
+network application-gateway http-settings update|[required]--resource_group_name --properties_to_add --raw --properties_to_remove --probe --cookie_based_affinity [required]--application_gateway_name [required]--item_name --properties_to_set --timeout --protocol --port 
+vm list-ip-addresses|--vm_name --resource_group_name 
+storage share metadata update|[required]--share_name --sas_token --account_key --timeout --connection_string --account_name --metadata 
+storage queue policy show|--sas_token --account_key [required]--policy_name [required]--container_name --connection_string --account_name 
+network application-gateway address-pool delete|[required]--item_name [required]--resource_group_name [required]--resource_name --no_wait 
+network traffic-manager profile show|[required]--resource_group_name [required]--profile_name 
+keyvault list|--resource_group_name 
+vm diagnostics set|[required]--vm_name [required]--resource_group_name --version [required]--settings --no_auto_upgrade --protected_settings 
+storage file delete|[required]--share_name [required]--file_name --sas_token --account_key --timeout --connection_string [required]--directory_name --account_name 
+iot hub show|[required]--hub_name --resource_group_name 
+storage table policy show|--sas_token --account_key [required]--policy_name [required]--container_name --connection_string --account_name 
+appservice web config container update|--slot [required]--resource_group_name --docker_registry_server_url [required]--name --docker_custom_image_name --docker_registry_server_password --docker_registry_server_user 
+network lb inbound-nat-rule list|[required]--resource_group_name [required]--resource_name 
+redis delete|[required]--resource_group_name [required]--name 
+storage share delete|--fail_not_exist [required]--share_name --sas_token --account_key --timeout --connection_string --account_name 
+network application-gateway ssl-cert show|[required]--item_name [required]--resource_group_name [required]--resource_name 
+network vpn-connection delete|[required]--resource_group_name [required]--virtual_network_gateway_connection_name 
+network vpn-connection shared-key reset|[required]--resource_group_name [required]--virtual_network_gateway_connection_name [required]--key_length 
+redis list-keys|[required]--resource_group_name [required]--name 
+acr show|--resource_group_name [required]--registry_name 
+network lb inbound-nat-pool show|[required]--item_name [required]--resource_group_name [required]--resource_name 
+keyvault key restore|[required]--vault_base_url [required]--file_path 
+network lb inbound-nat-pool create|[required]--frontend_port_range_start [required]--resource_group_name [required]--protocol [required]--item_name [required]--load_balancer_name --frontend_ip_name [required]--frontend_port_range_end [required]--backend_port 
+network route-table update|[required]--resource_group_name --properties_to_add --properties_to_set --tags --properties_to_remove [required]--route_table_name 
+network lb inbound-nat-pool update|--frontend_port_range_start [required]--resource_group_name --properties_to_add --properties_to_remove [required]--load_balancer_name [required]--item_name --frontend_ip_name --properties_to_set --protocol --frontend_port_range_end --backend_port 
+storage file exists|[required]--share_name --file_name --sas_token --account_key --timeout --connection_string --directory_name --account_name 
+network dns zone list|--resource_group_name 
+network dns record-set create|[required]--resource_group_name --if_none_match --metadata --ttl [required]--zone_name --if_match [required]--record_set_type [required]--record_set_name 
+storage queue exists|[required]--queue_name --sas_token --account_key --timeout --connection_string --account_name 
+network vnet-gateway root-cert create|[required]--resource_group_name [required]--public_cert_data [required]--gateway_name [required]--cert_name 
+vm access set-linux-user|[required]--vm_name [required]--resource_group_name [required]--username --password --ssh_key_value 
+sql server create|[required]--resource_group_name [required]--parameters [required]--server_name 
+keyvault set-policy|--upn [required]--resource_group_name --certificate_permissions --secret_permissions --object_id [required]--vault_name --spn --key_permissions 
+ad sp create-for-rbac|--scopes --name --years --expanded_view --role --password 
+appservice web config appsettings update|--slot [required]--resource_group_name [required]--name [required]--settings 
+storage table stats|--connection_string --timeout --sas_token --account_name --account_key 
+keyvault certificate show|[required]--vault_base_url [required]--certificate_name [required]--certificate_version 
+storage account keys renew|[required]--resource_group_name [required]--account_name [required]--key_name 
+storage directory create|--fail_on_exist [required]--share_name --sas_token --account_key --timeout --connection_string [required]--directory_name --account_name --metadata 
+network express-route update|[required]--resource_group_name --properties_to_add --bandwidth_in_mbps --properties_to_remove --tags --peering_location --sku_family --properties_to_set --sku_tier [required]--circuit_name --service_provider_name 
+vm list|--resource_group_name --show_details 
+network route-table delete|[required]--resource_group_name [required]--route_table_name 
+network application-gateway auth-cert update|[required]--resource_group_name --properties_to_add --properties_to_remove [required]--application_gateway_name --raw --properties_to_set [required]--item_name [required]--cert_data 
+storage directory metadata show|[required]--share_name --sas_token --account_key --timeout --connection_string [required]--directory_name --account_name 
+network nic list-effective-nsg|[required]--resource_group_name [required]--network_interface_name 
+network application-gateway probe list|[required]--resource_group_name [required]--resource_name 
+storage account delete|[required]--resource_group_name --force [required]--account_name 
+group deployment delete|[required]--resource_group_name [required]--deployment_name 
+iot device message reject|[required]--hub_name --resource_group_name [required]--lock_token [required]--device_id 
+network lb address-pool list|[required]--resource_group_name [required]--resource_name 
+storage container lease renew|[required]--lease_id --if_modified_since --sas_token --account_key --timeout [required]--container_name --connection_string --if_unmodified_since --account_name 
+storage container delete|--fail_not_exist --lease_id --if_modified_since --sas_token --account_key --timeout [required]--container_name --connection_string --if_unmodified_since --account_name 
+network lb probe show|[required]--item_name [required]--resource_group_name [required]--resource_name 
+account list|--list_all 
+network route-table create|[required]--resource_group_name [required]--route_table_name [required]--parameters 
+network dns record txt add|[required]--resource_group_name [required]--record_set_name [required]--value [required]--zone_name 
+storage directory delete|--fail_not_exist [required]--share_name --sas_token --account_key --timeout --connection_string [required]--directory_name --account_name 
+keyvault key list-versions|[required]--vault_base_url [required]--key_name --maxresults 
+storage share policy list|--connection_string --sas_token --account_name --account_key [required]--container_name 
+storage container lease release|[required]--lease_id --if_modified_since --sas_token --account_key --timeout [required]--container_name --connection_string --if_unmodified_since --account_name 
+policy assignment list|--resource_group_name --scope --disable_scope_strict_match 
+sql elastic-pools db show-activity|[required]--resource_group_name [required]--elastic_pool_name [required]--server_name 
+network dns zone delete|[required]--resource_group_name --if_match --force --if_none_match [required]--zone_name 
+vmss extension image list-versions|--orderby [required]--publisher_name --top --filter [required]--location [required]--type 
+acs delete|[required]--resource_group_name [required]--container_service_name 
+iot hub policy delete|[required]--hub_name --resource_group_name [required]--policy_name 
+iot device import|[required]--hub_name [required]--output_blob_container_uri --resource_group_name [required]--input_blob_container_uri 
+vm stop|[required]--vm_name [required]--resource_group_name 
+network traffic-manager profile create|[required]--routing_method [required]--resource_group_name --monitor_port [required]--deployment_name [required]--unique_dns_name --monitor_path [required]--traffic_manager_profile_name --status --location --ttl --monitor_protocol 
+network dns record mx remove|[required]--resource_group_name [required]--record_set_name [required]--preference [required]--exchange [required]--zone_name 
+network dns record mx add|[required]--resource_group_name [required]--record_set_name [required]--preference [required]--exchange [required]--zone_name 
+appservice web deployment slot list|[required]--resource_group_name [required]--name --properties_to_include 
+network application-gateway rule delete|[required]--item_name [required]--resource_group_name [required]--resource_name --no_wait 
+network vnet-gateway list|[required]--resource_group_name 
+keyvault secret list-versions|[required]--vault_base_url [required]--secret_name --maxresults 
+provider unregister|[required]--resource_provider_namespace 
+network lb inbound-nat-rule show|[required]--item_name [required]--resource_group_name [required]--resource_name 
+storage container policy create|--permission --sas_token --account_key [required]--policy_name --start [required]--container_name --connection_string --expiry --account_name 
+iot hub show-quota-metrics|[required]--hub_name --resource_group_name 
+network vnet-gateway delete|[required]--resource_group_name [required]--virtual_network_gateway_name 
+network express-route auth list|[required]--resource_group_name [required]--circuit_name 
+network application-gateway frontend-ip delete|[required]--item_name [required]--resource_group_name [required]--resource_name --no_wait 
+ad group list|--display_name --query_filter 
+vm extension list|[required]--vm_name [required]--resource_group_name 
+network vnet subnet delete|[required]--virtual_network_name [required]--resource_group_name [required]--subnet_name 
+storage queue metadata update|[required]--queue_name --sas_token --account_key --timeout --connection_string --account_name --metadata 
+resource list|--resource_group_name --name --tag --location --resource_provider_namespace --resource_type 
+network dns zone create|[required]--resource_group_name --if_none_match --tags --location [required]--zone_name 
+vmss extension image list-names|[required]--publisher_name [required]--location 
+network application-gateway http-listener show|[required]--item_name [required]--resource_group_name [required]--resource_name 
+network public-ip create|[required]--resource_group_name [required]--name [required]--deployment_name --tags --dns_name --reverse_fqdn --idle_timeout --version --location --allocation_method --dns_name_type 
+network traffic-manager endpoint delete|[required]--resource_group_name [required]--profile_name [required]--endpoint_name [required]--endpoint_type 
+sql db transparent-data-encryption show-activity|[required]--resource_group_name [required]--database_name [required]--server_name 
+vm availability-set update|--properties_to_remove [required]--resource_group_name --properties_to_add --properties_to_set [required]--name 
+network vnet subnet update|[required]--resource_group_name --properties_to_add --properties_to_remove [required]--virtual_network_name [required]--subnet_name --properties_to_set --route_table --network_security_group --address_prefix 
+context show|--context_name 
+vm image list-publishers|[required]--location 
+iot hub policy list|[required]--hub_name --resource_group_name 
+storage message clear|[required]--queue_name --sas_token --account_key --timeout --connection_string --account_name 
+acs create|[required]--resource_group_name --orchestrator_type [required]--name [required]--deployment_name --tags [required]--ssh_key_value --admin_username --agent_count --master_count --location --client_secret --agent_vm_size --service_principal --dns_name_prefix 
+acr check-name|[required]--registry_name 
+network application-gateway address-pool list|[required]--resource_group_name [required]--resource_name 
+storage table generate-sas|--protocol --permission --start_pk --ip --end_pk --sas_token --account_key --expiry --start --start_rk [required]--table_name --end_rk --id --connection_string --account_name 
+vm generalize|[required]--vm_name [required]--resource_group_name 
+provider register|[required]--resource_provider_namespace 
+group update|--properties_to_remove [required]--resource_group_name --properties_to_add --properties_to_set 
+container build create|--registry_resource_id --registry_name [required]--target_name --remote_branch --vsts_account_name --remote_access_token [required]--target_resource_group --remote_url --vsts_project_name 
+component remove|[required]--component_name 
+cloud show|[required]--cloud_name 
+batch application show|[required]--resource_group_name [required]--application_id [required]--account_name 
+acr update|--resource_group_name --properties_to_add --tags --properties_to_remove --properties_to_set [required]--registry_name --storage_account_name --admin_enabled 
+iot device message receive|[required]--hub_name --resource_group_name --lock_timeout [required]--device_id 
+vm availability-set create|[required]--resource_group_name [required]--name [required]--deployment_name --tags --platform_update_domain_count --platform_fault_domain_count --location 
+network express-route auth create|[required]--resource_group_name [required]--authorization_parameters [required]--authorization_name [required]--circuit_name 
+network traffic-manager profile check-dns|--type --name 
+network application-gateway stop|[required]--resource_group_name [required]--application_gateway_name 
+sql server show-usage|[required]--resource_group_name [required]--server_name 
+iot hub list|--resource_group_name 
+storage file list|--exclude_dir [required]--share_name --sas_token --account_key --timeout --connection_string --directory_name --account_name 
+iot hub consumer-group list|--event_hub_name [required]--hub_name --resource_group_name 
+network list-usages|[required]--location 
+vmss extension delete|[required]--resource_group_name [required]--vmss_name [required]--extension_name 
+vm image list-skus|[required]--publisher_name [required]--location [required]--offer 
+sql db data-warehouse resume|[required]--resource_group_name [required]--database_name [required]--server_name 
+provider show|[required]--resource_provider_namespace --expand 
+network nic update|[required]--resource_group_name [required]--network_interface_name --properties_to_add --properties_to_remove --enable_ip_forwarding --properties_to_set --internal_dns_name_label --network_security_group 
+keyvault key list|[required]--vault_base_url --maxresults 
+storage account update|--sku [required]--resource_group_name --custom_domain --tags --encryption --access_tier [required]--account_name 
+sql db create|[required]--resource_group_name [required]--database_name [required]--parameters [required]--server_name 
+batch account set|[required]--resource_group_name --storage_account_id [required]--account_name --tags 
+lock list|--resource_group_name --resource_provider_namespace --parent_resource_path --resource_name --filter_string --resource_type 
+storage logging show|--sas_token --account_key --timeout --services --connection_string --account_name 
+keyvault certificate list|[required]--vault_base_url --maxresults 
+iot device list|[required]--hub_name --top --resource_group_name 
+network dns record txt remove|[required]--resource_group_name [required]--record_set_name [required]--value [required]--zone_name 
+cloud register|--cloud_config --endpoint_resource_manager --suffix_azure_datalake_store_file_system_endpoint --endpoint_sql_management --endpoint_management --endpoint_gallery [required]--cloud_name --suffix_keyvault_dns --suffix_storage_endpoint --endpoint_active_directory --suffix_sql_server_hostname --endpoint_active_directory_resource_id --endpoint_active_directory_graph_resource_id --suffix_azure_datalake_analytics_catalog_and_job_endpoint 
+network application-gateway address-pool show|[required]--item_name [required]--resource_group_name [required]--resource_name 
+policy definition delete|[required]--policy_definition_name 
+network vnet subnet list|[required]--virtual_network_name [required]--resource_group_name 
+network application-gateway frontend-port list|[required]--resource_group_name [required]--resource_name 
+vm extension delete|[required]--vm_name [required]--resource_group_name [required]--vm_extension_name 
+vm nic add|[required]--vm_name [required]--resource_group_name --primary_nic [required]--nics 
+keyvault certificate download|[required]--vault_base_url [required]--certificate_name --certificate_version [required]--file_path --encoding 
+network lb frontend-ip list|[required]--resource_group_name [required]--resource_name 
+redis regenerate-keys|[required]--key_type [required]--resource_group_name [required]--name 
+storage table create|--fail_on_exist --sas_token --account_key [required]--table_name --timeout --connection_string --account_name 
+appservice web log tail|--slot [required]--resource_group_name [required]--name --provider 
+sql server service-objective show|[required]--resource_group_name [required]--server_name [required]--service_objective_name 
+appservice web config show|--slot [required]--resource_group_name [required]--name 
+storage account create|[required]--sku [required]--resource_group_name --kind --custom_domain --tags --encryption [required]--location --access_tier [required]--account_name 
+group wait|[required]--resource_group_name --updated --exists --created --deleted --interval --custom --timeout 
+sql db replication-link show|[required]--resource_group_name [required]--database_name [required]--server_name [required]--link_id 
+appservice web source-control config|--slot [required]--resource_group_name [required]--name --manual_integration [required]--repo_url --branch --repository_type 
+storage blob service-properties show|--connection_string --timeout --sas_token --account_name --account_key 
+iot hub list-skus|[required]--hub_name --resource_group_name 
+network vpn-connection create|[required]--connection_type [required]--resource_group_name --authorization_key [required]--vnet_gateway1_id [required]--deployment_name --tags --enable_bgp --shared_key --vnet_gateway2_id --routing_weight [required]--virtual_network_gateway_connection_name --local_gateway2_id --express_route_circuit2_id --location 
+network application-gateway delete|[required]--resource_group_name [required]--application_gateway_name --raw 
+vm extension image show|[required]--type [required]--version [required]--publisher_name [required]--location 
+storage blob metadata update|--lease_id --if_none_match --if_modified_since --if_unmodified_since --sas_token --account_key --timeout [required]--container_name --connection_string --if_match [required]--blob_name --account_name --metadata 
+sql server show|[required]--resource_group_name [required]--server_name 
+network traffic-manager profile list|--resource_group_name 
+keyvault delete-policy|--upn [required]--resource_group_name [required]--vault_name --spn --object_id 
+network vnet show|[required]--virtual_network_name [required]--resource_group_name --expand 
+vm disk list|[required]--vm_name [required]--resource_group_name 
+vmss extension list|[required]--resource_group_name [required]--vmss_name 
+sql elastic-pools update|[required]--resource_group_name --properties_to_add --properties_to_set [required]--server_name --properties_to_remove [required]--elastic_pool_name 
+context modify|--context_name --default_subscription --cloud_name 
+network express-route peering list|[required]--resource_group_name [required]--circuit_name 
+provider list|--top --expand 
+ad sp delete|[required]--identifier 
+storage cors clear|--sas_token --account_key --timeout [required]--services --connection_string --account_name 
+batch account keys renew|[required]--resource_group_name [required]--account_name [required]--key_name 
+iot device message send|--resource_group_name --user_id --correlation_id [required]--hub_name --data --message_id [required]--device_id 
+network application-gateway http-settings create|[required]--resource_group_name --protocol [required]--item_name --no_wait --probe --cookie_based_affinity [required]--application_gateway_name --timeout [required]--port 
+network application-gateway frontend-port delete|[required]--item_name [required]--resource_group_name [required]--resource_name --no_wait 
+tag remove-value|[required]--tag_name [required]--tag_value 
+network lb list|--resource_group_name 
+storage account keys list|[required]--resource_group_name [required]--account_name 
+lock create|--lock_id --resource_group_name --parent_resource_path [required]--name --level --lock_type --notes --resource_name --resource_provider_namespace --resource_type 
+vmss get-instance-view|[required]--vm_scale_set_name [required]--resource_group_name --instance_id 
+network application-gateway probe update|[required]--resource_group_name --properties_to_add --raw --properties_to_remove --interval [required]--application_gateway_name [required]--item_name --host --properties_to_set --timeout --path --threshold --protocol 
+storage file download-batch|--dryrun --pattern [required]--destination --sas_token --account_key [required]--source --validate_content --connection_string --account_name --max_connections 
+keyvault certificate import|[required]--vault_base_url --certificate_policy --tags [required]--certificate_name --certificate_attributes [required]--base64_encoded_certificate --password 
+appservice web source-control delete|--slot [required]--resource_group_name [required]--name 
+network application-gateway ssl-policy set|[required]--resource_group_name --clear --disabled_ssl_protocols --no_wait [required]--application_gateway_name 
+redis show|[required]--resource_group_name [required]--name 
+redis update-settings|[required]--resource_group_name [required]--name [required]--redis_configuration 
+storage queue policy create|--permission --sas_token --account_key [required]--policy_name --start [required]--container_name --connection_string --expiry --account_name 
+ad group delete|[required]--group_object_id 
+network vnet peering create|[required]--resource_group_name --allow_gateway_transit [required]--virtual_network_name [required]--virtual_network_peering_name [required]--remote_virtual_network --allow_forwarded_traffic --use_remote_gateways --allow_virtual_network_access 
+network route-table route show|[required]--resource_group_name [required]--route_table_name [required]--route_name 
+network dns record ns add|[required]--dname [required]--resource_group_name [required]--record_set_name [required]--zone_name 
+network nic ip-config address-pool remove|[required]--ip_config_name [required]--resource_group_name [required]--network_interface_name --load_balancer_name [required]--backend_address_pool 
+keyvault secret list|[required]--vault_base_url --maxresults 
+network nic list|--resource_group_name 
+network express-route auth show|[required]--resource_group_name [required]--authorization_name [required]--circuit_name 
+storage queue metadata show|[required]--queue_name --sas_token --account_key --timeout --connection_string --account_name 
+network express-route auth delete|[required]--resource_group_name [required]--authorization_name [required]--circuit_name 
 component list-available|
-network lb probe list|
-storage share update|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-resource show|
-acr credential show|
-storage entity delete|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network nic ip-config address-pool add|
-batch location quotas show|
-appservice web deployment slot swap|
-sql db service-tier-advisor show|
-storage blob lease acquire|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-policy definition show|
-network application-gateway address-pool create|
-sql elastic-pools recommended list|
-vm list-sizes|
-acs install-cli|
-network application-gateway frontend-ip list|
-vm availability-set delete|
-resource tag|
-appservice web config container delete|
-policy assignment create|
-vmss delete-instances|
-network application-gateway auth-cert delete|
-ad app delete|
+network lb probe list|[required]--resource_group_name [required]--resource_name 
+storage share update|[required]--share_name --sas_token [required]--quota --account_key --timeout --connection_string --account_name 
+resource show|--resource_group_name --parent_resource_path --resource_id --resource_name --api_version --resource_provider_namespace --resource_type 
+acr credential show|--resource_group_name [required]--registry_name 
+storage entity delete|--if_match --sas_token --account_key [required]--row_key [required]--table_name --timeout --connection_string [required]--partition_key --account_name 
+network nic ip-config address-pool add|[required]--ip_config_name [required]--resource_group_name [required]--network_interface_name --load_balancer_name [required]--backend_address_pool 
+batch location quotas show|[required]--location_name 
+appservice web deployment slot swap|[required]--slot [required]--resource_group_name --target_slot [required]--webapp 
+sql db service-tier-advisor show|[required]--resource_group_name [required]--database_name [required]--service_tier_advisor_name [required]--server_name 
+storage blob lease acquire|--proposed_lease_id --if_none_match --if_modified_since --if_unmodified_since --sas_token --account_key --lease_duration --timeout [required]--container_name --connection_string --if_match [required]--blob_name --account_name 
+policy definition show|[required]--policy_definition_name 
+network application-gateway address-pool create|[required]--item_name [required]--resource_group_name --no_wait [required]--application_gateway_name [required]--servers 
+sql elastic-pools recommended list|[required]--resource_group_name [required]--server_name 
+vm list-sizes|[required]--location 
+acs install-cli|--install_location --client_version [required]--name [required]--resource_group 
+network application-gateway frontend-ip list|[required]--resource_group_name [required]--resource_name 
+vm availability-set delete|[required]--resource_group_name [required]--availability_set_name 
+resource tag|--resource_group_name --resource_name [required]--tags --parent_resource_path --resource_id --api_version --resource_provider_namespace --resource_type 
+appservice web config container delete|--slot [required]--resource_group_name [required]--name 
+policy assignment create|[required]--policy --resource_group_name --display_name --name --scope 
+vmss delete-instances|[required]--vm_scale_set_name [required]--resource_group_name [required]--instance_ids 
+network application-gateway auth-cert delete|[required]--item_name [required]--resource_group_name [required]--resource_name --no_wait 
+ad app delete|[required]--identifier 
 feedback|
-storage container create|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-storage logging update|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network vnet-gateway show|
-network express-route peering delete|
-vm image list-offers|
-network dns record-set update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-ad app create|
-network application-gateway rule update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-network dns record srv remove|
-storage blob snapshot|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-sql server update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-batch account autostorage-keys sync|
-storage directory exists|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network dns record cname add|
-network lb rule show|
-vmss nic list-vm-nics|
-network application-gateway url-path-map delete|
-storage share metadata show|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-sql db transparent-data-encryption create|
-keyvault key import|
-vm extension image list-names|
-sql db transparent-data-encryption show-configuration|
-group list|
-storage account list|
-network nic ip-config update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-acs kubernetes browse|
-network application-gateway http-listener update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-appservice web config appsettings show|
-appservice plan create|
-network application-gateway url-path-map update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-ad sp create|
-resource delete|
-network vnet-gateway root-cert delete|
-role definition create|
-sql server firewall create|
-network lb inbound-nat-pool delete|
-storage container generate-sas|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-vm nic show|
-network vnet list|
-storage cors list|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network dns record aaaa add|
-acs show|
-vmss list|
-storage directory metadata update|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network application-gateway auth-cert create|
-storage queue policy delete|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network dns record-set show|
-network vnet peering show|
-storage metrics show|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-sql server firewall show|
-iot hub consumer-group show|
-storage table list|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-storage container lease change|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-redis export|
-network traffic-manager endpoint update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-storage container metadata show|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-iot device create|
-storage queue policy update|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-context delete|
-storage container lease acquire|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-acs dcos install-cli|
+storage container create|--public_access --fail_on_exist --sas_token --account_key --timeout [required]--container_name --connection_string --account_name --metadata 
+storage logging update|[required]--log --sas_token --account_key --timeout [required]--services --connection_string --account_name [required]--retention 
+network vnet-gateway show|[required]--resource_group_name [required]--virtual_network_gateway_name 
+network express-route peering delete|[required]--resource_group_name [required]--peering_name [required]--circuit_name 
+vm image list-offers|[required]--publisher_name [required]--location 
+network dns record-set update|[required]--resource_group_name --properties_to_add --if_none_match --properties_to_remove [required]--relative_record_set_name [required]--record_type --properties_to_set [required]--zone_name --if_match --metadata 
+ad app create|[required]--identifier_uris [required]--display_name --end_date --reply_urls --key_value --key_type --key_usage --available_to_other_tenants --password [required]--homepage --start_date 
+network application-gateway rule update|--rule_type [required]--resource_group_name --properties_to_add --raw --properties_to_remove [required]--application_gateway_name --http_listener --http_settings --url_path_map --properties_to_set [required]--item_name --address_pool 
+network dns record srv remove|[required]--resource_group_name [required]--target [required]--weight [required]--priority [required]--zone_name [required]--port [required]--record_set_name 
+storage blob snapshot|--lease_id --if_none_match --if_modified_since --if_unmodified_since --sas_token --account_key --timeout [required]--container_name --connection_string --if_match [required]--blob_name --account_name --metadata 
+sql server update|--properties_to_remove [required]--resource_group_name --properties_to_add --properties_to_set [required]--server_name 
+batch account autostorage-keys sync|[required]--resource_group_name [required]--account_name 
+storage directory exists|[required]--share_name --file_name --sas_token --account_key --timeout --connection_string --directory_name --account_name 
+network dns record cname add|[required]--resource_group_name [required]--cname [required]--record_set_name [required]--zone_name 
+network lb rule show|[required]--item_name [required]--resource_group_name [required]--resource_name 
+vmss nic list-vm-nics|[required]--resource_group_name [required]--virtual_machine_scale_set_name [required]--virtualmachine_index 
+network application-gateway url-path-map delete|[required]--item_name [required]--resource_group_name [required]--resource_name --no_wait 
+storage share metadata show|[required]--share_name --sas_token --account_key --timeout --connection_string --account_name 
+sql db transparent-data-encryption create|--status [required]--resource_group_name [required]--database_name [required]--server_name 
+keyvault key import|[required]--vault_base_url --pem_password --key_ops --tags [required]--key_name --destination --expires --pem_file --disabled --byok_file --not_before 
+vm extension image list-names|[required]--publisher_name [required]--location 
+sql db transparent-data-encryption show-configuration|[required]--resource_group_name [required]--database_name [required]--server_name 
+group list|--tag 
+storage account list|--resource_group_name 
+network nic ip-config update|--load_balancer_inbound_nat_rule_ids --properties_to_add --public_ip_address [required]--resource_group_name --virtual_network_name --private_ip_address_allocation [required]--ip_config_name --properties_to_set --make_primary --subnet [required]--network_interface_name --private_ip_address_version --properties_to_remove --load_balancer_name --load_balancer_backend_address_pool_ids --private_ip_address 
+acs kubernetes browse|--disable_browser --ssh_key_file [required]--name [required]--resource_group 
+network application-gateway http-listener update|[required]--resource_group_name --ssl_cert --properties_to_add --raw --properties_to_remove [required]--application_gateway_name [required]--item_name --frontend_ip --properties_to_set --protocol --frontend_port 
+appservice web config appsettings show|--slot [required]--resource_group_name [required]--name 
+appservice plan create|--sku [required]--resource_group_name [required]--name --location [required]--is_linux --number_of_workers 
+network application-gateway url-path-map update|[required]--resource_group_name --properties_to_add --properties_to_remove --no_wait [required]--application_gateway_name --default_address_pool --raw --properties_to_set [required]--item_name --default_http_settings 
+ad sp create|[required]--identifier 
+resource delete|--resource_group_name --parent_resource_path --resource_id --resource_name --api_version --resource_provider_namespace --resource_type 
+network vnet-gateway root-cert delete|[required]--resource_group_name [required]--gateway_name [required]--cert_name 
+role definition create|[required]--role_definition 
+sql server firewall create|--start_ip_address [required]--resource_group_name --end_ip_address [required]--server_name [required]--firewall_rule_name 
+network lb inbound-nat-pool delete|[required]--item_name [required]--resource_group_name [required]--resource_name --no_wait 
+storage container generate-sas|--protocol --cache_control --permission --ip --sas_token --account_key --expiry --start --content_language --content_encoding --content_type [required]--container_name --id --connection_string --content_disposition --account_name 
+vm nic show|[required]--vm_name [required]--resource_group_name [required]--nic 
+network vnet list|--resource_group_name 
+storage cors list|--sas_token --account_key --timeout --services --connection_string --account_name 
+network dns record aaaa add|[required]--resource_group_name [required]--ipv6_address [required]--record_set_name [required]--zone_name 
+acs show|[required]--resource_group_name [required]--container_service_name 
+vmss list|--resource_group_name 
+storage directory metadata update|[required]--share_name --sas_token --account_key --timeout --connection_string [required]--directory_name --account_name --metadata 
+network application-gateway auth-cert create|[required]--item_name [required]--resource_group_name --no_wait [required]--cert_data [required]--application_gateway_name 
+storage queue policy delete|--sas_token --account_key [required]--policy_name [required]--container_name --connection_string --account_name 
+network dns record-set show|[required]--resource_group_name [required]--record_type [required]--relative_record_set_name [required]--zone_name 
+network vnet peering show|[required]--virtual_network_name [required]--resource_group_name [required]--virtual_network_peering_name 
+storage metrics show|--interval --sas_token --account_key --timeout --services --connection_string --account_name 
+sql server firewall show|[required]--resource_group_name [required]--server_name [required]--firewall_rule_name 
+iot hub consumer-group show|--event_hub_name [required]--hub_name --resource_group_name [required]--consumer_group_name 
+storage table list|--num_results --sas_token --account_key --timeout --marker --connection_string --account_name 
+storage container lease change|[required]--lease_id --if_modified_since --sas_token [required]--proposed_lease_id --account_key --timeout [required]--container_name --connection_string --if_unmodified_since --account_name 
+redis export|[required]--resource_group_name [required]--prefix [required]--container [required]--name --file_format 
+network traffic-manager endpoint update|[required]--resource_group_name --endpoint_location --properties_to_add --weight [required]--endpoint_name --min_child_endpoints --properties_to_remove --endpoint_monitor_status --priority [required]--profile_name --properties_to_set --target_resource_id --endpoint_type --endpoint_status --target 
+storage container metadata show|--lease_id --sas_token --account_key --timeout [required]--container_name --connection_string --account_name 
+iot device create|--resource_group_name --x509 --valid_days --primary_thumbprint --secondary_thumbprint --output_dir [required]--hub_name [required]--device_id 
+storage queue policy update|--permission --sas_token --account_key [required]--policy_name --start [required]--container_name --connection_string --expiry --account_name 
+context delete|[required]--context_name 
+storage container lease acquire|--proposed_lease_id --if_modified_since --sas_token --account_key --lease_duration --timeout [required]--container_name --connection_string --if_unmodified_since --account_name 
+acs dcos install-cli|--install_location --client_version 
 component list|
-network nsg create|
-storage table delete|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-keyvault show|
-keyvault certificate contact list|
-vm boot-diagnostics disable|
-appservice plan list|
+network nsg create|[required]--resource_group_name --tags [required]--name [required]--deployment_name --location 
+storage table delete|--fail_not_exist --sas_token --account_key [required]--table_name --timeout --connection_string --account_name 
+keyvault show|[required]--resource_group_name [required]--vault_name 
+keyvault certificate contact list|[required]--vault_base_url 
+vm boot-diagnostics disable|[required]--vm_name [required]--resource_group_name 
+appservice plan list|--resource_group_name 
 taskhelp deploy-arm-template|
-network application-gateway http-settings show|
-network application-gateway probe delete|
-iot hub policy create|
-batch application set|
-network vpn-connection list|
-storage file metadata update|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-appservice web deployment slot create|
-network lb rule delete|
-storage container show-permission|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-keyvault certificate pending delete|
-network lb rule create|
-acr repository list|
-network application-gateway frontend-ip show|
-policy definition update|
-login|
-keyvault secret set|
-appservice web delete|
-storage share policy delete|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-acs kubernetes get-credentials|
-appservice web config appsettings delete|
-network lb probe update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-network nic ip-config delete|
-network vpn-connection shared-key update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-network application-gateway show-backend-health|
-network application-gateway create|
-iot hub consumer-group create|
-network route-table show|
-network route-table route list|
-batch account keys list|
-vm access reset-windows-admin|
-batch account list|
-ad app show|
-network application-gateway http-listener delete|
-vm extension image list|
-acs dcos browse|
-vm list-vm-resize-options|
-keyvault key show|
-network lb frontend-ip show|
-storage file metadata show|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-feature list|
-storage container show|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-role assignment list|
-storage blob upload-batch|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-vmss create|
-iot hub job list|
-storage share exists|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-vmss start|
-vmss nic list|
-network application-gateway http-settings delete|
-network lb frontend-ip update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-vm image show|
-vmss stop|
-ad user show|
-iot device show|
-storage message peek|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-container release list|
-network lb address-pool show|
-role assignment create|
-redis patch-schedule show|
-vm delete|--force --force --force 
-network vnet peering update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
+network application-gateway http-settings show|[required]--item_name [required]--resource_group_name [required]--resource_name 
+network application-gateway probe delete|[required]--item_name [required]--resource_group_name [required]--resource_name --no_wait 
+iot hub policy create|[required]--hub_name [required]--permissions --resource_group_name [required]--policy_name 
+batch application set|[required]--resource_group_name [required]--application_id --default_version --allow_updates --display_name [required]--account_name 
+network vpn-connection list|[required]--resource_group_name 
+storage file metadata update|[required]--share_name [required]--file_name --sas_token --account_key --timeout --connection_string [required]--directory_name --account_name --metadata 
+appservice web deployment slot create|[required]--slot [required]--resource_group_name --configuration_source [required]--webapp 
+network lb rule delete|[required]--item_name [required]--resource_group_name [required]--resource_name --no_wait 
+storage container show-permission|--lease_id --sas_token --account_key --timeout [required]--container_name --connection_string --account_name 
+keyvault certificate pending delete|[required]--vault_base_url [required]--certificate_name 
+network lb rule create|[required]--resource_group_name [required]--protocol [required]--item_name [required]--load_balancer_name [required]--backend_address_pool_name --floating_ip --idle_timeout [required]--frontend_ip_name --probe_name --load_distribution [required]--frontend_port [required]--backend_port 
+acr repository list|--username --password [required]--registry_name 
+network application-gateway frontend-ip show|[required]--item_name [required]--resource_group_name [required]--resource_name 
+policy definition update|--rules [required]--policy_definition_name --display_name --description 
+login|--username --service_principal --password --tenant 
+keyvault secret set|[required]--vault_base_url --tags [required]--value --secret_attributes --content_type [required]--secret_name 
+appservice web delete|--slot [required]--resource_group_name [required]--name 
+storage share policy delete|--sas_token --account_key [required]--policy_name [required]--container_name --connection_string --account_name 
+acs kubernetes get-credentials|[required]--resource_group_name --ssh_key_file [required]--name --path 
+appservice web config appsettings delete|--slot [required]--resource_group_name [required]--setting_names [required]--name 
+network lb probe update|[required]--resource_group_name [required]--load_balancer_name --properties_to_add --properties_to_remove --interval [required]--item_name --properties_to_set --path --threshold --protocol --port 
+network nic ip-config delete|[required]--item_name [required]--resource_group_name [required]--resource_name --no_wait 
+network vpn-connection shared-key update|[required]--resource_group_name --properties_to_add --properties_to_set --properties_to_remove [required]--value [required]--virtual_network_gateway_connection_name 
+network application-gateway show-backend-health|[required]--resource_group_name [required]--application_gateway_name --expand 
+network application-gateway create|[required]--deployment_name --servers --raw --sku_tier --http_settings_port --public_ip_address_type --subnet --capacity --tags --http_listener_protocol --http_settings_cookie_based_affinity --location --routing_rule_type --public_ip_address --subnet_type --virtual_network_name --private_ip_address_allocation --sku_name --cert_password --frontend_port --cert_data --frontend_type --subnet_address_prefix [required]--resource_group_name --public_ip_address_allocation --http_settings_protocol [required]--application_gateway_name --vnet_address_prefix --private_ip_address 
+iot hub consumer-group create|--event_hub_name [required]--hub_name --resource_group_name [required]--consumer_group_name 
+network route-table show|[required]--resource_group_name [required]--route_table_name --expand 
+network route-table route list|[required]--resource_group_name [required]--route_table_name 
+batch account keys list|[required]--resource_group_name [required]--account_name 
+vm access reset-windows-admin|[required]--vm_name [required]--resource_group_name [required]--username [required]--password 
+batch account list|--resource_group_name 
+ad app show|[required]--identifier 
+network application-gateway http-listener delete|[required]--item_name [required]--resource_group_name [required]--resource_name --no_wait 
+vm extension image list|--image_location --version --publisher_name --name --latest 
+acs dcos browse|--disable_browser --ssh_key_file [required]--name [required]--resource_group 
+vm list-vm-resize-options|[required]--vm_name [required]--resource_group_name 
+keyvault key show|[required]--vault_base_url [required]--key_name [required]--key_version 
+network lb frontend-ip show|[required]--item_name [required]--resource_group_name [required]--resource_name 
+storage file metadata show|[required]--share_name [required]--file_name --sas_token --account_key --timeout --connection_string [required]--directory_name --account_name 
+feature list|--resource_provider_namespace 
+storage container show|--lease_id --sas_token --account_key --timeout [required]--container_name --connection_string --account_name 
+role assignment list|--resource_group_name --show_all --assignee --role --include_groups --scope --include_inherited 
+storage blob upload-batch|--lease_id --account_key --connection_string --content_settings --account_name --max_connections --if_modified_since --pattern [required]--destination --blob_type [required]--source --validate_content --source_files --if_match --metadata --destination_container_name --dryrun --if_none_match --maxsize_condition --sas_token --timeout --if_unmodified_since 
+vmss create|--public_ip_address_dns_name [required]--image --no_wait --storage_sku --load_balancer_type --vnet_type --os_disk_name --storage_container_name --backend_port --public_ip_address --subnet --storage_profile --os_version --authentication_type --os_offer --location --storage_caching --admin_password --load_balancer --disable_overprovision --nat_pool_name --vnet_name --tags --ssh_key_value --upgrade_policy_mode --instance_count --os_sku [required]--vmss_name --validate --generate_ssh_keys --subnet_address_prefix [required]--resource_group_name --backend_pool_name --public_ip_address_allocation --os_publisher --public_ip_type --admin_username --ssh_dest_key_path --vnet_address_prefix --os_type --vm_sku 
+iot hub job list|[required]--hub_name --resource_group_name 
+storage share exists|[required]--share_name --file_name --sas_token --account_key --timeout --connection_string --directory_name --account_name 
+vmss start|[required]--vm_scale_set_name [required]--resource_group_name --instance_ids 
+vmss nic list|[required]--resource_group_name [required]--virtual_machine_scale_set_name 
+network application-gateway http-settings delete|[required]--item_name [required]--resource_group_name [required]--resource_name --no_wait 
+network lb frontend-ip update|[required]--resource_group_name --properties_to_add --public_ip_address --subnet --properties_to_remove --private_ip_address_allocation [required]--load_balancer_name [required]--item_name --properties_to_set --private_ip_address --virtual_network_name 
+vm image show|[required]--version [required]--publisher_name [required]--location [required]--skus [required]--offer 
+vmss stop|[required]--vm_scale_set_name [required]--resource_group_name --instance_ids 
+ad user show|[required]--upn_or_object_id 
+iot device show|[required]--hub_name --resource_group_name [required]--device_id 
+storage message peek|--num_messages [required]--queue_name --sas_token --account_key --timeout --connection_string --account_name 
+container release list|[required]--target_name [required]--target_resource_group 
+network lb address-pool show|[required]--item_name [required]--resource_group_name [required]--resource_name 
+role assignment create|[required]--assignee [required]--role --scope --resource_group_name 
+redis patch-schedule show|[required]--resource_group_name [required]--name 
+vm delete|[required]--vm_name [required]--resource_group_name --force 
+network vnet peering update|[required]--resource_group_name --properties_to_add --properties_to_set [required]--virtual_network_peering_name --properties_to_remove [required]--virtual_network_name 
 storage account show-usage|
-network nsg list|
-context create|
-vmss deallocate|
-network public-ip delete|
-group deployment list|
-policy assignment delete|
-network application-gateway http-listener list|
-network dns zone import|
-appservice web config container show|
-tag delete|
-network express-route list|
-network vnet peering delete|
-storage file resize|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-batch application package activate|
-network route-table route create|
+network nsg list|--resource_group_name 
+context create|[required]--context_name --use_later [required]--cloud_name 
+vmss deallocate|[required]--vm_scale_set_name [required]--resource_group_name --instance_ids 
+network public-ip delete|[required]--public_ip_address_name [required]--resource_group_name 
+group deployment list|--filter [required]--resource_group_name --top 
+policy assignment delete|--resource_group_name [required]--name --scope 
+network application-gateway http-listener list|[required]--resource_group_name [required]--resource_name 
+network dns zone import|[required]--file_name [required]--resource_group_name --location [required]--zone_name 
+appservice web config container show|--slot [required]--resource_group_name [required]--name 
+tag delete|[required]--tag_name 
+network express-route list|--resource_group_name 
+network vnet peering delete|[required]--virtual_network_name [required]--resource_group_name [required]--virtual_network_peering_name 
+storage file resize|[required]--content_length [required]--share_name [required]--file_name --sas_token --account_key --timeout --connection_string [required]--directory_name --account_name 
+batch application package activate|[required]--resource_group_name [required]--version [required]--application_id [required]--account_name [required]--format 
+network route-table route create|[required]--resource_group_name [required]--next_hop_type --next_hop_ip_address [required]--route_name [required]--route_table_name [required]--address_prefix 
 tag list|
-storage container policy update|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-vmss nic show|
-vm redeploy|
-keyvault create|
-storage metrics update|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-keyvault certificate issuer admin list|
-batch account create|
-group deployment show|
-storage account generate-sas|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-storage queue list|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-sql db show|
-batch application list|
-role assignment delete|
-storage queue delete|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-sql db update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-network express-route peering show|
-network application-gateway rule show|
-network public-ip list|
-network application-gateway frontend-port create|
-network application-gateway address-pool update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-vmss extension image show|
-network application-gateway update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-network nic ip-config show|
-keyvault certificate issuer list|
-iot hub job cancel|
-iot hub update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-ad sp show|
-storage entity merge|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-keyvault certificate issuer admin delete|
-network application-gateway ssl-policy show|
-network traffic-manager endpoint list|
-keyvault certificate issuer update|
-storage container policy delete|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-storage message update|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-storage file show|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-acr list|
-storage file copy start-batch|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-sql elastic-pools create|
-storage message delete|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network nsg rule update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-appservice web config update|
-keyvault secret show|
-batch application package create|
-network lb update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-sql elastic-pools db show|
-lock delete|
-redis create|
-appservice web source-control show|
-network nic show-effective-route-table|
-vm extension show|
-network express-route peering update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-network route-table route delete|
-batch application package delete|
-appservice web config hostname list|
-ad app list|
-network local-gateway update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-appservice web source-control config-local-git|
-storage file url|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-storage directory list|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network lb frontend-ip create|
-storage share stats|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-storage container set-permission|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-ad user list|
-storage entity show|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network lb inbound-nat-rule update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-vm availability-set list|
-acs browse|
-sql server service-objective list|
-keyvault certificate issuer create|
-network application-gateway auth-cert show|
-sql elastic-pools list|
-storage container metadata update|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-context switch|
-storage message put|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-policy definition list|
-keyvault certificate issuer admin add|
-storage table exists|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-sql db show-usage|
-network local-gateway show|
-storage blob copy start|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-group exists|
-keyvault key delete|
-network nsg update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-ad sp reset-credentials|
-resource move|
-iot hub job show|
-ad group show|
-sql server list|
-group show|
-storage queue generate-sas|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-iot device message abandon|
-appservice web config hostname delete|
-network dns record-set list|
-network dns record-set delete|
-network dns record aaaa remove|
-network application-gateway frontend-port show|
-appservice plan show|
-sql db replication-link list|
-network application-gateway http-settings list|
-network nic ip-config create|
-network dns record cname remove|
-ad app update|
-vm update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-network application-gateway frontend-port update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-sql elastic-pools recommended db list|
-lock update|
-tag add-value|
-network nic ip-config inbound-nat-rule add|
-vm extension set|
-network lb inbound-nat-rule delete|
-storage file download|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-storage table policy create|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-iot hub consumer-group delete|
-storage share list|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-storage table policy update|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-policy assignment show|
-appservice list-locations|
-network application-gateway wait|--updated --updated --updated --exists --exists --exists --created --created --created --deleted --deleted --deleted --interval --interval --interval --interval --custom --custom --timeout --timeout --timeout --timeout 
-vm resize|
+storage container policy update|--permission --sas_token --account_key [required]--policy_name --start [required]--container_name --connection_string --expiry --account_name 
+vmss nic show|[required]--resource_group_name [required]--network_interface_name [required]--virtual_machine_scale_set_name [required]--virtualmachine_index --expand 
+vm redeploy|[required]--vm_name [required]--resource_group_name 
+keyvault create|--sku [required]--resource_group_name --tags --enabled_for_disk_encryption --enabled_for_template_deployment [required]--vault_name [required]--location --no_self_perms --enabled_for_deployment 
+storage metrics update|--hour --sas_token --account_key --api --timeout [required]--services --connection_string --account_name --minute [required]--retention 
+keyvault certificate issuer admin list|[required]--vault_base_url [required]--issuer_name 
+batch account create|[required]--resource_group_name --tags [required]--account_name --storage_account_id [required]--location 
+group deployment show|[required]--resource_group_name [required]--deployment_name 
+storage account generate-sas|[required]--resource_types [required]--permission --ip --sas_token --account_key [required]--expiry --start [required]--services --connection_string --account_name --protocol 
+storage queue list|--num_results --include_metadata --sas_token --account_key --prefix --timeout --marker --connection_string --account_name 
+sql db show|[required]--resource_group_name [required]--database_name --expand [required]--server_name 
+batch application list|[required]--resource_group_name [required]--account_name --maxresults 
+role assignment delete|--resource_group_name --ids --assignee --role --scope --include_inherited 
+storage queue delete|--fail_not_exist [required]--queue_name --sas_token --account_key --timeout --connection_string --account_name 
+sql db update|[required]--resource_group_name --properties_to_add --properties_to_set [required]--server_name --properties_to_remove [required]--database_name 
+network express-route peering show|[required]--resource_group_name [required]--peering_name [required]--circuit_name 
+network application-gateway rule show|[required]--item_name [required]--resource_group_name [required]--resource_name 
+network public-ip list|--resource_group_name 
+network application-gateway frontend-port create|[required]--item_name [required]--resource_group_name --no_wait [required]--application_gateway_name [required]--port 
+network application-gateway address-pool update|[required]--resource_group_name --properties_to_add --properties_to_remove [required]--application_gateway_name --servers --raw --properties_to_set [required]--item_name 
+vmss extension image show|[required]--type [required]--version [required]--publisher_name [required]--location 
+network application-gateway update|[required]--resource_group_name --properties_to_add --tags --properties_to_remove --sku_name [required]--application_gateway_name --raw --properties_to_set --sku_tier --capacity 
+network nic ip-config show|[required]--item_name [required]--resource_group_name [required]--resource_name 
+keyvault certificate issuer list|[required]--vault_base_url --maxresults 
+iot hub job cancel|[required]--hub_name [required]--job_id --resource_group_name 
+iot hub update|--properties_to_remove [required]--hub_name --properties_to_add --properties_to_set --resource_group_name 
+ad sp show|[required]--identifier 
+storage entity merge|--sas_token --account_key [required]--entity [required]--table_name --timeout --connection_string --if_match --account_name 
+keyvault certificate issuer admin delete|[required]--vault_base_url [required]--email [required]--issuer_name 
+network application-gateway ssl-policy show|[required]--resource_group_name [required]--application_gateway_name 
+network traffic-manager endpoint list|[required]--resource_group_name [required]--profile_name --endpoint_type 
+keyvault certificate issuer update|[required]--vault_base_url --account_id --enabled --organization_id [required]--issuer_name --provider_name --password 
+storage container policy delete|--sas_token --account_key [required]--policy_name [required]--container_name --connection_string --account_name 
+storage message update|[required]--queue_name --sas_token --account_key [required]--message_id --content --timeout --connection_string [required]--pop_receipt --account_name [required]--visibility_timeout 
+storage file show|[required]--share_name [required]--file_name --sas_token --account_key --timeout --connection_string [required]--directory_name --account_name 
+acr list|--resource_group_name 
+storage file copy start-batch|--destination_share --source_sas --dryrun --pattern --destination_path --sas_token --account_key --source_container [required]--source_client --timeout --connection_string --source_share --account_name --metadata 
+sql elastic-pools create|[required]--resource_group_name [required]--parameters [required]--elastic_pool_name [required]--server_name 
+storage message delete|[required]--queue_name --sas_token --account_key [required]--message_id --timeout --connection_string [required]--pop_receipt --account_name 
+network nsg rule update|[required]--resource_group_name --destination_address_prefix --properties_to_add --description --properties_to_remove --direction --access --source_port_range --properties_to_set [required]--network_security_group_name --protocol --source_address_prefix [required]--security_rule_name --destination_port_range --priority 
+appservice web config update|--slot [required]--resource_group_name --java_container_version --auto_heal_enabled [required]--name --app_command_line --java_version --net_framework_version --node_version --remote_debugging_enabled --always_on --php_version --use32_bit_worker_process --web_sockets_enabled --java_container --python_version 
+keyvault secret show|[required]--vault_base_url [required]--secret_name [required]--secret_version 
+batch application package create|[required]--resource_group_name [required]--version [required]--application_id [required]--account_name [required]--package_file 
+network lb update|--properties_to_remove [required]--resource_group_name [required]--load_balancer_name --properties_to_add --properties_to_set 
+sql elastic-pools db show|[required]--resource_group_name [required]--database_name [required]--elastic_pool_name [required]--server_name 
+lock delete|--resource_group_name --parent_resource_path [required]--name --resource_name --resource_provider_namespace --resource_type 
+redis create|[required]--resource_group_name --shard_count [required]--name [required]--sku_capacity --tags [required]--sku_family [required]--sku_name --redis_configuration --static_ip --subnet_id [required]--location --tenant_settings --enable_non_ssl_port 
+appservice web source-control show|--slot [required]--resource_group_name [required]--name 
+network nic show-effective-route-table|[required]--resource_group_name [required]--network_interface_name 
+vm extension show|[required]--vm_name [required]--resource_group_name --expand [required]--vm_extension_name 
+network express-route peering update|--advertised_public_prefixes [required]--resource_group_name [required]--peering_name --secondary_peer_address_prefix --properties_to_add --properties_to_remove --shared_key --primary_peer_address_prefix --customer_asn --routing_registry_name --properties_to_set [required]--circuit_name --vlan_id --peer_asn 
+network route-table route delete|[required]--resource_group_name [required]--route_table_name [required]--route_name 
+batch application package delete|[required]--resource_group_name [required]--version [required]--application_id [required]--account_name 
+appservice web config hostname list|--slot [required]--resource_group_name [required]--webapp 
+ad app list|--identifier_uri --display_name --app_id --query_filter 
+network local-gateway update|[required]--resource_group_name --properties_to_add --tags --properties_to_remove --local_address_prefix --peer_weight --asn --bgp_peering_address --properties_to_set [required]--local_network_gateway_name --gateway_ip_address 
+appservice web source-control config-local-git|--slot [required]--resource_group_name [required]--name 
+storage file url|--protocol [required]--share_name [required]--file_name --sas_token --account_key --connection_string [required]--directory_name --account_name 
+storage directory list|[required]--share_name --sas_token --account_key --timeout --connection_string --directory_name --account_name 
+network lb frontend-ip create|[required]--resource_group_name --public_ip_address --subnet [required]--item_name --private_ip_address_allocation [required]--load_balancer_name --virtual_network_name --private_ip_address 
+storage share stats|[required]--share_name --sas_token --account_key --timeout --connection_string --account_name 
+storage container set-permission|--public_access --if_modified_since --sas_token --lease_id --account_key --signed_identifiers --timeout [required]--container_name --connection_string --if_unmodified_since --account_name 
+ad user list|--upn --display_name --query_filter 
+storage entity show|--sas_token --account_key [required]--row_key --property_resolver [required]--table_name --accept --timeout --connection_string [required]--partition_key --account_name --select 
+network lb inbound-nat-rule update|[required]--resource_group_name --properties_to_add --properties_to_remove [required]--load_balancer_name --floating_ip --idle_timeout [required]--item_name --frontend_ip_name --properties_to_set --protocol --frontend_port --backend_port 
+vm availability-set list|[required]--resource_group_name 
+acs browse|--disable_browser --ssh_key_file [required]--name [required]--resource_group 
+sql server service-objective list|[required]--resource_group_name [required]--server_name 
+keyvault certificate issuer create|[required]--vault_base_url --organization_id --account_id --disabled [required]--issuer_name [required]--provider_name --password 
+network application-gateway auth-cert show|[required]--item_name [required]--resource_group_name [required]--resource_name 
+sql elastic-pools list|[required]--resource_group_name [required]--server_name 
+storage container metadata update|--lease_id --if_modified_since --sas_token --account_key --timeout [required]--container_name --connection_string --account_name --metadata 
+context switch|[required]--context_name 
+storage message put|[required]--queue_name --sas_token --account_key [required]--content --time_to_live --timeout --connection_string --account_name --visibility_timeout 
+policy definition list|--filter 
+keyvault certificate issuer admin add|[required]--vault_base_url --first_name --last_name --phone [required]--issuer_name [required]--email 
+storage table exists|--sas_token --account_key [required]--table_name --timeout --connection_string --account_name 
+sql db show-usage|[required]--resource_group_name [required]--database_name [required]--server_name 
+network local-gateway show|[required]--resource_group_name [required]--local_network_gateway_name 
+storage blob copy start|--destination_if_none_match --source_if_none_match --destination_lease_id --source_if_unmodified_since --sas_token --destination_if_unmodified_since --account_key [required]--copy_source --source_if_modified_since --source_if_match --timeout [required]--container_name --destination_if_match --connection_string --destination_if_modified_since --source_lease_id [required]--blob_name --account_name --metadata 
+group exists|[required]--resource_group_name 
+keyvault key delete|[required]--vault_base_url [required]--key_name 
+network nsg update|--properties_to_remove [required]--resource_group_name [required]--network_security_group_name --properties_to_add --properties_to_set 
+ad sp reset-credentials|--password [required]--name --years 
+resource move|--destination_subscription_id [required]--ids [required]--destination_group 
+iot hub job show|[required]--hub_name [required]--job_id --resource_group_name 
+ad group show|[required]--object_id 
+sql server list|[required]--resource_group_name 
+group show|[required]--resource_group_name 
+storage queue generate-sas|--protocol --permission --ip [required]--queue_name --sas_token --account_key --expiry --start --id --connection_string --account_name 
+iot device message abandon|[required]--hub_name --resource_group_name [required]--lock_token [required]--device_id 
+appservice web config hostname delete|--slot [required]--resource_group_name [required]--name [required]--webapp 
+network dns record-set list|[required]--resource_group_name --record_type [required]--zone_name 
+network dns record-set delete|[required]--resource_group_name --if_none_match [required]--relative_record_set_name [required]--record_type [required]--zone_name --if_match 
+network dns record aaaa remove|[required]--resource_group_name [required]--ipv6_address [required]--record_set_name [required]--zone_name 
+network application-gateway frontend-port show|[required]--item_name [required]--resource_group_name [required]--resource_name 
+appservice plan show|[required]--resource_group_name [required]--name 
+sql db replication-link list|[required]--resource_group_name [required]--database_name [required]--server_name 
+network application-gateway http-settings list|[required]--resource_group_name [required]--resource_name 
+network nic ip-config create|[required]--resource_group_name [required]--network_interface_name --public_ip_address --subnet --virtual_network_name --private_ip_address_allocation --load_balancer_name --load_balancer_backend_address_pool_ids [required]--ip_config_name --private_ip_address --make_primary --load_balancer_inbound_nat_rule_ids --private_ip_address_version 
+network dns record cname remove|[required]--resource_group_name [required]--cname [required]--record_set_name [required]--zone_name 
+ad app update|--identifier_uris [required]--identifier --display_name --end_date --reply_urls --key_value --key_type --key_usage --password --homepage --start_date 
+vm update|[required]--vm_name [required]--resource_group_name --properties_to_add --properties_to_set --raw --properties_to_remove 
+network application-gateway frontend-port update|[required]--resource_group_name --properties_to_add --properties_to_remove [required]--application_gateway_name --raw --properties_to_set [required]--item_name --port 
+sql elastic-pools recommended db list|[required]--resource_group_name [required]--recommended_elastic_pool_name [required]--server_name 
+lock update|--lock_id --resource_group_name [required]--name --level --lock_type --notes 
+tag add-value|[required]--tag_name [required]--tag_value 
+network nic ip-config inbound-nat-rule add|[required]--ip_config_name [required]--resource_group_name [required]--network_interface_name --load_balancer_name [required]--inbound_nat_rule 
+vm extension set|[required]--vm_name [required]--resource_group_name [required]--publisher --settings [required]--vm_extension_name --no_auto_upgrade --version --protected_settings 
+network lb inbound-nat-rule delete|[required]--item_name [required]--resource_group_name [required]--resource_name --no_wait 
+storage file download|--end_range --progress_callback [required]--share_name [required]--file_name --sas_token --account_key [required]--file_path --validate_content --timeout --start_range --connection_string --open_mode [required]--directory_name --account_name --max_connections 
+storage table policy create|--permission --sas_token --account_key [required]--policy_name --start [required]--container_name --connection_string --expiry --account_name 
+iot hub consumer-group delete|--event_hub_name [required]--hub_name --resource_group_name [required]--consumer_group_name 
+storage share list|--num_results --include_metadata --sas_token --account_key --prefix --timeout --marker --connection_string --account_name 
+storage table policy update|--permission --sas_token --account_key [required]--policy_name --start [required]--container_name --connection_string --expiry --account_name 
+policy assignment show|--resource_group_name [required]--name --scope 
+appservice list-locations|--sku --linux_workers_enabled 
+network application-gateway wait|[required]--resource_group_name --updated --exists --created --deleted --interval [required]--application_gateway_name --custom --timeout 
+vm resize|[required]--vm_name [required]--resource_group_name [required]--size 
 context list|
-network lb inbound-nat-pool list|
-appservice web log config|
-ad sp list|
-network vnet-gateway reset|
-vmss extension show|
-group deployment operation show|
-iot hub show-stats|
-storage blob lease change|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network nsg delete|
-vm boot-diagnostics enable|
-network lb address-pool create|
-keyvault key set-attributes|
-storage blob download-batch|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-storage blob lease renew|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-storage blob download|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network application-gateway ssl-cert create|
-keyvault certificate contact delete|
-storage blob lease release|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network lb rule list|
-group deployment create|
-network local-gateway delete|
-ad user delete|
-storage queue create|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-sql server firewall delete|
-iot hub delete|
-network application-gateway url-path-map rule delete|
-vm capture|
-network nic ip-config inbound-nat-rule remove|
-lock show|
-sql elastic-pools show|
-sql db data-warehouse pause|
-component update|
-storage blob list|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-appservice web source-control sync|
-network application-gateway frontend-ip create|
-vmss extension image list|
-vm deallocate|
-appservice web log download|
-batch application package show|
-iot hub create|
-storage share show|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-acr delete|
-network application-gateway probe show|
-network dns record srv add|
-keyvault certificate set-attributes|
-vmss list-instances|
+network lb inbound-nat-pool list|[required]--resource_group_name [required]--resource_name 
+appservice web log config|--slot [required]--resource_group_name [required]--name --application_logging --web_server_logging --level --failed_request_tracing --detailed_error_messages 
+ad sp list|--display_name --query_filter --spn 
+network vnet-gateway reset|[required]--resource_group_name [required]--virtual_network_gateway_name --gateway_vip 
+vmss extension show|[required]--resource_group_name [required]--vmss_name [required]--extension_name 
+group deployment operation show|[required]--resource_group_name [required]--deployment_name [required]--operation_ids 
+iot hub show-stats|[required]--hub_name --resource_group_name 
+storage blob lease change|[required]--lease_id --if_none_match --if_modified_since --if_unmodified_since --sas_token [required]--proposed_lease_id --account_key --timeout [required]--container_name --connection_string --if_match [required]--blob_name --account_name 
+network nsg delete|[required]--network_security_group_name [required]--resource_group_name 
+vm boot-diagnostics enable|[required]--vm_name [required]--resource_group_name [required]--storage 
+network lb address-pool create|[required]--item_name [required]--resource_group_name [required]--load_balancer_name 
+keyvault key set-attributes|[required]--vault_base_url --key_ops --tags [required]--key_name --key_attributes [required]--key_version 
+storage blob download-batch|[required]--source_container_name --dryrun --pattern [required]--destination --sas_token --account_key [required]--source --connection_string --account_name 
+storage blob lease renew|[required]--lease_id --if_none_match --if_modified_since --if_unmodified_since --sas_token --account_key --timeout [required]--container_name --connection_string --if_match [required]--blob_name --account_name 
+storage blob download|--start_range --end_range --lease_id --validate_content --progress_callback --if_none_match --if_modified_since --if_unmodified_since --sas_token --account_key [required]--file_path --snapshot --timeout [required]--container_name --if_match --connection_string --open_mode [required]--blob_name --account_name --max_connections 
+network application-gateway ssl-cert create|[required]--resource_group_name [required]--item_name --no_wait [required]--application_gateway_name [required]--cert_password [required]--cert_data 
+keyvault certificate contact delete|[required]--vault_base_url [required]--contact_email 
+storage blob lease release|[required]--lease_id --if_none_match --if_modified_since --if_unmodified_since --sas_token --account_key --timeout [required]--container_name --connection_string --if_match [required]--blob_name --account_name 
+network lb rule list|[required]--resource_group_name [required]--resource_name 
+group deployment create|[required]--resource_group_name --deployment_name --parameters --no_wait --template_uri --mode --template_file 
+network local-gateway delete|[required]--resource_group_name [required]--local_network_gateway_name 
+ad user delete|[required]--upn_or_object_id 
+storage queue create|--fail_on_exist [required]--queue_name --sas_token --account_key --timeout --connection_string --account_name --metadata 
+sql server firewall delete|[required]--resource_group_name [required]--server_name [required]--firewall_rule_name 
+iot hub delete|[required]--hub_name --resource_group_name 
+network application-gateway url-path-map rule delete|[required]--item_name [required]--resource_group_name [required]--application_gateway_name [required]--url_path_map_name 
+vm capture|[required]--vm_name [required]--resource_group_name --storage_container [required]--vhd_name_prefix --overwrite 
+network nic ip-config inbound-nat-rule remove|[required]--ip_config_name [required]--resource_group_name [required]--network_interface_name --load_balancer_name [required]--inbound_nat_rule 
+lock show|--resource_group_name [required]--name 
+sql elastic-pools show|[required]--resource_group_name [required]--elastic_pool_name [required]--server_name 
+sql db data-warehouse pause|[required]--resource_group_name [required]--database_name [required]--server_name 
+component update|--pre --additional_components --link --private 
+storage blob list|--num_results --sas_token --delimiter --account_key --prefix --timeout [required]--container_name --marker --connection_string --include --account_name 
+appservice web source-control sync|--slot [required]--resource_group_name [required]--name 
+network application-gateway frontend-ip create|[required]--resource_group_name --public_ip_address --subnet [required]--item_name --private_ip_address_allocation --no_wait [required]--application_gateway_name --virtual_network_name --private_ip_address 
+vmss extension image list|--image_location --version --publisher_name --name --latest 
+vm deallocate|[required]--vm_name [required]--resource_group_name 
+appservice web log download|--slot [required]--resource_group_name --log_file [required]--name 
+batch application package show|[required]--resource_group_name [required]--version [required]--application_id [required]--account_name 
+iot hub create|--sku [required]--hub_name --location --unit [required]--resource_group_name 
+storage share show|[required]--share_name --sas_token --account_key --timeout --connection_string --account_name 
+acr delete|--resource_group_name [required]--registry_name 
+network application-gateway probe show|[required]--item_name [required]--resource_group_name [required]--resource_name 
+network dns record srv add|[required]--resource_group_name [required]--target [required]--weight [required]--priority [required]--zone_name [required]--port [required]--record_set_name 
+keyvault certificate set-attributes|[required]--vault_base_url --certificate_policy --tags [required]--certificate_name --certificate_attributes [required]--certificate_version 
+vmss list-instances|--filter [required]--resource_group_name [required]--virtual_machine_scale_set_name --expand --select 
 redis list-all|
 cloud list|
-storage share generate-sas|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-vm list-usage|
-storage queue policy list|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-storage blob exists|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-storage file upload|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network public-ip update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-sql db replication-link delete|
-network express-route list-arp-tables|
-keyvault certificate list-versions|
-keyvault update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-vmss show|
-network application-gateway rule list|
-appservice web start|
-network application-gateway url-path-map create|
-network traffic-manager profile delete|
-vm access reset-linux-ssh|
-vm disk attach-new|
-storage container list|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-storage share policy create|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network application-gateway start|
-network traffic-manager endpoint create|
-sql db replication-link force-failover|
-network application-gateway rule create|
-network express-route delete|
-network nic ip-config list|
-feature register|
-network vnet-gateway wait|--updated --updated --updated --exists --exists --exists --created --created --created --deleted --deleted --deleted --interval --interval --interval --interval --custom --custom --timeout --timeout --timeout --timeout 
-vm nic set|
-vmss list-skus|
-role definition delete|
-iot device delete|
-storage queue stats|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-vmss scale|
-network lb probe create|
-network express-route create|
-appservice plan delete|--force --force --force 
-appservice web list|
-storage blob url|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-vm boot-diagnostics get-boot-log|
-network application-gateway url-path-map rule create|
-network dns record a add|
-vmss update-instances|
-keyvault certificate issuer delete|
-sql server delete|
-network traffic-manager profile update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-vm restart|
-network application-gateway http-listener create|
-network lb create|
-network vnet create|
-storage account show-connection-string|
-network lb rule update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-keyvault secret download|
-network dns record update-soa|
-network nsg rule list|
-network route-table list|
-appservice web deployment user set|
-resource update|--properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_remove --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_add --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set --properties_to_set 
-sql elastic-pools recommended db show|
-group deployment export|
-appservice web deployment slot auto-swap|
-group delete|--force --force --force 
-keyvault secret set-attributes|
-acs list|
-network lb probe delete|
-ad user create|
-storage blob metadata show|[required]--connection_string [required]--connection_string [required]--connection_string [required]--connection_string [required]--sas_token [required]--sas_token [required]--sas_token [required]--sas_token [required]--account_name [required]--account_name [required]--account_name [required]--account_name [required]--account_key [required]--account_key [required]--account_key [required]--account_key 
-network application-gateway waf-config show|
-vmss diagnostics get-default-config|
+storage share generate-sas|--protocol --cache_control --permission --ip [required]--share_name --sas_token --account_key --expiry --start --content_language --content_encoding --content_type --id --connection_string --content_disposition --account_name 
+vm list-usage|[required]--location 
+storage queue policy list|--connection_string --sas_token --account_name --account_key [required]--container_name 
+storage blob exists|--sas_token --account_key --snapshot --timeout [required]--container_name --connection_string --blob_name --account_name 
+storage file upload|--max_connections --progress_callback [required]--share_name [required]--file_name --sas_token --account_key --validate_content --timeout [required]--local_file_path --content_settings --connection_string [required]--directory_name --account_name --metadata 
+network public-ip update|[required]--public_ip_address_name [required]--resource_group_name --properties_to_add --tags --properties_to_remove --dns_name --reverse_fqdn --idle_timeout --version --properties_to_set --allocation_method 
+sql db replication-link delete|[required]--resource_group_name [required]--database_name [required]--server_name [required]--link_id 
+network express-route list-arp-tables|[required]--resource_group_name [required]--peering_name [required]--device_path [required]--circuit_name 
+keyvault certificate list-versions|[required]--vault_base_url [required]--certificate_name --maxresults 
+keyvault update|--properties_to_remove [required]--resource_group_name --properties_to_add --properties_to_set [required]--vault_name 
+vmss show|[required]--vm_scale_set_name [required]--resource_group_name --instance_id 
+network application-gateway rule list|[required]--resource_group_name [required]--resource_name 
+appservice web start|--slot [required]--resource_group_name [required]--name 
+network application-gateway url-path-map create|[required]--resource_group_name [required]--paths [required]--item_name --no_wait [required]--http_settings [required]--application_gateway_name --rule_name [required]--address_pool --default_address_pool --default_http_settings 
+network traffic-manager profile delete|[required]--resource_group_name [required]--profile_name 
+vm access reset-linux-ssh|[required]--vm_name [required]--resource_group_name 
+vm disk attach-new|[required]--vm_name [required]--resource_group_name --disk_size --lun --caching [required]--vhd --disk_name 
+storage container list|--num_results --include_metadata --sas_token --account_key --prefix --timeout --marker --connection_string --account_name 
+storage share policy create|--permission --sas_token --account_key [required]--policy_name --start [required]--container_name --connection_string --expiry --account_name 
+network application-gateway start|[required]--resource_group_name [required]--application_gateway_name 
+network traffic-manager endpoint create|[required]--resource_group_name --endpoint_location --target_resource_id --target [required]--endpoint_name --min_child_endpoints --weight --priority [required]--profile_name --endpoint_monitor_status [required]--endpoint_type --endpoint_status 
+sql db replication-link force-failover|[required]--resource_group_name [required]--database_name [required]--server_name [required]--link_id 
+network application-gateway rule create|--rule_type [required]--resource_group_name [required]--item_name --no_wait [required]--http_settings [required]--http_listener [required]--application_gateway_name --url_path_map [required]--address_pool 
+network express-route delete|[required]--resource_group_name [required]--circuit_name 
+network nic ip-config list|[required]--resource_group_name [required]--resource_name 
+feature register|[required]--resource_provider_namespace [required]--feature_name 
+network vnet-gateway wait|[required]--resource_group_name --updated --exists --created --deleted --interval [required]--virtual_network_gateway_name --custom --timeout 
+vm nic set|[required]--vm_name [required]--resource_group_name --primary_nic [required]--nics 
+vmss list-skus|[required]--vm_scale_set_name [required]--resource_group_name 
+role definition delete|--resource_group_name --custom_role_only [required]--name --scope 
+iot device delete|[required]--hub_name --resource_group_name --etag [required]--device_id 
+storage queue stats|--connection_string --timeout --sas_token --account_name --account_key 
+vmss scale|[required]--vm_scale_set_name [required]--resource_group_name [required]--new_capacity 
+network lb probe create|[required]--resource_group_name --interval [required]--protocol [required]--item_name [required]--load_balancer_name --threshold --path [required]--port 
+network express-route create|[required]--resource_group_name [required]--deployment_name [required]--bandwidth_in_mbps --sku_family --tags [required]--peering_location --location --sku_tier [required]--circuit_name [required]--service_provider_name 
+appservice plan delete|[required]--resource_group_name --force [required]--name 
+appservice web list|[required]--resource_group_name 
+storage blob url|--protocol --sas_token --account_key [required]--container_name --connection_string [required]--blob_name --account_name 
+vm boot-diagnostics get-boot-log|[required]--vm_name [required]--resource_group_name 
+network application-gateway url-path-map rule create|[required]--resource_group_name [required]--paths [required]--item_name --no_wait [required]--application_gateway_name --http_settings --address_pool [required]--url_path_map_name 
+network dns record a add|[required]--ipv4_address [required]--resource_group_name [required]--record_set_name [required]--zone_name 
+vmss update-instances|[required]--vm_scale_set_name [required]--resource_group_name [required]--instance_ids 
+keyvault certificate issuer delete|[required]--vault_base_url [required]--issuer_name 
+sql server delete|[required]--resource_group_name [required]--server_name 
+network traffic-manager profile update|--routing_method [required]--resource_group_name --properties_to_add --monitor_protocol --tags --properties_to_remove --monitor_port --monitor_path [required]--profile_name --properties_to_set --ttl --profile_status 
+vm restart|[required]--vm_name [required]--resource_group_name 
+network application-gateway http-listener create|[required]--resource_group_name --ssl_cert [required]--item_name --no_wait [required]--application_gateway_name [required]--frontend_ip [required]--frontend_port 
+network lb create|--subnet_address_prefix [required]--resource_group_name --backend_pool_name --public_ip_address [required]--deployment_name --subnet --virtual_network_name --private_ip_address_allocation [required]--load_balancer_name --subnet_type --frontend_ip_name --location --vnet_address_prefix --public_ip_dns_name --private_ip_address --dns_name_type --public_ip_address_type --tags --public_ip_address_allocation 
+network vnet create|[required]--resource_group_name --dns_servers [required]--deployment_name --tags [required]--virtual_network_name --subnet_prefix --virtual_network_prefix --create_subnet --subnet_name --location 
+storage account show-connection-string|[required]--resource_group_name --protocol --queue_endpoint --key_name --table_endpoint --file_endpoint --blob_endpoint [required]--account_name 
+network lb rule update|[required]--resource_group_name --frontend_port --properties_to_add --frontend_ip_name --properties_to_remove [required]--load_balancer_name --floating_ip --backend_address_pool_name [required]--item_name --idle_timeout --properties_to_set --protocol --probe_name --load_distribution --backend_port 
+keyvault secret download|[required]--vault_base_url --encoding --secret_version [required]--secret_name [required]--file_path 
+network dns record update-soa|[required]--resource_group_name --refresh_time --minimum_ttl --expire_time [required]--zone_name --retry_time --serial_number --email 
+network nsg rule list|[required]--network_security_group_name [required]--resource_group_name 
+network route-table list|--resource_group_name 
+appservice web deployment user set|--password [required]--user_name 
+resource update|[required]--resource_group_name [required]--resource_name --properties_to_add --properties_to_remove [required]--resource_provider_namespace [required]--api_version --properties_to_set [required]--parent_resource_path [required]--resource_type 
+sql elastic-pools recommended db show|[required]--resource_group_name [required]--database_name [required]--recommended_elastic_pool_name [required]--server_name 
+group deployment export|[required]--resource_group_name [required]--deployment_name 
+appservice web deployment slot auto-swap|[required]--slot [required]--resource_group_name --disable --auto_swap_slot [required]--webapp 
+group delete|[required]--resource_group_name --force --raw 
+keyvault secret set-attributes|[required]--vault_base_url --tags --secret_attributes --content_type [required]--secret_name [required]--secret_version 
+acs list|--resource_group_name 
+network lb probe delete|[required]--item_name [required]--resource_group_name [required]--resource_name --no_wait 
+ad user create|--mail_nickname [required]--user_principal_name [required]--display_name --immutable_id --force_change_password_next_login [required]--password 
+storage blob metadata show|--lease_id --if_none_match --if_modified_since --if_unmodified_since --sas_token --account_key --snapshot --timeout [required]--container_name --connection_string --if_match [required]--blob_name --account_name 
+network application-gateway waf-config show|[required]--resource_group_name [required]--application_gateway_name 
+vmss diagnostics get-default-config|--is_windows_os 
 configure|
-network application-gateway ssl-cert list|
-vm get-instance-view|
-network express-route get-stats|
-redis patch-schedule set|
+network application-gateway ssl-cert list|[required]--resource_group_name [required]--resource_name 
+vm get-instance-view|[required]--vm_name [required]--resource_group_name 
+network express-route get-stats|[required]--resource_group_name [required]--circuit_name 
+redis patch-schedule set|[required]--resource_group_name [required]--schedule_entries [required]--name 

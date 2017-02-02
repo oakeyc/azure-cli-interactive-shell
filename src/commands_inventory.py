@@ -14,8 +14,9 @@ class CompletionIndex(object):
             self.subcommands.append(line.strip("\n"))
 
         for line in self.param:
-            for arg in line.partition("|")[2].partition("*")[0].split():
-                self.args_opts.append(arg.replace("[required]", ""))
+            for arg in line.partition("|")[2].split():
+                if arg not in self.args_opts:
+                    self.args_opts.append(arg.replace("[required]", ""))
 
         self.com.close()
         self.param.close()

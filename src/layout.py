@@ -11,7 +11,6 @@ from prompt_toolkit.layout.processors import HighlightSearchProcessor, \
 from prompt_toolkit.layout.prompt import DefaultPrompt
 from pygments.token import Token
 from pygments.lexer import Lexer
-from args_lexer import ArgsLexer
 
 def get_prompt_tokens(cli):
     """ returns prompt tokens """
