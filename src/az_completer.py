@@ -1,6 +1,7 @@
 from prompt_toolkit.contrib.completers import WordCompleter
 from prompt_toolkit.completion import Completer, Completer
 import math
+from command_tree import CommandBranch, CommandHead, CommandTree
 
 class AzCompleter(Completer):
     """ Completes Azure CLI commands """
@@ -13,6 +14,7 @@ class AzCompleter(Completer):
         self.param_dict = {}
         self.current_comamand = ""
         self.last_option = ""
+        self.command_tree = CommandHead()
         self.gather_from_files()
 
     def gather_from_files(self):
@@ -22,12 +24,21 @@ class AzCompleter(Completer):
 
         for line in command:
             self.words.append(line.strip("\n"))
+            branch = self.command_tree
+            for sing_word in line.split():
+                if branch.children is None or sing_word not in branch.children:
+                    branch.children = []
+                    branch.children.append(CommandBranch(sing_word))
+                branch = branch.get_child(sing_word, branch.children)
+
         # add exiting
         self.words.append("quit")
         self.words.append("exit")
 
         self.descrip["quit"] = "Exits the program"
         self.descrip["exit"] = "Exits the program"
+
+        self.command_tree.children.append("quit").append("exit")
 
         self.param_dict["quit"] = ""
         self.param_dict["exit"] = ""

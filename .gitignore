@@ -1,12 +1,16 @@
 # IDE files #
 .project
 .pydevproject
-.vscode
+.vscode/
+
+# Cache files #
+*.pyc
+__pycache__
 
 # OS gen files #
 .DS_Store
 
 # Virtual Environments #
-env
-env27
-shell
+env/
+env27/
+shell/
