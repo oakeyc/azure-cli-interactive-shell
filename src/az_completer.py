@@ -2,7 +2,19 @@ from prompt_toolkit.contrib.completers import WordCompleter
 from prompt_toolkit.completion import Completer, Completion
 import math
 from command_tree import CommandBranch, CommandHead, CommandTree
+import argcomplete
+import azure.cli.core.azlogging as azlogging
+
 from azure.cli.core.parser import AzCliCommandParser, enable_autocomplete
+from azure.cli.core.application import _explode_list_args
+from azure.cli.core.application import Configuration
+from azure.cli.core.application import APPLICATION, Application
+
+app = APPLICATION
+
+import logging
+logging.basicConfig()
+
 
 class AzCompleter(Completer):
     """ Completes Azure CLI commands """
@@ -15,9 +27,15 @@ class AzCompleter(Completer):
         self.param_dict = {}
         self.current_comamand = ""
         self.last_option = ""
+
+        self.global_parser = AzCliCommandParser(prog='az', add_help=False)
+        self.parser = AzCliCommandParser(prog='az', parents=[self.global_parser])
+        command_table = app.configuration.get_command_table()
+        self.parser.load_command_table(command_table)
+
         self.command_tree = CommandHead()
         self.gather_from_files()
-    
+
     def add_exit(self):
         self.completable.append("quit")
         self.completable.append("exit")
@@ -41,8 +59,9 @@ class AzCompleter(Completer):
 
             branch = self.command_tree
             for sing_word in line.split():
-                if branch.children is None or sing_word not in branch.children:
+                if branch.children is None:
                     branch.children = []
+                if not branch.has_child(sing_word):
                     branch.children.append(CommandBranch(sing_word))
                 branch = branch.get_child(sing_word, branch.children)
 
@@ -94,9 +113,43 @@ class AzCompleter(Completer):
         param.close()
 
     def get_completions(self, document, complete_event):
-        # self.global_parser = AzCliCommandParser(prog='az', add_help=False)
-        # self.parser = AzCliCommandParser(prog='az', parents=[self.global_parser])
-        
+        text_before_cursor = document.text_before_cursor
+
+        if text_before_cursor.split():
+            for kid in self.command_tree.children:
+                yield Completion(str(kid.data), -1)
+        # print("HElp")
+        # args = self.parser.parse_args("az vm list")
+
+        # if text_before_cursor[-1] == " ":
+        #     pos = -len(text_before_cursor.strip().split()[-1])
+        # else:
+        #     pos = 0
+        # argcomplete.autocomplete = argcomplete.CompletionFinder()
+        # argcomplete.autocomplete(text_before_cursor, validator=lambda c, p: c.lower().startswith(p.lower()),
+        #                             default_completer=lambda _: ())
+
+
+        # _display_completions = argcomplete.autocomplete.get_display_completions()
+        # print("")
+        # if _display_completions:
+        #     help_len = [len(x) for x in _display_completions.values() if x]
+
+        #     if help_len:
+        #         maxlen = max([len(x) for x in _display_completions])
+        #         print("\n".join("{0:{2}} -- {1}".format(k, v, maxlen)
+        #                         for k, v in sorted(_display_completions.items())))
+        #     else:
+        #         print("    ".join(k for k in sorted(_display_completions)))
+        # else:
+            # print("BOOO")
+
+        # for com in _explode_list_args(args):
+            # print com
+            # yield Completion(com, start_position=pos)
+
+        # print argcomplete.CompletionFinder().get_display_completions()
+            # print x
         # text_before_cursor = document.text_before_cursor
         # if self.is_command(text_before_cursor.split()[0]):
         #     # text = text_before_cursor.split()
@@ -104,7 +157,9 @@ class AzCompleter(Completer):
         #     for word in self.command_tree.get_subbranch(text_before_cursor):
         #         yield Completion(word)
 
-        return self.completer.get_completions(document, complete_event)
+        # yield Completion("hi")
+
+        # return self.completer.get_completions(document, complete_event)
 
     def is_completable(self, command):
         """ whether the command can be completed """

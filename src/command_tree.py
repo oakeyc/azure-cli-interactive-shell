@@ -12,6 +12,12 @@ class CommandTree(object):
 
     def add_child(self, child):
         self.children.append(child)
+    
+    def has_child(self, name):
+        for kid in self.children:
+            if kid.data == name:
+                return True
+        return False
 
 class CommandHead(CommandTree):
     """ represents the head of the tree, no data"""

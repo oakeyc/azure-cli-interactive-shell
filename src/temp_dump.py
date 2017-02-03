@@ -33,6 +33,7 @@ class Exporter(json.JSONEncoder):
             return super(Exporter, self).default(o)
         except TypeError:
             return str(o)
+            
 
 def _dump_command_table(**kwargs):
     cmd_table = APPLICATION.configuration.get_command_table()
