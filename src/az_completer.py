@@ -1,13 +1,14 @@
 from prompt_toolkit.contrib.completers import WordCompleter
-from prompt_toolkit.completion import Completer, Completer
+from prompt_toolkit.completion import Completer, Completion
 import math
 from command_tree import CommandBranch, CommandHead, CommandTree
+from azure.cli.core.parser import AzCliCommandParser, enable_autocomplete
 
 class AzCompleter(Completer):
     """ Completes Azure CLI commands """
     def __init__(self):
         # everything that is completable
-        self.words = []
+        self.completable = []
         # a completable to the description of what is does
         self.descrip = {}
         # from a command to a list of parameters
@@ -16,6 +17,19 @@ class AzCompleter(Completer):
         self.last_option = ""
         self.command_tree = CommandHead()
         self.gather_from_files()
+    
+    def add_exit(self):
+        self.completable.append("quit")
+        self.completable.append("exit")
+
+        self.descrip["quit"] = "Exits the program"
+        self.descrip["exit"] = "Exits the program"
+
+        self.command_tree.children.append(CommandBranch("quit"))
+        self.command_tree.children.append(CommandBranch("exit"))
+
+        self.param_dict["quit"] = ""
+        self.param_dict["exit"] = ""
 
     def gather_from_files(self):
         command = open("dump.txt", 'r')
@@ -23,7 +37,8 @@ class AzCompleter(Completer):
         param = open("params_dump.txt", 'r')
 
         for line in command:
-            self.words.append(line.strip("\n"))
+            self.completable.append(line.strip("\n"))
+
             branch = self.command_tree
             for sing_word in line.split():
                 if branch.children is None or sing_word not in branch.children:
@@ -32,16 +47,7 @@ class AzCompleter(Completer):
                 branch = branch.get_child(sing_word, branch.children)
 
         # add exiting
-        self.words.append("quit")
-        self.words.append("exit")
-
-        self.descrip["quit"] = "Exits the program"
-        self.descrip["exit"] = "Exits the program"
-
-        self.command_tree.children.append("quit").append("exit")
-
-        self.param_dict["quit"] = ""
-        self.param_dict["exit"] = ""
+        self.add_exit()
 
         for line in help_file:
             description = line.partition(":")[2]
@@ -66,9 +72,13 @@ class AzCompleter(Completer):
                 self.param_dict[key] = args
             else:
                 for arg in line.partition("|")[2].split():
+                    param_no_res = arg.replace("[required]", "")
+                    if param_no_res not in self.completable:
+                        self.completable.append(param_no_res)
+
                     args += str(arg) + "\n"
                     self.descrip[arg] = ""
-                self.param_dict[key] = args
+            self.param_dict[key] = args
 
         # for key in self.param_dict:
         #     for arg in self.param_dict[key]:
@@ -77,18 +87,28 @@ class AzCompleter(Completer):
         # for key in self.words:
         #     print key
 
-        self.completer = WordCompleter(words=self.words, sentence=True)
+        self.completer = WordCompleter(words=self.completable, sentence=True)
 
         command.close()
         help_file.close()
         param.close()
 
     def get_completions(self, document, complete_event):
+        # self.global_parser = AzCliCommandParser(prog='az', add_help=False)
+        # self.parser = AzCliCommandParser(prog='az', parents=[self.global_parser])
+        
+        # text_before_cursor = document.text_before_cursor
+        # if self.is_command(text_before_cursor.split()[0]):
+        #     # text = text_before_cursor.split()
+        #     # text = ' '.join(text)
+        #     for word in self.command_tree.get_subbranch(text_before_cursor):
+        #         yield Completion(word)
+
         return self.completer.get_completions(document, complete_event)
 
     def is_completable(self, command):
         """ whether the command can be completed """
-        return command in self.words
+        return command in self.completable
 
     def get_param(self, command):
         """ returns the parameters for a given command """

@@ -16,23 +16,29 @@ class CommandTree(object):
 class CommandHead(CommandTree):
     """ represents the head of the tree, no data"""
     def __init__(self, children=None):
-        CommandTree.__init__(self, None, children=children)
+        CommandTree.__init__(self, None, children=[])
 
     def get_subbranch(self, data):
         data_split = data.split()
         kids = self.children
-        try:
-            for word in data_split:
-                kid = self.get_child(word, kids)
-                kids = kid.children
+        # try:
+        for word in data_split:
+            kid = self.get_child(word, kids)
+            kids = kid.children
 
-            return self.get_subbranch_help(kids, [])
-        except:
-            raise ValueError("Input does not exist")
+### TODO fix this, it's for testing purposes
+        ans = self.get_subbranch_help(kids, [])
+        for x in ans:
+            print x
+        return ans
+        # except:
+            # raise ValueError("Input does not exist")
 
 
     def get_subbranch_help(self, to_check, acc):
         check_next = []
+        if to_check is None:
+            return acc
         for branch in to_check:
             if branch is None:
                 continue
