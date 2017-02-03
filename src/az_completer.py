@@ -28,6 +28,7 @@ class AzCompleter(Completer):
         self.current_comamand = ""
         self.last_option = ""
 
+        self.completable_param = []
         self.global_parser = AzCliCommandParser(prog='az', add_help=False)
         self.parser = AzCliCommandParser(prog='az', parents=[self.global_parser])
         command_table = app.configuration.get_command_table()
@@ -94,6 +95,8 @@ class AzCompleter(Completer):
                     param_no_res = arg.replace("[required]", "")
                     if param_no_res not in self.completable:
                         self.completable.append(param_no_res)
+                    if param_no_res not in self.completable_param:
+                        self.completable_param.append(param_no_res)
 
                     args += str(arg) + "\n"
                     self.descrip[arg] = ""
@@ -114,52 +117,29 @@ class AzCompleter(Completer):
 
     def get_completions(self, document, complete_event):
         text_before_cursor = document.text_before_cursor
-
+        # completions = []
+        position = 0
+        branch = self.command_tree
         if text_before_cursor.split():
-            for kid in self.command_tree.children:
-                yield Completion(str(kid.data), -1)
-        # print("HElp")
-        # args = self.parser.parse_args("az vm list")
+            for words in text_before_cursor.split():
+                if words.startswith("-"):
+                    for param in self.completable_param:
+                        if param.lower().startswith(words.lower()):
+                            yield Completion(param, -len(words))
+                else:
+                    try:
+                        branch = branch.get_child(words, branch.children)
+                    except ValueError:
+                        continue # do something
 
-        # if text_before_cursor[-1] == " ":
-        #     pos = -len(text_before_cursor.strip().split()[-1])
-        # else:
-        #     pos = 0
-        # argcomplete.autocomplete = argcomplete.CompletionFinder()
-        # argcomplete.autocomplete(text_before_cursor, validator=lambda c, p: c.lower().startswith(p.lower()),
-        #                             default_completer=lambda _: ())
+            if branch.children is not None:
+                for kid in branch.children:
+                    if kid.data.lower().startswith(text_before_cursor.split()[-1].lower()):
+                        yield Completion(str(kid.data),
+                                         -len(text_before_cursor.split()[-1])) # this is a bug
 
 
-        # _display_completions = argcomplete.autocomplete.get_display_completions()
-        # print("")
-        # if _display_completions:
-        #     help_len = [len(x) for x in _display_completions.values() if x]
-
-        #     if help_len:
-        #         maxlen = max([len(x) for x in _display_completions])
-        #         print("\n".join("{0:{2}} -- {1}".format(k, v, maxlen)
-        #                         for k, v in sorted(_display_completions.items())))
-        #     else:
-        #         print("    ".join(k for k in sorted(_display_completions)))
-        # else:
-            # print("BOOO")
-
-        # for com in _explode_list_args(args):
-            # print com
-            # yield Completion(com, start_position=pos)
-
-        # print argcomplete.CompletionFinder().get_display_completions()
-            # print x
-        # text_before_cursor = document.text_before_cursor
-        # if self.is_command(text_before_cursor.split()[0]):
-        #     # text = text_before_cursor.split()
-        #     # text = ' '.join(text)
-        #     for word in self.command_tree.get_subbranch(text_before_cursor):
-        #         yield Completion(word)
-
-        # yield Completion("hi")
-
-        # return self.completer.get_completions(document, complete_event)
+        yield Completion("")  # Do i have to return something?
 
     def is_completable(self, command):
         """ whether the command can be completed """
