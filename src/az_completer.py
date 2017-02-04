@@ -84,12 +84,14 @@ class AzCompleter(Completer):
 
         for line in param:
             key = str(line.partition("|")[0])
-            args = ""
-            if "*" in line:  # if there is a help
-                for arg in line.partition("|")[2].split():
-                    args += str(arg) + "\n"
-                    self.descrip[arg] = str(line.partition("|")[2])
-                self.param_dict[key] = args
+            args = []
+            if "*" in line:
+                print("OOPS")
+                  # if there is a help
+                # for arg in line.partition("|")[2].split():
+                #     # args += str(arg) + "\n"
+                #     self.descrip[arg] = str(line.partition("|")[2])
+                # self.param_dict[key] = args
             else:
                 for arg in line.partition("|")[2].split():
                     param_no_res = arg.replace("[required]", "")
@@ -98,7 +100,7 @@ class AzCompleter(Completer):
                     if param_no_res not in self.completable_param:
                         self.completable_param.append(param_no_res)
 
-                    args += str(arg) + "\n"
+                    args.append(arg)
                     self.descrip[arg] = ""
             self.param_dict[key] = args
 
@@ -117,18 +119,25 @@ class AzCompleter(Completer):
 
     def get_completions(self, document, complete_event):
         text_before_cursor = document.text_before_cursor
-        # completions = []
+        command = ""
         position = 0
         branch = self.command_tree
         if text_before_cursor.split():
             for words in text_before_cursor.split():
-                if words.startswith("-"):
-                    for param in self.completable_param:
-                        if param.lower().startswith(words.lower()):
-                            yield Completion(param, -len(words))
+                if words.startswith("--"):
+                    if self.is_command(command[:-1]):  # gets rid of the trailing whitespace
+                        for param in self.get_param(command[:-1]):
+                            if param.lower().startswith(words.lower()):
+                                yield Completion(param, -len(words))
+                    else:
+                        for param in self.completable_param:
+                            if param.lower().startswith(words.lower()):
+                                yield Completion(param, -len(words))
                 else:
+                    command += words + " "
                     try:
-                        branch = branch.get_child(words, branch.children)
+                        if branch.has_child(words):
+                            branch = branch.get_child(words, branch.children)
                     except ValueError:
                         continue # do something
 
@@ -136,10 +145,16 @@ class AzCompleter(Completer):
                 for kid in branch.children:
                     if kid.data.lower().startswith(text_before_cursor.split()[-1].lower()):
                         yield Completion(str(kid.data),
-                                         -len(text_before_cursor.split()[-1])) # this is a bug
+                                         -len(text_before_cursor.split()[-1])) # this has a bug
 
-
-        yield Completion("")  # Do i have to return something?
+        if not text_before_cursor.split() or text_before_cursor[-1] == " ":
+            if branch.children is not None:
+                for com in branch.children:
+                    yield Completion(com.data)
+        # else:
+        #     for word in self.command_tree.children:
+        #         yield Completion(word)
+        # yield Completion("")  # Do i have to return something?
 
     def is_completable(self, command):
         """ whether the command can be completed """

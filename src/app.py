@@ -99,8 +99,11 @@ class Shell(object):
             command += str(word) + " "
             if self.completer.is_completable(command.rstrip()):
                 if self.completer.is_command(command.rstrip()):
+                    all_params = ""
+                    for param in self.completer.get_param(command.rstrip()):
+                        all_params += param + "\n"
                     self.current_docs = unicode(self.completer.get_description(command.rstrip()) +
-                                                "\n\n" + self.completer.get_param(command.rstrip()))
+                                                "\n\n" + all_params)
                 else:
                     self.current_docs = unicode(self.completer.get_description(command.rstrip()))
                 break
