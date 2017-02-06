@@ -34,11 +34,7 @@ class CommandHead(CommandTree):
             kid = self.get_child(word, kids)
             kids = kid.children
 
-### TODO fix this, it's for testing purposes
-        ans = self.get_subbranch_help(kids, [])
-        for x in ans:
-            print x
-        return ans
+        return self.get_subbranch_help(kids, [])
         # except:
             # raise ValueError("Input does not exist")
 
