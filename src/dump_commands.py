@@ -39,7 +39,7 @@ def _dump_command_table(**kwargs):
     cmd_table = APPLICATION.configuration.get_command_table()
     los_names = []
     dic_meta = {}
-    f = open("dump.txt", 'w')
+    f = open("./cache_ish/dump.txt", 'w')
     # m = open("meta_dump.txt", 'w')
     
     for command_name in cmd_table.keys():
@@ -97,8 +97,8 @@ def _dump_command_table(**kwargs):
         print('\nPARAM: "{}" - {} commands - scope "{}" - {}'.format(
             param, len(commands), _get_parameter_scope(param, commands), commands), file=sys.stderr)
 
-    param_file = open("params_dump.txt", 'w')
-    help = open("help_dump.txt", 'w')
+    param_file = open("./cache_ish/params_dump.txt", 'w')
+    help = open("./cache_ish/help_dump.txt", 'w')
     for cmd in cmd_table:
         # load_params(cmd)
         # cmd_string = 'az {} -h'.format(cmd)
