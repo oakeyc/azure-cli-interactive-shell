@@ -32,11 +32,13 @@ class AzCompleter(Completer):
                 if words.startswith("--"):
                     if self.is_command(command[:-1]): # gets rid of the trailing whitespace
                         for param in self.get_param(command[:-1]):
+                            param = param.replace("[required]", "")
                             if param.lower().startswith(words.lower()) and \
                             param.lower() != words.lower():
                                 yield Completion(param, -len(words))
                     else:
                         for param in self.completable_param:
+                            param = param.replace("[required]", "")
                             if param.lower().startswith(words.lower()) and \
                             param.lower() != words.lower():
                                 yield Completion(param, -len(words))
