@@ -20,6 +20,8 @@ class AzCompleter(Completer):
 
         self.command_tree = commands.command_tree
 
+        self.competer = commands.completer
+
     def get_completions(self, document, complete_event):
         text_before_cursor = document.text_before_cursor
         command = ""
@@ -27,14 +29,15 @@ class AzCompleter(Completer):
         if text_before_cursor.split():
             for words in text_before_cursor.split():
                 if words.startswith("--"):
-                    if self.is_command(command[:-1]) and \
-                    words not in self.completable_param:  # gets rid of the trailing whitespace
+                    if self.is_command(command[:-1]): # gets rid of the trailing whitespace
                         for param in self.get_param(command[:-1]):
-                            if param.lower().startswith(words.lower()):
+                            if param.lower().startswith(words.lower()) and \
+                            param.lower() != words.lower():
                                 yield Completion(param, -len(words))
                     else:
                         for param in self.completable_param:
-                            if param.lower().startswith(words.lower()):
+                            if param.lower().startswith(words.lower()) and \
+                            param.lower() != words.lower():
                                 yield Completion(param, -len(words))
                 else:
                     command += words + " "

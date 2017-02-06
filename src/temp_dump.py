@@ -112,8 +112,8 @@ def _dump_command_table(**kwargs):
             if cmd_table[cmd].arguments[key].type.settings.get('required'):
                 param_file.write("[required]")
             param_file.write("--" + _dashed_to_camel(key) + " ")
-            if 'help' in cmd_table[cmd].arguments[key]:
-                param_file.write("*" + cmd_table[cmd].arguments[key].type.settings.get('help'))
+            if cmd_table[cmd].arguments[key].type.settings.get('help'):
+                param_file.write("* " + cmd_table[cmd].arguments[key].type.settings.get('help') + " ")
             # if key.settings.get('required'):
             #     param_file.write("[required]")
             # for opt in key.settings.get('options_list'):
