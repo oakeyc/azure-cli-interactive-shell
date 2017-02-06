@@ -92,7 +92,7 @@ class GatherCommands(object):
                         args.append(symbol)
 
                         if description != "" and name != "":
-                            self.param_descript[name] = description
+                            self.param_descript[symbol] = description
                             description = ""
                         name = symbol.replace("[required]", "")
 
@@ -104,10 +104,6 @@ class GatherCommands(object):
                         param_description = True
                     elif param_description:
                         description += symbol + " "
-                # for arg in line.partition("|")[2].partition("*")[2].split():
-                #     args += str(arg) + "\n"
-                #     self.descrip[arg] = str(line.partition("|")[2].partition("*")[2])
-                # self.param_dict[key] = args
             else:
                 for arg in line.partition("|")[2].split():
                     param_no_res = arg.replace("[required]", "")
@@ -118,8 +114,8 @@ class GatherCommands(object):
                     self.descrip[arg] = ""
             self.param_dict[key] = args
 
-        self.completer = WordCompleter(words=self.completable,\
-         sentence=True, meta_dict=self.param_descript)
+        # self.completer = WordCompleter(words=self.completable,\
+        #  sentence=True, meta_dict=self.param_descript)
 
         command.close()
         help_file.close()

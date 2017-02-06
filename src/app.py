@@ -105,7 +105,11 @@ class Shell(object):
                 if self.completer.is_command(command.rstrip()):
                     all_params = ""
                     for param in self.completer.get_param(command.rstrip()):
-                        all_params += param + "\n"
+                        if self.completer.has_description(param):
+                            all_params += param + ": " + \
+                            self.completer.param_description[param] + "\n"
+                        else:
+                            all_params += param + "\n"
                     self.current_docs = unicode(self.completer.get_description(command.rstrip()) +
                                                 "\n\n" + all_params)
                 else:

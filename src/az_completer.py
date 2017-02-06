@@ -21,6 +21,7 @@ class AzCompleter(Completer):
         self.command_tree = commands.command_tree
 
         self.competer = commands.completer
+        self.param_description = commands.param_descript
 
     def get_completions(self, document, complete_event):
         text_before_cursor = document.text_before_cursor
@@ -83,3 +84,6 @@ class AzCompleter(Completer):
                 if com.data != command:
                     subcommands.append(command)
         return subcommands
+
+    def has_description(self, param):
+        return param in self.param_description.keys()
