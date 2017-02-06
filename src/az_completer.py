@@ -29,10 +29,6 @@ class AzCompleter(Completer):
         self.last_option = ""
 
         self.completable_param = []
-        self.global_parser = AzCliCommandParser(prog='az', add_help=False)
-        self.parser = AzCliCommandParser(prog='az', parents=[self.global_parser])
-        command_table = app.configuration.get_command_table()
-        self.parser.load_command_table(command_table)
 
         self.command_tree = CommandHead()
         self.gather_from_files()
@@ -56,7 +52,9 @@ class AzCompleter(Completer):
         param = open("params_dump.txt", 'r')
 
         for line in command:
-            self.completable.append(line.strip("\n"))
+            for word in line.split():
+                if word not in self.completable:
+                    self.completable.append(word)
 
             branch = self.command_tree
             for sing_word in line.split():
@@ -95,21 +93,12 @@ class AzCompleter(Completer):
             else:
                 for arg in line.partition("|")[2].split():
                     param_no_res = arg.replace("[required]", "")
-                    if param_no_res not in self.completable:
-                        self.completable.append(param_no_res)
                     if param_no_res not in self.completable_param:
                         self.completable_param.append(param_no_res)
 
                     args.append(arg)
                     self.descrip[arg] = ""
             self.param_dict[key] = args
-
-        # for key in self.param_dict:
-        #     for arg in self.param_dict[key]:
-        #         self.words.append(arg)
-
-        # for key in self.words:
-        #     print key
 
         self.completer = WordCompleter(words=self.completable, sentence=True)
 
@@ -120,12 +109,12 @@ class AzCompleter(Completer):
     def get_completions(self, document, complete_event):
         text_before_cursor = document.text_before_cursor
         command = ""
-        position = 0
         branch = self.command_tree
         if text_before_cursor.split():
             for words in text_before_cursor.split():
                 if words.startswith("--"):
-                    if self.is_command(command[:-1]):  # gets rid of the trailing whitespace
+                    if self.is_command(command[:-1]) and \
+                    words not in self.completable_param:  # gets rid of the trailing whitespace
                         for param in self.get_param(command[:-1]):
                             if param.lower().startswith(words.lower()):
                                 yield Completion(param, -len(words))
@@ -151,14 +140,11 @@ class AzCompleter(Completer):
             if branch.children is not None:
                 for com in branch.children:
                     yield Completion(com.data)
-        # else:
-        #     for word in self.command_tree.children:
-        #         yield Completion(word)
-        # yield Completion("")  # Do i have to return something?
+
 
     def is_completable(self, command):
         """ whether the command can be completed """
-        return command in self.completable
+        return self.is_command(command) or command in self.completable_param
 
     def get_param(self, command):
         """ returns the parameters for a given command """
@@ -171,4 +157,11 @@ class AzCompleter(Completer):
     def is_command(self, command):
         """ returns whether given command is valid """
         return command in self.param_dict.keys()
-        
+
+    def get_all_subcommands(self):
+        subcommands = []
+        for command in self.completable:
+            for com in self.command_tree.children:
+                if com.data != command:
+                    subcommands.append(command)
+        return subcommands
