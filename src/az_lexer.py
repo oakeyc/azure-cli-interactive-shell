@@ -20,13 +20,13 @@ class AzLexer(RegexLexer):
                 tuple(completer.get_all_subcommands()),
                 prefix=r'\b',
                 suffix=r'\b'),
-             Name.Class),
+             Keyword.Declaration),
             # --instance-ids
             (words(
                 tuple(param for param in completer.completable_param),
                 prefix=r'',
                 suffix=r'\b'),
-             Keyword.Declaration),
+             Name.Class),
             # Everything else
             (r'.*\n', Text),
         ]

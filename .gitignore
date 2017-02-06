@@ -19,3 +19,7 @@ src/shell/
 env/
 env27/
 shell/
+
+# installation things #
+dist/
+az_cli_shell.egg-info/

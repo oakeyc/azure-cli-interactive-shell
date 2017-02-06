@@ -60,20 +60,21 @@ class Shell(object):
     def default_style(self):
         styles = style_from_dict({
             # Completion colors
-            Token.Menu.Completions.Completion.Current: 'bg:#ffc0cb #000000',
+            Token.Menu.Completions.Completion.Current: 'bg:#7c2c80 #ffffff',
             Token.Menu.Completions.Completion: 'bg:#00b7b7 #ffffff',
             Token.Menu.Completions.ProgressButton: 'bg:#b78991',
             Token.Menu.Completions.ProgressBar: 'bg:#ffc0cb',
+
             Token.Az: '#7c2c80',
+            Token.Prompt.Arg: '#888888',
             # Toolbar
             Token.Toolbar: 'bg:#000000 #00b700',
             # Pretty Words
-            Token.Keyword: '#805182',
-            Token.Keyword.Declaration: '#b27cb2',
-            Token.Name.Class: '#e050e5',
+            Token.Keyword: '#965699',
+            Token.Keyword.Declaration: '#ab77ad',
+            Token.Name.Class: '#c49fc5',
             Token.Text: '#ec96ef',
-            # Temperary
-            Token.Hello: '#008080',
+
             # Toolbar
             Token.Toolbar: 'bg:#000000 #00b700',
             Token.RPrompt: 'bg:#ffffff #800080',

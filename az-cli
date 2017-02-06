@@ -1,0 +1,3 @@
+#!/usr/bin/env python
+python src/temp_dump.py
+python src/__init__.py
