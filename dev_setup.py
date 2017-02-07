@@ -4,7 +4,8 @@ import sys
 import os
 from subprocess import check_call, CalledProcessError
 
-root_dir = os.path.abspath(os.path.join(os.path.abspath(__file__), '..', '..'))
+# root_dir = os.path.abspath(os.path.join(os.path.abspath(__file__), '..', '..'))
+root_dir = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 
 def exec_command(command):
@@ -21,6 +22,7 @@ print('Root directory \'{}\'\n'.format(root_dir))
 
 # install general requirements
 exec_command('pip install -r requirements.txt')
+# exec_command('python src/dump_commands.py')
 
 # install automation package
 # exec_command('pip install -e ./scripts')

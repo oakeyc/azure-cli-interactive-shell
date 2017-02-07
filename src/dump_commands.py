@@ -13,12 +13,6 @@ import types
 import os
 import sys
 
-from cStringIO import StringIO
-from docutils import nodes
-from docutils.statemachine import ViewList
-from sphinx.util.compat import Directive
-from sphinx.util.nodes import nested_parse_with_titles
-
 from azure.cli.core.application import APPLICATION, Application
 from azure.cli.core.application import Configuration
 from azure.cli.core.commands import load_params

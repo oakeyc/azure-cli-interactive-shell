@@ -1,0 +1,6 @@
+#!/Users/courtney/Documents/azure-cli-interactive-shell/src/env/bin/python
+# find where it's installed then python -m that
+
+# import dev_setup
+
+import src
