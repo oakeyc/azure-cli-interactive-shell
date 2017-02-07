@@ -13,7 +13,7 @@ import sys
 from azure.cli.core.application import APPLICATION, Application
 from azure.cli.core.application import Configuration
 from azure.cli.core.commands import CliArgumentType
-# from azure.cli.core.commands import load_params
+from azure.cli.core.commands import load_params
 from importlib import import_module
 
 from collections import OrderedDict, defaultdict
@@ -21,6 +21,9 @@ from collections import OrderedDict, defaultdict
 import azure.cli.core._help as _help
 app = APPLICATION
 command_module_map = {}
+config = Configuration([])
+cmd_table = config.get_command_table()
+
 class Exporter(json.JSONEncoder):
 
     def default(self, o):#pylint: disable=method-hidden
@@ -37,7 +40,6 @@ def _dump_command_table(**kwargs):
     # m = open("meta_dump.txt", 'w')
     
     for command_name in cmd_table.keys():
-        load_params(cmd_table, command_name)
         f.write(str(command_name) + "\n")
         # m.write(str(command_name) + ":" + str(metadata.description) + "\n" )
         los_names.append(str(command_name))
@@ -95,6 +97,7 @@ def _dump_command_table(**kwargs):
     param_file = open("./cache_ish/params_dump.txt", 'w')
     help = open("./cache_ish/help_dump.txt", 'w')
     for cmd in cmd_table:
+        config.load_params(cmd)
         # load_params(cmd)
         # cmd_string = 'az {} -h'.format(cmd)
         # output = StringIO()
@@ -130,23 +133,32 @@ def _dump_command_table(**kwargs):
 
 
         help.write(cmd + ":" + str(descrip) + "\n")
+
+    # result_dict = {'commands': table_entries}
+    # print(json.dumps(result_dict, indent=2, sort_keys=True))
+    # # for name in cmd_table.keys():
+    # #     print(str(cmd_table[name].arguments) + "\n")
+    # # display summary info with STDERR
+    # print('\n===RESULTS===', file=sys.stderr)
+    # print('{} commands dumped within {} scope with {} parameters'.format(len(table_entries),
+    #     cmd_set_names or '*', param_names or 'ANY'), file=sys.stderr)
     help.close()
     param_file.close()
     sys.exit(0)
 
-def load_params(command_table, command):
-    try:
-        command_table[command].load_arguments()
-    except KeyError:
-        return
-    command_module = command_module_map.get(command, None)
-    if not command_module:
-        # logger.debug("Unable to load commands for '%s'. No module in command module map found.",
-        #              command)  # pylint: disable=line-too-long
-        return
-    module_to_load = command_module[:command_module.rfind('.')]
-    import_module(module_to_load).load_params(command)
-    _update_command_definitions(command_table)
+# def load_params(command_table, command):
+#     try:
+#         command_table[command].load_arguments()
+#     except KeyError:
+#         return
+#     command_module = command_module_map.get(command, None)
+#     if not command_module:
+#         # logger.debug("Unable to load commands for '%s'. No module in command module map found.",
+#         #              command)  # pylint: disable=line-too-long
+#         return
+#     module_to_load = command_module[:command_module.rfind('.')]
+#     import_module(module_to_load).load_params(command)
+#     _update_command_definitions(command_table)
 
 def _get_cli_argument(command, argname):
     return _cli_argument_registry.get_cli_argument(command, argname)
@@ -263,8 +275,7 @@ hide_nulls = args.hide_nulls
 PRIMITIVES = (str, int, bool, float)
 IGNORE_ARGS = ['help', 'help_file', 'base_type', 'arguments_loader']
 sys.argv = sys.argv[:1]
-config = Configuration([])
-cmd_table = config.get_command_table()
+
 # cmd_list = sorted([cmd_name for cmd_name in cmd_table.keys() if cmd_set_names is None or cmd_name.split()[0] in cmd_set_names])
 
 
