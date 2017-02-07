@@ -1,7 +1,4 @@
-# --------------------------------------------------------------------------------------------
-# Copyright (c) Microsoft Corporation. All rights reserved.
-# Licensed under the MIT License. See License.txt in the project root for license information.
-# --------------------------------------------------------------------------------------------
+#!usr/bin/env python
 
 from __future__ import print_function
 
@@ -15,11 +12,15 @@ import sys
 
 from azure.cli.core.application import APPLICATION, Application
 from azure.cli.core.application import Configuration
-from azure.cli.core.commands import load_params
+from azure.cli.core.commands import CliArgumentType
+# from azure.cli.core.commands import load_params
+from importlib import import_module
+
+from collections import OrderedDict, defaultdict
 
 import azure.cli.core._help as _help
 app = APPLICATION
-
+command_module_map = {}
 class Exporter(json.JSONEncoder):
 
     def default(self, o):#pylint: disable=method-hidden
@@ -27,7 +28,6 @@ class Exporter(json.JSONEncoder):
             return super(Exporter, self).default(o)
         except TypeError:
             return str(o)
-            
 
 def _dump_command_table(**kwargs):
     cmd_table = APPLICATION.configuration.get_command_table()
@@ -37,6 +37,7 @@ def _dump_command_table(**kwargs):
     # m = open("meta_dump.txt", 'w')
     
     for command_name in cmd_table.keys():
+        load_params(cmd_table, command_name)
         f.write(str(command_name) + "\n")
         # m.write(str(command_name) + ":" + str(metadata.description) + "\n" )
         los_names.append(str(command_name))
@@ -105,7 +106,8 @@ def _dump_command_table(**kwargs):
         for key in cmd_table[cmd].arguments:
             if cmd_table[cmd].arguments[key].type.settings.get('required'):
                 param_file.write("[required]")
-            param_file.write("--" + _dashed_to_camel(key) + " ")
+            # for
+            param_file.write(str(cmd_table[cmd].arguments[key].options_list[0]) + " ")
             if cmd_table[cmd].arguments[key].type.settings.get('help'):
                 param_file.write("* " + cmd_table[cmd].arguments[key].type.settings.get('help') + " ")
             # if key.settings.get('required'):
@@ -131,6 +133,63 @@ def _dump_command_table(**kwargs):
     help.close()
     param_file.close()
     sys.exit(0)
+
+def load_params(command_table, command):
+    try:
+        command_table[command].load_arguments()
+    except KeyError:
+        return
+    command_module = command_module_map.get(command, None)
+    if not command_module:
+        # logger.debug("Unable to load commands for '%s'. No module in command module map found.",
+        #              command)  # pylint: disable=line-too-long
+        return
+    module_to_load = command_module[:command_module.rfind('.')]
+    import_module(module_to_load).load_params(command)
+    _update_command_definitions(command_table)
+
+def _get_cli_argument(command, argname):
+    return _cli_argument_registry.get_cli_argument(command, argname)
+
+
+def _get_cli_extra_arguments(command):
+    return _cli_extra_argument_registry[command].items()
+
+
+def _update_command_definitions(command_table_to_update):
+    for command_name, command in command_table_to_update.items():
+        for argument_name in command.arguments:
+            overrides = _get_cli_argument(command_name, argument_name)
+            command.update_argument(argument_name, overrides)
+
+        # Add any arguments explicitly registered for this command
+        for argument_name, argument_definition in _get_cli_extra_arguments(command_name):
+            command.arguments[argument_name] = argument_definition
+            command.update_argument(argument_name, _get_cli_argument(command_name, argument_name))
+
+class _ArgumentRegistry(object):
+    def __init__(self):
+        self.arguments = defaultdict(lambda: {})
+
+    def register_cli_argument(self, scope, dest, argtype, **kwargs):
+        argument = CliArgumentType(overrides=argtype,
+                                   **kwargs)
+        self.arguments[scope][dest] = argument
+
+    def get_cli_argument(self, command, name):
+        parts = command.split()
+        result = CliArgumentType()
+        for index in range(0, len(parts) + 1):
+            probe = ' '.join(parts[0:index])
+            override = self.arguments.get(probe, {}).get(name, None)
+            if override:
+                result.update(override)
+        return result
+
+_cli_argument_registry = _ArgumentRegistry()
+_cli_extra_argument_registry = defaultdict(lambda: {})
+
+
 
 def _format_entry(obj):
     if not obj:

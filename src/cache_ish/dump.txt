@@ -8,15 +8,16 @@ iot device message complete
 account show
 group deployment validate
 network nsg rule show
-vm disk attach-existing
 network nsg rule create
 appservice web browse
 network nsg rule delete
+documentdb list
 network dns record ptr remove
 sql elastic-pools recommended show
 network lb inbound-nat-rule create
-vm start
+tag create
 batch account delete
+documentdb failover-priority-change
 network lb address-pool delete
 storage blob show
 storage table policy list
@@ -30,10 +31,11 @@ network application-gateway auth-cert list
 redis patch-schedule delete
 network traffic-manager endpoint show
 appservice web deployment slot delete
-appservice web restart
+documentdb show
 group export
 storage entity replace
 network dns zone export
+snapshot grant-access
 vm extension image list-versions
 network vnet-gateway update
 network vnet peering list
@@ -63,6 +65,7 @@ network application-gateway waf-config set
 storage blob update
 keyvault certificate issuer show
 network local-gateway create
+disk show
 network dns record ns remove
 network route-table route update
 sql db list
@@ -76,13 +79,14 @@ acr credential renew
 storage share policy update
 vm availability-set list-sizes
 keyvault secret delete
-vm disk detach
+group update
 appservice plan update
 network express-route peering create
 storage entity query
 batch account show
 storage blob lease break
 keyvault certificate delete
+vm unmanaged-disk attach
 network express-route list-route-tables
 network local-gateway list
 storage container lease break
@@ -102,6 +106,7 @@ vmss delete
 sql elastic-pools recommended show-metrics
 role definition list
 network lb frontend-ip delete
+snapshot update
 acr repository show-tags
 storage blob generate-sas
 vmss restart
@@ -111,8 +116,10 @@ network lb delete
 network public-ip show
 keyvault delete
 keyvault certificate pending merge
+vm start
 storage file upload-batch
 iot device show-connection-string
+vm unmanaged-disk list
 acr create
 network vnet update
 storage share policy show
@@ -139,7 +146,7 @@ keyvault certificate pending show
 iot device update
 appservice web create
 appservice web deployment user show
-tag create
+documentdb delete
 network dns zone show
 storage container exists
 network application-gateway url-path-map list
@@ -153,6 +160,7 @@ redis force-reboot
 network nsg show
 storage entity insert
 vm diagnostics get-default-config
+vmss disk detach
 vmss diagnostics set
 storage account show
 network vnet delete
@@ -196,6 +204,7 @@ storage file exists
 network dns zone list
 network dns record-set create
 storage queue exists
+snapshot create
 network vnet-gateway root-cert create
 vm access set-linux-user
 sql server create
@@ -217,7 +226,9 @@ storage account delete
 group deployment delete
 iot device message reject
 network lb address-pool list
+appservice web restart
 storage container lease renew
+documentdb create
 storage container delete
 network lb probe show
 account list
@@ -253,6 +264,7 @@ ad group list
 vm extension list
 network vnet subnet delete
 storage queue metadata update
+disk create
 resource list
 network dns zone create
 vmss extension image list-names
@@ -272,7 +284,7 @@ network application-gateway address-pool list
 storage table generate-sas
 vm generalize
 provider register
-group update
+documentdb check-name-exists
 container build create
 component remove
 cloud show
@@ -288,6 +300,7 @@ iot hub list
 storage file list
 iot hub consumer-group list
 network list-usages
+disk delete
 vmss extension delete
 vm image list-skus
 sql db data-warehouse resume
@@ -318,9 +331,11 @@ sql server service-objective show
 appservice web config show
 storage account create
 group wait
+vmss disk attach
 sql db replication-link show
 appservice web source-control config
 storage blob service-properties show
+documentdb regenerate-key
 iot hub list-skus
 network vpn-connection create
 network application-gateway delete
@@ -330,7 +345,6 @@ sql server show
 network traffic-manager profile list
 keyvault delete-policy
 network vnet show
-vm disk list
 vmss extension list
 sql elastic-pools update
 context modify
@@ -344,6 +358,7 @@ network application-gateway http-settings create
 network application-gateway frontend-port delete
 tag remove-value
 network lb list
+snapshot delete
 storage account keys list
 lock create
 vmss get-instance-view
@@ -371,10 +386,12 @@ storage share update
 resource show
 acr credential show
 storage entity delete
+vm unmanaged-disk detach
 network nic ip-config address-pool add
 batch location quotas show
 appservice web deployment slot swap
 sql db service-tier-advisor show
+documentdb list-all
 storage blob lease acquire
 policy definition show
 network application-gateway address-pool create
@@ -386,6 +403,7 @@ vm availability-set delete
 resource tag
 appservice web config container delete
 policy assignment create
+documentdb update
 vmss delete-instances
 network application-gateway auth-cert delete
 ad app delete
@@ -405,6 +423,7 @@ batch account autostorage-keys sync
 storage directory exists
 network dns record cname add
 network lb rule show
+snapshot revoke-access
 vmss nic list-vm-nics
 network application-gateway url-path-map delete
 storage share metadata show
@@ -425,6 +444,7 @@ resource delete
 network vnet-gateway root-cert delete
 role definition create
 sql server firewall create
+vm convert
 network lb inbound-nat-pool delete
 storage container generate-sas
 vm nic show
@@ -453,8 +473,10 @@ storage container lease acquire
 acs dcos install-cli
 component list
 network nsg create
+image show
 storage table delete
 keyvault show
+snapshot list
 keyvault certificate contact list
 vm boot-diagnostics disable
 appservice plan list
@@ -478,6 +500,7 @@ keyvault secret set
 appservice web delete
 storage share policy delete
 acs kubernetes get-credentials
+vmss extension show
 appservice web config appsettings delete
 network lb probe update
 network nic ip-config delete
@@ -526,6 +549,7 @@ context create
 vmss deallocate
 network public-ip delete
 group deployment list
+snapshot show
 policy assignment delete
 network application-gateway http-listener list
 network dns zone import
@@ -548,9 +572,11 @@ group deployment show
 storage account generate-sas
 storage queue list
 sql db show
+vm disk attach
 batch application list
 role assignment delete
 storage queue delete
+vm disk detach
 sql db update
 network express-route peering show
 network application-gateway rule show
@@ -560,12 +586,15 @@ network application-gateway address-pool update
 vmss extension image show
 network application-gateway update
 network nic ip-config show
+disk list
 keyvault certificate issuer list
 iot hub job cancel
 iot hub update
 ad sp show
+image create
 storage entity merge
 keyvault certificate issuer admin delete
+image delete
 network application-gateway ssl-policy show
 network traffic-manager endpoint list
 keyvault certificate issuer update
@@ -653,6 +682,7 @@ iot hub consumer-group delete
 storage share list
 storage table policy update
 policy assignment show
+image list
 appservice list-locations
 network application-gateway wait
 vm resize
@@ -661,13 +691,16 @@ network lb inbound-nat-pool list
 appservice web log config
 ad sp list
 network vnet-gateway reset
-vmss extension show
+documentdb list-read-only-keys
 group deployment operation show
 iot hub show-stats
 storage blob lease change
 network nsg delete
 vm boot-diagnostics enable
 network lb address-pool create
+disk revoke-access
+vm availability-set convert
+disk update
 keyvault key set-attributes
 storage blob download-batch
 storage blob lease renew
@@ -701,6 +734,7 @@ storage share show
 acr delete
 network application-gateway probe show
 network dns record srv add
+disk grant-access
 keyvault certificate set-attributes
 vmss list-instances
 redis list-all
@@ -721,7 +755,6 @@ appservice web start
 network application-gateway url-path-map create
 network traffic-manager profile delete
 vm access reset-linux-ssh
-vm disk attach-new
 storage container list
 storage share policy create
 network application-gateway start
@@ -750,6 +783,7 @@ vmss update-instances
 keyvault certificate issuer delete
 sql server delete
 network traffic-manager profile update
+vmss list_instance_connection_info
 vm restart
 network application-gateway http-listener create
 network lb create
@@ -777,4 +811,5 @@ configure
 network application-gateway ssl-cert list
 vm get-instance-view
 network express-route get-stats
+documentdb list-keys
 redis patch-schedule set

@@ -2,7 +2,7 @@ from prompt_toolkit.contrib.completers import WordCompleter
 from prompt_toolkit.completion import Completer, Completion
 import math
 from command_tree import CommandBranch, CommandHead, CommandTree
-import azure.cli.core.azlogging as azlogging
+# import azure.cli.core.azlogging as azlogging
 
 from azure.cli.core.parser import AzCliCommandParser, enable_autocomplete
 from azure.cli.core.application import _explode_list_args
