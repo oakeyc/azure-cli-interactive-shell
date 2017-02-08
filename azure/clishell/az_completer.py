@@ -29,7 +29,7 @@ class AzCompleter(Completer):
         branch = self.command_tree
         if text_before_cursor.split():
             for words in text_before_cursor.split():
-                if words.startswith("--"):
+                if words.startswith("-"):
                     if self.is_command(command[:-1]): # gets rid of the trailing whitespace
                         for param in self.get_param(command[:-1]):
                             param = param.replace("[required]", "")
