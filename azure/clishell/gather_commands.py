@@ -19,9 +19,7 @@ class GatherCommands(object):
         # a completable to the description of what is does
         self.descrip = {}
         # from a command to a list of parameters
-        self.param_dict = {}
-        self.current_comamand = ""
-        self.last_option = ""
+        self.command_param = {}
 
         self.completable_param = []
 
@@ -40,8 +38,8 @@ class GatherCommands(object):
         self.command_tree.children.append(CommandBranch("quit"))
         self.command_tree.children.append(CommandBranch("exit"))
 
-        self.param_dict["quit"] = ""
-        self.param_dict["exit"] = ""
+        self.command_param["quit"] = ""
+        self.command_param["exit"] = ""
 
     def add_random_new_lines(self, long_phrase):
         if len(long_phrase) > 50:
@@ -55,73 +53,62 @@ class GatherCommands(object):
         return long_phrase
 
     def gather_from_files(self):
-        command = open("../cache_ish/dump.txt", 'r')
         help_file = open("../cache_ish/help_dump.txt", 'r')
         param = open("../cache_ish/params_dump.txt", 'r')
 
-        for line in command:
-            for word in line.split():
+         # add exiting
+        self.add_exit()
+
+        for line in help_file:
+            command = line.partition(":")[0]
+            for word in command.split():
                 if word not in self.completable:
                     self.completable.append(word)
 
             branch = self.command_tree
-            for sing_word in line.split():
+            for sing_word in command.split():
                 if branch.children is None:
                     branch.children = []
                 if not branch.has_child(sing_word):
                     branch.children.append(CommandBranch(sing_word))
                 branch = branch.get_child(sing_word, branch.children)
 
-        # add exiting
-        self.add_exit()
-
-        for line in help_file:
             description = line.partition(":")[2]
-            self.descrip[line.partition(":")[0]] = self.add_random_new_lines(description)
+            self.descrip[command] = self.add_random_new_lines(description)
 
         for line in param:
-            key = str(line.partition("|")[0])
-            args = []
-            if "*" in line:
-                  # if there is a help
+            command_name = str(line.partition("|")[0])
+            all_params = []
+            if "*" in line:  # if there is a help
                 name_to_description = line.partition("|")[2]
                 name = ""
                 param_description = False
                 description = ""
                 for symbol in name_to_description.split():
-                    if symbol.startswith('[required]') or symbol.startswith("--"):
-                        args.append(symbol)
-
-                        # if description != "" and name != "":
-                            # self.param_descript[key + " " + symbol] = description
+                    if symbol.startswith("--"):
+                        all_params.append(symbol)
                         description = ""
-                        name = symbol.replace("[required]", "")
-
-                        if name not in self.completable_param:
-                            self.completable_param.append(name)
                         param_description = False
-
+                        name = symbol
+                        if symbol not in self.completable_param:
+                            self.completable_param.append(symbol)
                     elif symbol.startswith("*"):
                         param_description = True
                     elif param_description:
                         description += symbol + " "
-                        self.param_descript[key + " " + name] = description
+                        self.param_descript[command_name + " " + name] = description
 
             else:
                 for arg in line.partition("|")[2].split():
-                    param_no_res = arg.replace("[required]", "")
-                    if param_no_res not in self.completable_param:
-                        self.completable_param.append(param_no_res)
-
-                    args.append(arg)
+                    if arg not in self.completable_param:
+                        self.completable_param.append(arg)
+                    all_params.append(arg)
                     self.descrip[arg] = ""
-            self.param_dict[key] = args
+            self.command_param[command_name] = all_params
 
-        for key in self.param_descript:
-            self.param_descript[key] = self.add_random_new_lines(self.param_descript[key])
-        # self.completer = WordCompleter(words=self.completable,\
-        #  sentence=True, meta_dict=self.param_descript)
+        for command_name in self.param_descript:
+            self.param_descript[command_name] = \
+            self.add_random_new_lines(self.param_descript[command_name])
 
-        command.close()
         help_file.close()
         param.close()

@@ -46,13 +46,20 @@ def create_shell(completer):
 class Shell(object):
     """ represents the shell """
 
-    def __init__(self, completer):
-        self.styles = self.default_style()
+    def __init__(self, completer, styles=None, lexer=None):
+        if styles is None:
+            self.styles = self.default_style()
+        else:
+            self.styles = styles
+
+        if lexer is None:
+            self.lexer = AzLexer
+        else:
+            self.lexer = lexer
         self.completer = completer
         self.history = InMemoryHistory()
         self._cli = None
         self.refresh_cli = False
-        self.lexer = AzLexer
         self.layout = None
         self.current_docs = u''
         self._env = os.environ.copy()
@@ -181,4 +188,4 @@ class Shell(object):
                 self.cli.request_redraw()
                 proc = subprocess.Popen(cmd, shell=True, env=self._env)
                 proc.communicate()
-        print('Have a lovely day!!')
+        print 'Have a lovely day!!'

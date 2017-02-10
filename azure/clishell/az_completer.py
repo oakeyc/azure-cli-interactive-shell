@@ -7,20 +7,14 @@ class AzCompleter(Completer):
     """ Completes Azure CLI commands """
     def __init__(self):
         commands = GatherCommands()
-        # everything that is completable
-        self.completable = commands.completable
         # a completable to the description of what is does
-        self.descrip = commands.descrip
+        self.command_description = commands.descrip
+        self.completable = commands.completable
         # from a command to a list of parameters
-        self.param_dict = commands.param_dict
-        self.current_comamand = ""
-        self.last_option = ""
-
+        self.command_parameters = commands.command_param
         self.completable_param = commands.completable_param
 
         self.command_tree = commands.command_tree
-
-        self.competer = commands.completer
         self.param_description = commands.param_descript
 
     def get_completions(self, document, complete_event):
@@ -64,28 +58,30 @@ class AzCompleter(Completer):
 
     def is_completable(self, command):
         """ whether the command can be completed """
-        return self.is_command(command) or command in self.completable_param
+        return self.is_command(command) or command in self.param_description.keys()
 
     def get_param(self, command):
         """ returns the parameters for a given command """
-        return self.param_dict[command]
+        return self.command_parameters[command]
 
     def get_description(self, command):
         """ returns the description for a given command """
-        return self.descrip[command]
+        return self.command_description[command]
 
     def is_command(self, command):
         """ returns whether given command is valid """
-        return command in self.param_dict.keys()
+        return command in self.command_parameters.keys()
 
     def get_all_subcommands(self):
         """ returns all the subcommands """
         subcommands = []
-        for command in self.completable:
-            for com in self.command_tree.children:
-                if com.data != command:
-                    subcommands.append(command)
+        for command in self.command_description:
+            for word in command.split():
+                for kid in self.command_tree.children:
+                    if word != kid.data and word not in subcommands:
+                        subcommands.append(word)
         return subcommands
 
     def has_description(self, param):
+        """ if a parameter has a description """
         return param in self.param_description.keys()
