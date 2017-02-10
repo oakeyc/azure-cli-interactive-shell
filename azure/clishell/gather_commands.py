@@ -85,7 +85,8 @@ class GatherCommands(object):
                 param_description = False
                 description = ""
                 for symbol in name_to_description.split():
-                    if symbol.startswith("--"):
+                    if symbol.startswith("**"):
+                        symbol = symbol[2:]
                         all_params.append(symbol)
                         description = ""
                         param_description = False

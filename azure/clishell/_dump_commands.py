@@ -4,16 +4,18 @@ import argparse
 import inspect
 import json
 import re
-import types
 import os
+import pkgutil
 import sys
+import types
+
+from importlib import import_module
 
 from azure.cli.core.application import APPLICATION, Application
 from azure.cli.core.application import Configuration
 from azure.cli.core.commands import CliArgumentType
 # import azure.cli.core
-# from azure.cli.core.commands import load_params
-from importlib import import_module
+from azure.cli.core.commands import load_params, _update_command_definitions
 
 from collections import OrderedDict, defaultdict
 
@@ -31,25 +33,42 @@ class Exporter(json.JSONEncoder):
         except TypeError:
             return str(o)
 
-def load_params(command):
-    try:
-        cmd_table[command].load_arguments()
-    except KeyError:
-        return
-    command_module = command_module_map.get(command, None)
-    if not command_module:
-        # logger.debug("Unable to load commands for '%s'. No module in command module map found.",
-        #              command)  # pylint: disable=line-too-long
-        return
-    module_to_load = command_module[:command_module.rfind('.')]
-    import_module(module_to_load).load_params(command)
-    _update_command_definitions(cmd_table)
+# def load_params(command):
+#     try:
+#         cmd_table[command].load_arguments()
+#     except KeyError:
+#         return
+    # command_module = command_module_map.get(command, None)
+    # if not command_module:
+    #     # logger.debug("Unable to load commands for '%s'. No module in command module map found.",
+    #     #              command)  # pylint: disable=line-too-long
+    #     return
+    # module_to_load = command_module[:command_module.rfind('.')]
+    # import_module(module_to_load).load_params(command)
+    # _update_command_definitions(cmd_table)
 
 def _dump_command_table(**kwargs):
     cmd_table = APPLICATION.configuration.get_command_table()
 
+    for cmd in cmd_table:
+        cmd_table[cmd].load_arguments()
+
+
+    try:
+        mods_ns_pkg = import_module('azure.cli.command_modules')
+        installed_command_modules = [modname for _, modname, _ in
+                                     pkgutil.iter_modules(mods_ns_pkg.__path__)]
+    except ImportError:
+        pass
+    for mod in installed_command_modules:
+        try:
+            import_module('azure.cli.command_modules.' + mod).load_params()
+        except Exception as ex:
+            print("EXCPETION: " + ex.message)
+    _update_command_definitions(cmd_table)
+
     cmd_list = []
-    if cmd_set_names is None :
+    if cmd_set_names is None:
         # if no command prefix specified, use all command table entries
         cmd_list = list(cmd_table.keys())
     else:
@@ -83,12 +102,14 @@ def _dump_command_table(**kwargs):
     param_file = open("../cache_ish/params_dump.txt", 'w')
     help = open("../cache_ish/help_dump.txt", 'w')
     for cmd in cmd_table:
-        config.load_params(cmd)
+        # if (cmd )
+        # config.load_params(cmd)
+        # cmd_table[cmd].load_arguments()
         descrip = cmd_table[cmd].description
 
         param_file.write(cmd + "|")
         for key in cmd_table[cmd].arguments:
-            param_file.write(str(cmd_table[cmd].arguments[key].options_list[0]) + " ")
+            param_file.write("**" + str(cmd_table[cmd].arguments[key].options_list[0]) + " ")
             if cmd_table[cmd].arguments[key].type.settings.get('required'):
                 param_file.write("* [REQUIRED] ")
             else:
@@ -103,46 +124,6 @@ def _dump_command_table(**kwargs):
     param_file.close()
     sys.exit(0)
 
-def _get_cli_argument(command, argname):
-    return _cli_argument_registry.get_cli_argument(command, argname)
-
-
-def _get_cli_extra_arguments(command):
-    return _cli_extra_argument_registry[command].items()
-
-
-def _update_command_definitions(command_table_to_update):
-    for command_name, command in command_table_to_update.items():
-        for argument_name in command.arguments:
-            overrides = _get_cli_argument(command_name, argument_name)
-            command.update_argument(argument_name, overrides)
-
-        # Add any arguments explicitly registered for this command
-        for argument_name, argument_definition in _get_cli_extra_arguments(command_name):
-            command.arguments[argument_name] = argument_definition
-            command.update_argument(argument_name, _get_cli_argument(command_name, argument_name))
-
-class _ArgumentRegistry(object):
-    def __init__(self):
-        self.arguments = defaultdict(lambda: {})
-
-    def register_cli_argument(self, scope, dest, argtype, **kwargs):
-        argument = CliArgumentType(overrides=argtype,
-                                   **kwargs)
-        self.arguments[scope][dest] = argument
-
-    def get_cli_argument(self, command, name):
-        parts = command.split()
-        result = CliArgumentType()
-        for index in range(0, len(parts) + 1):
-            probe = ' '.join(parts[0:index])
-            override = self.arguments.get(probe, {}).get(name, None)
-            if override:
-                result.update(override)
-        return result
-
-_cli_argument_registry = _ArgumentRegistry()
-_cli_extra_argument_registry = defaultdict(lambda: {})
 
 def _get_parameter_scope(param, cmd_list): 
     if not cmd_list:
