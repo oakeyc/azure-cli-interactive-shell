@@ -55,9 +55,9 @@ class GatherCommands(object):
         return long_phrase
 
     def gather_from_files(self):
-        command = open("./cache_ish/dump.txt", 'r')
-        help_file = open("./cache_ish/help_dump.txt", 'r')
-        param = open("./cache_ish/params_dump.txt", 'r')
+        command = open("../cache_ish/dump.txt", 'r')
+        help_file = open("../cache_ish/help_dump.txt", 'r')
+        param = open("../cache_ish/params_dump.txt", 'r')
 
         for line in command:
             for word in line.split():

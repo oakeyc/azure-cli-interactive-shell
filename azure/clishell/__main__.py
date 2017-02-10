@@ -4,7 +4,7 @@ import subprocess
 
 from app import create_shell
 from az_completer import AzCompleter
-import dump_commands
+# import dump_commands
 
 def main(db):
     """ the main function """
