@@ -9,8 +9,8 @@ from azure.cli.core.application import _explode_list_args
 from azure.cli.core.application import Configuration
 from azure.cli.core.application import APPLICATION, Application
 
-app = APPLICATION
-
+TOLERANCE = 10
+LINE_MINIMUM = 60
 
 class GatherCommands(object):
     def __init__(self):
@@ -42,19 +42,20 @@ class GatherCommands(object):
         self.command_param["exit"] = ""
 
     def add_random_new_lines(self, long_phrase):
-        if len(long_phrase) > 50:
-            for num in range(int(math.ceil(len(long_phrase) / 60))):
-                index = (num + 1) * 60
+        if len(long_phrase) > LINE_MINIMUM:
+            for num in range(int(math.ceil(len(long_phrase) / LINE_MINIMUM))):
+                index = (num + 1) * LINE_MINIMUM
                 while index < len(long_phrase) and \
-                not long_phrase[index].isspace():
+                not long_phrase[index].isspace() and index < TOLERANCE + LINE_MINIMUM:
                     index += 1
-                long_phrase = long_phrase[:index] + "\n" \
-                + long_phrase[index + 1:]
+                if index < len(long_phrase):
+                    long_phrase = long_phrase[:index] + "\n" \
+                    + long_phrase[index + 1:]
         return long_phrase
 
     def gather_from_files(self):
-        help_file = open("../cache_ish/help_dump.txt", 'r')
-        param = open("../cache_ish/params_dump.txt", 'r')
+        help_file = open("./.cache/help_dump.txt", 'r')
+        param = open("./.cache/params_dump.txt", 'r')
 
          # add exiting
         self.add_exit()
@@ -84,20 +85,29 @@ class GatherCommands(object):
                 name = ""
                 param_description = False
                 description = ""
+                suppress = False
                 for symbol in name_to_description.split():
                     if symbol.startswith("**"):
                         symbol = symbol[2:]
                         all_params.append(symbol)
                         description = ""
+                        suppress = False
                         param_description = False
                         name = symbol
                         if symbol not in self.completable_param:
                             self.completable_param.append(symbol)
+                    elif symbol == "==SUPPRESS==":
+                        # self.command_param.pop(name)
+                        # self.param_descript.
+                        all_params.remove(name)
+                        self.param_descript.pop(command_name + " " + name, None)
+                        suppress = True
                     elif symbol.startswith("*"):
                         param_description = True
                     elif param_description:
                         description += symbol + " "
-                        self.param_descript[command_name + " " + name] = description
+                        if not suppress:
+                            self.param_descript[command_name + " " + name] = description
 
             else:
                 for arg in line.partition("|")[2].split():

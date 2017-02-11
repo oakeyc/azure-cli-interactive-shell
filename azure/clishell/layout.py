@@ -66,10 +66,11 @@ def create_layout(lexer):
         Window(width=D.exact(1), height=D.exact(1), content=FillControl('-', token=Token.Line)),
         Window(
             content=BufferControl(
-                buffer_name="description",),
-                # lexer=PygmentsLexer(ArgsLexer())),
-            height=D(max=17),
-            allow_scroll_beyond_bottom=True),
+                buffer_name="description",
+                ),
+            # lexer=PygmentsLexer(ArgsLexer())),
+            # height=D(max=17),
+            ),
 
         # FloatContainer(
         #     Window(

@@ -20,10 +20,10 @@ from azure.cli.core.commands import load_params, _update_command_definitions
 from collections import OrderedDict, defaultdict
 
 import azure.cli.core._help as _help
-app = APPLICATION
-command_module_map = {}
-config = Configuration([])
-cmd_table = config.get_command_table()
+# app = APPLICATION
+# command_module_map = {}
+# config = Configuration([])
+# cmd_table = config.get_command_table()
 
 class Exporter(json.JSONEncoder):
 
@@ -33,39 +33,9 @@ class Exporter(json.JSONEncoder):
         except TypeError:
             return str(o)
 
-# def load_params(command):
-#     try:
-#         cmd_table[command].load_arguments()
-#     except KeyError:
-#         return
-    # command_module = command_module_map.get(command, None)
-    # if not command_module:
-    #     # logger.debug("Unable to load commands for '%s'. No module in command module map found.",
-    #     #              command)  # pylint: disable=line-too-long
-    #     return
-    # module_to_load = command_module[:command_module.rfind('.')]
-    # import_module(module_to_load).load_params(command)
-    # _update_command_definitions(cmd_table)
-
 def _dump_command_table(**kwargs):
     cmd_table = APPLICATION.configuration.get_command_table()
 
-    for cmd in cmd_table:
-        cmd_table[cmd].load_arguments()
-
-
-    try:
-        mods_ns_pkg = import_module('azure.cli.command_modules')
-        installed_command_modules = [modname for _, modname, _ in
-                                     pkgutil.iter_modules(mods_ns_pkg.__path__)]
-    except ImportError:
-        pass
-    for mod in installed_command_modules:
-        try:
-            import_module('azure.cli.command_modules.' + mod).load_params()
-        except Exception as ex:
-            print("EXCPETION: " + ex.message)
-    _update_command_definitions(cmd_table)
 
     cmd_list = []
     if cmd_set_names is None:
@@ -99,8 +69,27 @@ def _dump_command_table(**kwargs):
         table_entry = cmd_table[cmd_name]
         table_entry.arguments.update(table_entry.arguments_loader())
 
-    param_file = open("../cache_ish/params_dump.txt", 'w')
-    help = open("../cache_ish/help_dump.txt", 'w')
+
+    for cmd in cmd_table:
+        cmd_table[cmd].load_arguments()
+
+
+    try:
+        mods_ns_pkg = import_module('azure.cli.command_modules')
+        installed_command_modules = [modname for _, modname, _ in
+                                     pkgutil.iter_modules(mods_ns_pkg.__path__)]
+    except ImportError:
+        pass
+    for mod in installed_command_modules:
+        print('loading params for', mod)
+        try:
+            import_module('azure.cli.command_modules.' + mod).load_params(mod)
+        except Exception as ex:
+            print("EXCPETION: " + ex.message)
+    _update_command_definitions(cmd_table)
+
+    param_file = open("./.cache/params_dump.txt", 'w')
+    command_help = open("./.cache/help_dump.txt", 'w')
     for cmd in cmd_table:
         # if (cmd )
         # config.load_params(cmd)
@@ -119,8 +108,8 @@ def _dump_command_table(**kwargs):
         param_file.write("\n")
 
 
-        help.write(cmd + ":" + str(descrip) + "\n")
-    help.close()
+        command_help.write(cmd + ":" + str(descrip) + "\n")
+    command_help.close()
     param_file.close()
     sys.exit(0)
 
