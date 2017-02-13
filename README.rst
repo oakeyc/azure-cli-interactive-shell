@@ -9,9 +9,11 @@ The interactive shell for Microsoft Azure CLI (Command Line Interface)
 * Auto-suggestions from history
 
 Installation
-#############
-run: pip install az-cli-shell
+############
+.. code-block:: console
+   $ pip install az-cli-shell
 
 Running
 ########
-run: az-cli
+.. code-block:: console
+   $ az-cli
