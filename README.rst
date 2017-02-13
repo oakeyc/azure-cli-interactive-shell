@@ -1,12 +1,12 @@
-azure-cli-interactive-shell
+Azure CLI Interactive Shell
 ****************************
 The interactive shell for Microsoft Azure CLI (Command Line Interface)
 ######################################################################
 
-* Has colors :D
-* Completion
+* Completion Suggestions
 * On the fly documentation
 * Auto-suggestions from history
+* Fun Colors
 
 Installation
 ############
