@@ -189,4 +189,4 @@ class Shell(object):
                 self.cli.request_redraw()
                 proc = subprocess.Popen(cmd, shell=True, env=self._env)
                 proc.communicate()
-        print 'Have a lovely day!!'
+        print('Have a lovely day!!')
