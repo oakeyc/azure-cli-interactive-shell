@@ -20,10 +20,8 @@ from azure.cli.core.commands import load_params, _update_command_definitions
 from collections import OrderedDict, defaultdict
 
 import azure.cli.core._help as _help
-# app = APPLICATION
-# command_module_map = {}
-# config = Configuration([])
-# cmd_table = config.get_command_table()
+
+root_dir = os.path.abspath(os.path.join(os.path.abspath(__file__), '../'))
 
 class Exporter(json.JSONEncoder):
 
@@ -36,43 +34,41 @@ class Exporter(json.JSONEncoder):
 def _dump_command_table(**kwargs):
     cmd_table = APPLICATION.configuration.get_command_table()
 
+    # cmd_list = []
+    # if cmd_set_names is None:
+    #     # if no command prefix specified, use all command table entries
+    #     cmd_list = list(cmd_table.keys())
+    # else:
+    #     # if the command name matches a prefix, add it to the output list
+    #     for name in cmd_table.keys():
+    #         for prefix in cmd_set_names:
+    #             if name.startswith(prefix):
+    #                 cmd_list.append(name)
+    #                 break
 
-    cmd_list = []
-    if cmd_set_names is None:
-        # if no command prefix specified, use all command table entries
-        cmd_list = list(cmd_table.keys())
-    else:
-        # if the command name matches a prefix, add it to the output list
-        for name in cmd_table.keys():
-            for prefix in cmd_set_names:
-                if name.startswith(prefix):
-                    cmd_list.append(name)
-                    break
+    # filtered_cmd_list = []
+    # param_dict = {k : [] for k in param_names} if param_names else {}
+    # if param_names:
+    #     for cmd_name in cmd_list:
+    #         table_entry = cmd_table[cmd_name]
+    #         table_entry.arguments.update(table_entry.arguments_loader())
+    #         cmd_args = list(table_entry.arguments.keys())
+    #         for arg in cmd_args:
+    #             if arg in param_names:
+    #                 param_dict[arg].append(cmd_name)
+    #                 if cmd_name not in filtered_cmd_list:
+    #                     filtered_cmd_list.append(cmd_name)
+    # else:
+    #     filtered_cmd_list = cmd_list
 
-    filtered_cmd_list = []
-    param_dict = {k : [] for k in param_names} if param_names else {}
-    if param_names:
-        for cmd_name in cmd_list:
-            table_entry = cmd_table[cmd_name]
-            table_entry.arguments.update(table_entry.arguments_loader())
-            cmd_args = list(table_entry.arguments.keys())
-            for arg in cmd_args:
-                if arg in param_names:
-                    param_dict[arg].append(cmd_name)
-                    if cmd_name not in filtered_cmd_list:
-                        filtered_cmd_list.append(cmd_name)
-    else:
-        filtered_cmd_list = cmd_list
-
-    table_entries = []
-    for cmd_name in filtered_cmd_list:
-        table_entry = cmd_table[cmd_name]
-        table_entry.arguments.update(table_entry.arguments_loader())
+    # table_entries = []
+    # for cmd_name in filtered_cmd_list:
+    #     table_entry = cmd_table[cmd_name]
+    #     table_entry.arguments.update(table_entry.arguments_loader())
 
 
     for cmd in cmd_table:
         cmd_table[cmd].load_arguments()
-
 
     try:
         mods_ns_pkg = import_module('azure.cli.command_modules')
@@ -81,15 +77,15 @@ def _dump_command_table(**kwargs):
     except ImportError:
         pass
     for mod in installed_command_modules:
-        print('loading params for', mod)
+        # print('loading params for', mod)
         try:
             import_module('azure.cli.command_modules.' + mod).load_params(mod)
         except Exception as ex:
             print("EXCPETION: " + ex.message)
     _update_command_definitions(cmd_table)
 
-    param_file = open("./.cache/params_dump.txt", 'w')
-    command_help = open("./.cache/help_dump.txt", 'w')
+    param_file = open(root_dir + "/.cache/params_dump.txt", 'w')
+    command_help = open(root_dir + "/.cache/help_dump.txt", 'w')
     for cmd in cmd_table:
         # if (cmd )
         # config.load_params(cmd)

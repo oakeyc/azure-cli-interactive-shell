@@ -1,13 +1,11 @@
+import math
+import os
+
 from prompt_toolkit.contrib.completers import WordCompleter
 from prompt_toolkit.completion import Completer, Completion
-import math
 from command_tree import CommandBranch, CommandHead, CommandTree
-import azure.cli.core.azlogging as azlogging
 
-from azure.cli.core.parser import AzCliCommandParser, enable_autocomplete
-from azure.cli.core.application import _explode_list_args
-from azure.cli.core.application import Configuration
-from azure.cli.core.application import APPLICATION, Application
+root_dir = os.path.abspath(os.path.join(os.path.abspath(__file__), '../'))
 
 TOLERANCE = 10
 LINE_MINIMUM = 60
@@ -54,8 +52,8 @@ class GatherCommands(object):
         return long_phrase
 
     def gather_from_files(self):
-        help_file = open("./.cache/help_dump.txt", 'r')
-        param = open("./.cache/params_dump.txt", 'r')
+        help_file = open(root_dir + "/.cache/help_dump.txt", 'r')
+        param = open(root_dir + "/.cache/params_dump.txt", 'r')
 
          # add exiting
         self.add_exit()

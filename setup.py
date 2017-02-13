@@ -1,5 +1,5 @@
-from setuptools import setup
 from os import path
+from setuptools import setup
 
 here = path.abspath(path.dirname(__file__))
 
@@ -10,11 +10,11 @@ DEPENDENCIES = [
 
 setup(
     name='az-cli-shell',
-    version='0.1.0.15',
+    version='0.1.1a.1',
     author='Microsoft Corporation',
     scripts=['dev_setup.py', 'az-cli'],
     packages=[
-        "azure.clishell", 
+        "azure.clishell",
     ],
     package_data={
         "azure.clishell" : ['*.py', '.cache/*.txt']
