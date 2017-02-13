@@ -14,9 +14,10 @@ from prompt_toolkit.key_binding.manager import KeyBindingManager
 from prompt_toolkit.filters import Always
 from prompt_toolkit.keys import Keys
 from prompt_toolkit.enums import DEFAULT_BUFFER
-from pygments.token import Token, Name, Keyword
-from az_lexer import AzLexer
-from layout import create_layout
+from pygments.token import Token, Keyword
+
+from azure.clishell.az_lexer import AzLexer
+from azure.clishell.layout import create_layout
 
 manager = KeyBindingManager(
     enable_system_bindings=True,
@@ -162,7 +163,7 @@ class Shell(object):
         app = self.create_application()
         return CommandLineInterface(application=app, eventloop=run_loop)
 
-    def run(self, database):
+    def run(self):
         """ runs the CLI """
         while True:
             try:

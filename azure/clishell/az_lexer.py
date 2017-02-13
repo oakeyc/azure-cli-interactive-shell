@@ -1,6 +1,6 @@
 from pygments.lexer import RegexLexer, words
 from pygments.token import Name, Literal, Keyword, Operator, Text, Number
-from az_completer import AzCompleter
+from azure.clishell.az_completer import AzCompleter
 
 class AzLexer(RegexLexer):
     """

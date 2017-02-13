@@ -23,49 +23,9 @@ import azure.cli.core._help as _help
 
 root_dir = os.path.abspath(os.path.join(os.path.abspath(__file__), '../'))
 
-class Exporter(json.JSONEncoder):
 
-    def default(self, o):#pylint: disable=method-hidden
-        try:
-            return super(Exporter, self).default(o)
-        except TypeError:
-            return str(o)
-
-def _dump_command_table(**kwargs):
+def dump_command_table():
     cmd_table = APPLICATION.configuration.get_command_table()
-
-    # cmd_list = []
-    # if cmd_set_names is None:
-    #     # if no command prefix specified, use all command table entries
-    #     cmd_list = list(cmd_table.keys())
-    # else:
-    #     # if the command name matches a prefix, add it to the output list
-    #     for name in cmd_table.keys():
-    #         for prefix in cmd_set_names:
-    #             if name.startswith(prefix):
-    #                 cmd_list.append(name)
-    #                 break
-
-    # filtered_cmd_list = []
-    # param_dict = {k : [] for k in param_names} if param_names else {}
-    # if param_names:
-    #     for cmd_name in cmd_list:
-    #         table_entry = cmd_table[cmd_name]
-    #         table_entry.arguments.update(table_entry.arguments_loader())
-    #         cmd_args = list(table_entry.arguments.keys())
-    #         for arg in cmd_args:
-    #             if arg in param_names:
-    #                 param_dict[arg].append(cmd_name)
-    #                 if cmd_name not in filtered_cmd_list:
-    #                     filtered_cmd_list.append(cmd_name)
-    # else:
-    #     filtered_cmd_list = cmd_list
-
-    # table_entries = []
-    # for cmd_name in filtered_cmd_list:
-    #     table_entry = cmd_table[cmd_name]
-    #     table_entry.arguments.update(table_entry.arguments_loader())
-
 
     for cmd in cmd_table:
         cmd_table[cmd].load_arguments()
@@ -107,7 +67,7 @@ def _dump_command_table(**kwargs):
         command_help.write(cmd + ":" + str(descrip) + "\n")
     command_help.close()
     param_file.close()
-    sys.exit(0)
+    # sys.exit(0)
 
 
 def _get_parameter_scope(param, cmd_list): 
@@ -130,20 +90,22 @@ def _get_parameter_scope(param, cmd_list):
 def _dashed_to_camel(string):
     return string.replace('-', '_')
 
-parser = argparse.ArgumentParser(description='Command Table Parser')
-parser.add_argument('--commands', metavar='N', nargs='+', help='Filter by first level command (OR)')
-parser.add_argument('--params', metavar='N', nargs='+', help='Filter by parameters (OR)')
-parser.add_argument('--hide-nulls', action='store_true', default=False, help='Show null entries')
-args = parser.parse_args()
-cmd_set_names = args.commands
-param_names = [_dashed_to_camel(x) for x in args.params or []]
+dump_command_table()
 
-hide_nulls = args.hide_nulls
+# parser = argparse.ArgumentParser(description='Command Table Parser')
+# parser.add_argument('--commands', metavar='N', nargs='+', help='Filter by first level command (OR)')
+# parser.add_argument('--params', metavar='N', nargs='+', help='Filter by parameters (OR)')
+# parser.add_argument('--hide-nulls', action='store_true', default=False, help='Show null entries')
+# args = parser.parse_args()
+# cmd_set_names = args.commands
+# param_names = [_dashed_to_camel(x) for x in args.params or []]
 
-PRIMITIVES = (str, int, bool, float)
-IGNORE_ARGS = ['help', 'help_file', 'base_type', 'arguments_loader']
-sys.argv = sys.argv[:1]
+# hide_nulls = args.hide_nulls
 
-APPLICATION.register(Application.COMMAND_PARSER_LOADED, _dump_command_table)
+# PRIMITIVES = (str, int, bool, float)
+# IGNORE_ARGS = ['help', 'help_file', 'base_type', 'arguments_loader']
+# sys.argv = sys.argv[:1]
 
-APPLICATION.execute([])
+# APPLICATION.register(Application.COMMAND_PARSER_LOADED, _dump_command_table)
+
+# APPLICATION.execute([])

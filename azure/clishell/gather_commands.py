@@ -3,7 +3,7 @@ import os
 
 from prompt_toolkit.contrib.completers import WordCompleter
 from prompt_toolkit.completion import Completer, Completion
-from command_tree import CommandBranch, CommandHead, CommandTree
+from azure.clishell.command_tree import CommandBranch, CommandHead, CommandTree
 
 root_dir = os.path.abspath(os.path.join(os.path.abspath(__file__), '../'))
 

@@ -1,7 +1,7 @@
 from prompt_toolkit.contrib.completers import WordCompleter
 from prompt_toolkit.completion import Completer, Completion
 import math
-from gather_commands import GatherCommands
+from azure.clishell.gather_commands import GatherCommands
 
 class AzCompleter(Completer):
     """ Completes Azure CLI commands """
