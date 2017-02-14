@@ -14,12 +14,12 @@ from importlib import import_module
 from azure.cli.core.application import APPLICATION, Application
 from azure.cli.core.application import Configuration
 from azure.cli.core.commands import CliArgumentType
-# import azure.cli.core
 from azure.cli.core.commands import load_params, _update_command_definitions
+
+from azure.clishell.configuration import get_config_dir
 
 from collections import OrderedDict, defaultdict
 
-import azure.cli.core._help as _help
 
 root_dir = os.path.abspath(os.path.join(os.path.abspath(__file__), '../'))
 
@@ -44,8 +44,8 @@ def dump_command_table():
             print("EXCPETION: " + ex.message)
     _update_command_definitions(cmd_table)
 
-    param_file = open(root_dir + "/.cache/params_dump.txt", 'w')
-    command_help = open(root_dir + "/.cache/help_dump.txt", 'w')
+    param_file = open(get_cache_dir() + "/params_dump.txt", 'w')
+    command_help = open(get_cache_dir() + "/help_dump.txt", 'w')
     for cmd in cmd_table:
         # if (cmd )
         # config.load_params(cmd)
@@ -87,25 +87,13 @@ def _get_parameter_scope(param, cmd_list):
             return test_entry
     return '_ROOT_'
 
-def _dashed_to_camel(string):
-    return string.replace('-', '_')
+def get_cache_dir():
+    azure_folder = get_config_dir()
+    cache_path = os.path.join(azure_folder, 'cache')
+    if not os.path.exists(azure_folder):
+        os.makedirs(azure_folder)
+    if not os.path.exists(cache_path):
+        os.makedirs(cache_path)
+    return cache_path
 
 dump_command_table()
-
-# parser = argparse.ArgumentParser(description='Command Table Parser')
-# parser.add_argument('--commands', metavar='N', nargs='+', help='Filter by first level command (OR)')
-# parser.add_argument('--params', metavar='N', nargs='+', help='Filter by parameters (OR)')
-# parser.add_argument('--hide-nulls', action='store_true', default=False, help='Show null entries')
-# args = parser.parse_args()
-# cmd_set_names = args.commands
-# param_names = [_dashed_to_camel(x) for x in args.params or []]
-
-# hide_nulls = args.hide_nulls
-
-# PRIMITIVES = (str, int, bool, float)
-# IGNORE_ARGS = ['help', 'help_file', 'base_type', 'arguments_loader']
-# sys.argv = sys.argv[:1]
-
-# APPLICATION.register(Application.COMMAND_PARSER_LOADED, _dump_command_table)
-
-# APPLICATION.execute([])

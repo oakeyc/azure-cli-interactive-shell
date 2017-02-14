@@ -121,8 +121,6 @@ class Shell(object):
                             all_params += param + "\n"
                     self.current_docs = u"%s\n\n%s" %(\
                     self.completer.get_description(command.rstrip()), all_params)
-                    # self.current_docs = unicode(self.completer.get_description(command.rstrip()) +
-                    #                             "\n\n" + all_params)
                 else:
                     self.current_docs = u"%s" % \
                     self.completer.get_description(command.rstrip())
@@ -175,7 +173,7 @@ class Shell(object):
             except AttributeError:  # when the user pressed Control Q
                 break
             else:
-                if text == "quit" or text == "exit":
+                if text.strip() == "quit" or text.strip() == "exit":
                     break
                 try:
                     if text[0] == "#":

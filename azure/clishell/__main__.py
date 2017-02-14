@@ -9,7 +9,6 @@ from azure.clishell.configuration import Configuration
 def main():
     """ the main function """
 
-    # Configuration().load()
     config = Configuration()
     if config.get_lexer() == 'AzLexer':
         lexer = AzLexer

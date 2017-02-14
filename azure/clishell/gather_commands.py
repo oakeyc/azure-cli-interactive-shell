@@ -4,7 +4,7 @@ import os
 from prompt_toolkit.contrib.completers import WordCompleter
 from prompt_toolkit.completion import Completer, Completion
 from azure.clishell.command_tree import CommandBranch, CommandHead, CommandTree
-
+from azure.clishell._dump_commands import get_cache_dir
 root_dir = os.path.abspath(os.path.join(os.path.abspath(__file__), '../'))
 
 TOLERANCE = 10
@@ -47,13 +47,15 @@ class GatherCommands(object):
                 not long_phrase[index].isspace() and index < TOLERANCE + LINE_MINIMUM:
                     index += 1
                 if index < len(long_phrase):
+                    if long_phrase[index].isspace():
+                        index += 1
                     long_phrase = long_phrase[:index] + "\n" \
-                    + long_phrase[index + 1:]
+                    + long_phrase[index:]
         return long_phrase
 
     def gather_from_files(self):
-        help_file = open(root_dir + "/.cache/help_dump.txt", 'r')
-        param = open(root_dir + "/.cache/params_dump.txt", 'r')
+        help_file = open(get_cache_dir() + "/help_dump.txt", 'r')
+        param = open(get_cache_dir() + "/params_dump.txt", 'r')
 
          # add exiting
         self.add_exit()
