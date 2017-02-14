@@ -39,9 +39,9 @@ def enter_(event):
     # event.cli.set_return_value(event.cli.current_doc)
 
 
-def create_shell(completer):
+def create_shell(completer, lexer):
     """ creates the shell """
-    return Shell(completer)
+    return Shell(completer=completer, lexer=lexer)
 
 
 class Shell(object):
