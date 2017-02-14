@@ -5,12 +5,13 @@ here = path.abspath(path.dirname(__file__))
 
 DEPENDENCIES = [
     'azure-cli',
-    'prompt_toolkit'
+    'prompt_toolkit',
+    'configparser'
 ]
 
 setup(
     name='az-cli-shell',
-    version='0.1.1a31',
+    version='0.1.1a39',
     author='Microsoft Corporation',
     scripts=['dev_setup.py', 'az-cli'],
     packages=[

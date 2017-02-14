@@ -119,10 +119,13 @@ class Shell(object):
                             self.completer.param_description[command.rstrip() + " " + param] + "\n"
                         else:
                             all_params += param + "\n"
-                    self.current_docs = unicode(self.completer.get_description(command.rstrip()) +
-                                                "\n\n" + all_params)
+                    self.current_docs = u"%s\n\n%s" %(\
+                    self.completer.get_description(command.rstrip()), all_params)
+                    # self.current_docs = unicode(self.completer.get_description(command.rstrip()) +
+                    #                             "\n\n" + all_params)
                 else:
-                    self.current_docs = unicode(self.completer.get_description(command.rstrip()))
+                    self.current_docs = u"%s" % \
+                    self.completer.get_description(command.rstrip())
                 break
         else:
             self.current_docs = u''

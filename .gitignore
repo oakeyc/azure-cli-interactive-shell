@@ -8,9 +8,7 @@
 __pycache__/
 
 # in src folder #
-src/__pycache/
-src/*.pyc
-src/shell/
+shell/
 
 # OS gen files #
 .DS_Store
@@ -25,3 +23,4 @@ dist/
 az_cli_shell.egg-info/
 build/
 install_script.sh
+az-cli
