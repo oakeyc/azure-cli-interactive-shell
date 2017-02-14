@@ -1,13 +1,13 @@
 """
 Configuration settings
 """
-import configparser
+from configparser import ConfigParser
 import os
 
 class Configuration():
     """ Configuration information """
     def __init__(self):
-        self.config = configparser.ConfigParser()
+        self.config = ConfigParser()
         self.config['DEFAULT'] = {
             'lexer' : 'AzLexer'
         }
