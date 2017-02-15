@@ -8,6 +8,7 @@ import os
 import pkgutil
 import sys
 import types
+import json
 
 from importlib import import_module
 
@@ -16,16 +17,14 @@ from azure.cli.core.application import Configuration
 from azure.cli.core.commands import CliArgumentType
 from azure.cli.core.commands import load_params, _update_command_definitions
 
-from azure.clishell.configuration import get_config_dir
+from azure.clishell.configuration import get_config_dir, Configuration
 
 from collections import OrderedDict, defaultdict
 
 
-root_dir = os.path.abspath(os.path.join(os.path.abspath(__file__), '../'))
-
-
 def dump_command_table():
     cmd_table = APPLICATION.configuration.get_command_table()
+    command_file = Configuration().get_help_files()
 
     for cmd in cmd_table:
         cmd_table[cmd].load_arguments()
@@ -44,50 +43,33 @@ def dump_command_table():
             print("EXCPETION: " + ex.message)
     _update_command_definitions(cmd_table)
 
-    param_file = open(get_cache_dir() + "/params_dump.txt", 'w')
-    command_help = open(get_cache_dir() + "/help_dump.txt", 'w')
+    data = {}
+    com_descip = {}
     for cmd in cmd_table:
-        # if (cmd )
-        # config.load_params(cmd)
-        # cmd_table[cmd].load_arguments()
-        descrip = cmd_table[cmd].description
+        param_descrip = {}
+        com_descip['help'] = cmd_table[cmd].description
 
-        param_file.write(cmd + "|")
         for key in cmd_table[cmd].arguments:
-            param_file.write("**" + str(cmd_table[cmd].arguments[key].options_list[0]) + " ")
+            required = None
+            help_desc = None
             if cmd_table[cmd].arguments[key].type.settings.get('required'):
-                param_file.write("* [REQUIRED] ")
-            else:
-                param_file.write("* ")
+                required = "[REQUIRED]"
             if cmd_table[cmd].arguments[key].type.settings.get('help'):
-                param_file.write(cmd_table[cmd].arguments[key].type.settings.get('help') + " ")
-        param_file.write("\n")
+                help_desc = cmd_table[cmd].arguments[key].type.settings.get('help')
 
+            param_descrip[cmd_table.arguements[key].options_list[0]] = {
+                'required' : required,
+                'help' : help_desc
+            }
 
-        command_help.write(cmd + ":" + str(descrip) + "\n")
-    command_help.close()
-    param_file.close()
-    # sys.exit(0)
+        com_descip['parameters'] = param_descrip
+        data[cmd] = com_descip
 
-
-def _get_parameter_scope(param, cmd_list): 
-    if not cmd_list:
-        return 'N/A (NOT FOUND)'
-    test_list = cmd_list[0].split(' ')
-    while len(test_list) > 0:
-        test_entry = ' '.join(test_list)
-        all_match = True
-        for entry in cmd_list[1:]:
-            if test_entry not in entry:
-                all_match = False
-                break
-        if not all_match:
-            test_list.pop()
-        else:
-            return test_entry
-    return '_ROOT_'
+    with open(get_cache_dir() + "/" + str(command_file), 'w') as help_file:
+        json.dump(com_descip, help_file)
 
 def get_cache_dir():
+    """ gets the location of the cache """
     azure_folder = get_config_dir()
     cache_path = os.path.join(azure_folder, 'cache')
     if not os.path.exists(azure_folder):
@@ -95,5 +77,3 @@ def get_cache_dir():
     if not os.path.exists(cache_path):
         os.makedirs(cache_path)
     return cache_path
-
-dump_command_table()

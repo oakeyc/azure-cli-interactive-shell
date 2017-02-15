@@ -1,14 +1,14 @@
 import math
 import os
+import json
 
 from prompt_toolkit.contrib.completers import WordCompleter
 from prompt_toolkit.completion import Completer, Completion
-from azure.clishell.command_tree import CommandBranch, CommandHead, CommandTree
-from azure.clishell._dump_commands import get_cache_dir
-root_dir = os.path.abspath(os.path.join(os.path.abspath(__file__), '../'))
+from azure.clishell.command_tree import CommandBranch, CommandHead
+from azure.clishell._dump_commands import get_cache_dir, Configuration
 
 TOLERANCE = 10
-LINE_MINIMUM = 60
+LINE_MINIMUM = 70
 
 class GatherCommands(object):
     def __init__(self):
@@ -54,72 +54,43 @@ class GatherCommands(object):
         return long_phrase
 
     def gather_from_files(self):
-        help_file = open(get_cache_dir() + "/help_dump.txt", 'r')
-        param = open(get_cache_dir() + "/params_dump.txt", 'r')
+        command_file = Configuration().get_help_files()
+
+        with open(get_cache_dir() + "/" + str(command_file), 'r') as help_file:
+            data = json.load(help_file)
 
          # add exiting
         self.add_exit()
+        commands = data.keys()
 
-        for line in help_file:
-            command = line.partition(":")[0]
+        for command in commands:
+            branch = self.command_tree
             for word in command.split():
                 if word not in self.completable:
                     self.completable.append(word)
-
-            branch = self.command_tree
-            for sing_word in command.split():
                 if branch.children is None:
                     branch.children = []
-                if not branch.has_child(sing_word):
-                    branch.children.append(CommandBranch(sing_word))
-                branch = branch.get_child(sing_word, branch.children)
+                if not branch.has_child(word):
+                    branch.children.append(CommandBranch(word))
+                branch = branch.get_child(word, branch.children)
 
-            description = line.partition(":")[2]
+            description = data[command]['help']
             self.descrip[command] = self.add_random_new_lines(description)
 
-        for line in param:
-            command_name = str(line.partition("|")[0])
             all_params = []
-            if "*" in line:  # if there is a help
-                name_to_description = line.partition("|")[2]
-                name = ""
-                param_description = False
-                description = ""
+            for param in data[command]['parameters']:
                 suppress = False
-                for symbol in name_to_description.split():
-                    if symbol.startswith("**"):
-                        symbol = symbol[2:]
-                        all_params.append(symbol)
-                        description = ""
-                        suppress = False
-                        param_description = False
-                        name = symbol
-                        if symbol not in self.completable_param:
-                            self.completable_param.append(symbol)
-                    elif symbol == "==SUPPRESS==":
-                        # self.command_param.pop(name)
-                        # self.param_descript.
-                        all_params.remove(name)
-                        self.param_descript.pop(command_name + " " + name, None)
-                        suppress = True
-                    elif symbol.startswith("*"):
-                        param_description = True
-                    elif param_description:
-                        description += symbol + " "
-                        if not suppress:
-                            self.param_descript[command_name + " " + name] = description
 
-            else:
-                for arg in line.partition("|")[2].split():
-                    if arg not in self.completable_param:
-                        self.completable_param.append(arg)
-                    all_params.append(arg)
-                    self.descrip[arg] = ""
-            self.command_param[command_name] = all_params
+                if data[command]['parameters']['help'] and \
+                '==SUPPRESS==' in data[command]['parameters']['help']:
+                    suppress = True
+                if data[command]['parameters']['help'] and not suppress:
+                    self.param_descript[command + " " + param] =  \
+                    self.add_random_new_lines(data[command]['parameters']['help'])
+                if not suppress:
+                    if param not in self.command_param:
+                        self.completable_param.append(param)
+                    all_params.append(param)
 
-        for command_name in self.param_descript:
-            self.param_descript[command_name] = \
-            self.add_random_new_lines(self.param_descript[command_name])
+            self.command_param[command] = all_params
 
-        help_file.close()
-        param.close()

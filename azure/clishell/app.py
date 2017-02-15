@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+from __future__ import unicode_literals, print_function
 
 import subprocess
 import os
@@ -36,27 +36,14 @@ def exit_(event):
 def enter_(event):
     """ Sends the command to the terminal"""
     event.cli.set_return_value(event.cli.current_buffer)
-    # event.cli.set_return_value(event.cli.current_doc)
-
-
-def create_shell(completer, lexer):
-    """ creates the shell """
-    return Shell(completer=completer, lexer=lexer)
 
 
 class Shell(object):
     """ represents the shell """
 
     def __init__(self, completer, styles=None, lexer=None):
-        if styles is None:
-            self.styles = self.default_style()
-        else:
-            self.styles = styles
-
-        if lexer is None:
-            self.lexer = AzLexer
-        else:
-            self.lexer = lexer
+        self.styles = styles or self.default_style()
+        self.lexer = lexer or AzLexer
         self.completer = completer
         self.history = InMemoryHistory()
         self._cli = None
@@ -138,24 +125,22 @@ class Shell(object):
             'description': Buffer(is_multiline=True, read_only=True)
         }
 
+        writing_buffer = Buffer(
+            history=self.history,
+            auto_suggest=AutoSuggestFromHistory(),
+            enable_history_search=True,
+            completer=self.completer,
+            complete_while_typing=Always()
+        )
+
         return Application(
             mouse_support=False,
             style=self.styles,
-            buffer=self.create_buffer(self.completer, self.history),
+            buffer=writing_buffer,
             on_input_timeout=self.on_input_timeout,
             key_bindings_registry=registry,
             layout=create_layout(self.lexer),
             buffers=buffers,
-        )
-
-    def create_buffer(self, completer, history):
-        """ makes the buffer """
-        return Buffer(
-            history=history,
-            auto_suggest=AutoSuggestFromHistory(),
-            enable_history_search=True,
-            completer=completer,
-            complete_while_typing=Always()
         )
 
     def create_interface(self):

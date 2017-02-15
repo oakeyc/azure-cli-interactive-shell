@@ -8,10 +8,10 @@ from prompt_toolkit.layout.menus import CompletionsMenu
 from prompt_toolkit.layout.processors import HighlightSearchProcessor, \
     HighlightSelectionProcessor, \
     ConditionalProcessor, AppendAutoSuggestion
-from prompt_toolkit.layout.lexers import Lexer as Lex
+from prompt_toolkit.layout.lexers import Lexer as PromptLex
 from prompt_toolkit.layout.prompt import DefaultPrompt
 from pygments.token import Token
-from pygments.lexer import Lexer
+from pygments.lexer import Lexer as PygLex
 
 def get_prompt_tokens(cli):
     """ returns prompt tokens """
@@ -40,9 +40,9 @@ def get_height(cli):
 def create_layout(lex):
     """ creates the layout """
     lexer = None
-    if issubclass(lex, Lex):
+    if issubclass(lex, PromptLex):
         lexer = lex
-    elif issubclass(lex, Lexer):
+    elif issubclass(lex, PygLex):
         lexer = PygmentsLexer(lex)
 
     input_processors.append(DefaultPrompt(get_prompt_tokens))

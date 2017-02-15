@@ -1,21 +1,26 @@
 """
 Configuration settings
 """
-from configparser import ConfigParser
+from six.moves import configparser
 import os
 
 class Configuration():
     """ Configuration information """
     def __init__(self):
-        self.config = ConfigParser()
-        self.config['DEFAULT'] = {
-            'lexer' : 'AzLexer'
-        }
+        self.config = configparser.ConfigParser({
+            'lexer' : 'AzLexer',
+        })
+        self.config.add_section('Help Files')
+        self.config.set('Help Files', 'command', 'help_dump.json')
+
         azure_folder = get_config_dir()
         if not os.path.exists(azure_folder):
             os.makedirs(azure_folder)
         with open(os.path.join(get_config_dir(), 'config'), 'w') as config_file:
             self.config.write(config_file)
+
+    def get_help_files(self):
+        return self.config.get('Help Files', 'command')
 
     def load(self, path):
         """ loads the configuration settings """

@@ -6,12 +6,12 @@ here = path.abspath(path.dirname(__file__))
 DEPENDENCIES = [
     'azure-cli',
     'prompt_toolkit',
-    'configparser'
+    'six',
 ]
 
 setup(
     name='az-cli-shell',
-    version='0.1.1a42',
+    version='0.1.1a50',
     author='Microsoft Corporation',
     scripts=['dev_setup.py', 'az-cli'],
     packages=[
