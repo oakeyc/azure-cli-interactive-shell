@@ -19,7 +19,7 @@ from azure.cli.core.commands import load_params, _update_command_definitions
 
 from azure.clishell.configuration import get_config_dir, Configuration
 
-from collections import OrderedDict, defaultdict
+# from collections import OrderedDict, defaultdict
 
 
 def dump_command_table():
@@ -44,29 +44,29 @@ def dump_command_table():
     _update_command_definitions(cmd_table)
 
     data = {}
-    com_descip = {}
     for cmd in cmd_table:
+        com_descip = {}
         param_descrip = {}
         com_descip['help'] = cmd_table[cmd].description
 
         for key in cmd_table[cmd].arguments:
-            required = None
-            help_desc = None
+            required = ""
+            help_desc = ""
             if cmd_table[cmd].arguments[key].type.settings.get('required'):
                 required = "[REQUIRED]"
             if cmd_table[cmd].arguments[key].type.settings.get('help'):
                 help_desc = cmd_table[cmd].arguments[key].type.settings.get('help')
 
-            param_descrip[cmd_table.arguements[key].options_list[0]] = {
+            options = {
                 'required' : required,
                 'help' : help_desc
             }
+            param_descrip[cmd_table[cmd].arguments[key].options_list[0]] = options
 
         com_descip['parameters'] = param_descrip
         data[cmd] = com_descip
-
-    with open(get_cache_dir() + "/" + str(command_file), 'w') as help_file:
-        json.dump(com_descip, help_file)
+    with open(os.path.join(get_cache_dir(), command_file), 'w') as help_file:
+        json.dump(data, help_file)
 
 def get_cache_dir():
     """ gets the location of the cache """

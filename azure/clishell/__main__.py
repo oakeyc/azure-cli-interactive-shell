@@ -1,15 +1,16 @@
 import os
 
+from azure.clishell.configuration import Configuration
 from azure.clishell._dump_commands import dump_command_table
+dump_command_table()
+
 from azure.clishell.app import Shell
 from azure.clishell.az_completer import AzCompleter
 from azure.clishell.az_lexer import AzLexer
-from azure.clishell.configuration import Configuration
 
 def main():
     """ the main function """
     config = Configuration()
-    dump_command_table()
     if config.get_lexer() == 'AzLexer':
         lexer = AzLexer
     else:

@@ -40,6 +40,8 @@ class GatherCommands(object):
         self.command_param["exit"] = ""
 
     def add_random_new_lines(self, long_phrase):
+        if long_phrase is None:
+            return long_phrase
         if len(long_phrase) > LINE_MINIMUM:
             for num in range(int(math.ceil(len(long_phrase) / LINE_MINIMUM))):
                 index = (num + 1) * LINE_MINIMUM
@@ -56,7 +58,7 @@ class GatherCommands(object):
     def gather_from_files(self):
         command_file = Configuration().get_help_files()
 
-        with open(get_cache_dir() + "/" + str(command_file), 'r') as help_file:
+        with open(os.path.join(get_cache_dir(), command_file), 'r') as help_file:
             data = json.load(help_file)
 
          # add exiting
@@ -81,14 +83,14 @@ class GatherCommands(object):
             for param in data[command]['parameters']:
                 suppress = False
 
-                if data[command]['parameters']['help'] and \
-                '==SUPPRESS==' in data[command]['parameters']['help']:
+                if data[command]['parameters'][param]['help'] and \
+                '==SUPPRESS==' in data[command]['parameters'][param]['help']:
                     suppress = True
-                if data[command]['parameters']['help'] and not suppress:
+                if data[command]['parameters'][param]['help'] and not suppress:
                     self.param_descript[command + " " + param] =  \
-                    self.add_random_new_lines(data[command]['parameters']['help'])
+                    self.add_random_new_lines(data[command]['parameters'][param]['help'])
                 if not suppress:
-                    if param not in self.command_param:
+                    if param not in self.completable_param:
                         self.completable_param.append(param)
                     all_params.append(param)
 

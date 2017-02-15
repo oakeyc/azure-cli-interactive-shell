@@ -84,4 +84,5 @@ class AzCompleter(Completer):
 
     def has_description(self, param):
         """ if a parameter has a description """
-        return param in self.param_description.keys()
+        return param in self.param_description.keys() and \
+        not self.param_description[param].isspace()
