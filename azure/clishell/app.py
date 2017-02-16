@@ -93,12 +93,20 @@ class Shell(object):
         """
         document = cli.current_buffer.document
         text = document.text
-        split_text = text.split()
+        # split_text = text.split()
         command = ""
-        for word in split_text:
-            command += str(word) + " "
+        any_documentation = False
+        is_command = True
+        for word in text.split():
+            if word.startswith("-"):
+                is_command = False
+            if is_command:
+                command += str(word) + " "
+
             if self.completer.is_completable(command.rstrip()):
-                if self.completer.is_command(command.rstrip()):
+                any_documentation = True
+
+                if self.completer.has_parameters(command.rstrip()):
                     all_params = ""
                     for param in self.completer.get_param(command.rstrip()):
                         if self.completer.has_description(command.rstrip() + " " + param):
@@ -111,9 +119,10 @@ class Shell(object):
                 else:
                     self.current_docs = u"%s" % \
                     self.completer.get_description(command.rstrip())
-                break
-        else:
+                # break
+        if not any_documentation:
             self.current_docs = u''
+
         cli.buffers['description'].reset(
             initial_document=Document(self.current_docs, cursor_position=0))
         cli.request_redraw()

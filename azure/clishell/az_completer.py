@@ -33,23 +33,24 @@ class AzCompleter(Completer):
         command = ""
         branch = self.command_tree
         if text_before_cursor.split():
-            args = self.parser.parse_args()
-            ## TODO 
-            parameter = text_before_cursor.split()[-1].replace("--", "")
-            args.parameter.completer(prefix=text_before_cursor.split()[-1],\
-            parsed_args=text_before_cursor.text.rsplit(' ', 1)[0]())
+            # args = self.parser.parse_args()
+            # ## TODO 
+            # parameter = text_before_cursor.split()[-1].replace("--", "")
+            # args.parameter.completer(prefix=text_before_cursor.split()[-1],\
+            # parsed_args=text_before_cursor.text.rsplit(' ', 1)[0]())
 
-            end = False
-            for opts in args:
-                if opts.completer:
-                    yield Completion("THE NAME OF THINGS")
-                    end = True
-            if end:
-                return
+            # end = False
+            # for opts in args:
+            #     if opts.completer:
+            #         yield Completion("THE NAME OF THINGS")
+            #         end = True
+            # if end:
+            #     return
             ## Param
+
             for words in text_before_cursor.split():
                 if words.startswith("--"):
-                    if self.is_command(command[:-1]): # gets rid of the trailing whitespace
+                    if self.has_parameters(command[:-1]): # gets rid of the trailing whitespace
                         for param in self.get_param(command[:-1]):
                             if param.lower().startswith(words.lower()) and \
                             param.lower() != words.lower():
@@ -81,7 +82,7 @@ class AzCompleter(Completer):
 
     def is_completable(self, command):
         """ whether the command can be completed """
-        return self.is_command(command) or command in self.param_description.keys()
+        return self.has_parameters(command) or command in self.param_description.keys()
 
     def get_param(self, command):
         """ returns the parameters for a given command """
@@ -91,7 +92,7 @@ class AzCompleter(Completer):
         """ returns the description for a given command """
         return self.command_description[command]
 
-    def is_command(self, command):
+    def has_parameters(self, command):
         """ returns whether given command is valid """
         return command in self.command_parameters.keys()
 
