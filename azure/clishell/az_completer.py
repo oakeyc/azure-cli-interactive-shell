@@ -118,17 +118,19 @@ class AzCompleter(Completer):
             ## Param
 
             for words in text_before_cursor.split():
-                if words.startswith("-"):
+                if words.startswith("--"):
                     if self.has_parameters(command[:-1]): # gets rid of the trailing whitespace
                         for param in self.get_param(command[:-1]):
                             if param.lower().startswith(words.lower()) and \
                             param.lower() != words.lower():
-                                yield Completion(param, -len(words))
+                                yield Completion(param, -len(words),\
+                                display_meta=self.param_description[command[:-1] + " " + param])
                     else:
                         for param in self.completable_param:
                             if param.lower().startswith(words.lower()) and \
                             param.lower() != words.lower():
-                                yield Completion(param, -len(words))
+                                yield Completion(param, -len(words),\
+                                display_meta=self.param_description[command[:-1] + " " + param])
                 else:
                     command += words + " "
                     try:

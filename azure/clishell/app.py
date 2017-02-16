@@ -116,6 +116,7 @@ class Shell(object):
                                 " " + param] + "\n"
                             else:
                                 all_params += param + "\n"
+                    all_params = "" # delete later if change mind
                     self.current_docs = u"%s\n\n%s" %(\
                     self.completer.get_description(command.rstrip()), all_params)
                 else:
