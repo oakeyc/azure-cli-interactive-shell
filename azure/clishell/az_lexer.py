@@ -31,3 +31,10 @@ class AzLexer(RegexLexer):
             (r'.*\n', Text),
         ]
     }
+
+class DescriptionLexer(RegexLexer):
+    tokens = {
+        'root' : [
+
+        ]
+    }

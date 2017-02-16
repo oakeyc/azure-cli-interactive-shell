@@ -87,11 +87,13 @@ class GatherCommands(object):
                     suppress = True
                 if data[command]['parameters'][param]['help'] and not suppress:
                     self.param_descript[command + " " + param] =  \
-                    self.add_random_new_lines(data[command]['parameters'][param]['help'])
+                    self.add_random_new_lines(data[command]['parameters'][param]['required']\
+                     + " " + data[command]['parameters'][param]['help'])
                 if not suppress:
-                    if param not in self.completable_param:
-                        self.completable_param.append(param)
-                    all_params.append(param)
+                    for par in data[command]['parameters'][param]['name']:
+                        if par not in self.completable_param:
+                            self.completable_param.append(par)
+                        all_params.append(par)
 
             self.command_param[command] = all_params
 

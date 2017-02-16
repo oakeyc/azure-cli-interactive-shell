@@ -109,11 +109,13 @@ class Shell(object):
                 if self.completer.has_parameters(command.rstrip()):
                     all_params = ""
                     for param in self.completer.get_param(command.rstrip()):
-                        if self.completer.has_description(command.rstrip() + " " + param):
-                            all_params += param + ": " + \
-                            self.completer.param_description[command.rstrip() + " " + param] + "\n"
-                        else:
-                            all_params += param + "\n"
+                        if param.startswith("--"):
+                            if self.completer.has_description(command.rstrip() + " " + param):
+                                all_params += param + ": " + \
+                                self.completer.param_description[command.rstrip() + \
+                                " " + param] + "\n"
+                            else:
+                                all_params += param + "\n"
                     self.current_docs = u"%s\n\n%s" %(\
                     self.completer.get_description(command.rstrip()), all_params)
                 else:

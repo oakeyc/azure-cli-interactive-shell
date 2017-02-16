@@ -16,6 +16,12 @@ Installation
 
 Running
 ########
+
+To start the application
 .. code-block:: console
 
    $ az-cli
+
+Then type your commands and hit [Enter]
+
+*to run commands outside of the shell, start the command with #*
