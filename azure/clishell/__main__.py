@@ -1,8 +1,6 @@
-import os
-
 from azure.clishell.configuration import Configuration
 from azure.clishell._dump_commands import dump_command_table
-dump_command_table()
+dump_command_table() # order of imports
 
 from azure.clishell.app import Shell
 from azure.clishell.az_completer import AzCompleter

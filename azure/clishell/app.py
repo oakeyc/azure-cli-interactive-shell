@@ -14,7 +14,7 @@ from prompt_toolkit.key_binding.manager import KeyBindingManager
 from prompt_toolkit.filters import Always
 from prompt_toolkit.keys import Keys
 from prompt_toolkit.enums import DEFAULT_BUFFER
-from pygments.token import Token, Keyword
+from pygments.token import Token
 
 from azure.clishell.az_lexer import AzLexer
 from azure.clishell.layout import create_layout

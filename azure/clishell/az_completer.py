@@ -1,7 +1,12 @@
+import math
+import argcomplete
+
 from prompt_toolkit.contrib.completers import WordCompleter
 from prompt_toolkit.completion import Completer, Completion
-import math
+from azure.cli.core.parser import AzCliCommandParser
+from azure.cli.core.application import APPLICATION, Application, Configuration
 from azure.clishell.gather_commands import GatherCommands
+
 
 class AzCompleter(Completer):
     """ Completes Azure CLI commands """
@@ -17,22 +22,40 @@ class AzCompleter(Completer):
         self.command_tree = commands.command_tree
         self.param_description = commands.param_descript
 
+        cmd_table = APPLICATION.configuration.get_command_table()
+        self.parser = AzCliCommandParser()
+        self.parser.load_command_table(cmd_table)
+        argcomplete.autocomplete(self.parser)
+
+
     def get_completions(self, document, complete_event):
         text_before_cursor = document.text_before_cursor
         command = ""
         branch = self.command_tree
         if text_before_cursor.split():
+            args = self.parser.parse_args()
+            ## TODO 
+            parameter = text_before_cursor.split()[-1].replace("--", "")
+            args.parameter.completer(prefix=text_before_cursor.split()[-1],\
+            parsed_args=text_before_cursor.text.rsplit(' ', 1)[0]())
+
+            end = False
+            for opts in args:
+                if opts.completer:
+                    yield Completion("THE NAME OF THINGS")
+                    end = True
+            if end:
+                return
+            ## Param
             for words in text_before_cursor.split():
-                if words.startswith("-"):
+                if words.startswith("--"):
                     if self.is_command(command[:-1]): # gets rid of the trailing whitespace
                         for param in self.get_param(command[:-1]):
-                            param = param.replace("[required]", "")
                             if param.lower().startswith(words.lower()) and \
                             param.lower() != words.lower():
                                 yield Completion(param, -len(words))
                     else:
                         for param in self.completable_param:
-                            param = param.replace("[required]", "")
                             if param.lower().startswith(words.lower()) and \
                             param.lower() != words.lower():
                                 yield Completion(param, -len(words))
@@ -48,7 +71,7 @@ class AzCompleter(Completer):
                 for kid in branch.children:
                     if kid.data.lower().startswith(text_before_cursor.split()[-1].lower()):
                         yield Completion(str(kid.data),
-                                         -len(text_before_cursor.split()[-1])) # this has a bug
+                                         -len(text_before_cursor.split()[-1]))
 
         if not text_before_cursor.split() or text_before_cursor[-1] == " ":
             if branch.children is not None:

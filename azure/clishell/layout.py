@@ -70,22 +70,7 @@ def create_layout(lex):
             content=BufferControl(
                 buffer_name="description",
                 ),
-            # lexer=PygmentsLexer(ArgsLexer())),
-            # height=D(max=17),
             ),
-
-        # FloatContainer(
-        #     Window(
-        #         BufferControl(
-        #             buffer_name="description",
-        #             preview_search=Always()),
-        #         get_height=get_height,
-        #     ),
-        #     [
-        #         Float(xcursor=True,
-        #               ycursor=True,
-        #               content=BufferControl(buffer_name="description")),
-        #     ]),
     ])
     return layout
  

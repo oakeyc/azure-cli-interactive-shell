@@ -1,1 +1,1 @@
-# HI
+""" Welcome to Azure CLI Interactive Shell """

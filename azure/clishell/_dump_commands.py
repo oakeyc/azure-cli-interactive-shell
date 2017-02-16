@@ -1,25 +1,16 @@
 from __future__ import print_function
 
-import argparse
-import inspect
 import json
-import re
 import os
 import pkgutil
-import sys
-import types
-import json
-
+import yaml
 from importlib import import_module
 
-from azure.cli.core.application import APPLICATION, Application
-from azure.cli.core.application import Configuration
+from azure.cli.core.application import APPLICATION, Application, Configuration
 from azure.cli.core.commands import CliArgumentType
 from azure.cli.core.commands import load_params, _update_command_definitions
-
 from azure.clishell.configuration import get_config_dir, Configuration
-
-# from collections import OrderedDict, defaultdict
+from azure.cli.core.help_files import helps
 
 
 def dump_command_table():
@@ -57,7 +48,12 @@ def dump_command_table():
             if cmd_table[cmd].arguments[key].type.settings.get('help'):
                 help_desc = cmd_table[cmd].arguments[key].type.settings.get('help')
 
+            name_options = []
+            for name in cmd_table[cmd].arguments[key].options_list:
+                name_options.append(name)
+
             options = {
+                'name' : name_options,
                 'required' : required,
                 'help' : help_desc
             }
@@ -65,6 +61,34 @@ def dump_command_table():
 
         com_descip['parameters'] = param_descrip
         data[cmd] = com_descip
+
+    for cmd in helps:
+        diction_help = yaml.load(helps[cmd])
+        if "short-summary" in diction_help:
+            if cmd in data:
+                data[cmd]['help'] = diction_help["short-summary"]
+            else:
+                data[cmd] = {
+                    'help': diction_help["short-summary"],
+                    'parameters' : {}
+                }
+
+        if "parameters" in diction_help:
+            for param in diction_help["parameters"]:
+                if param["name"].split()[0] not in data[cmd]['parameters']:
+                    options = {
+                        'name' : name_options,
+                        'required' : required,
+                        'help' : help_desc
+                    }
+                    data[cmd]['parameters'] = {
+                        param["name"].split()[0]: options
+                    }
+                if "short-summary" in param:
+                    data[cmd]['parameters'][param["name"].split()[0]]['help']\
+                     = param["short-summary"]
+
+
     with open(os.path.join(get_cache_dir(), command_file), 'w') as help_file:
         json.dump(data, help_file)
 
