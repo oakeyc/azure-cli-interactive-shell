@@ -100,6 +100,7 @@ class AzCompleter(Completer):
     def get_completions(self, document, complete_event):
         text_before_cursor = document.text_before_cursor
         command = ""
+        is_command = True
         branch = self.command_tree
         if text_before_cursor.split():
             # args = self.parser.parse_args()
@@ -118,21 +119,32 @@ class AzCompleter(Completer):
             ## Param
 
             for words in text_before_cursor.split():
+                if words.startswith("-"):
+                    is_command = False
+
                 if words.startswith("--"):
-                    if self.has_parameters(command[:-1]): # gets rid of the trailing whitespace
-                        for param in self.get_param(command[:-1]):
+                    is_command = False
+                    if self.has_parameters(command): # gets rid of the trailing whitespace
+                        for param in self.get_param(command):
                             if param.lower().startswith(words.lower()) and \
                             param.lower() != words.lower():
                                 yield Completion(param, -len(words),\
-                                display_meta=self.param_description[command[:-1] + " " + param])
+                                display_meta=self.param_description[command + " " + str(param)])
                     else:
                         for param in self.completable_param:
                             if param.lower().startswith(words.lower()) and \
                             param.lower() != words.lower():
-                                yield Completion(param, -len(words),\
-                                display_meta=self.param_description[command[:-1] + " " + param])
+                                if command + " " + str(param) in self.param_description:
+                                    yield Completion(param, -len(words),\
+                                    display_meta=self.param_description[command + " " + str(param)])
+                                else:
+                                    yield Completion(param, -len(words))
                 else:
-                    command += words + " "
+                    if is_command:
+                        if command:
+                            command += " " + str(words)
+                        else:
+                            command += str(words)
                     try:
                         if branch.has_child(words):
                             branch = branch.get_child(words, branch.children)
