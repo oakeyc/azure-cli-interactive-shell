@@ -37,6 +37,25 @@ def enter_(event):
     """ Sends the command to the terminal"""
     event.cli.set_return_value(event.cli.current_buffer)
 
+# @registry.add_binding(Keys.Up, eager=True)
+# def up_(event):
+#     """ Sends the command to the terminal"""
+#     event.cli.current_buffer.reset(
+#         initial_document=Document(
+#             event.cli.application.buffer.history
+#             u"", cursor_position=0))
+
+# @registry.add_binding(Keys.Down, eager=True)
+# def down_(event):
+#     """ Sends the command to the terminal"""
+#     event.cli.current_buffer.reset(
+#         initial_document=Document(u"world", cursor_position=0))
+
+# @registry.add_binding(Keys.Down, eager=True)
+# def down_(event):
+#     """ Sends the command to the terminal"""
+#     event.cli.set_return_value(event.cli.current_buffer)
+
 
 class Shell(object):
     """ represents the shell """
@@ -181,7 +200,10 @@ class Shell(object):
                     cmd = "az"
                 self.history.append(text)
                 self.current_docs = u''
-                self.cli.buffers["description"].reset(
+                # self.cli.buffers["description"].reset(
+                #     initial_document=Document(self.current_docs,
+                #                               cursor_position=0))
+                self.cli.buffers[DEFAULT_BUFFER].reset(
                     initial_document=Document(self.current_docs,
                                               cursor_position=0))
                 self.cli.request_redraw()
