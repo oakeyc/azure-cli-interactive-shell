@@ -18,6 +18,7 @@ Running
 ########
 
 To start the application
+
 .. code-block:: console
 
    $ az-cli
