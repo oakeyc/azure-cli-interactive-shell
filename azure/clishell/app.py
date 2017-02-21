@@ -37,26 +37,6 @@ def enter_(event):
     """ Sends the command to the terminal"""
     event.cli.set_return_value(event.cli.current_buffer)
 
-# @registry.add_binding(Keys.Up, eager=True)
-# def up_(event):
-#     """ Sends the command to the terminal"""
-#     event.cli.current_buffer.reset(
-#         initial_document=Document(
-#             event.cli.application.buffer.history
-#             u"", cursor_position=0))
-
-# @registry.add_binding(Keys.Down, eager=True)
-# def down_(event):
-#     """ Sends the command to the terminal"""
-#     event.cli.current_buffer.reset(
-#         initial_document=Document(u"world", cursor_position=0))
-
-# @registry.add_binding(Keys.Down, eager=True)
-# def down_(event):
-#     """ Sends the command to the terminal"""
-#     event.cli.set_return_value(event.cli.current_buffer)
-
-
 class Shell(object):
     """ represents the shell """
 
@@ -68,7 +48,8 @@ class Shell(object):
         self._cli = None
         self.refresh_cli = False
         self.layout = None
-        self.current_docs = u''
+        self.description_docs = u''
+        self.example_docs = u''
         self._env = os.environ.copy()
 
     def default_style(self):
@@ -87,11 +68,13 @@ class Shell(object):
             Token.Keyword: '#965699',
             Token.Keyword.Declaration: '#ab77ad',
             Token.Name.Class: '#c49fc5',
-            Token.Text: '#ec96ef',
+            Token.Text: '#666666',
 
             # Toolbar
             Token.Toolbar: 'bg:#000000 #00b700',
             Token.RPrompt: 'bg:#ffffff #800080',
+
+            Token.Line: '#FF00FF',
         })
 
         return styles
@@ -114,6 +97,8 @@ class Shell(object):
         text = document.text
         # split_text = text.split()
         command = ""
+        all_params = ""
+
         any_documentation = False
         is_command = True
         for word in text.split():
@@ -125,35 +110,34 @@ class Shell(object):
             if self.completer.is_completable(command.rstrip()):
                 any_documentation = True
 
-                if self.completer.has_parameters(command.rstrip()):
-                    all_params = ""
-                    for param in self.completer.get_param(command.rstrip()):
-                        if param.startswith("--"):
-                            if self.completer.has_description(command.rstrip() + " " + param):
-                                all_params += param + ": " + \
-                                self.completer.param_description[command.rstrip() + \
-                                " " + param] + "\n"
-                            else:
-                                all_params += param + "\n"
-                    all_params = "" # delete later if change mind
-                    self.current_docs = u"%s\n\n%s" %(\
-                    self.completer.get_description(command.rstrip()), all_params)
-                else:
-                    self.current_docs = u"%s" % \
-                    self.completer.get_description(command.rstrip())
+
+                if word in self.completer.command_parameters[command.rstrip()] and \
+                self.completer.has_description(command.rstrip() + " " + word):
+                    all_params += word + ": " + \
+                    self.completer.get_param_description(command.rstrip() + \
+                    " " + word) + "\n"
+
+                self.description_docs = u"%s" % \
+                self.completer.get_description(command.rstrip())
                 # break
         if not any_documentation:
-            self.current_docs = u''
+            self.description_docs = u''
+
+        self.example_docs = u"%s" % all_params
 
         cli.buffers['description'].reset(
-            initial_document=Document(self.current_docs, cursor_position=0))
+            initial_document=Document(self.description_docs, cursor_position=0))
+        cli.buffers['examples'].reset(
+            initial_document=Document(self.example_docs)
+        )
         cli.request_redraw()
 
     def create_application(self):
         """ makes the application object and the buffers """
         buffers = {
             DEFAULT_BUFFER: Buffer(is_multiline=True),
-            'description': Buffer(is_multiline=True, read_only=True)
+            'description': Buffer(is_multiline=True, read_only=True),
+            'examples' : Buffer(is_multiline=True, read_only=True)
         }
 
         writing_buffer = Buffer(
@@ -199,12 +183,9 @@ class Shell(object):
                 except IndexError:  # enter blank for welcome message
                     cmd = "az"
                 self.history.append(text)
-                self.current_docs = u''
-                # self.cli.buffers["description"].reset(
-                #     initial_document=Document(self.current_docs,
-                #                               cursor_position=0))
+                self.description_docs = u''
                 self.cli.buffers[DEFAULT_BUFFER].reset(
-                    initial_document=Document(self.current_docs,
+                    initial_document=Document(self.description_docs,
                                               cursor_position=0))
                 self.cli.request_redraw()
                 proc = subprocess.Popen(cmd, shell=True, env=self._env)

@@ -50,14 +50,15 @@ class AzCompleter(Completer):
                             if param.lower().startswith(words.lower()) and \
                             param.lower() != words.lower():
                                 yield Completion(param, -len(words),\
-                                display_meta=self.param_description[command + " " + str(param)])
+                                display_meta=self.get_param_description(command + " " + str(param)))
                     else:
                         for param in self.completable_param:
                             if param.lower().startswith(words.lower()) and \
                             param.lower() != words.lower():
                                 if command + " " + str(param) in self.param_description:
                                     yield Completion(param, -len(words),\
-                                    display_meta=self.param_description[command + " " + str(param)])
+                                    display_meta=self.get_param_description(\
+                                    command + " " + str(param)))
                                 else:
                                     yield Completion(param, -len(words))
                 else:
@@ -91,6 +92,12 @@ class AzCompleter(Completer):
     def get_param(self, command):
         """ returns the parameters for a given command """
         return self.command_parameters[command]
+
+    def get_param_description(self, param):
+        if param in self.param_description:
+            return self.param_description[param]
+        else:
+            return ""
 
     def get_description(self, command):
         """ returns the description for a given command """
