@@ -44,8 +44,8 @@ class AzCompleter(Completer):
                     is_command = False
 
                 if words.startswith("--"):
-                    is_command = False
-                    if self.has_parameters(command): # gets rid of the trailing whitespace
+                    # is_command = False
+                    if self.has_parameters(command):
                         for param in self.get_param(command):
                             if param.lower().startswith(words.lower()) and \
                             param.lower() != words.lower():
@@ -94,6 +94,7 @@ class AzCompleter(Completer):
         return self.command_parameters[command]
 
     def get_param_description(self, param):
+        """ gets a description of an empty string """
         if param in self.param_description:
             return self.param_description[param]
         else:

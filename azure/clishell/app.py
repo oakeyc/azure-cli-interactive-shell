@@ -37,11 +37,38 @@ def enter_(event):
     """ Sends the command to the terminal"""
     event.cli.set_return_value(event.cli.current_buffer)
 
+def default_style():
+    """ Default coloring """
+    styles = style_from_dict({
+        # Completion colors
+        Token.Menu.Completions.Completion.Current: 'bg:#7c2c80 #ffffff',
+        Token.Menu.Completions.Completion: 'bg:#00b7b7 #ffffff',
+        Token.Menu.Completions.ProgressButton: 'bg:#b78991',
+        Token.Menu.Completions.ProgressBar: 'bg:#ffc0cb',
+
+        Token.Az: '#7c2c80',
+        Token.Prompt.Arg: '#888888',
+        # Toolbar
+        Token.Toolbar: 'bg:#000000 #00b700',
+        # Pretty Words
+        Token.Keyword: '#965699',
+        Token.Keyword.Declaration: '#ab77ad',
+        Token.Name.Class: '#c49fc5',
+        Token.Text: '#666666',
+
+        # Toolbar
+        Token.Toolbar: 'bg:#000000 #00b700',
+        Token.RPrompt: 'bg:#ffffff #800080',
+
+        Token.Line: '#FF00FF',
+    })
+
+    return styles
 class Shell(object):
     """ represents the shell """
 
     def __init__(self, completer, styles=None, lexer=None):
-        self.styles = styles or self.default_style()
+        self.styles = styles or default_style()
         self.lexer = lexer or AzLexer
         self.completer = completer
         self.history = InMemoryHistory()
@@ -52,32 +79,6 @@ class Shell(object):
         self.example_docs = u''
         self._env = os.environ.copy()
 
-    def default_style(self):
-        styles = style_from_dict({
-            # Completion colors
-            Token.Menu.Completions.Completion.Current: 'bg:#7c2c80 #ffffff',
-            Token.Menu.Completions.Completion: 'bg:#00b7b7 #ffffff',
-            Token.Menu.Completions.ProgressButton: 'bg:#b78991',
-            Token.Menu.Completions.ProgressBar: 'bg:#ffc0cb',
-
-            Token.Az: '#7c2c80',
-            Token.Prompt.Arg: '#888888',
-            # Toolbar
-            Token.Toolbar: 'bg:#000000 #00b700',
-            # Pretty Words
-            Token.Keyword: '#965699',
-            Token.Keyword.Declaration: '#ab77ad',
-            Token.Name.Class: '#c49fc5',
-            Token.Text: '#666666',
-
-            # Toolbar
-            Token.Toolbar: 'bg:#000000 #00b700',
-            Token.RPrompt: 'bg:#ffffff #800080',
-
-            Token.Line: '#FF00FF',
-        })
-
-        return styles
 
     @property
     def cli(self):
@@ -109,7 +110,6 @@ class Shell(object):
 
             if self.completer.is_completable(command.rstrip()):
                 any_documentation = True
-
 
                 if word in self.completer.command_parameters[command.rstrip()] and \
                 self.completer.has_description(command.rstrip() + " " + word):

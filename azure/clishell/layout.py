@@ -46,7 +46,7 @@ def create_layout(lex):
         lexer = lex
     elif issubclass(lex, PygLex):
         lexer = PygmentsLexer(lex)
-    
+
     # exampleLex = ExampleLexer
     # if issubclass(exampleLex, PygLex):
     #     examLex = PygmentsLexer(exampleLexer)

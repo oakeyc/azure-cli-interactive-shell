@@ -3,7 +3,10 @@ class CommandTree(object):
 
     def __init__(self, data, children=None):
         self.data = data
-        self.children = children
+        if not children:
+            self.children = []
+        else:
+            self.children = children
 
     def get_child(self, child_name, tree):
         for kid in tree:
@@ -12,10 +15,13 @@ class CommandTree(object):
         raise ValueError("Value not in this tree")
 
     def add_child(self, child):
+        assert issubclass(child, CommandTree)
+        if not self.children:
+            self.children = []
         self.children.append(child)
 
     def has_child(self, name):
-        if self.children is None:
+        if not self.children:
             return False
         return any(kid.data == name for kid in self.children)
 
@@ -32,19 +38,20 @@ class CommandHead(CommandTree):
             kid = self.get_child(word, kids)
             kids = kid.children
 
-        return self.get_subbranch_help(kids, [])
+        return self._get_subbranch_help(kids, [])
 
-    def get_subbranch_help(self, to_check, acc):
+    def _get_subbranch_help(self, to_check, acc):
         check_next = []
-        if to_check is None:
+        if not to_check:
             return acc
         for branch in to_check:
-            if branch is None:
+            if not branch:
                 continue
             else:
                 acc.append(branch.data)
-                check_next.extend(branch.children)
-        self.get_subbranch_help(check_next, acc)
+                if branch.children:
+                    check_next.extend(branch.children)
+        self._get_subbranch_help(check_next, acc)
         return acc
 
 
