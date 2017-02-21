@@ -60,7 +60,7 @@ def default_style():
         Token.Toolbar: 'bg:#000000 #00b700',
         Token.RPrompt: 'bg:#ffffff #800080',
 
-        Token.Line: '#FF00FF',
+        Token.Line: '#E500E5',
     })
 
     return styles
