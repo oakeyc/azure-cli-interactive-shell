@@ -10,70 +10,6 @@ from azure.cli.core.application import APPLICATION, Application, Configuration
 from azure.clishell.gather_commands import GatherCommands
 from argcomplete import CompletionFinder, FilesCompleter
 
-# class AzCompletionFinder(CompletionFinder):
-#     def __call__(self, argument_parser, always_complete_options=True, exit_method=os._exit, output_stream=None,
-#                 exclude=None, validator=None, print_suppressed=False, append_space=None,
-#                 default_completer=FilesCompleter()):
-#         """
-#         :param argument_parser: The argument parser to autocomplete on
-#         :type argument_parser: :class:`argparse.ArgumentParser`
-#         :param always_complete_options:
-#             Controls the autocompletion of option strings if an option string opening character (normally ``-``) has not
-#             been entered. If ``True`` (default), both short (``-x``) and long (``--x``) option strings will be
-#             suggested. If ``False``, no option strings will be suggested. If ``long``, long options and short options
-#             with no long variant will be suggested. If ``short``, short options and long options with no short variant
-#             will be suggested.
-#         :type always_complete_options: boolean or string
-#         :param exit_method:
-#             Method used to stop the program after printing completions. Defaults to :meth:`os._exit`. If you want to
-#             perform a normal exit that calls exit handlers, use :meth:`sys.exit`.
-#         :type exit_method: callable
-#         :param exclude: List of strings representing options to be omitted from autocompletion
-#         :type exclude: iterable
-#         :param validator:
-#             Function to filter all completions through before returning (called with two string arguments, completion
-#             and prefix; return value is evaluated as a boolean)
-#         :type validator: callable
-#         :param print_suppressed:
-#             Whether or not to autocomplete options that have the ``help=argparse.SUPPRESS`` keyword argument set.
-#         :type print_suppressed: boolean
-#         :param append_space:
-#             Whether to append a space to unique matches. The default is ``True``.
-#         :type append_space: boolean
-#         .. note::
-#             If you are not subclassing CompletionFinder to override its behaviors,
-#             use ``argcomplete.autocomplete()`` directly. It has the same signature as this method.
-#         Produces tab completions for ``argument_parser``. See module docs for more info.
-#         Argcomplete only executes actions if their class is known not to have side effects. Custom action classes can be
-#         added to argcomplete.safe_actions, if their values are wanted in the ``parsed_args`` completer argument, or
-#         their execution is otherwise desirable.
-#         """
-#         self.__init__(argument_parser, always_complete_options=always_complete_options, exclude=exclude,
-#                       validator=validator, print_suppressed=print_suppressed, append_space=append_space,
-#                       default_completer=default_completer)
-
-#         comp_line = os.environ["COMP_LINE"]
-#         comp_point = int(os.environ["COMP_POINT"])
-
-#         # Adjust comp_point for wide chars
-#         # if USING_PYTHON2:
-#         #     comp_point = len(comp_line[:comp_point].decode(sys_encoding))
-#         # else:
-#         comp_point = len(comp_line.encode(sys_encoding)[:comp_point].decode(sys_encoding))
-
-#         comp_line = ensure_str(comp_line)
-#         cword_prequote, cword_prefix, cword_suffix, comp_words, last_wordbreak_pos = split_line(comp_line, comp_point)
-
-#         # _ARGCOMPLETE is set by the shell script to tell us where comp_words
-#         # should start, based on what we're completing.
-#         # 1: <script> [args]
-#         # 2: python <script> [args]
-#         # 3: python -m <module> [args]
-#         start = int(os.environ["_ARGCOMPLETE"]) - 1
-#         comp_words = comp_words[start:]
-
-#         return self._get_completions(comp_words, cword_prefix, cword_prequote, last_wordbreak_pos)
-
 class AzCompleter(Completer):
     """ Completes Azure CLI commands """
     def __init__(self):
@@ -103,21 +39,6 @@ class AzCompleter(Completer):
         is_command = True
         branch = self.command_tree
         if text_before_cursor.split():
-            # args = self.parser.parse_args()
-            # ## TODO 
-            # parameter = text_before_cursor.split()[-1].replace("--", "")
-            # args.parameter.completer(prefix=text_before_cursor.split()[-1],\
-            # parsed_args=text_before_cursor.text.rsplit(' ', 1)[0]())
-
-            # end = False
-            # for opts in args:
-            #     if opts.completer:
-            #         yield Completion("THE NAME OF THINGS")
-            #         end = True
-            # if end:
-            #     return
-            ## Param
-
             for words in text_before_cursor.split():
                 if words.startswith("-"):
                     is_command = False

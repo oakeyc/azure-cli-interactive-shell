@@ -11,15 +11,12 @@ DEPENDENCIES = [
 
 setup(
     name='az-cli-shell',
-    version='0.1.1a113',
+    version='0.1.1a120',
     author='Microsoft Corporation',
     scripts=['dev_setup.py', 'az-cli'],
     packages=[
-        "azure.clishell",
+        "azure.clishell", "test"
     ],
-    package_data={
-        "azure.clishell" : ['*.py']
-    },
     url='https://github.com/oakeyc/azure-cli-interactive-shell',
     install_requires=DEPENDENCIES,
 )
