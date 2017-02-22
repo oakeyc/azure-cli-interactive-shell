@@ -50,7 +50,7 @@ class AzCompleter(Completer):
                                 self.get_param_description(command + " " + str(param)))
 
                 if words.startswith("--"):
-                    # is_command = False
+                    is_command = False
                     if self.has_parameters(command):
                         for param in self.get_param(command):
                             if param.lower().startswith(words.lower()) and \
