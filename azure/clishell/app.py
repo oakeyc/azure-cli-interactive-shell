@@ -67,11 +67,11 @@ def default_style():
 class Shell(object):
     """ represents the shell """
 
-    def __init__(self, completer, styles=None, lexer=None):
+    def __init__(self, completer, styles=None, lexer=None, history=InMemoryHistory()):
         self.styles = styles or default_style()
         self.lexer = lexer or AzLexer
         self.completer = completer
-        self.history = InMemoryHistory()
+        self.history = history
         self._cli = None
         self.refresh_cli = False
         self.layout = None
