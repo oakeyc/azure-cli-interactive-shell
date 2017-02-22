@@ -13,6 +13,8 @@ from prompt_toolkit.layout.prompt import DefaultPrompt
 from pygments.token import Token
 from pygments.lexer import Lexer as PygLex
 
+# from azure.clishell.az_lexer import ExampleLexer
+
 def get_prompt_tokens(cli):
     """ returns prompt tokens """
     return [(Token.Az, 'az>> ')]
@@ -45,6 +47,10 @@ def create_layout(lex):
     elif issubclass(lex, PygLex):
         lexer = PygmentsLexer(lex)
 
+    # exampleLex = ExampleLexer
+    # if issubclass(exampleLex, PygLex):
+    #     examLex = PygmentsLexer(exampleLexer)
+
     input_processors.append(DefaultPrompt(get_prompt_tokens))
 
     layout = HSplit([
@@ -71,6 +77,15 @@ def create_layout(lex):
                 buffer_name="description",
                 ),
             ),
+
+        Window(width=D.exact(1), height=D.exact(1), content=FillControl('*', token=Token.Line)),
+        Window(
+            content=BufferControl(
+                buffer_name="examples",
+                lexer=lexer
+                ),
+            ),
+
     ])
     return layout
  

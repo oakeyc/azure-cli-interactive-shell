@@ -10,6 +10,7 @@ class AzLexer(RegexLexer):
 
     tokens = {
         'root': [
+            (r' .*\n', Text),
             (words(
                 tuple(kid.data for kid in completer.command_tree.children),
                 prefix=r'\b',
@@ -32,9 +33,9 @@ class AzLexer(RegexLexer):
         ]
     }
 
-class DescriptionLexer(RegexLexer):
-    tokens = {
-        'root' : [
+# class ExampleLexer(RegexLexer):
+#     tokens = {
+#         'root' : [
 
-        ]
-    }
+#         ]
+#     }
