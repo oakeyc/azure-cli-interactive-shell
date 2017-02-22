@@ -8,7 +8,7 @@ from prompt_toolkit.completion import Completer, Completion
 from azure.cli.core.parser import AzCliCommandParser
 from azure.cli.core.application import APPLICATION, Application, Configuration
 from azure.clishell.gather_commands import GatherCommands
-from argcomplete import CompletionFinder
+from azure.clishell.completion_finder import CompletionFinder
 
 import json
 import os
@@ -88,21 +88,21 @@ class AzCompleter(Completer):
 
         # if flip:
         line = text_before_cursor
-        argcomplete.autocomplete = CompletionFinder(self.parser, \
+        completions = CompletionFinder()
+        completions = completions(self.parser, \
         validator=lambda c, p: c.lower().startswith(p.lower()),\
                                  default_completer=lambda _: ())
-        
-        comp_line = text_before_cursor
-        comp_point = len(text_before_cursor) - len(text_before_cursor.split()[-1])
-        comp_point = len(comp_line.encode(sys_encoding)[:comp_point].decode(sys_encoding))
+        # comp_line = text_before_cursor
+        # comp_point = len(text_before_cursor) - len(text_before_cursor.split()[-1])
+        # comp_point = len(comp_line.encode(sys_encoding)[:comp_point].decode(sys_encoding))
 
-        (cword_prequote, cword_prefix, cword_suffix,
-         comp_words, first_colon_pos) = argcomplete.split_line(line, comp_point)
-        completions = argcomplete.autocomplete._get_completions(
-            comp_words, cword_prefix, cword_prequote, first_colon_pos)
-
-        for comp in completions:
-            yield Completion(comp, -len(comp))
+        # (cword_prequote, cword_prefix, cword_suffix,
+        #  comp_words, first_colon_pos) = argcomplete.split_line(line)
+        # completions = argcomplete.autocomplete._get_completions(
+        #     comp_words, cword_prefix, cword_prequote, first_colon_pos)
+        if completions:
+            for comp in completions:
+                yield Completion(comp, -len(comp))
 
 
 

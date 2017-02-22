@@ -14,6 +14,7 @@ class Configuration():
         self.config.set('Help Files', 'command', 'help_dump.json')
 
         self.config.set('Help Files', 'history', 'history.txt')
+        self.config.set('DEFAULT', 'multiple examples', 'True')
 
         azure_folder = get_config_dir()
         if not os.path.exists(azure_folder):
