@@ -11,7 +11,7 @@ DEPENDENCIES = [
 
 setup(
     name='az-cli-shell',
-    version='0.1.1a139',
+    version='0.1.1a149',
     author='Microsoft Corporation',
     scripts=['dev_setup.py', 'az-cli'],
     packages=[

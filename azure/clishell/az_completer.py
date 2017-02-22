@@ -24,13 +24,13 @@ class AzCompleter(Completer):
         self.command_tree = commands.command_tree
         self.param_description = commands.param_descript
 
-        cmd_table = APPLICATION.configuration.get_command_table()
-        self.parser = AzCliCommandParser()
-        self.parser.load_command_table(cmd_table)
-        argcomplete.autocomplete = CompletionFinder()
-        argcomplete.autocomplete(self.parser, \
-        validator=lambda c, p: c.lower().startswith(p.lower()),
-                                 default_completer=lambda _: ())
+        # cmd_table = APPLICATION.configuration.get_command_table()
+        # self.parser = AzCliCommandParser()
+        # self.parser.load_command_table(cmd_table)
+        # argcomplete.autocomplete = CompletionFinder()
+        # argcomplete.autocomplete(self.parser, \
+        # validator=lambda c, p: c.lower().startswith(p.lower()),
+        #                          default_completer=lambda _: ())
 
 
     def get_completions(self, document, complete_event):
@@ -40,8 +40,14 @@ class AzCompleter(Completer):
         branch = self.command_tree
         if text_before_cursor.split():
             for words in text_before_cursor.split():
-                if words.startswith("-"):
+                if words.startswith("-") and not words.startswith("--"):
                     is_command = False
+                    if self.has_parameters(command):
+                        for param in self.get_param(command):
+                            if param.lower().startswith(words.lower()) and \
+                            param.lower() != words.lower() and not param.startswith("--"):
+                                yield Completion(param, -len(words), display_meta=\
+                                self.get_param_description(command + " " + str(param)))
 
                 if words.startswith("--"):
                     # is_command = False
