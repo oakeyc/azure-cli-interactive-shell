@@ -10,6 +10,21 @@ from azure.cli.core.application import APPLICATION, Application, Configuration
 from azure.clishell.gather_commands import GatherCommands
 from argcomplete import CompletionFinder
 
+import json
+import os
+import pkgutil
+import yaml
+from importlib import import_module
+
+from azure.cli.core.application import APPLICATION, Application, Configuration
+from azure.cli.core.commands import CliArgumentType
+from azure.cli.core.commands import load_params, _update_command_definitions
+from azure.clishell.configuration import get_config_dir, Configuration
+from azure.cli.core.help_files import helps
+
+from argcomplete.compat import sys_encoding
+
+
 class AzCompleter(Completer):
     """ Completes Azure CLI commands """
     def __init__(self):
@@ -24,8 +39,31 @@ class AzCompleter(Completer):
         self.command_tree = commands.command_tree
         self.param_description = commands.param_descript
 
+
+        self.global_parser = AzCliCommandParser(prog='az', add_help=False)
+        global_group = self.global_parser.add_argument_group('global', 'Global Arguments')
+        # self.raise_event(self.GLOBAL_PARSER_CREATED, global_group=global_group)
+
+        self.parser = AzCliCommandParser(prog='az', parents=[self.global_parser])
         cmd_table = APPLICATION.configuration.get_command_table()
-        self.parser = AzCliCommandParser()
+        for cmd in cmd_table:
+            cmd_table[cmd].load_arguments()
+
+        try:
+            mods_ns_pkg = import_module('azure.cli.command_modules')
+            installed_command_modules = [modname for _, modname, _ in
+                                        pkgutil.iter_modules(mods_ns_pkg.__path__)]
+        except ImportError:
+            pass
+        for mod in installed_command_modules:
+            # print('loading params for', mod)
+            try:
+                import_module('azure.cli.command_modules.' + mod).load_params(mod)
+            except Exception as ex:
+                print("EXCPETION: " + ex.message)
+        _update_command_definitions(cmd_table)
+
+
         self.parser.load_command_table(cmd_table)
         argcomplete.autocomplete = CompletionFinder(self.parser, \
         validator=lambda c, p: c.lower().startswith(p.lower()),
@@ -50,19 +88,21 @@ class AzCompleter(Completer):
 
         # if flip:
         line = text_before_cursor
-        completer = CompletionFinder(
-            self.parser,
-            validator=lambda c,\
-            p: c.lower().startswith(p.lower()),
-            default_completer=lambda _: ())
+        argcomplete.autocomplete = CompletionFinder(self.parser, \
+        validator=lambda c, p: c.lower().startswith(p.lower()),\
+                                 default_completer=lambda _: ())
+        
+        comp_line = text_before_cursor
+        comp_point = len(text_before_cursor) - len(text_before_cursor.split()[-1])
+        comp_point = len(comp_line.encode(sys_encoding)[:comp_point].decode(sys_encoding))
 
         (cword_prequote, cword_prefix, cword_suffix,
-            comp_words, first_colon_pos) = argcomplete.split_line(line)
-        completions = completer._get_completions(
+         comp_words, first_colon_pos) = argcomplete.split_line(line, comp_point)
+        completions = argcomplete.autocomplete._get_completions(
             comp_words, cword_prefix, cword_prequote, first_colon_pos)
 
         for comp in completions:
-            yield Completion(comp)
+            yield Completion(comp, -len(comp))
 
 
 
