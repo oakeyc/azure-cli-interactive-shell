@@ -24,7 +24,7 @@ class Configuration():
                 self.config.write(config_file)
         else:
             with open(os.path.join(get_config_dir(), 'config'), 'r') as config_file:
-                self.config.read(config_file)
+                self.config.readfp(config_file)
 
     def get_history(self):
         """ returns the history """
@@ -45,7 +45,7 @@ class Configuration():
     def firsttime(self):
         """ sets it as already done"""
         self.config.set('DEFAULT', 'firsttime', 'no')
-        with open(os.path.join(get_config_dir(), 'config'), 'a') as config_file:
+        with open(os.path.join(get_config_dir(), 'config'), 'w') as config_file:
             self.config.write(config_file)
 
 def get_config_dir():

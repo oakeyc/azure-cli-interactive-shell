@@ -68,9 +68,11 @@ def default_style():
 class Shell(object):
     """ represents the shell """
 
-    def __init__(self, completer, styles=None, lexer=None, history=InMemoryHistory()):
+    def __init__(self, completer, styles=None, lexer=None, history=InMemoryHistory(),
+                 app=None):
         self.styles = styles or default_style()
         self.lexer = lexer or AzLexer
+        self.app = app
         self.completer = completer
         self.history = history
         self._cli = None
@@ -183,24 +185,28 @@ class Shell(object):
             try:
                 document = self.cli.run(reset_current_buffer=True)
                 text = document.text
+                cmd = text
+                outside = False
             except AttributeError:  # when the user pressed Control Q
                 break
             else:
                 if text.strip() == "quit" or text.strip() == "exit":
                     break
-                try:
-                    if text[0] == "#":
-                        cmd = text[1:]
-                    else:
-                        cmd = "az " + text
-                except IndexError:  # enter blank for welcome message
-                    cmd = "az"
-                self.history.append(text)
+                # try:
+                if text[0] == "#":
+                    cmd = text[1:]
+                    outside = True
+                elif text.split()[0] == "az":
+                    cmd = text[1:]
+                # except IndexError:  # enter blank for welcome message
+                self.history.append(cmd)
                 self.description_docs = u''
                 self.cli.buffers[DEFAULT_BUFFER].reset(
                     initial_document=Document(self.description_docs,
                                               cursor_position=0))
                 self.cli.request_redraw()
-                proc = subprocess.Popen(cmd, shell=True, env=self._env)
-                proc.communicate()
+                if outside:
+                    subprocess.Popen(cmd).communicate()
+                else:
+                    self.app.execute([command for command in cmd.split()])
         print('Have a lovely day!!')
