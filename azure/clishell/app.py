@@ -114,7 +114,8 @@ class Shell(object):
             if word.startswith("-"):
                 is_command = False
             if is_command:
-                command += str(word) + " "
+                if not word == 'az':
+                    command += str(word) + " "
 
             if self.completer.is_completable(command.rstrip()):
                 cmdstp = command.rstrip()
