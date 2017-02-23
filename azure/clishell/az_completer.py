@@ -40,54 +40,58 @@ class AzCompleter(Completer):
         is_command = True
         branch = self.command_tree
         if text_before_cursor.split():
-            for words in text_before_cursor.split():
-                if words.startswith("-") and not words.startswith("--"):
-                    is_command = False
-                    if self.has_parameters(command):
-                        for param in self.get_param(command):
-                            if param.lower().startswith(words.lower()) and \
-                            param.lower() != words.lower() and not param.startswith("--") and\
-                            param not in text_before_cursor.split():
-                                yield Completion(param, -len(words), display_meta=\
-                                self.get_param_description(command + " " + str(param)))
+            if text_before_cursor.split()[0] == 'az':
+                text_before_cursor = ' '.join(text_before_cursor.split()[1:])
+            if text_before_cursor.split():
+                for words in text_before_cursor.split():
+                    if words.startswith("-") and not words.startswith("--"):
+                        is_command = False
+                        if self.has_parameters(command):
+                            for param in self.get_param(command):
+                                if param.lower().startswith(words.lower()) and \
+                                param.lower() != words.lower() and not param.startswith("--") and\
+                                param not in text_before_cursor.split():
+                                    yield Completion(param, -len(words), display_meta=\
+                                    self.get_param_description(command + " " + str(param)))
 
-                if words.startswith("--"):
-                    is_command = False
-                    if self.has_parameters(command):
-                        for param in self.get_param(command):
-                            if param.lower().startswith(words.lower()) and \
-                            param.lower() != words.lower() and\
-                            param not in text_before_cursor.split():
-                                yield Completion(param, -len(words),\
-                                display_meta=self.get_param_description(command + " " + str(param)))
-                    else:
-                        for param in self.completable_param:
-                            if param.lower().startswith(words.lower()) and \
-                            param.lower() != words.lower() and\
-                            param not in text_before_cursor.split():
-                                if command + " " + str(param) in self.param_description:
+                    if words.startswith("--"):
+                        is_command = False
+                        if self.has_parameters(command):
+                            for param in self.get_param(command):
+                                if param.lower().startswith(words.lower()) and \
+                                param.lower() != words.lower() and\
+                                param not in text_before_cursor.split():
                                     yield Completion(param, -len(words),\
-                                    display_meta=self.get_param_description(\
-                                    command + " " + str(param)))
-                                else:
-                                    yield Completion(param, -len(words))
-                else:
-                    if is_command:
-                        if command:
-                            command += " " + str(words)
+                                    display_meta=self.get_param_description(
+                                        command + " " + str(param)))
                         else:
-                            command += str(words)
-                    try:
-                        if branch.has_child(words):
-                            branch = branch.get_child(words, branch.children)
-                    except ValueError:
-                        continue # do something
+                            for param in self.completable_param:
+                                if param.lower().startswith(words.lower()) and \
+                                param.lower() != words.lower() and\
+                                param not in text_before_cursor.split():
+                                    if command + " " + str(param) in self.param_description:
+                                        yield Completion(param, -len(words),\
+                                        display_meta=self.get_param_description(\
+                                        command + " " + str(param)))
+                                    else:
+                                        yield Completion(param, -len(words))
+                    else:
+                        if is_command:
+                            if command:
+                                command += " " + str(words)
+                            else:
+                                command += str(words)
+                        try:
+                            if branch.has_child(words):
+                                branch = branch.get_child(words, branch.children)
+                        except ValueError:
+                            continue # do something
 
-            if branch.children is not None:
-                for kid in branch.children:
-                    if kid.data.lower().startswith(text_before_cursor.split()[-1].lower()):
-                        yield Completion(str(kid.data),
-                                         -len(text_before_cursor.split()[-1]))
+                if branch.children is not None:
+                    for kid in branch.children:
+                        if kid.data.lower().startswith(text_before_cursor.split()[-1].lower()):
+                            yield Completion(str(kid.data),\
+                                -len(text_before_cursor.split()[-1]))
 
         if not text_before_cursor.split() or text_before_cursor[-1] == " ":
             if branch.children is not None:
