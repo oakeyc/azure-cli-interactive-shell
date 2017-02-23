@@ -7,7 +7,9 @@ class AzLexer(RegexLexer):
     A custom lexer for Azure CLI
     """
     completer = AzCompleter()
-
+    # top_level = []
+    # top_level.append(kid.data for kid in completer.command_tree.children)
+    # top_level.append('az')
     tokens = {
         'root': [
             (r' .*\n', Text),

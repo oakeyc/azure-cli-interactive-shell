@@ -39,6 +39,11 @@ class GatherCommands(object):
         self.command_param["quit"] = ""
         self.command_param["exit"] = ""
 
+        self.completable.append("az")
+        self.descrip["az"] = ""
+        self.command_tree.children.append(CommandBranch("az"))
+        self.command_param["az"] = ""
+
     def add_random_new_lines(self, long_phrase, line_min):
         if long_phrase is None:
             return long_phrase
