@@ -1,7 +1,7 @@
 from pygments.lexer import RegexLexer, words
 from pygments.token import Name, Literal, Keyword, Operator, Text, Number
 from azure.clishell.az_completer import AzCompleter
-
+# from azure.clishell.app import COMPLETER
 class AzLexer(RegexLexer):
     """
     A custom lexer for Azure CLI

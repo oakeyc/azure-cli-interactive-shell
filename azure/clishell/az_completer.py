@@ -8,7 +8,27 @@ from prompt_toolkit.completion import Completer, Completion
 from azure.cli.core.parser import AzCliCommandParser
 from azure.cli.core.application import APPLICATION, Application, Configuration
 from azure.clishell.gather_commands import GatherCommands
-from argcomplete import CompletionFinder, FilesCompleter
+
+from azure.clishell.completion_finder import CompletionFinder, FilesCompleter
+import json
+import os
+import pkgutil
+import yaml
+from importlib import import_module
+
+from azure.cli.core.application import APPLICATION, Application, Configuration
+from azure.cli.core.commands import CliArgumentType
+from azure.cli.core.commands import load_params, _update_command_definitions
+from azure.clishell.configuration import get_config_dir, Configuration
+from azure.cli.core.help_files import helps
+
+from azure.cli.core.application import APPLICATION
+import os, sys, argparse, contextlib
+from argcomplete import completers, my_shlex as shlex
+from argcomplete.compat import USING_PYTHON2, str, sys_encoding, ensure_str, ensure_bytes
+from argcomplete.completers import FilesCompleter
+from argcomplete.my_argparse import IntrospectiveArgumentParser, action_is_satisfied, action_is_open, action_is_greedy
+
 
 class AzCompleter(Completer):
     """ Completes Azure CLI commands """
@@ -25,78 +45,76 @@ class AzCompleter(Completer):
         self.param_description = commands.param_descript
         self.command_examples = commands.command_example
 
-        # cmd_table = APPLICATION.configuration.get_command_table()
-        # self.parser = AzCliCommandParser()
-        # self.parser.load_command_table(cmd_table)
-        # argcomplete.autocomplete = CompletionFinder()
+
+
+        self.global_parser = AzCliCommandParser(prog='az', add_help=False)
+        global_group = self.global_parser.add_argument_group('global', 'Global Arguments')
+        # self.raise_event(self.GLOBAL_PARSER_CREATED, global_group=global_group)
+
+        self.parser = AzCliCommandParser(prog='az', parents=[self.global_parser])
+        cmd_table = APPLICATION.configuration.get_command_table()
+        for cmd in cmd_table:
+            cmd_table[cmd].load_arguments()
+
+        try:
+            mods_ns_pkg = import_module('azure.cli.command_modules')
+            installed_command_modules = [modname for _, modname, _ in
+                                         pkgutil.iter_modules(mods_ns_pkg.__path__)]
+        except ImportError:
+            pass
+        for mod in installed_command_modules:
+            # print('loading params for', mod)
+            try:
+                import_module('azure.cli.command_modules.' + mod).load_params(mod)
+            except Exception as ex:
+                print("EXCPETION: " + ex.message)
+        _update_command_definitions(cmd_table)
+
+
+        self.parser.load_command_table(cmd_table)
+        argcomplete.autocomplete = CompletionFinder(self.parser, \
+        validator=lambda c, p: c.lower().startswith(p.lower()),
+                                 default_completer=lambda _: ())
         # argcomplete.autocomplete(self.parser, \
         # validator=lambda c, p: c.lower().startswith(p.lower()),
         #                          default_completer=lambda _: ())
 
+
+        # print("completions for: %r" % line)
 
     def get_completions(self, document, complete_event):
         text_before_cursor = document.text_before_cursor
         command = ""
         is_command = True
         branch = self.command_tree
-        if text_before_cursor.split():
-            if text_before_cursor.split()[0] == 'az':
-                text_before_cursor = ' '.join(text_before_cursor.split()[1:])
-            if text_before_cursor.split():
-                for words in text_before_cursor.split():
-                    if words.startswith("-") and not words.startswith("--"):
-                        is_command = False
-                        if self.has_parameters(command):
-                            for param in self.get_param(command):
-                                if param.lower().startswith(words.lower()) and \
-                                param.lower() != words.lower() and not param.startswith("--") and\
-                                param not in text_before_cursor.split():
-                                    yield Completion(param, -len(words), display_meta=\
-                                    self.get_param_description(command + " " + str(param)))
+        flip = False
+        # if text_before_cursor.split():
+        #     for words in text_before_cursor.split():
+        #         if words.startswith("!"):
+        #             flip = True
 
-                    if words.startswith("--"):
-                        is_command = False
-                        if self.has_parameters(command):
-                            for param in self.get_param(command):
-                                if param.lower().startswith(words.lower()) and \
-                                param.lower() != words.lower() and\
-                                param not in text_before_cursor.split():
-                                    yield Completion(param, -len(words),\
-                                    display_meta=self.get_param_description(
-                                        command + " " + str(param)))
-                        else:
-                            for param in self.completable_param:
-                                if param.lower().startswith(words.lower()) and \
-                                param.lower() != words.lower() and\
-                                param not in text_before_cursor.split():
-                                    if command + " " + str(param) in self.param_description:
-                                        yield Completion(param, -len(words),\
-                                        display_meta=self.get_param_description(\
-                                        command + " " + str(param)))
-                                    else:
-                                        yield Completion(param, -len(words))
-                    else:
-                        if is_command:
-                            if command:
-                                command += " " + str(words)
-                            else:
-                                command += str(words)
-                        try:
-                            if branch.has_child(words):
-                                branch = branch.get_child(words, branch.children)
-                        except ValueError:
-                            continue # do something
+        # if flip:
+        line = text_before_cursor
+        complete = CompletionFinder()
+        completions = complete(self.parser, \
+        validator=lambda c, p: c.lower().startswith(p.lower()),\
+                                 default_completer=lambda _: (),
+                                 line=line)
+        # comp_line = text_before_cursor
+        # comp_point = len(text_before_cursor) - len(text_before_cursor.split()[-1])
+        # comp_point = len(comp_line.encode(sys_encoding)[:comp_point].decode(sys_encoding))
 
-                if branch.children is not None:
-                    for kid in branch.children:
-                        if kid.data.lower().startswith(text_before_cursor.split()[-1].lower()):
-                            yield Completion(str(kid.data),\
-                                -len(text_before_cursor.split()[-1]))
+        # (cword_prequote, cword_prefix, cword_suffix,
+        #  comp_words, first_colon_pos) = argcomplete.split_line(line)
+        # completions = argcomplete.autocomplete._get_completions(
+        #     comp_words, cword_prefix, cword_prequote, first_colon_pos)
 
-        if not text_before_cursor.split() or text_before_cursor[-1] == " ":
-            if branch.children is not None:
-                for com in branch.children:
-                    yield Completion(com.data)
+        if completions:
+            for comp in completions:
+                yield Completion(comp, -len(comp))
+
+
+
 
 
     def is_completable(self, command):

@@ -121,7 +121,8 @@ class CompletionFinder(object):
 
     def __call__(self, argument_parser, always_complete_options=True, exit_method=os._exit, output_stream=None,
                  exclude=None, validator=None, print_suppressed=False, append_space=None,
-                 default_completer=FilesCompleter()):
+                 default_completer=FilesCompleter(),
+                 line=None):
         """
         :param argument_parser: The argument parser to autocomplete on
         :type argument_parser: :class:`argparse.ArgumentParser`
@@ -160,9 +161,9 @@ class CompletionFinder(object):
                       validator=validator, print_suppressed=print_suppressed, append_space=append_space,
                       default_completer=default_completer)
 
-        if "_ARGCOMPLETE" not in os.environ:
-            # not an argument completion invocation
-            return
+        # if "_ARGCOMPLETE" not in os.environ:
+        #     # not an argument completion invocation
+        #     return
 
         global debug_stream
         # try:
@@ -181,34 +182,34 @@ class CompletionFinder(object):
         # for v in "COMP_CWORD COMP_LINE COMP_POINT COMP_TYPE COMP_KEY _ARGCOMPLETE_COMP_WORDBREAKS COMP_WORDS".split():
         #     print(v, os.environ[v], stream=debug_stream)
 
-        ifs = os.environ.get("_ARGCOMPLETE_IFS", "\013")
-        if len(ifs) != 1:
-            debug("Invalid value for IFS, quitting [{v}]".format(v=ifs))
-            exit_method(1)
+        # ifs = os.environ.get("_ARGCOMPLETE_IFS", "\013")
+        # if len(ifs) != 1:
+        #     debug("Invalid value for IFS, quitting [{v}]".format(v=ifs))
+        #     exit_method(1)
 
-        comp_line = os.environ["COMP_LINE"]
-        comp_point = int(os.environ["COMP_POINT"])
+        # comp_line = os.environ["COMP_LINE"]
+        # comp_point = int(os.environ["COMP_POINT"])
 
         # Adjust comp_point for wide chars
-        if USING_PYTHON2:
-            comp_point = len(comp_line[:comp_point].decode(sys_encoding))
-        else:
-            comp_point = len(comp_line.encode(sys_encoding)[:comp_point].decode(sys_encoding))
+        # if USING_PYTHON2:
+        #     comp_point = len(comp_line[:comp_point].decode(sys_encoding))
+        # else:
+        #     comp_point = len(comp_line.encode(sys_encoding)[:comp_point].decode(sys_encoding))
 
-        comp_line = ensure_str(comp_line)
-        cword_prequote, cword_prefix, cword_suffix, comp_words, last_wordbreak_pos = split_line(comp_line, comp_point)
+        comp_line = ensure_str(line)
+        cword_prequote, cword_prefix, cword_suffix, comp_words, last_wordbreak_pos = split_line(comp_line)
 
         # _ARGCOMPLETE is set by the shell script to tell us where comp_words
         # should start, based on what we're completing.
         # 1: <script> [args]
         # 2: python <script> [args]
         # 3: python -m <module> [args]
-        start = int(os.environ["_ARGCOMPLETE"]) - 1
-        comp_words = comp_words[start:]
+        # start = int(os.environ["_ARGCOMPLETE"]) - 1
+        # comp_words = comp_words[start:]
 
-        debug("\nLINE: '{l}'\nPREQUOTE: '{pq}'\nPREFIX: '{p}'".format(l=comp_line, pq=cword_prequote, p=cword_prefix),
-              "\nSUFFIX: '{s}'".format(s=cword_suffix),
-              "\nWORDS:", comp_words)
+        # debug("\nLINE: '{l}'\nPREQUOTE: '{pq}'\nPREFIX: '{p}'".format(l=comp_line, pq=cword_prequote, p=cword_prefix),
+        #       "\nSUFFIX: '{s}'".format(s=cword_suffix),
+        #       "\nWORDS:", comp_words)
 
         return self._get_completions(comp_words, cword_prefix, cword_prequote, last_wordbreak_pos)
 
