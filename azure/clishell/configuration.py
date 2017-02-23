@@ -8,6 +8,7 @@ class Configuration():
     """ Configuration information """
     def __init__(self):
         self.config = configparser.ConfigParser({
+            'firsttime' : 'yes',
             'lexer' : 'AzLexer',
         })
         self.config.add_section('Help Files')
@@ -18,8 +19,12 @@ class Configuration():
         azure_folder = get_config_dir()
         if not os.path.exists(azure_folder):
             os.makedirs(azure_folder)
-        with open(os.path.join(get_config_dir(), 'config'), 'w') as config_file:
-            self.config.write(config_file)
+        if not os.path.exists(os.path.join(get_config_dir(), 'config')):
+            with open(os.path.join(get_config_dir(), 'config'), 'w') as config_file:
+                self.config.write(config_file)
+        else:
+            with open(os.path.join(get_config_dir(), 'config'), 'r') as config_file:
+                self.config.read(config_file)
 
     def get_history(self):
         """ returns the history """
@@ -36,6 +41,12 @@ class Configuration():
     def get_lexer(self):
         """ gets the kind of the lexer """
         return self.config.get('DEFAULT', 'lexer')
+
+    def firsttime(self):
+        """ sets it as already done"""
+        self.config.set('DEFAULT', 'firsttime', 'no')
+        with open(os.path.join(get_config_dir(), 'config'), 'a') as config_file:
+            self.config.write(config_file)
 
 def get_config_dir():
     """ gets the directory of the configuration """

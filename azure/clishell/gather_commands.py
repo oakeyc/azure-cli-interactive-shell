@@ -80,7 +80,7 @@ class GatherCommands(object):
 
             if 'examples' in data[command]:
                 self.command_example[command] = self.add_random_new_lines(
-                    data[command]['examples'], LINE_MINIMUM * 2)
+                    data[command]['examples'], int(LINE_MINIMUM * 2.5))
 
             all_params = []
             for param in data[command]['parameters']:

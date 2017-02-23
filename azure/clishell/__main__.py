@@ -15,7 +15,9 @@ def main():
         lexer = AzLexer
     else:
         lexer = None
-    # with open(os.path.join(get_config_dir(), config.get_history), 'a') as history_file:
+    if config.config.get('DEFAULT', 'firsttime') is 'yes':
+        ## run configure
+        config.firsttime()
     completer = AzCompleter()
     shell_app = Shell(
         completer=completer,
