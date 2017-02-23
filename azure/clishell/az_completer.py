@@ -2,32 +2,33 @@ import math
 import os
 import argcomplete
 import sys
-
-from prompt_toolkit.contrib.completers import WordCompleter
-from prompt_toolkit.completion import Completer, Completion
-from azure.cli.core.parser import AzCliCommandParser
-from azure.cli.core.application import APPLICATION, Application, Configuration
-from azure.clishell.gather_commands import GatherCommands
-
-from azure.clishell.completion_finder import CompletionFinder, FilesCompleter
 import json
 import os
 import pkgutil
 import yaml
-from importlib import import_module
+import os, sys, argparse, contextlib
 
+from importlib import import_module
+from prompt_toolkit.contrib.completers import WordCompleter
+from prompt_toolkit.completion import Completer, Completion
+
+from argcomplete import completers, my_shlex as shlex
+from argcomplete.compat import USING_PYTHON2, str, sys_encoding, ensure_str, ensure_bytes
+from argcomplete.completers import FilesCompleter
+from argcomplete.my_argparse import IntrospectiveArgumentParser, action_is_satisfied, action_is_open, action_is_greedy
+
+from azure.cli.core.parser import AzCliCommandParser
+
+from azure.cli.core.application import APPLICATION, Application, Configuration
+from azure.clishell.gather_commands import GatherCommands
+
+from azure.clishell.completion_finder import CompletionFinder as MyCompleterFinder, FilesCompleter
 from azure.cli.core.application import APPLICATION, Application, Configuration
 from azure.cli.core.commands import CliArgumentType
 from azure.cli.core.commands import load_params, _update_command_definitions
 from azure.clishell.configuration import get_config_dir, Configuration
 from azure.cli.core.help_files import helps
-
 from azure.cli.core.application import APPLICATION
-import os, sys, argparse, contextlib
-from argcomplete import completers, my_shlex as shlex
-from argcomplete.compat import USING_PYTHON2, str, sys_encoding, ensure_str, ensure_bytes
-from argcomplete.completers import FilesCompleter
-from argcomplete.my_argparse import IntrospectiveArgumentParser, action_is_satisfied, action_is_open, action_is_greedy
 
 
 class AzCompleter(Completer):
@@ -72,9 +73,9 @@ class AzCompleter(Completer):
 
 
         self.parser.load_command_table(cmd_table)
-        argcomplete.autocomplete = CompletionFinder(self.parser, \
-        validator=lambda c, p: c.lower().startswith(p.lower()),
-                                 default_completer=lambda _: ())
+        # argcomplete.autocomplete = CompletionFinder(self.parser, \
+        # validator=lambda c, p: c.lower().startswith(p.lower()),
+        #                          default_completer=lambda _: ())
         # argcomplete.autocomplete(self.parser, \
         # validator=lambda c, p: c.lower().startswith(p.lower()),
         #                          default_completer=lambda _: ())
@@ -88,18 +89,15 @@ class AzCompleter(Completer):
         is_command = True
         branch = self.command_tree
         flip = False
-        # if text_before_cursor.split():
-        #     for words in text_before_cursor.split():
-        #         if words.startswith("!"):
-        #             flip = True
 
-        # if flip:
+
         line = text_before_cursor
-        complete = CompletionFinder()
+        complete = MyCompleterFinder()
+        # print(self.pars ?/der.__dict__)
         completions = complete(self.parser, \
         validator=lambda c, p: c.lower().startswith(p.lower()),\
                                  default_completer=lambda _: (),
-                                 line=line)
+                               line=line, completer=self)
         # comp_line = text_before_cursor
         # comp_point = len(text_before_cursor) - len(text_before_cursor.split()[-1])
         # comp_point = len(comp_line.encode(sys_encoding)[:comp_point].decode(sys_encoding))
