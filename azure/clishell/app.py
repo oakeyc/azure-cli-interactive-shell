@@ -2,7 +2,7 @@ from __future__ import unicode_literals, print_function
 
 import subprocess
 import os
-
+import sys
 from prompt_toolkit.buffer import Buffer
 from prompt_toolkit.shortcuts import create_eventloop
 from prompt_toolkit.history import InMemoryHistory
@@ -18,6 +18,9 @@ from pygments.token import Token
 
 from azure.clishell.az_lexer import AzLexer
 from azure.clishell.layout import create_layout
+import azure.cli.core.telemetry as telemetry
+from azure.cli.core._util import (show_version_info_exit, handle_exception)
+from azure.cli.core.application import APPLICATION, Configuration
 
 manager = KeyBindingManager(
     enable_system_bindings=True,
@@ -197,7 +200,7 @@ class Shell(object):
                     cmd = text[1:]
                     outside = True
                 elif text.split()[0] == "az":
-                    cmd = text[1:]
+                    cmd = " ".join(text.split()[1:])
                 # except IndexError:  # enter blank for welcome message
                 self.history.append(cmd)
                 self.description_docs = u''
@@ -208,5 +211,25 @@ class Shell(object):
                 if outside:
                     subprocess.Popen(cmd).communicate()
                 else:
-                    self.app.execute([command for command in cmd.split()])
+                    # try:
+                    config = Configuration(str(command) for command in cmd.split())
+                    self.app.initialize(config)
+
+                    result = self.app.execute([str(command) for command in cmd.split()])
+                    if result and result.result is not None:
+                        from azure.cli.core._output import OutputProducer
+                        formatter = OutputProducer.get_formatter(
+                            self.app.configuration.output_format)
+                        OutputProducer(formatter=formatter, file=sys.stdout).out(result)
+
+                    # except Exception as ex:  # pylint: disable=broad-except
+                    #     print(ex.message)
+                    #     # TODO: include additional details of the exception in telemetry
+                    #     telemetry.set_exception(ex, 'outer-exception',
+                    #                             'Unexpected exception caught during application execution.')
+                    #     telemetry.set_failure()
+                    #     break
+                    #     # error_code = handle_exception(ex)
+                    #     # return error_code
+
         print('Have a lovely day!!')
