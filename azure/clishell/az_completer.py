@@ -71,8 +71,8 @@ class AzCompleter(Completer):
                 print("EXCPETION: " + ex.message)
         _update_command_definitions(cmd_table)
 
-
         self.parser.load_command_table(cmd_table)
+        self.cmdtab = cmd_table
         # argcomplete.autocomplete = CompletionFinder(self.parser, \
         # validator=lambda c, p: c.lower().startswith(p.lower()),
         #                          default_completer=lambda _: ())
@@ -84,33 +84,118 @@ class AzCompleter(Completer):
         # print("completions for: %r" % line)
 
     def get_completions(self, document, complete_event):
+        # text_before_cursor = document.text_before_cursor
+        # command = ""
+        # is_command = True
+        # branch = self.command_tree
+        # flip = False
+
+
+        # line = text_before_cursor
+        # complete = MyCompleterFinder()
+        # # print(self.pars ?/der.__dict__)
+        # completions = complete(self.parser, \
+        # validator=lambda c, p: c.lower().startswith(p.lower()),\
+        #                          default_completer=lambda _: (),
+        #                        line=line, completer=self)
+        # # comp_line = text_before_cursor
+        # # comp_point = len(text_before_cursor) - len(text_before_cursor.split()[-1])
+        # # comp_point = len(comp_line.encode(sys_encoding)[:comp_point].decode(sys_encoding))
+
+        # # (cword_prequote, cword_prefix, cword_suffix,
+        # #  comp_words, first_colon_pos) = argcomplete.split_line(line)
+        # # completions = argcomplete.autocomplete._get_completions(
+        # #     comp_words, cword_prefix, cword_prequote, first_colon_pos)
+
+        # if completions:
+        #     for comp in completions:
+        #         yield Completion(comp, -len(comp))
         text_before_cursor = document.text_before_cursor
         command = ""
         is_command = True
         branch = self.command_tree
-        flip = False
+        if text_before_cursor.split():
+            if text_before_cursor.split()[0] == 'az':
+                text_before_cursor = ' '.join(text_before_cursor.split()[1:])
+            if text_before_cursor.split():
+                for words in text_before_cursor.split():
+                    if words.startswith("-") and not words.startswith("--"):
+                        is_command = False
+                        if self.has_parameters(command):
+                            for param in self.get_param(command):
+                                if param.lower().startswith(words.lower()) and \
+                                param.lower() != words.lower() and not param.startswith("--") and\
+                                param not in text_before_cursor.split():
+                                    yield Completion(param, -len(words), display_meta=\
+                                    self.get_param_description(command + " " + str(param)))
 
+                    if words.startswith("--"):
+                        is_command = False
+                        if self.has_parameters(command):
+                            for param in self.get_param(command):
+                                if param.lower().startswith(words.lower()) and \
+                                param.lower() != words.lower() and\
+                                param not in text_before_cursor.split():
+                                    yield Completion(param, -len(words),\
+                                    display_meta=self.get_param_description(
+                                        command + " " + str(param)))
+                        else:
+                            for param in self.completable_param:
+                                if param.lower().startswith(words.lower()) and \
+                                param.lower() != words.lower() and\
+                                param not in text_before_cursor.split():
+                                    if command + " " + str(param) in self.param_description:
+                                        yield Completion(param, -len(words),\
+                                        display_meta=self.get_param_description(\
+                                        command + " " + str(param)))
+                                    else:
+                                        yield Completion(param, -len(words))
+                    else:
+                        if is_command:
+                            if command:
+                                command += " " + str(words)
+                            else:
+                                command += str(words)
+                        try:
+                            if branch.has_child(words):
+                                branch = branch.get_child(words, branch.children)
+                        except ValueError:
+                            continue # do something
 
-        line = text_before_cursor
-        complete = MyCompleterFinder()
-        # print(self.pars ?/der.__dict__)
-        completions = complete(self.parser, \
-        validator=lambda c, p: c.lower().startswith(p.lower()),\
-                                 default_completer=lambda _: (),
-                               line=line, completer=self)
-        # comp_line = text_before_cursor
-        # comp_point = len(text_before_cursor) - len(text_before_cursor.split()[-1])
-        # comp_point = len(comp_line.encode(sys_encoding)[:comp_point].decode(sys_encoding))
+                if branch.children is not None:
+                    for kid in branch.children:
+                        if kid.data.lower().startswith(text_before_cursor.split()[-1].lower()):
+                            yield Completion(str(kid.data),\
+                                -len(text_before_cursor.split()[-1]))
 
-        # (cword_prequote, cword_prefix, cword_suffix,
-        #  comp_words, first_colon_pos) = argcomplete.split_line(line)
-        # completions = argcomplete.autocomplete._get_completions(
-        #     comp_words, cword_prefix, cword_prequote, first_colon_pos)
+        if not text_before_cursor.split() or text_before_cursor[-1] == " ":
+            if branch.children is not None:
+                for com in branch.children:
+                    yield Completion(com.data)
 
-        if completions:
-            for comp in completions:
-                yield Completion(comp, -len(comp))
+        is_param = False
+        param = ""
+        if text_before_cursor.split():
+            param = text_before_cursor.split()[-1]
+            if param.startswith("-"):
+                is_param = True
 
+        arg_name = ""
+        if command in self.cmdtab:
+            if is_param:
+                for arg in self.cmdtab[command].arguments:
+                    for name in self.cmdtab[command].arguments[arg].options_list:
+                        if name == param:
+                            arg_name = arg
+                            break
+                    if arg_name:
+                        break
+                if arg_name:
+                    if self.cmdtab[command].arguments[arg_name].completer:
+                        for comp in self.cmdtab[command].arguments[arg_name].completer("", None, command):
+                            yield Completion(comp)
+
+        # print(self.cmdtab[command].arguments['cloud_name'].completer("AzureU", None, 'cloud show -n'))
 
 
 
