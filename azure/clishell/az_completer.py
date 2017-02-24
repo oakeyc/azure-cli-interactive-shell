@@ -68,7 +68,8 @@ class AzCompleter(Completer):
                                 param.lower() != words.lower() and not param.startswith("--") and\
                                 param not in text_before_cursor.split():
                                     yield Completion(param, -len(words), display_meta=\
-                                    self.get_param_description(command + " " + str(param)))
+                                    self.get_param_description(
+                                        command + " " + str(param)).replace('\n', ''))
 
                     if words.startswith("--"):
                         is_command = False
@@ -79,7 +80,7 @@ class AzCompleter(Completer):
                                 param not in text_before_cursor.split():
                                     yield Completion(param, -len(words),\
                                     display_meta=self.get_param_description(
-                                        command + " " + str(param)))
+                                        command + " " + str(param)).replace('\n', ''))
                         else:
                             for param in self.completable_param:
                                 if param.lower().startswith(words.lower()) and \
@@ -88,7 +89,7 @@ class AzCompleter(Completer):
                                     if command + " " + str(param) in self.param_description:
                                         yield Completion(param, -len(words),\
                                         display_meta=self.get_param_description(\
-                                        command + " " + str(param)))
+                                        command + " " + str(param)).replace('\n', ''))
                                     else:
                                         yield Completion(param, -len(words))
                     else:
