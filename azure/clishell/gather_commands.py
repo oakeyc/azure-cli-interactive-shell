@@ -24,6 +24,8 @@ class GatherCommands(object):
         self.command_tree = CommandHead()
         self.param_descript = {}
         self.completer = None
+        self.same_param_doubles = {}
+
         self.gather_from_files()
 
     def add_exit(self):
@@ -95,7 +97,14 @@ class GatherCommands(object):
                 '==SUPPRESS==' in data[command]['parameters'][param]['help']:
                     suppress = True
                 if data[command]['parameters'][param]['help'] and not suppress:
+                    param_double = None
                     for par in data[command]['parameters'][param]['name']:
+                        if not param_double:
+                            param_double = par
+                        else:
+                            self.same_param_doubles[par] = param_double
+                            self.same_param_doubles[param_double] = par
+
                         self.param_descript[command + " " + par] =  \
                         self.add_random_new_lines(data[command]['parameters'][param]['required']\
                         + " " + data[command]['parameters'][param]['help'], LINE_MINIMUM)

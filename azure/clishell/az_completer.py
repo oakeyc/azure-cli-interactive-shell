@@ -28,7 +28,7 @@ class AzCompleter(Completer):
         self.command_tree = commands.command_tree
         self.param_description = commands.param_descript
         self.command_examples = commands.command_example
-
+        self.same_param_doubles = commands.same_param_doubles
 
         cmd_table = APPLICATION.configuration.get_command_table()
         for cmd in cmd_table:
@@ -50,6 +50,24 @@ class AzCompleter(Completer):
 
         self.cmdtab = cmd_table
 
+    def validate_param_completion(self, param, words, text_before_cursor):
+        """ validates that a param should be completed """
+        double_flag = True
+        if param in self.same_param_doubles:
+            double_flag = self.same_param_doubles[param] not in text_before_cursor.split()
+        return param.lower().startswith(words.lower()) and \
+                                param.lower() != words.lower() and\
+                                param not in text_before_cursor.split()\
+                                and double_flag
+
+    def create_dynamic_completion(self, started_param, comp, prefix, text_before_cursor):
+        if started_param:
+            if comp.lower().startswith(prefix.lower())\
+                and comp not in text_before_cursor.split():
+                yield Completion(comp)
+        else:
+            yield Completion(comp)
+
     def get_completions(self, document, complete_event):
         text_before_cursor = document.text_before_cursor
         command = ""
@@ -64,9 +82,8 @@ class AzCompleter(Completer):
                         is_command = False
                         if self.has_parameters(command):
                             for param in self.get_param(command):
-                                if param.lower().startswith(words.lower()) and \
-                                param.lower() != words.lower() and not param.startswith("--") and\
-                                param not in text_before_cursor.split():
+                                if self.validate_param_completion(param, words, text_before_cursor)\
+                                and not param.startswith("--"):
                                     yield Completion(param, -len(words), display_meta=\
                                     self.get_param_description(
                                         command + " " + str(param)).replace('\n', ''))
@@ -75,17 +92,13 @@ class AzCompleter(Completer):
                         is_command = False
                         if self.has_parameters(command):
                             for param in self.get_param(command):
-                                if param.lower().startswith(words.lower()) and \
-                                param.lower() != words.lower() and\
-                                param not in text_before_cursor.split():
+                                if self.validate_param_completion(param, words, text_before_cursor):
                                     yield Completion(param, -len(words),\
                                     display_meta=self.get_param_description(
                                         command + " " + str(param)).replace('\n', ''))
                         else:
                             for param in self.completable_param:
-                                if param.lower().startswith(words.lower()) and \
-                                param.lower() != words.lower() and\
-                                param not in text_before_cursor.split():
+                                if self.validate_param_completion(param, words, text_before_cursor):
                                     if command + " " + str(param) in self.param_description:
                                         yield Completion(param, -len(words),\
                                         display_meta=self.get_param_description(\
@@ -148,7 +161,8 @@ class AzCompleter(Completer):
                             for comp in self.cmdtab[command].\
                             arguments[arg_name].completer("", None, command):
                                 if started_param:
-                                    if comp.lower().startswith(prefix.lower()):
+                                    if comp.lower().startswith(prefix.lower())\
+                                        and comp not in text_before_cursor.split():
                                         yield Completion(comp)
                                 else:
                                     yield Completion(comp)
@@ -157,7 +171,8 @@ class AzCompleter(Completer):
                                 for comp in self.cmdtab[command].\
                                 arguments[arg_name].completer(""):
                                     if started_param:
-                                        if comp.lower().startswith(prefix.lower()):
+                                        if comp.lower().startswith(prefix.lower())\
+                                            and comp not in text_before_cursor.split():
                                             yield Completion(comp)
                                     else:
                                         yield Completion(comp)
@@ -166,7 +181,8 @@ class AzCompleter(Completer):
                                     for comp in self.cmdtab[command].\
                                     arguments[arg_name].completer():
                                         if started_param:
-                                            if comp.lower().startswith(prefix.lower()):
+                                            if comp.lower().startswith(prefix.lower())\
+                                                and comp not in text_before_cursor.split():
                                                 yield Completion(comp)
                                         else:
                                             yield Completion(comp)
