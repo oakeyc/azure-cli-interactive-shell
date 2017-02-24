@@ -73,43 +73,8 @@ class AzCompleter(Completer):
 
         self.parser.load_command_table(cmd_table)
         self.cmdtab = cmd_table
-        # argcomplete.autocomplete = CompletionFinder(self.parser, \
-        # validator=lambda c, p: c.lower().startswith(p.lower()),
-        #                          default_completer=lambda _: ())
-        # argcomplete.autocomplete(self.parser, \
-        # validator=lambda c, p: c.lower().startswith(p.lower()),
-        #                          default_completer=lambda _: ())
-
-
-        # print("completions for: %r" % line)
 
     def get_completions(self, document, complete_event):
-        # text_before_cursor = document.text_before_cursor
-        # command = ""
-        # is_command = True
-        # branch = self.command_tree
-        # flip = False
-
-
-        # line = text_before_cursor
-        # complete = MyCompleterFinder()
-        # # print(self.pars ?/der.__dict__)
-        # completions = complete(self.parser, \
-        # validator=lambda c, p: c.lower().startswith(p.lower()),\
-        #                          default_completer=lambda _: (),
-        #                        line=line, completer=self)
-        # # comp_line = text_before_cursor
-        # # comp_point = len(text_before_cursor) - len(text_before_cursor.split()[-1])
-        # # comp_point = len(comp_line.encode(sys_encoding)[:comp_point].decode(sys_encoding))
-
-        # # (cword_prequote, cword_prefix, cword_suffix,
-        # #  comp_words, first_colon_pos) = argcomplete.split_line(line)
-        # # completions = argcomplete.autocomplete._get_completions(
-        # #     comp_words, cword_prefix, cword_prequote, first_colon_pos)
-
-        # if completions:
-        #     for comp in completions:
-        #         yield Completion(comp, -len(comp))
         text_before_cursor = document.text_before_cursor
         command = ""
         is_command = True
@@ -192,11 +157,24 @@ class AzCompleter(Completer):
                         break
                 if arg_name:
                     if self.cmdtab[command].arguments[arg_name].completer:
-                        for comp in self.cmdtab[command].arguments[arg_name].completer("", None, command):
-                            yield Completion(comp)
-
-        # print(self.cmdtab[command].arguments['cloud_name'].completer("AzureU", None, 'cloud show -n'))
-
+                        # formats = []
+                        # for form in formats:
+                        try:
+                            for comp in self.cmdtab[command].\
+                            arguments[arg_name].completer("", None, command):
+                                yield Completion(comp)
+                        except TypeError:
+                            try:
+                                for comp in self.cmdtab[command].\
+                                arguments[arg_name].completer(""):
+                                    yield Completion(comp)
+                            except TypeError:
+                                try:
+                                    for comp in self.cmdtab[command].\
+                                    arguments[arg_name].completer():
+                                        yield Completion(comp)
+                                except TypeError:
+                                    print("TypeError: " + TypeError.message)
 
 
 
