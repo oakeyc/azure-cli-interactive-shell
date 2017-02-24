@@ -125,7 +125,6 @@ class Shell(object):
         cols = int(cols)
         document = cli.current_buffer.document
         text = document.text
-        # split_text = text.split()
         command = ""
         all_params = ""
         example = ""
@@ -153,21 +152,8 @@ class Shell(object):
                 self.completer.get_description(cmdstp)
 
                 if cmdstp in self.completer.command_examples:
-                    example = self.completer.command_examples[cmdstp]
+                    example = self.create_examples(cmdstp, rows)
 
-                    num_newline = example.count('\n')
-                    if num_newline > rows / 2:
-                        len_of_excerpt = math.floor(rows / 2)
-                        group = example.split('\n')
-                        if _SECTION * len_of_excerpt < num_newline:
-                            end = _SECTION * len_of_excerpt
-                            example = '\n'.join(group[:-end]) + "\n"
-                        else:
-                            # end = num_newline
-                            example = '\n'.join(group) + "\n"
-
-
-                # break
         if not any_documentation:
             self.description_docs = u''
 
@@ -184,6 +170,25 @@ class Shell(object):
             initial_document=Document(self.example_docs)
         )
         cli.request_redraw()
+
+    def create_examples(self, cmdstp, rows):
+        """ makes the example text """
+        global _SECTION
+
+        example = self.completer.command_examples[cmdstp]
+
+        num_newline = example.count('\n')
+        if num_newline > rows / 2:
+            len_of_excerpt = math.floor(rows / 2)
+            group = example.split('\n')
+            if _SECTION * len_of_excerpt < num_newline:
+                end = _SECTION * len_of_excerpt
+                example = '\n'.join(group[:-end]) + "\n"
+            else: # default chops top off
+                example = '\n'.join(group) + "\n"
+                while (_SECTION * len_of_excerpt) % num_newline > len_of_excerpt:
+                    _SECTION -= 1
+        return example
 
     def create_application(self):
         """ makes the application object and the buffers """
@@ -231,12 +236,12 @@ class Shell(object):
             else:
                 if text.strip() == "quit" or text.strip() == "exit":
                     break
-                # try:
-                if text[0] == "#":
-                    cmd = text[1:]
-                    outside = True
-                elif text.split()[0] == "az":
-                    cmd = " ".join(text.split()[1:])
+                if text:
+                    if text[0] == "#":
+                        cmd = text[1:]
+                        outside = True
+                    elif text.split()[0] == "az":
+                        cmd = " ".join(text.split()[1:])
                 # except IndexError:  # enter blank for welcome message
                 self.history.append(cmd)
                 self.description_docs = u''
