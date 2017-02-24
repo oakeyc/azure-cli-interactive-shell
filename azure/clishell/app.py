@@ -17,10 +17,13 @@ from prompt_toolkit.enums import DEFAULT_BUFFER
 from pygments.token import Token
 
 from azure.clishell.az_lexer import AzLexer
+from azure.clishell.az_completer import AzCompleter
+
 from azure.clishell.layout import create_layout
 import azure.cli.core.telemetry as telemetry
 from azure.cli.core._util import (show_version_info_exit, handle_exception)
 from azure.cli.core.application import APPLICATION, Configuration
+import azure.cli.core.telemetry as telemetry
 
 manager = KeyBindingManager(
     enable_system_bindings=True,
@@ -28,6 +31,7 @@ manager = KeyBindingManager(
 )
 registry = manager.registry
 
+COMPLETER = AzCompleter()
 
 @registry.add_binding(Keys.ControlQ, eager=True)
 def exit_(event):
@@ -68,15 +72,16 @@ def default_style():
     })
 
     return styles
+
 class Shell(object):
     """ represents the shell """
 
-    def __init__(self, completer, styles=None, lexer=None, history=InMemoryHistory(),
+    def __init__(self, completer=None, styles=None, lexer=None, history=InMemoryHistory(),
                  app=None):
         self.styles = styles or default_style()
         self.lexer = lexer or AzLexer
         self.app = app
-        self.completer = completer
+        self.completer = COMPLETER
         self.history = history
         self._cli = None
         self.refresh_cli = False

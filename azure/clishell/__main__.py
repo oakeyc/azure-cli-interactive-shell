@@ -41,9 +41,8 @@ def main():
         APPLICATION.execute(["configure"])
         config.firsttime()
 
-    completer = AzCompleter()
     shell_app = Shell(
-        completer=completer,
+        completer=None,
         lexer=lexer,
         history=FileHistory(os.path.join(get_config_dir(), config.get_history())),
         app=APPLICATION,
