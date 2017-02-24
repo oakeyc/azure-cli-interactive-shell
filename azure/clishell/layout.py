@@ -1,3 +1,5 @@
+
+
 from prompt_toolkit.enums import DEFAULT_BUFFER, SEARCH_BUFFER
 from prompt_toolkit.layout.containers import VSplit, HSplit, Window, FloatContainer, ConditionalContainer, Float
 from prompt_toolkit.layout.controls import BufferControl, FillControl
@@ -18,6 +20,7 @@ from azure.clishell.az_lexer import ExampleLexer
 def get_prompt_tokens(cli):
     """ returns prompt tokens """
     return [(Token.Az, 'az>> ')]
+MAX_COMPLETION = 16
 
 # TODO fix this somehow
 input_processors = [
@@ -66,7 +69,7 @@ def create_layout(lex):
                 Float(xcursor=True,
                       ycursor=True,
                       content=CompletionsMenu(
-                          max_height=16,
+                          max_height=MAX_COMPLETION,
                           scroll_offset=1,
                           extra_filter=(HasFocus(DEFAULT_BUFFER))
                           ))

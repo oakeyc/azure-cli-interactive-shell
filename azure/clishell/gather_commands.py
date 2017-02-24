@@ -5,10 +5,15 @@ import json
 from prompt_toolkit.contrib.completers import WordCompleter
 from prompt_toolkit.completion import Completer, Completion
 from azure.clishell.command_tree import CommandBranch, CommandHead
-from azure.clishell._dump_commands import get_cache_dir, Configuration
+# from azure.clishell._dump_commands import get_cache_dir, Configuration
+import azure.clishell.configuration
+
+CONFIGURATION = azure.clishell.configuration.CONFIGURATION
+# CONFIG_DIR = azure.clishell.configuration.get_cache_dir
+ROWS, COLS = os.popen('stty size', 'r').read().split()
 
 TOLERANCE = 10
-LINE_MINIMUM = 30
+LINE_MINIMUM = math.floor(int(COLS) / 2 - 15)
 
 class GatherCommands(object):
     def __init__(self):
@@ -63,9 +68,10 @@ class GatherCommands(object):
         return long_phrase + "\n"
 
     def gather_from_files(self):
-        command_file = Configuration().get_help_files()
-
-        with open(os.path.join(get_cache_dir(), command_file), 'r') as help_file:
+        command_file = CONFIGURATION.get_help_files()
+        cache_path = os.path.join(CONFIGURATION.get_config_dir(), 'cache')
+        with open(os.path.join(cache_path, \
+        command_file), 'r') as help_file:
             data = json.load(help_file)
 
         self.add_exit()
@@ -87,7 +93,7 @@ class GatherCommands(object):
 
             if 'examples' in data[command]:
                 self.command_example[command] = self.add_random_new_lines(
-                    data[command]['examples'], int(LINE_MINIMUM * 2.5))
+                    data[command]['examples'], int(COLS))
 
             all_params = []
             for param in data[command]['parameters']:
@@ -117,4 +123,12 @@ class GatherCommands(object):
 
         # for command in self.command_example:
         #     print(command + ": " + self.command_example[command])
-
+    def get_all_subcommands(self):
+        """ returns all the subcommands """
+        subcommands = []
+        for command in self.descrip:
+            for word in command.split():
+                for kid in self.command_tree.children:
+                    if word != kid.data and word not in subcommands:
+                        subcommands.append(word)
+        return subcommands

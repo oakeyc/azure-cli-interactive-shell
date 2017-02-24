@@ -1,6 +1,5 @@
 
 class CommandTree(object):
-
     def __init__(self, data, children=None):
         self.data = data
         if not children:
@@ -54,6 +53,12 @@ class CommandHead(CommandTree):
         self._get_subbranch_help(check_next, acc)
         return acc
 
+    def get_all_subcommands(self):
+        """ returns all the subcommands """
+        subcommands = []
+        for command in self.children:
+            subcommands.append(list(set(self.get_subbranch(command.data))))
+        return subcommands
 
 class CommandBranch(CommandTree):
     """ represents a branch of the tree """

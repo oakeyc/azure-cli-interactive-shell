@@ -3,6 +3,7 @@ from __future__ import unicode_literals, print_function
 import subprocess
 import os
 import sys
+import math
 from prompt_toolkit.buffer import Buffer
 from prompt_toolkit.shortcuts import create_eventloop
 from prompt_toolkit.history import InMemoryHistory
@@ -18,8 +19,8 @@ from pygments.token import Token
 
 from azure.clishell.az_lexer import AzLexer
 from azure.clishell.az_completer import AzCompleter
-
 from azure.clishell.layout import create_layout
+
 import azure.cli.core.telemetry as telemetry
 from azure.cli.core._util import (show_version_info_exit, handle_exception)
 from azure.cli.core.application import APPLICATION, Configuration
@@ -31,18 +32,31 @@ manager = KeyBindingManager(
 )
 registry = manager.registry
 
-COMPLETER = AzCompleter()
+_SECTION = 1
 
 @registry.add_binding(Keys.ControlQ, eager=True)
 def exit_(event):
     """ exits the program when Control Q is pressed """
     event.cli.set_return_value(None)
 
-
 @registry.add_binding(Keys.Enter, eager=True)
 def enter_(event):
     """ Sends the command to the terminal"""
     event.cli.set_return_value(event.cli.current_buffer)
+
+@registry.add_binding(Keys.ControlP, eager=True)
+def panUp_(event):
+    """ Pans the example pan up"""
+    global _SECTION
+    if _SECTION > 0:
+        _SECTION -= 1
+
+@registry.add_binding(Keys.ControlL, eager=True)
+def panDown_(event):
+    """ Pans the example pan down"""
+    global _SECTION
+    if _SECTION < 5:
+        _SECTION += 1
 
 def default_style():
     """ Default coloring """
@@ -81,7 +95,7 @@ class Shell(object):
         self.styles = styles or default_style()
         self.lexer = lexer or AzLexer
         self.app = app
-        self.completer = COMPLETER
+        self.completer = completer
         self.history = history
         self._cli = None
         self.refresh_cli = False
@@ -106,6 +120,9 @@ class Shell(object):
         Brings up the metadata for the command if
         there is a valid command already typed
         """
+        rows, cols = os.popen('stty size', 'r').read().split()
+        rows = int(rows)
+        cols = int(cols)
         document = cli.current_buffer.document
         text = document.text
         # split_text = text.split()
@@ -137,6 +154,19 @@ class Shell(object):
 
                 if cmdstp in self.completer.command_examples:
                     example = self.completer.command_examples[cmdstp]
+
+                    num_newline = example.count('\n')
+                    if num_newline > rows / 2:
+                        len_of_excerpt = math.floor(rows / 2)
+                        group = example.split('\n')
+                        if _SECTION * len_of_excerpt < num_newline:
+                            end = _SECTION * len_of_excerpt
+                            example = '\n'.join(group[:-end]) + "\n"
+                        else:
+                            # end = num_newline
+                            example = '\n'.join(group) + "\n"
+
+
                 # break
         if not any_documentation:
             self.description_docs = u''

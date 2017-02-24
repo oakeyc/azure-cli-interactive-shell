@@ -7,17 +7,14 @@ from importlib import import_module
 from prompt_toolkit.contrib.completers import WordCompleter
 from prompt_toolkit.completion import Completer, Completion
 
-from azure.clishell.gather_commands import GatherCommands
 from azure.cli.core.application import APPLICATION, Application, Configuration
 from azure.cli.core.commands import load_params, _update_command_definitions
-
-from azure.clishell.configuration import get_config_dir, Configuration
 
 
 class AzCompleter(Completer):
     """ Completes Azure CLI commands """
-    def __init__(self):
-        commands = GatherCommands()
+    def __init__(self, commands):
+        commands = commands
         # a completable to the description of what is does
         self.command_description = commands.descrip
         self.completable = commands.completable
@@ -59,14 +56,6 @@ class AzCompleter(Completer):
                                 param.lower() != words.lower() and\
                                 param not in text_before_cursor.split()\
                                 and double_flag
-
-    def create_dynamic_completion(self, started_param, comp, prefix, text_before_cursor):
-        if started_param:
-            if comp.lower().startswith(prefix.lower())\
-                and comp not in text_before_cursor.split():
-                yield Completion(comp)
-        else:
-            yield Completion(comp)
 
     def get_completions(self, document, complete_event):
         text_before_cursor = document.text_before_cursor
@@ -159,7 +148,7 @@ class AzCompleter(Completer):
                         # for form in formats:
                         try:
                             for comp in self.cmdtab[command].\
-                            arguments[arg_name].completer("", None, command):
+                            arguments[arg_name].completer("", None, text_before_cursor):
                                 if started_param:
                                     if comp.lower().startswith(prefix.lower())\
                                         and comp not in text_before_cursor.split():
@@ -213,16 +202,6 @@ class AzCompleter(Completer):
     def has_parameters(self, command):
         """ returns whether given command is valid """
         return command in self.command_parameters.keys()
-
-    def get_all_subcommands(self):
-        """ returns all the subcommands """
-        subcommands = []
-        for command in self.command_description:
-            for word in command.split():
-                for kid in self.command_tree.children:
-                    if word != kid.data and word not in subcommands:
-                        subcommands.append(word)
-        return subcommands
 
     def has_description(self, param):
         """ if a parameter has a description """

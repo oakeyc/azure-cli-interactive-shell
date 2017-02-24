@@ -1,12 +1,12 @@
 from pygments.lexer import RegexLexer, words
 from pygments.token import Name, Literal, Keyword, Operator, Text, Number
-from azure.clishell.az_completer import AzCompleter
-# from azure.clishell.app import COMPLETER
+
+from azure.clishell.gather_commands import GatherCommands
 class AzLexer(RegexLexer):
     """
     A custom lexer for Azure CLI
     """
-    completer = AzCompleter()
+    commands = GatherCommands()
     # top_level = []
     # top_level.append(kid.data for kid in completer.command_tree.children)
     # top_level.append('az')
@@ -14,19 +14,19 @@ class AzLexer(RegexLexer):
         'root': [
             (r' .*\n', Text),
             (words(
-                tuple(kid.data for kid in completer.command_tree.children),
+                tuple(kid.data for kid in commands.command_tree.children),
                 prefix=r'\b',
                 suffix=r'\b'),
              Keyword),
             # describe-instances
             (words(
-                tuple(completer.get_all_subcommands()),
+                tuple(commands.get_all_subcommands()),
                 prefix=r'\b',
                 suffix=r'\b'),
              Keyword.Declaration),
             # --instance-ids
             (words(
-                tuple(param for param in completer.completable_param),
+                tuple(param for param in commands.completable_param),
                 prefix=r'',
                 suffix=r'\b'),
              Name.Class),

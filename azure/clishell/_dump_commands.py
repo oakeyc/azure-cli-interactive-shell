@@ -9,13 +9,15 @@ from importlib import import_module
 from azure.cli.core.application import APPLICATION, Application, Configuration
 from azure.cli.core.commands import CliArgumentType
 from azure.cli.core.commands import load_params, _update_command_definitions
-from azure.clishell.configuration import get_config_dir, Configuration
 from azure.cli.core.help_files import helps
 
+import azure.clishell.configuration as config
+
+# CONFIGURATION = configuration.CONFIGURATION
 
 def dump_command_table():
     cmd_table = APPLICATION.configuration.get_command_table()
-    command_file = Configuration().get_help_files()
+    command_file = config.CONFIGURATION.get_help_files()
 
     for cmd in cmd_table:
         cmd_table[cmd].load_arguments()
@@ -101,7 +103,7 @@ def dump_command_table():
 
 def get_cache_dir():
     """ gets the location of the cache """
-    azure_folder = get_config_dir()
+    azure_folder = config.CONFIGURATION.get_config_dir()
     cache_path = os.path.join(azure_folder, 'cache')
     if not os.path.exists(azure_folder):
         os.makedirs(azure_folder)
