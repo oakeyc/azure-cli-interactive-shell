@@ -117,7 +117,7 @@ class CompletionFinder(object):
             append_space = os.environ.get("_ARGCOMPLETE_SUPPRESS_SPACE") != "1"
         self.append_space = append_space
 
-    def __call__(self, argument_parser, always_complete_options=True, exit_method=os._exit, output_stream=None,
+    def __call__(self, argument_parser, always_complete_options=True, exit_method=os._exit, output_stream=sys.stdout,
                  exclude=None, validator=None, print_suppressed=False, append_space=None,
                  default_completer=FilesCompleter(), line=None, completer=None):
         """
@@ -211,12 +211,13 @@ class CompletionFinder(object):
         #       "\nWORDS:", comp_words)
 
         completions = self._get_completions(comp_words, cword_prefix, cword_prequote, last_wordbreak_pos)
-        return completions
         # debug("\nReturning completions:", completions)
-        # output_stream.write(ifs.join(completions).encode(sys_encoding))
-        # output_stream.flush()
+        output_stream.write(" ".join(completions))
+        output_stream.flush()
         # debug_stream.flush()
         # exit_method(0)
+        return completions
+
 
     def _get_completions(self, comp_words, cword_prefix, cword_prequote, last_wordbreak_pos):
         active_parsers = self._patch_argument_parser()

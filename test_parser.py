@@ -12,7 +12,7 @@ from importlib import import_module
 from prompt_toolkit.contrib.completers import WordCompleter
 from prompt_toolkit.completion import Completer, Completion
 
-from argcomplete import completers, my_shlex as shlex
+from argcomplete import CompletionFinder, completers, my_shlex as shlex
 from argcomplete.compat import USING_PYTHON2, str, sys_encoding, ensure_str, ensure_bytes
 from argcomplete.completers import FilesCompleter
 from argcomplete.my_argparse import IntrospectiveArgumentParser, action_is_satisfied, action_is_open, action_is_greedy
@@ -58,15 +58,18 @@ def main(args):
 
     complete = MyCompleterFinder()
     # print(self.pars ?/der.__dict__)
-    args = args[1:]
-    args = " ".join(arg for arg in args)
-    args += " vm c"
+    # args = args[1:]
+    # args = " ".join(arg for arg in args)
+    args = "az vm c"
     print(args)
 
     completions = complete(parser, \
     validator=lambda c, p: c.lower().startswith(p.lower()),\
                                 default_completer=lambda _: (), line=args)
-    print(completions)
+    # print(completions)
 
+    # print(parser.parse_args('vm create'.split()))
+
+    sys.exit(0)
 if __name__ == '__main__':
     main(sys.argv)
