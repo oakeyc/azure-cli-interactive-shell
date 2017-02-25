@@ -12,7 +12,7 @@ class AzLexer(RegexLexer):
     # top_level.append('az')
     tokens = {
         'root': [
-            (r' .*\n', Text),
+            (r' .', Text),
             (words(
                 tuple(kid.data for kid in commands.command_tree.children),
                 prefix=r'\b',
@@ -31,7 +31,7 @@ class AzLexer(RegexLexer):
                 suffix=r'\b'),
              Name.Class),
             # Everything else
-            (r'.*\n', Text),
+            (r'.', Text),
         ]
     }
 
@@ -39,7 +39,16 @@ class ExampleLexer(RegexLexer):
     """ Lexer for the example description """
     tokens = {
         'root' : [
-            (r' .*\n', Number),
-            (r'.*\n', Number),
+            (r' .', Number),
+            (r'.', Number),
+        ]
+    }
+
+class ToolbarLexer(RegexLexer):
+    """ Lexer for the example description """
+    tokens = {
+        'root' : [
+            (r' .', Operator),
+            (r'.', Operator),
         ]
     }
