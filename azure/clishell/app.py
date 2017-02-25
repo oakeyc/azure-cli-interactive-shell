@@ -126,6 +126,7 @@ class Shell(object):
         command = ""
         all_params = ""
         example = ""
+        notification = "No Notifications :("
 
         any_documentation = False
         is_command = True
@@ -168,7 +169,7 @@ class Shell(object):
             initial_document=Document(self.example_docs)
         )
         cli.buffers['bottom_toolbar'].reset(
-            initial_document=Document(u'%s' % 'Notification Center')
+            initial_document=Document(u'%s%s' % ('Notification Center: ', notification))
         )
         cli.request_redraw()
 

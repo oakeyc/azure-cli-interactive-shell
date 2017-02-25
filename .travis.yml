@@ -6,5 +6,5 @@ python:
 #   - pip install -qqq virtualenv
 #   - pip install -e .
 #   - az-cli
-# script:
-#   - ./scripts/build_in_travis.sh
+script:
+  - python -m test
