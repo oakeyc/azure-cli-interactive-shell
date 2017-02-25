@@ -2,24 +2,24 @@
 
 from prompt_toolkit.enums import DEFAULT_BUFFER, SEARCH_BUFFER
 from prompt_toolkit.layout.containers import VSplit, HSplit, Window, FloatContainer, ConditionalContainer, Float
-from prompt_toolkit.layout.controls import BufferControl, FillControl
+from prompt_toolkit.layout.controls import BufferControl, FillControl, TokenListControl
 from prompt_toolkit.layout.dimension import LayoutDimension as D
 from prompt_toolkit.layout.lexers import PygmentsLexer
-from prompt_toolkit.filters import Always, HasFocus
+from prompt_toolkit.filters import Always, HasFocus, IsDone, RendererHeightIsKnown
 from prompt_toolkit.layout.menus import CompletionsMenu
 from prompt_toolkit.layout.processors import HighlightSearchProcessor, \
     HighlightSelectionProcessor, \
     ConditionalProcessor, AppendAutoSuggestion
 from prompt_toolkit.layout.lexers import Lexer as PromptLex
 from prompt_toolkit.layout.prompt import DefaultPrompt
+from prompt_toolkit.layout.screen import Char
+
 from pygments.token import Token
 from pygments.lexer import Lexer as PygLex
 
-from azure.clishell.az_lexer import ExampleLexer
+from azure.clishell.az_lexer import ExampleLexer, ToolbarLexer
 
-def get_prompt_tokens(cli):
-    """ returns prompt tokens """
-    return [(Token.Az, 'az>> ')]
+
 MAX_COMPLETION = 16
 
 # TODO fix this somehow
@@ -37,6 +37,10 @@ input_processors = [
         AppendAutoSuggestion(), HasFocus(DEFAULT_BUFFER)),
 ]
 
+def get_prompt_tokens(cli):
+    """ returns prompt tokens """
+    return [(Token.Az, 'az>> ')]
+
 def get_height(cli):
     """ gets the height of the cli """
     if not cli.is_done:
@@ -53,6 +57,10 @@ def create_layout(lex):
     exampleLex = ExampleLexer
     if issubclass(exampleLex, PygLex):
         examLex = PygmentsLexer(exampleLex)
+
+    toolbarLex = ToolbarLexer
+    if issubclass(toolbarLex, PygLex):
+        toolbarLex = PygmentsLexer(toolbarLex)
 
     input_processors.append(DefaultPrompt(get_prompt_tokens))
 
@@ -101,6 +109,12 @@ def create_layout(lex):
                 lexer=examLex
                 ),
             ),
+        Window(
+            content=BufferControl(
+                buffer_name='bottom_toolbar',
+                lexer=toolbarLex
+            )
+        ),
 
     ])
     return layout

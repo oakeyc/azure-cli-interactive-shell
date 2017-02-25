@@ -25,6 +25,7 @@ import azure.cli.core.telemetry as telemetry
 from azure.cli.core._util import (show_version_info_exit, handle_exception)
 from azure.cli.core.application import APPLICATION, Configuration
 import azure.cli.core.telemetry as telemetry
+from azure.cli.core._util import CLIError
 
 manager = KeyBindingManager(
     enable_system_bindings=True,
@@ -70,19 +71,16 @@ def default_style():
         Token.Az: '#7c2c80',
         Token.Prompt.Arg: '#888888',
         # Toolbar
-        Token.Toolbar: 'bg:#000000 #00b700',
+        Token.Toolbar: 'bg:#ffffff #551A8B',
         # Pretty Words
         Token.Keyword: '#965699',
         Token.Keyword.Declaration: '#ab77ad',
         Token.Name.Class: '#c49fc5',
         Token.Text: '#666666',
 
-        # Toolbar
-        Token.Toolbar: 'bg:#000000 #00b700',
-        Token.RPrompt: 'bg:#ffffff #800080',
-
         Token.Line: '#E500E5',
         Token.Number: '#3d79db',
+        Token.Operator: '#551A8B',
     })
 
     return styles
@@ -125,7 +123,6 @@ class Shell(object):
         cols = int(cols)
         document = cli.current_buffer.document
         text = document.text
-        # split_text = text.split()
         command = ""
         all_params = ""
         example = ""
@@ -147,27 +144,14 @@ class Shell(object):
                 self.completer.has_description(cmdstp + " " + word):
                     all_params += word + ":\n" + \
                     self.completer.get_param_description(cmdstp+ \
-                    " " + word) + "\n"
+                    " " + word)
 
                 self.description_docs = u"%s" % \
                 self.completer.get_description(cmdstp)
 
                 if cmdstp in self.completer.command_examples:
-                    example = self.completer.command_examples[cmdstp]
+                    example = self.create_examples(cmdstp, rows)
 
-                    num_newline = example.count('\n')
-                    if num_newline > rows / 2:
-                        len_of_excerpt = math.floor(rows / 2)
-                        group = example.split('\n')
-                        if _SECTION * len_of_excerpt < num_newline:
-                            end = _SECTION * len_of_excerpt
-                            example = '\n'.join(group[:-end]) + "\n"
-                        else:
-                            # end = num_newline
-                            example = '\n'.join(group) + "\n"
-
-
-                # break
         if not any_documentation:
             self.description_docs = u''
 
@@ -183,7 +167,29 @@ class Shell(object):
         cli.buffers['examples'].reset(
             initial_document=Document(self.example_docs)
         )
+        cli.buffers['bottom_toolbar'].reset(
+            initial_document=Document(u'%s' % 'Notification Center')
+        )
         cli.request_redraw()
+
+    def create_examples(self, cmdstp, rows):
+        """ makes the example text """
+        global _SECTION
+
+        example = self.completer.command_examples[cmdstp]
+
+        num_newline = example.count('\n')
+        if num_newline > rows / 2:
+            len_of_excerpt = math.floor(rows / 2)
+            group = example.split('\n')
+            if _SECTION * len_of_excerpt < num_newline:
+                end = _SECTION * len_of_excerpt
+                example = '\n'.join(group[:-end]) + "\n"
+            else: # default chops top off
+                example = '\n'.join(group) + "\n"
+                while (_SECTION * len_of_excerpt) % num_newline > len_of_excerpt:
+                    _SECTION -= 1
+        return example
 
     def create_application(self):
         """ makes the application object and the buffers """
@@ -191,7 +197,8 @@ class Shell(object):
             DEFAULT_BUFFER: Buffer(is_multiline=True),
             'description': Buffer(is_multiline=True, read_only=True),
             'parameter' : Buffer(is_multiline=True, read_only=True),
-            'examples' : Buffer(is_multiline=True, read_only=True)
+            'examples' : Buffer(is_multiline=True, read_only=True),
+            'bottom_toolbar' : Buffer(is_multiline=True),
         }
 
         writing_buffer = Buffer(
@@ -216,7 +223,7 @@ class Shell(object):
         """ instantiates the intereface """
         run_loop = create_eventloop()
         app = self.create_application()
-        return CommandLineInterface(application=app, eventloop=run_loop)
+        return CommandLineInterface(application=app, eventloop=run_loop,)
 
     def run(self):
         """ runs the CLI """
@@ -231,12 +238,12 @@ class Shell(object):
             else:
                 if text.strip() == "quit" or text.strip() == "exit":
                     break
-                # try:
-                if text[0] == "#":
-                    cmd = text[1:]
-                    outside = True
-                elif text.split()[0] == "az":
-                    cmd = " ".join(text.split()[1:])
+                if text:
+                    if text[0] == "#":
+                        cmd = text[1:]
+                        outside = True
+                    elif text.split()[0] == "az":
+                        cmd = " ".join(text.split()[1:])
                 # except IndexError:  # enter blank for welcome message
                 self.history.append(cmd)
                 self.description_docs = u''
@@ -247,25 +254,19 @@ class Shell(object):
                 if outside:
                     subprocess.Popen(cmd).communicate()
                 else:
-                    # try:
-                    config = Configuration(str(command) for command in cmd.split())
-                    self.app.initialize(config)
+                    try:
+                        config = Configuration(str(command) for command in cmd.split())
+                        self.app.initialize(config)
 
-                    result = self.app.execute([str(command) for command in cmd.split()])
-                    if result and result.result is not None:
-                        from azure.cli.core._output import OutputProducer
-                        formatter = OutputProducer.get_formatter(
-                            self.app.configuration.output_format)
-                        OutputProducer(formatter=formatter, file=sys.stdout).out(result)
-
-                    # except Exception as ex:  # pylint: disable=broad-except
-                    #     print(ex.message)
-                    #     # TODO: include additional details of the exception in telemetry
-                    #     telemetry.set_exception(ex, 'outer-exception',
-                    #                             'Unexpected exception caught during application execution.')
-                    #     telemetry.set_failure()
-                    #     break
-                    #     # error_code = handle_exception(ex)
-                    #     # return error_code
+                        result = self.app.execute([str(command) for command in cmd.split()])
+                        if result and result.result is not None:
+                            from azure.cli.core._output import OutputProducer
+                            formatter = OutputProducer.get_formatter(
+                                self.app.configuration.output_format)
+                            OutputProducer(formatter=formatter, file=sys.stdout).out(result)
+                    except Exception as ex:  # pylint: disable=broad-except
+                        print(ex.message)
+                    except SystemExit:
+                        pass
 
         print('Have a lovely day!!')
