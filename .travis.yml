@@ -1,0 +1,10 @@
+language: python
+python:
+  - "2.7"
+  - "3.6"
+# install:
+#   - pip install -qqq virtualenv
+#   - pip install -e .
+#   - az-cli
+# script:
+#   - ./scripts/build_in_travis.sh
