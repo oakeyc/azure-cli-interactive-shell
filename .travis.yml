@@ -6,5 +6,5 @@ python:
 #   - pip install -qqq virtualenv
 #   - pip install -e .
 #   - az-cli
-# script:
-#   - python -m test
+script:
+  - python -m unittest test/*.py
