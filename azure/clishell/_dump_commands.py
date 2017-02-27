@@ -13,10 +13,12 @@ from azure.cli.core.help_files import helps
 
 import azure.clishell.configuration as config
 
-# CONFIGURATION = configuration.CONFIGURATION
+CMD_TABLE = APPLICATION.configuration.get_command_table()
 
 def dump_command_table():
-    cmd_table = APPLICATION.configuration.get_command_table()
+    global CMD_TABLE
+    cmd_table = CMD_TABLE
+
     command_file = config.CONFIGURATION.get_help_files()
 
     for cmd in cmd_table:

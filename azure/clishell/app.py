@@ -126,8 +126,7 @@ class Shell(object):
         command = ""
         all_params = ""
         example = ""
-        notification = "No Notifications :("
-
+        notification = "No Notifications"
         any_documentation = False
         is_command = True
         for word in text.split():
