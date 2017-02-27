@@ -142,7 +142,7 @@ class Shell(object):
 
                 if word in self.completer.command_parameters[cmdstp] and \
                 self.completer.has_description(cmdstp + " " + word):
-                    all_params += word + ":\n" + \
+                    all_params = word + ":\n" + \
                     self.completer.get_param_description(cmdstp+ \
                     " " + word)
 
@@ -252,7 +252,7 @@ class Shell(object):
                                               cursor_position=0))
                 self.cli.request_redraw()
                 if outside:
-                    subprocess.Popen(cmd).communicate()
+                    subprocess.Popen(cmd, shell=True).communicate()
                 else:
                     try:
                         config = Configuration(str(command) for command in cmd.split())
