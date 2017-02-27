@@ -14,7 +14,7 @@ class CommandTree(object):
         raise ValueError("Value not in this tree")
 
     def add_child(self, child):
-        assert issubclass(child, CommandTree)
+        assert isinstance(child, CommandTree)
         if not self.children:
             self.children = []
         self.children.append(child)
