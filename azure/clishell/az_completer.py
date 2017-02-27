@@ -9,6 +9,7 @@ from prompt_toolkit.completion import Completer, Completion
 
 from azure.cli.core.application import APPLICATION, Application, Configuration
 from azure.cli.core.commands import load_params, _update_command_definitions
+from azure.cli.core.parser import AzCliCommandParser
 
 
 class AzCompleter(Completer):
@@ -27,25 +28,15 @@ class AzCompleter(Completer):
         self.command_examples = commands.command_example
         self.same_param_doubles = commands.same_param_doubles
 
-        cmd_table = APPLICATION.configuration.get_command_table()
-        for cmd in cmd_table:
-            cmd_table[cmd].load_arguments()
+        self.global_parser = AzCliCommandParser(prog='az', add_help=False)
+        global_group = self.global_parser.add_argument_group('global', 'Global Arguments')
 
-        try:
-            mods_ns_pkg = import_module('azure.cli.command_modules')
-            installed_command_modules = [modname for _, modname, _ in
-                                         pkgutil.iter_modules(mods_ns_pkg.__path__)]
-        except ImportError:
-            pass
-        for mod in installed_command_modules:
-            # print('loading params for', mod)
-            try:
-                import_module('azure.cli.command_modules.' + mod).load_params(mod)
-            except Exception as ex:
-                print("EXCPETION: " + ex.message)
-        _update_command_definitions(cmd_table)
+        self.parser = AzCliCommandParser(prog='az', parents=[self.global_parser])
 
+        from azure.clishell._dump_commands import CMD_TABLE as cmd_table
         self.cmdtab = cmd_table
+        self.parser.load_command_table(self.cmdtab)
+
 
     def validate_param_completion(self, param, words, text_before_cursor):
         """ validates that a param should be completed """
@@ -144,27 +135,30 @@ class AzCompleter(Completer):
                         break
                 if arg_name:
                     if self.cmdtab[command].arguments[arg_name].completer:
-                        # formats = []
-                        # for form in formats:
+
+                        # if not text_before_cursor.split()[-1].startswith("-"):
+                        #     text_before_cursor = \
+                        #     self.parser.parse_args(list(text_before_cursor.split()))
+
                         try:
                             for comp in self.cmdtab[command].\
                             arguments[arg_name].completer("", None, text_before_cursor):
                                 if started_param:
                                     if comp.lower().startswith(prefix.lower())\
                                         and comp not in text_before_cursor.split():
-                                        yield Completion(comp)
+                                        yield Completion(comp, -len(prefix))
                                 else:
-                                    yield Completion(comp)
+                                    yield Completion(comp, -len(prefix))
                         except TypeError:
                             try:
                                 for comp in self.cmdtab[command].\
-                                arguments[arg_name].completer(""):
+                                arguments[arg_name].completer(prefix):
                                     if started_param:
                                         if comp.lower().startswith(prefix.lower())\
                                             and comp not in text_before_cursor.split():
-                                            yield Completion(comp)
+                                            yield Completion(comp, -len(prefix))
                                     else:
-                                        yield Completion(comp)
+                                        yield Completion(comp, -len(prefix))
                             except TypeError:
                                 try:
                                     for comp in self.cmdtab[command].\
@@ -172,12 +166,11 @@ class AzCompleter(Completer):
                                         if started_param:
                                             if comp.lower().startswith(prefix.lower())\
                                                 and comp not in text_before_cursor.split():
-                                                yield Completion(comp)
+                                                yield Completion(comp, -len(prefix))
                                         else:
-                                            yield Completion(comp)
+                                            yield Completion(comp, -len(prefix))
                                 except TypeError:
                                     print("TypeError: " + TypeError.message)
-
 
 
     def is_completable(self, command):
