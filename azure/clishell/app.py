@@ -59,6 +59,11 @@ def panDown_(event):
     if _SECTION < 5:
         _SECTION += 1
 
+@registry.add_binding(Keys.F1, eager=True)
+def configsettings_(event):
+    """ opens the configuration """
+    event.cli.set_return_value(None)
+
 def default_style():
     """ Default coloring """
     styles = style_from_dict({
@@ -168,7 +173,8 @@ class Shell(object):
             initial_document=Document(self.example_docs)
         )
         cli.buffers['bottom_toolbar'].reset(
-            initial_document=Document(u'%s%s' % ('Notification Center: ', notification))
+            initial_document=Document(u'%s%s' % \
+            ('Notification Center: ', "Press F1 to open Configuration Settings"))
         )
         cli.request_redraw()
 
@@ -273,4 +279,4 @@ class Shell(object):
                         pass
 
         print('Have a lovely day!!')
-        print(self.last)
+        # print(self.last)
