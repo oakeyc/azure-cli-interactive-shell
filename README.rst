@@ -29,6 +29,12 @@ Then type your commands and hit [Enter]
 
 To scroll through the examples Control H to page up and Control N to page down
 
+To Search through the last command as json
+
+.. code-block:: console
+
+   $ ? [param]
+
 Dev Setup
 ########
 
@@ -37,3 +43,9 @@ Fork and clone repository
 .. code-block:: console
 
    $ . dev_setup.py
+
+To get the Exit Code of the previous command:
+
+.. code-block:: console
+
+   $ $

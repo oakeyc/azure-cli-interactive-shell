@@ -81,3 +81,10 @@ def format_response(response):
             return 'no'
     else:
         raise ValueError('Invalid response: input should equate to true or false')
+
+def get_section():
+    return _SECTION
+
+def sub_section():
+    global _SECTION
+    _SECTION -= 1

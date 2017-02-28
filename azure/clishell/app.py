@@ -4,6 +4,7 @@ import subprocess
 import os
 import sys
 import math
+import json
 from prompt_toolkit.buffer import Buffer
 from prompt_toolkit.shortcuts import create_eventloop
 from prompt_toolkit.history import InMemoryHistory
@@ -23,7 +24,7 @@ import azure.clishell.configuration
 from azure.clishell.az_lexer import AzLexer
 from azure.clishell.az_completer import AzCompleter
 from azure.clishell.layout import create_layout
-from azure.clishell.key_bindings import registry
+from azure.clishell.key_bindings import registry, get_section, sub_section
 
 import azure.cli.core.telemetry as telemetry
 from azure.cli.core._util import (show_version_info_exit, handle_exception)
@@ -77,6 +78,7 @@ class Shell(object):
         self.example_docs = u''
         self._env = os.environ.copy()
         self.last = None
+        self.last_exit = 0
 
     @property
     def cli(self):
@@ -153,21 +155,19 @@ class Shell(object):
 
     def create_examples(self, cmdstp, rows):
         """ makes the example text """
-        global _SECTION
-
         example = self.completer.command_examples[cmdstp]
 
         num_newline = example.count('\n')
         if num_newline > rows / 2:
             len_of_excerpt = math.floor(rows / 2)
             group = example.split('\n')
-            if _SECTION * len_of_excerpt < num_newline:
-                end = _SECTION * len_of_excerpt
+            if get_section() * len_of_excerpt < num_newline:
+                end = get_section() * len_of_excerpt
                 example = '\n'.join(group[:-end]) + "\n"
             else: # default chops top off
                 example = '\n'.join(group) + "\n"
-                while (_SECTION * len_of_excerpt) % num_newline > len_of_excerpt:
-                    _SECTION -= 1
+                while (get_section() * len_of_excerpt) % num_newline > len_of_excerpt:
+                    sub_section()
         return example
 
     def create_application(self):
@@ -204,6 +204,13 @@ class Shell(object):
         app = self.create_application()
         return CommandLineInterface(application=app, eventloop=run_loop,)
 
+    def clear_prompt(self):
+        self.description_docs = u''
+        self.cli.buffers[DEFAULT_BUFFER].reset(
+            initial_document=Document(self.description_docs,\
+            cursor_position=0))
+        self.cli.request_redraw()
+
     def run(self):
         """ runs the CLI """
         while True:
@@ -223,14 +230,24 @@ class Shell(object):
                         outside = True
                     elif text.split()[0] == "az":
                         cmd = " ".join(text.split()[1:])
+                    elif text[0] == "$":
+                        print(self.last_exit)
+                        self.clear_prompt()
+                        continue
+                    elif text[0] == "?":
+                        answer = []
+                        if self.last and self.last.result:
+                            for item in self.last.result:
+                                if text.split()[1] in item:
+                                    answer.append(item[text.split()[1]])
+                        for ans in answer:
+                            print(ans)
+                        self.clear_prompt()
+                        continue
 
                 # except IndexError:  # enter blank for welcome message
                 self.history.append(cmd)
-                self.description_docs = u''
-                self.cli.buffers[DEFAULT_BUFFER].reset(
-                    initial_document=Document(self.description_docs,
-                                              cursor_position=0))
-                self.cli.request_redraw()
+                self.clear_prompt()
                 if outside:
                     subprocess.Popen(cmd, shell=True).communicate()
                 else:
@@ -244,12 +261,13 @@ class Shell(object):
                             formatter = OutputProducer.get_formatter(
                                 self.app.configuration.output_format)
                             OutputProducer(formatter=formatter, file=sys.stdout).out(result)
-                            self.last = format_json(result)
-                            # print(self.last)
+                            self.last = result
+                            self.last_exit = 0
                     except Exception as ex:  # pylint: disable=broad-except
-                        print(ex)
-                    except SystemExit:
-                        pass
+                        self.last_exit = handle_exception(ex)
+                    except SystemExit as ex:
+                        self.last_exit = ex.code
+                        # pass
 
         print('Have a lovely day!!')
         # print(self.last)
