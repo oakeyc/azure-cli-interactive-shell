@@ -2,6 +2,8 @@ from pygments.lexer import RegexLexer, words
 from pygments.token import Name, Literal, Keyword, Operator, Text, Number
 
 from azure.clishell.gather_commands import GatherCommands
+
+
 class AzLexer(RegexLexer):
     """
     A custom lexer for Azure CLI
@@ -45,7 +47,7 @@ class ExampleLexer(RegexLexer):
     }
 
 class ToolbarLexer(RegexLexer):
-    """ Lexer for the example description """
+    """ Lexer for the the toolbar """
     tokens = {
         'root' : [
             (r' .', Operator),

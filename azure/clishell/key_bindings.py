@@ -1,13 +1,11 @@
 from __future__ import print_function
 
 from prompt_toolkit.key_binding.manager import KeyBindingManager
-from prompt_toolkit.filters import Always, Filter
+from prompt_toolkit.filters import Filter
 from prompt_toolkit.keys import Keys
 from prompt_toolkit import prompt
 
 import azure.clishell.configuration
-# from azure.clishell.layout import create_layout
-# from azure.clishell.az_lexer import AzLexer
 
 manager = KeyBindingManager(
     enable_system_bindings=True,
@@ -19,7 +17,7 @@ _SECTION = 1
 
 PROMPTING = False
 
-class PromptFilter(Filter):
+class _PromptFilter(Filter):
     def __call__(self, *a, **kw):
         return not PROMPTING
 
@@ -28,27 +26,27 @@ def exit_(event):
     """ exits the program when Control Q is pressed """
     event.cli.set_return_value(None)
 
-@registry.add_binding(Keys.Enter, filter=PromptFilter())
+@registry.add_binding(Keys.Enter, filter=_PromptFilter())
 def enter_(event):
     """ Sends the command to the terminal"""
     event.cli.set_return_value(event.cli.current_buffer)
 
 @registry.add_binding(Keys.ControlH, eager=True)
-def panUp_(event):
+def pan_up_(event):
     """ Pans the example pan up"""
     global _SECTION
-    if _SECTION > 0:
+    if _SECTION > 1:
         _SECTION -= 1
 
 @registry.add_binding(Keys.ControlN, eager=True)
-def panDown_(event):
+def pan_down_(event):
     """ Pans the example pan down"""
     global _SECTION
     if _SECTION < 5:
         _SECTION += 1
 
 @registry.add_binding(Keys.F1, eager=True)
-def configsettings_(event):
+def config_settings_(event):
     """ opens the configuration """
     global PROMPTING
     PROMPTING = True
@@ -73,6 +71,7 @@ def configsettings_(event):
 
 
 def format_response(response):
+    """ formats a response in a binary """
     conversion = azure.clishell.configuration.CONFIGURATION.BOOLEAN_STATES
     if response in conversion:
         if conversion[response]:
@@ -83,8 +82,10 @@ def format_response(response):
         raise ValueError('Invalid response: input should equate to true or false')
 
 def get_section():
+    """ gets which section to display """
     return _SECTION
 
 def sub_section():
+    """ subtracts which section so not to overflow """
     global _SECTION
     _SECTION -= 1

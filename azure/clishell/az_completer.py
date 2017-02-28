@@ -16,28 +16,29 @@ from azure.cli.core.parser import AzCliCommandParser
 class AzCompleter(Completer):
     """ Completes Azure CLI commands """
     def __init__(self, commands):
-        commands = commands
-        # a completable to the description of what is does
+        # dictionary of command to descriptions
         self.command_description = commands.descrip
-        self.completable = commands.completable
         # from a command to a list of parameters
         self.command_parameters = commands.command_param
+        # a list of all the possible parameters
         self.completable_param = commands.completable_param
-
+        # the command tree
         self.command_tree = commands.command_tree
+        # a dictionary of parameter (which is command + " " + parameter name)
+        # to a description of what it does
         self.param_description = commands.param_descript
+        # a dictionary of command to examples of how to use it
         self.command_examples = commands.command_example
+        # a dictionary of which parameters mean the same thing
         self.same_param_doubles = commands.same_param_doubles
 
         self.global_parser = AzCliCommandParser(prog='az', add_help=False)
-        global_group = self.global_parser.add_argument_group('global', 'Global Arguments')
-
+        self.global_parser.add_argument_group('global', 'Global Arguments')
         self.parser = AzCliCommandParser(prog='az', parents=[self.global_parser])
 
         from azure.clishell._dump_commands import CMD_TABLE as cmd_table
         self.cmdtab = cmd_table
         self.parser.load_command_table(self.cmdtab)
-
 
     def validate_param_completion(self, param, words, text_before_cursor):
         """ validates that a param should be completed """
@@ -55,7 +56,7 @@ class AzCompleter(Completer):
         is_command = True
         branch = self.command_tree
         if text_before_cursor.split():
-            if text_before_cursor.split()[0] == 'az':
+            if text_before_cursor.split()[0] == 'az': # remove optional az
                 text_before_cursor = ' '.join(text_before_cursor.split()[1:])
             if text_before_cursor.split():
                 for words in text_before_cursor.split():
@@ -69,7 +70,7 @@ class AzCompleter(Completer):
                                     self.get_param_description(
                                         command + " " + str(param)).replace('\n', ''))
 
-                    if words.startswith("--"):
+                    elif words.startswith("--"):
                         is_command = False
                         if self.has_parameters(command):
                             for param in self.get_param(command):
@@ -184,9 +185,9 @@ class AzCompleter(Completer):
                                     print("TypeError: " + TypeError.message)
 
 
-    def is_completable(self, command):
-        """ whether the command can be completed """
-        return self.has_parameters(command) or command in self.param_description.keys()
+    def is_completable(self, symbol):
+        """ whether the word can be completed as a command or parameter """
+        return self.has_parameters(symbol) or symbol in self.param_description.keys()
 
     def get_param(self, command):
         """ returns the parameters for a given command """
