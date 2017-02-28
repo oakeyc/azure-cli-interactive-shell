@@ -88,54 +88,82 @@ def create_layout(lex):
         Window(width=D.exact(1), height=D.exact(1), content=FillControl('-', token=Token.Line)),
 
         get_descriptions(config, examLex, lexer),
-
-        Window(width=D.exact(1), height=D.exact(1), content=FillControl('-', token=Token.Line)),
-        Window(
-            content=BufferControl(
-                buffer_name="examples",
-                lexer=examLex
-                ),
-            ),
-        Window(
-            content=BufferControl(
-                buffer_name='bottom_toolbar',
-                lexer=toolbarLex
-            )
-        ),
+        get_examplehline(config),
+        get_example(config, examLex),
+        # Window(
+        #     content=BufferControl(
+        #         buffer_name='bottom_toolbar',
+        #         lexer=toolbarLex
+        #     )
+        # ),
 
     ])
     return layout
 
-def get_descript(config, lexer):
-    if config.config.get('Layout', 'command_description') == 'yes':
+def get_descript(lexer):
+    return Window(
+        content=BufferControl(
+            buffer_name="description",
+            lexer=lexer
+
+            ),
+        )
+
+def get_param(lexer):
+    return Window(
+        content=BufferControl(
+            buffer_name="parameter",
+            lexer=lexer
+            ),
+        )
+
+def get_example(config, examLex):
+    if config.config.get('Layout', 'examples') == 'yes':
         return Window(
             content=BufferControl(
-                buffer_name="description",
-                lexer=lexer
-
+                buffer_name="examples",
+                lexer=examLex
                 ),
             )
+    else:
+        return get_empty()
 
-def get_param(config, lexer):
-    if config.config.get('Layout', 'param_description') == 'yes':
-        return Window(
-            content=BufferControl(
-                buffer_name="parameter",
-                lexer=lexer
-                ),
-            )
+def get_examplehline(config):
+    if config.config.get('Layout', 'examples') == 'yes':
+        return get_hline()
+    else:
+        return get_empty()
 
-def get_line(config):
-    if config.config.get('Layout', 'param_description') == 'yes' and\
-    config.config.get('Layout', 'command_description') == 'yes':
-        return Window(
-            width=D.exact(1),
-            height=D.exact(1),
-            content=FillControl('*', token=Token.Line))
+def get_empty():
+    return Window(
+        content=FillControl(' ')
+    )
+
+def get_hline():
+    return Window(
+        width=D.exact(1),
+        height=D.exact(1),
+        content=FillControl('-', token=Token.Line))
+
+def get_vline():
+    return Window(
+        width=D.exact(1),
+        height=D.exact(1),
+        content=FillControl('*', token=Token.Line))
 
 def get_descriptions(config, examLex, lexer):
-    return VSplit([
-        get_descript(config, examLex),
-        get_line(config),
-        get_param(config, lexer),
-    ])
+    if config.config.get('Layout', 'command_description') == 'yes':
+        if config.config.get('Layout', 'param_description') == 'yes':
+            return VSplit([
+                get_descript(examLex),
+                get_vline(),
+                get_param(lexer),
+            ])
+        else:
+            return get_descript(examLex)
+
+    elif config.config.get('Layout', 'param_description') == 'yes':
+        return get_param(lexer)
+    else:
+        return get_empty()
+
