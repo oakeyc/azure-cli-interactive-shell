@@ -2,6 +2,7 @@ from __future__ import print_function
 
 import math
 import pkgutil
+import argparse
 
 from importlib import import_module
 from prompt_toolkit.contrib.completers import WordCompleter
@@ -135,14 +136,24 @@ class AzCompleter(Completer):
                         break
                 if arg_name:
                     if self.cmdtab[command].arguments[arg_name].completer:
-
-                        # if not text_before_cursor.split()[-1].startswith("-"):
-                        #     text_before_cursor = \
-                        #     self.parser.parse_args(list(text_before_cursor.split()))
+                        parsing_text = None
+                        # try:
+                        # parsed_args = argparse.Namespace()
+                        # if text_before_cursor.split()[-1].startswith("-n"):
+                        #     parsing_text = \
+                        #     self.parser.parse_known_args(
+                        #         list(text_before_cursor.split()), namespace=parsed_args)
+                        # except SystemExit as ex:
+                        #     print("System Exit: " +  str(ex))
+                        # except SystemError as ex2:
+                        #     print("System Error" + str(ex2))
+                        # print("Namespace: " + str(parsed_args))
+                        # print("Parsing text: " + str(parsing_text))
 
                         try:
                             for comp in self.cmdtab[command].\
-                            arguments[arg_name].completer("", None, text_before_cursor):
+                            arguments[arg_name].completer(prefix=prefix, action=None,\
+                            parser=self.parser, parsed_args=None):
                                 if started_param:
                                     if comp.lower().startswith(prefix.lower())\
                                         and comp not in text_before_cursor.split():

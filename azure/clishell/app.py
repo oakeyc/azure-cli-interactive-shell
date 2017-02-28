@@ -102,7 +102,7 @@ class Shell(object):
         self.param_docs = u''
         self.example_docs = u''
         self._env = os.environ.copy()
-
+        self.last = None
 
     @property
     def cli(self):
@@ -142,7 +142,7 @@ class Shell(object):
 
                 if word in self.completer.command_parameters[cmdstp] and \
                 self.completer.has_description(cmdstp + " " + word):
-                    all_params += word + ":\n" + \
+                    all_params = word + ":\n" + \
                     self.completer.get_param_description(cmdstp+ \
                     " " + word)
 
@@ -244,6 +244,7 @@ class Shell(object):
                         outside = True
                     elif text.split()[0] == "az":
                         cmd = " ".join(text.split()[1:])
+
                 # except IndexError:  # enter blank for welcome message
                 self.history.append(cmd)
                 self.description_docs = u''
@@ -252,7 +253,7 @@ class Shell(object):
                                               cursor_position=0))
                 self.cli.request_redraw()
                 if outside:
-                    subprocess.Popen(cmd).communicate()
+                    subprocess.Popen(cmd, shell=True).communicate()
                 else:
                     try:
                         config = Configuration(str(command) for command in cmd.split())
@@ -260,13 +261,16 @@ class Shell(object):
 
                         result = self.app.execute([str(command) for command in cmd.split()])
                         if result and result.result is not None:
-                            from azure.cli.core._output import OutputProducer
+                            from azure.cli.core._output import OutputProducer, format_json
                             formatter = OutputProducer.get_formatter(
                                 self.app.configuration.output_format)
                             OutputProducer(formatter=formatter, file=sys.stdout).out(result)
+                            self.last = format_json(result)
+                            # print(self.last)
                     except Exception as ex:  # pylint: disable=broad-except
-                        print(ex.message)
+                        print(ex)
                     except SystemExit:
                         pass
 
         print('Have a lovely day!!')
+        print(self.last)

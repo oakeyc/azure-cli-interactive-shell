@@ -6,6 +6,6 @@ install:
   - pip install -qqq virtualenv
   - pip install -e .
 script:
-  - python -m unittest discover -s test -p '*_test.py'
+  - . build_in_travis.sh
 notifications:
   email: false

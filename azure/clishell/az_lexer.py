@@ -12,7 +12,6 @@ class AzLexer(RegexLexer):
     # top_level.append('az')
     tokens = {
         'root': [
-            (r' .', Text),
             (words(
                 tuple(kid.data for kid in commands.command_tree.children),
                 prefix=r'\b',
@@ -32,6 +31,7 @@ class AzLexer(RegexLexer):
              Name.Class),
             # Everything else
             (r'.', Text),
+            (r' .', Text),
         ]
     }
 

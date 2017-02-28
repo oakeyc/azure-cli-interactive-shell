@@ -18,7 +18,7 @@ from pygments.token import Token
 from pygments.lexer import Lexer as PygLex
 
 from azure.clishell.az_lexer import ExampleLexer, ToolbarLexer
-
+import azure.clishell.configuration
 
 MAX_COMPLETION = 16
 
@@ -48,6 +48,9 @@ def get_height(cli):
 
 def create_layout(lex):
     """ creates the layout """
+    config = azure.clishell.configuration.CONFIGURATION
+
+
     lexer = None
     if issubclass(lex, PromptLex):
         lexer = lex
@@ -83,39 +86,84 @@ def create_layout(lex):
                           ))
             ]),
         Window(width=D.exact(1), height=D.exact(1), content=FillControl('-', token=Token.Line)),
-        VSplit([
-            Window(
-                content=BufferControl(
-                    buffer_name="description",
-                    lexer=examLex
 
-                    ),
-                ),
+        get_descriptions(config, examLex, lexer),
+        get_examplehline(config),
+        get_example(config, examLex),
+        # Window(
+        #     content=BufferControl(
+        #         buffer_name='bottom_toolbar',
+        #         lexer=toolbarLex
+        #     )
+        # ),
 
-            Window(width=D.exact(1), height=D.exact(1), content=FillControl('*', token=Token.Line)),
-            Window(
-                content=BufferControl(
-                    buffer_name="parameter",
-                    lexer=lexer
-                    ),
-                ),
-        ]),
+    ])
+    return layout
 
+def get_descript(lexer):
+    return Window(
+        content=BufferControl(
+            buffer_name="description",
+            lexer=lexer
 
-        Window(width=D.exact(1), height=D.exact(1), content=FillControl('-', token=Token.Line)),
-        Window(
+            ),
+        )
+
+def get_param(lexer):
+    return Window(
+        content=BufferControl(
+            buffer_name="parameter",
+            lexer=lexer
+            ),
+        )
+
+def get_example(config, examLex):
+    if config.config.get('Layout', 'examples') == 'yes':
+        return Window(
             content=BufferControl(
                 buffer_name="examples",
                 lexer=examLex
                 ),
-            ),
-        Window(
-            content=BufferControl(
-                buffer_name='bottom_toolbar',
-                lexer=toolbarLex
             )
-        ),
+    else:
+        return get_empty()
 
-    ])
-    return layout
- 
+def get_examplehline(config):
+    if config.config.get('Layout', 'examples') == 'yes':
+        return get_hline()
+    else:
+        return get_empty()
+
+def get_empty():
+    return Window(
+        content=FillControl(' ')
+    )
+
+def get_hline():
+    return Window(
+        width=D.exact(1),
+        height=D.exact(1),
+        content=FillControl('-', token=Token.Line))
+
+def get_vline():
+    return Window(
+        width=D.exact(1),
+        height=D.exact(1),
+        content=FillControl('*', token=Token.Line))
+
+def get_descriptions(config, examLex, lexer):
+    if config.config.get('Layout', 'command_description') == 'yes':
+        if config.config.get('Layout', 'param_description') == 'yes':
+            return VSplit([
+                get_descript(examLex),
+                get_vline(),
+                get_param(lexer),
+            ])
+        else:
+            return get_descript(examLex)
+
+    elif config.config.get('Layout', 'param_description') == 'yes':
+        return get_param(lexer)
+    else:
+        return get_empty()
+
