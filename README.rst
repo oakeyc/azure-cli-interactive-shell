@@ -3,10 +3,18 @@ Azure CLI Interactive Shell
 The interactive shell for Microsoft Azure CLI (Command Line Interface)
 ######################################################################
 
-* Completion Suggestions
-* On the fly documentation
-* Auto-suggestions from history
-* Fun Colors
+* Interactive Tutorials
+* Lightweight Drop Down Completions 
+* Auto Cached Suggestions 
+* Dynamic parameter completion 
+* On the fly descriptions of the commands AND parameters 
+* On the fly examples of how to utilize each command 
+* Optional "az" component 
+* Query the previous command
+* Navigation of example pane 
+* Optional layout configurations 
+* Fun Colors 
+
 
 Installation
 ############
@@ -25,6 +33,56 @@ To start the application
 
 Then type your commands and hit [Enter]
 
-*to run commands outside of the shell, start the command with #*
+To use commands outside the application
 
-To scroll through the examples Control P to page up and Control L to page down
+.. code-block:: console
+
+   $ #[command]
+
+To Search through the last command as json
+jmespath format for querying
+
+.. code-block:: console
+
+   $ ? [param]
+
+*Note: Only if the previous command dumps out json, e.g. vm list*
+
+Use Examples
+########
+
+Type a command, for example:
+
+.. code-block:: console
+
+   $ vm create
+
+Look at the examples
+
+*Scroll through the pane with Control H for up and Control N for down #*
+
+Pick the example you want with:
+
+.. code-block:: console
+
+   $ vm create : [Example Number]
+
+Dev Setup
+########
+
+Fork and clone repository
+
+.. code-block:: console
+
+   $ . dev_setup.py
+
+To get the Exit Code of the previous command:
+
+.. code-block:: console
+
+   $ $
+
+But Wait, There Will Be More!
+#############################
+* Telemetry
+* Real-time Notifications

@@ -5,7 +5,18 @@ import os
 
 from six.moves import configparser
 
+SELECT_SYMBOL = {
+    'outside' : '#',
+    'query' : '?',
+    'exit_code' : '$',
+    'example' : ':'
+}
+
 class Configuration():
+    BOOLEAN_STATES = {'1': True, 'yes': True, 'true': True, 'on': True,
+                      '0': False, 'no': False, 'false': False, 'off': False,
+                      'y': True, 'Y': True, 'n': False, 'N': False}
+
     """ Configuration information """
     def __init__(self):
         self.config = configparser.ConfigParser({
@@ -29,6 +40,7 @@ class Configuration():
         else:
             with open(os.path.join(self.get_config_dir(), 'config'), 'r') as config_file:
                 self.config.readfp(config_file)
+                self.update()
 
     def get_history(self):
         """ returns the history """
@@ -58,7 +70,13 @@ class Configuration():
         else:
             return os.path.expanduser(os.path.join('~', '.azure-shell'))
 
+    def set_val(self, dir, section, val):
+        """ set the config values """
+        self.config.set(dir, section, val)
+        self.update()
+
     def update(self):
+        """ updates the configuration settings """
         with open(os.path.join(self.get_config_dir(), 'config'), 'w') as config_file:
             self.config.write(config_file)
 

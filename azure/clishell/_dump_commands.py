@@ -1,15 +1,15 @@
-from __future__ import print_function
+from importlib import import_module
 
 import json
 import os
 import pkgutil
 import yaml
-from importlib import import_module
 
 from azure.cli.core.application import APPLICATION, Application, Configuration
 from azure.cli.core.commands import CliArgumentType
 from azure.cli.core.commands import load_params, _update_command_definitions
 from azure.cli.core.help_files import helps
+import azure.cli.core._help as _help
 
 import azure.clishell.configuration as config
 
@@ -31,7 +31,6 @@ def dump_command_table():
     except ImportError:
         pass
     for mod in installed_command_modules:
-        # print('loading params for', mod)
         try:
             import_module('azure.cli.command_modules.' + mod).load_params(mod)
         except Exception as ex:
@@ -80,6 +79,7 @@ def dump_command_table():
 
         if "parameters" in diction_help:
             for param in diction_help["parameters"]:
+
                 if param["name"].split()[0] not in data[cmd]['parameters']:
                     options = {
                         'name' : name_options,
@@ -92,12 +92,13 @@ def dump_command_table():
                 if "short-summary" in param:
                     data[cmd]['parameters'][param["name"].split()[0]]['help']\
                      = param["short-summary"]
+                # if "choices" in param:
+                #     print("choices")
         if "examples" in diction_help:
-            string_example = ""
-            for name in diction_help["examples"]:
-                for prop in name:
-                    string_example += name[prop] + "\n"
-            data[cmd]['examples'] = string_example
+            examples = []
+            for example in diction_help["examples"]:
+                examples.append([example['name'], example['text']])
+            data[cmd]['examples'] = examples
 
 
     with open(os.path.join(get_cache_dir(), command_file), 'w') as help_file:

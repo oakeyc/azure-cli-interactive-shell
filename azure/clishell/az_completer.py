@@ -3,41 +3,47 @@ from __future__ import print_function
 import math
 import pkgutil
 import argparse
+from operator import xor
 
 from importlib import import_module
 from prompt_toolkit.contrib.completers import WordCompleter
 from prompt_toolkit.completion import Completer, Completion
 
+import azure.clishell.configuration
+
 from azure.cli.core.application import APPLICATION, Application, Configuration
 from azure.cli.core.commands import load_params, _update_command_definitions
 from azure.cli.core.parser import AzCliCommandParser
+
+SELECT_SYMBOL = azure.clishell.configuration.SELECT_SYMBOL
 
 
 class AzCompleter(Completer):
     """ Completes Azure CLI commands """
     def __init__(self, commands):
-        commands = commands
-        # a completable to the description of what is does
+        # dictionary of command to descriptions
         self.command_description = commands.descrip
-        self.completable = commands.completable
         # from a command to a list of parameters
         self.command_parameters = commands.command_param
+        # a list of all the possible parameters
         self.completable_param = commands.completable_param
-
+        # the command tree
         self.command_tree = commands.command_tree
+        # a dictionary of parameter (which is command + " " + parameter name)
+        # to a description of what it does
         self.param_description = commands.param_descript
+        # a dictionary of command to examples of how to use it
         self.command_examples = commands.command_example
-        self.same_param_doubles = commands.same_param_doubles
+        # a dictionary of which parameters mean the same thing
+        self.same_param_doubles = commands.same_param_doubles or {}
 
         self.global_parser = AzCliCommandParser(prog='az', add_help=False)
-        global_group = self.global_parser.add_argument_group('global', 'Global Arguments')
-
+        self.global_parser.add_argument_group('global', 'Global Arguments')
         self.parser = AzCliCommandParser(prog='az', parents=[self.global_parser])
 
         from azure.clishell._dump_commands import CMD_TABLE as cmd_table
         self.cmdtab = cmd_table
         self.parser.load_command_table(self.cmdtab)
-
 
     def validate_param_completion(self, param, words, text_before_cursor):
         """ validates that a param should be completed """
@@ -54,9 +60,11 @@ class AzCompleter(Completer):
         command = ""
         is_command = True
         branch = self.command_tree
+        not_command = False
+        if len(text_before_cursor.split()) > 0\
+        and text_before_cursor.split()[0] == 'az': # remove optional az
+            text_before_cursor = ' '.join(text_before_cursor.split()[1:])
         if text_before_cursor.split():
-            if text_before_cursor.split()[0] == 'az':
-                text_before_cursor = ' '.join(text_before_cursor.split()[1:])
             if text_before_cursor.split():
                 for words in text_before_cursor.split():
                     if words.startswith("-") and not words.startswith("--"):
@@ -69,23 +77,14 @@ class AzCompleter(Completer):
                                     self.get_param_description(
                                         command + " " + str(param)).replace('\n', ''))
 
-                    if words.startswith("--"):
+                    elif words.startswith("--"):
                         is_command = False
-                        if self.has_parameters(command):
+                        if self.has_parameters(command):  # Everything should, map to empty list
                             for param in self.get_param(command):
                                 if self.validate_param_completion(param, words, text_before_cursor):
                                     yield Completion(param, -len(words),\
                                     display_meta=self.get_param_description(
                                         command + " " + str(param)).replace('\n', ''))
-                        else:
-                            for param in self.completable_param:
-                                if self.validate_param_completion(param, words, text_before_cursor):
-                                    if command + " " + str(param) in self.param_description:
-                                        yield Completion(param, -len(words),\
-                                        display_meta=self.get_param_description(\
-                                        command + " " + str(param)).replace('\n', ''))
-                                    else:
-                                        yield Completion(param, -len(words))
                     else:
                         if is_command:
                             if command:
@@ -95,17 +94,24 @@ class AzCompleter(Completer):
                         try:
                             if branch.has_child(words):
                                 branch = branch.get_child(words, branch.children)
+                            elif text_before_cursor.split()[0] in SELECT_SYMBOL.values():
+                                # print('help')
+                                not_command = True
                         except ValueError:
                             continue # do something
 
-                if branch.children is not None:
+                if branch.children is not None and not not_command:
                     for kid in branch.children:
                         if kid.data.lower().startswith(text_before_cursor.split()[-1].lower()):
                             yield Completion(str(kid.data),\
                                 -len(text_before_cursor.split()[-1]))
 
-        if not text_before_cursor.split() or text_before_cursor[-1] == " ":
+        if not text_before_cursor:
             if branch.children is not None:
+                for com in branch.children:
+                    yield Completion(com.data)
+        elif text_before_cursor[-1].isspace():
+            if branch is not self.command_tree:
                 for com in branch.children:
                     yield Completion(com.data)
 
@@ -135,6 +141,17 @@ class AzCompleter(Completer):
                     if arg_name:
                         break
                 if arg_name:
+                    try:
+                        for choice in self.cmdtab[command].arguments[arg_name].choices:
+                            if started_param:
+                                if choice.lower().startswith(prefix.lower())\
+                                   and choice not in text_before_cursor.split():
+                                    yield Completion(choice, -len(prefix))
+                            else:
+                                yield Completion(choice, -len(prefix))
+                    except TypeError:
+                        # print(arg_name)
+                        pass
                     if self.cmdtab[command].arguments[arg_name].completer:
                         parsing_text = None
                         # try:
@@ -184,9 +201,9 @@ class AzCompleter(Completer):
                                     print("TypeError: " + TypeError.message)
 
 
-    def is_completable(self, command):
-        """ whether the command can be completed """
-        return self.has_parameters(command) or command in self.param_description.keys()
+    def is_completable(self, symbol):
+        """ whether the word can be completed as a command or parameter """
+        return self.has_parameters(symbol) or symbol in self.param_description.keys()
 
     def get_param(self, command):
         """ returns the parameters for a given command """

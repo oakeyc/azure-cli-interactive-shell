@@ -4,18 +4,18 @@ import json
 
 from prompt_toolkit.contrib.completers import WordCompleter
 from prompt_toolkit.completion import Completer, Completion
+
 from azure.clishell.command_tree import CommandBranch, CommandHead
-# from azure.clishell._dump_commands import get_cache_dir, Configuration
 import azure.clishell.configuration
 
 CONFIGURATION = azure.clishell.configuration.CONFIGURATION
-# CONFIG_DIR = azure.clishell.configuration.get_cache_dir
 ROWS, COLS = os.popen('stty size', 'r').read().split()
 
 TOLERANCE = 10
 LINE_MINIMUM = math.floor(int(COLS) / 2 - 15)
 
 class GatherCommands(object):
+    """ grabs all the cached commands from files """
     def __init__(self):
         # everything that is completable
         self.completable = []
@@ -34,6 +34,7 @@ class GatherCommands(object):
         self.gather_from_files()
 
     def add_exit(self):
+        """ adds the exits from the application """
         self.completable.append("quit")
         self.completable.append("exit")
 
@@ -51,14 +52,15 @@ class GatherCommands(object):
         self.command_tree.children.append(CommandBranch("az"))
         self.command_param["az"] = ""
 
-    def add_random_new_lines(self, long_phrase, line_min):
+    def add_random_new_lines(self, long_phrase, line_min, tolerance=TOLERANCE):
+        """ not everything fits on the screen, based on the size, add newlines """
         if long_phrase is None:
             return long_phrase
         if len(long_phrase) > line_min:
             for num in range(int(math.ceil(len(long_phrase) / line_min))):
-                index = (num + 1) * line_min
+                index = int((num + 1) * line_min)
                 while index < len(long_phrase) and \
-                not long_phrase[index].isspace() and index < TOLERANCE + line_min:
+                not long_phrase[index].isspace() and index < tolerance + line_min:
                     index += 1
                 if index < len(long_phrase):
                     if long_phrase[index].isspace():
@@ -68,6 +70,7 @@ class GatherCommands(object):
         return long_phrase + "\n"
 
     def gather_from_files(self):
+        """ gathers from the files in a way that is convienent to use """
         command_file = CONFIGURATION.get_help_files()
         cache_path = os.path.join(CONFIGURATION.get_config_dir(), 'cache')
         with open(os.path.join(cache_path, \
@@ -92,8 +95,12 @@ class GatherCommands(object):
             self.descrip[command] = self.add_random_new_lines(description, LINE_MINIMUM)
 
             if 'examples' in data[command]:
-                self.command_example[command] = self.add_random_new_lines(
-                    data[command]['examples'], int(COLS))
+                examples = []
+                for example in data[command]['examples']:
+                    examples.append([
+                        self.add_random_new_lines(example[0], line_min=int(COLS)),
+                        self.add_random_new_lines(example[1], line_min=int(COLS))])
+            self.command_example[command] = examples
 
             all_params = []
             for param in data[command]['parameters']:
@@ -120,9 +127,6 @@ class GatherCommands(object):
 
             self.command_param[command] = all_params
 
-
-        # for command in self.command_example:
-        #     print(command + ": " + self.command_example[command])
     def get_all_subcommands(self):
         """ returns all the subcommands """
         subcommands = []
