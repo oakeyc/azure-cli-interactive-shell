@@ -7,7 +7,8 @@ DEPENDENCIES = [
     'azure-cli',
     'prompt_toolkit',
     'six',
-    'pyyaml'
+    'pyyaml',
+    'pytest'
 ]
 
 setup(

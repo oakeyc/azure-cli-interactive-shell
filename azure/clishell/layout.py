@@ -18,7 +18,7 @@ from pygments.token import Token
 from pygments.lexer import Lexer as PygLex
 
 from azure.clishell.az_lexer import ExampleLexer, ToolbarLexer
-
+import azure.clishell.configuration
 
 MAX_COMPLETION = 16
 
@@ -48,6 +48,9 @@ def get_height(cli):
 
 def create_layout(lex):
     """ creates the layout """
+    config = azure.clishell.configuration.CONFIGURATION
+
+
     lexer = None
     if issubclass(lex, PromptLex):
         lexer = lex
@@ -83,24 +86,8 @@ def create_layout(lex):
                           ))
             ]),
         Window(width=D.exact(1), height=D.exact(1), content=FillControl('-', token=Token.Line)),
-        VSplit([
-            Window(
-                content=BufferControl(
-                    buffer_name="description",
-                    lexer=examLex
 
-                    ),
-                ),
-
-            Window(width=D.exact(1), height=D.exact(1), content=FillControl('*', token=Token.Line)),
-            Window(
-                content=BufferControl(
-                    buffer_name="parameter",
-                    lexer=lexer
-                    ),
-                ),
-        ]),
-
+        get_descriptions(config, examLex, lexer),
 
         Window(width=D.exact(1), height=D.exact(1), content=FillControl('-', token=Token.Line)),
         Window(
@@ -118,4 +105,37 @@ def create_layout(lex):
 
     ])
     return layout
- 
+
+def get_descript(config, lexer):
+    if config.config.get('Layout', 'command_description') == 'yes':
+        return Window(
+            content=BufferControl(
+                buffer_name="description",
+                lexer=lexer
+
+                ),
+            )
+
+def get_param(config, lexer):
+    if config.config.get('Layout', 'param_description') == 'yes':
+        return Window(
+            content=BufferControl(
+                buffer_name="parameter",
+                lexer=lexer
+                ),
+            )
+
+def get_line(config):
+    if config.config.get('Layout', 'param_description') == 'yes' and\
+    config.config.get('Layout', 'command_description') == 'yes':
+        return Window(
+            width=D.exact(1),
+            height=D.exact(1),
+            content=FillControl('*', token=Token.Line))
+
+def get_descriptions(config, examLex, lexer):
+    return VSplit([
+        get_descript(config, examLex),
+        get_line(config),
+        get_param(config, lexer),
+    ])

@@ -13,9 +13,12 @@ class Configuration():
             'lexer' : 'AzLexer',
         })
         self.config.add_section('Help Files')
+        self.config.add_section('Layout')
         self.config.set('Help Files', 'command', 'help_dump.json')
-
         self.config.set('Help Files', 'history', 'history.txt')
+        self.config.set('Layout', 'command_description', 'yes')
+        self.config.set('Layout', 'param_description', 'yes')
+        self.config.set('Layout', 'examples', 'yes')
 
         azure_folder = self.get_config_dir()
         if not os.path.exists(azure_folder):
@@ -46,8 +49,7 @@ class Configuration():
     def firsttime(self):
         """ sets it as already done"""
         self.config.set('DEFAULT', 'firsttime', 'no')
-        with open(os.path.join(self.get_config_dir(), 'config'), 'w') as config_file:
-            self.config.write(config_file)
+        self.update()
 
     def get_config_dir(self):
         """ gets the directory of the configuration """
@@ -55,5 +57,9 @@ class Configuration():
             return os.getenv('AZURE_CONFIG_DIR')
         else:
             return os.path.expanduser(os.path.join('~', '.azure-shell'))
+
+    def update(self):
+        with open(os.path.join(self.get_config_dir(), 'config'), 'w') as config_file:
+            self.config.write(config_file)
 
 CONFIGURATION = Configuration()

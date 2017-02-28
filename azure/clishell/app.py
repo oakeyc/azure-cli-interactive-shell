@@ -265,7 +265,7 @@ class Shell(object):
                                 self.app.configuration.output_format)
                             OutputProducer(formatter=formatter, file=sys.stdout).out(result)
                     except Exception as ex:  # pylint: disable=broad-except
-                        print(ex.message)
+                        print("oops")
                     except SystemExit:
                         pass
 
