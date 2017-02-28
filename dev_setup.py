@@ -24,17 +24,7 @@ print('Root directory \'{}\'\n'.format(root_dir))
 
 # install general requirements
 exec_command('pip install -r requirements.txt')
-# exec_command('python src/dump_commands.py')
 
-# install automation package
-# exec_command('pip install -e ./scripts')
-
-# command modules have dependency on azure-cli-core so install this first
-# exec_command('pip install -e src/azure-cli-nspkg')
-# exec_command('pip install -e src/azure-cli-core')
-# exec_command('python -m automation.setup.install_modules')
-
-# azure cli has dependencies on the above packages so install this one last
-# exec_command('pip install -e src/azure-cli')
+exec_command('pip install -e .')
 
 print('Finished dev setup.')
