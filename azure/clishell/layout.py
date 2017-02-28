@@ -90,12 +90,12 @@ def create_layout(lex):
         get_descriptions(config, examLex, lexer),
         get_examplehline(config),
         get_example(config, examLex),
-        # Window(
-        #     content=BufferControl(
-        #         buffer_name='bottom_toolbar',
-        #         lexer=toolbarLex
-        #     )
-        # ),
+        Window(
+            content=BufferControl(
+                buffer_name='bottom_toolbar',
+                lexer=toolbarLex
+            )
+        ),
 
     ])
     return layout
@@ -118,7 +118,7 @@ def get_param(lexer):
         )
 
 def get_example(config, examLex):
-    if config.config.get('Layout', 'examples') == 'yes':
+    if config.BOOLEAN_STATES[config.config.get('Layout', 'examples')]:
         return Window(
             content=BufferControl(
                 buffer_name="examples",
@@ -129,7 +129,7 @@ def get_example(config, examLex):
         return get_empty()
 
 def get_examplehline(config):
-    if config.config.get('Layout', 'examples') == 'yes':
+    if config.BOOLEAN_STATES[config.config.get('Layout', 'examples')]:
         return get_hline()
     else:
         return get_empty()
@@ -152,8 +152,8 @@ def get_vline():
         content=FillControl('*', token=Token.Line))
 
 def get_descriptions(config, examLex, lexer):
-    if config.config.get('Layout', 'command_description') == 'yes':
-        if config.config.get('Layout', 'param_description') == 'yes':
+    if config.BOOLEAN_STATES[config.config.get('Layout', 'command_description')]:
+        if config.BOOLEAN_STATES[config.config.get('Layout', 'param_description')]:
             return VSplit([
                 get_descript(examLex),
                 get_vline(),
@@ -162,7 +162,7 @@ def get_descriptions(config, examLex, lexer):
         else:
             return get_descript(examLex)
 
-    elif config.config.get('Layout', 'param_description') == 'yes':
+    elif config.BOOLEAN_STATES[config.config.get('Layout', 'param_description')]:
         return get_param(lexer)
     else:
         return get_empty()

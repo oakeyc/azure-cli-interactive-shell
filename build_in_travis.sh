@@ -18,4 +18,4 @@ if [ "$TRAVIS_PYTHON_VERSION" != "3.6" ]; then
     python -m unittest discover test
 fi
 
-python -m unittest discover test
+python -m unittest discover -s test -p '*_test.py'

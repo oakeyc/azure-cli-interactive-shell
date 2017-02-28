@@ -4,6 +4,7 @@ import subprocess
 import os
 import sys
 import math
+import json
 from prompt_toolkit.buffer import Buffer
 from prompt_toolkit.shortcuts import create_eventloop
 from prompt_toolkit.history import InMemoryHistory
@@ -12,14 +13,18 @@ from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 from prompt_toolkit.document import Document
 from prompt_toolkit.interface import CommandLineInterface, Application
 from prompt_toolkit.key_binding.manager import KeyBindingManager
-from prompt_toolkit.filters import Always
+from prompt_toolkit.filters import Always, Filter
 from prompt_toolkit.keys import Keys
 from prompt_toolkit.enums import DEFAULT_BUFFER
+from prompt_toolkit import prompt
+
 from pygments.token import Token
 
+import azure.clishell.configuration
 from azure.clishell.az_lexer import AzLexer
 from azure.clishell.az_completer import AzCompleter
 from azure.clishell.layout import create_layout
+from azure.clishell.key_bindings import registry, get_section, sub_section
 
 import azure.cli.core.telemetry as telemetry
 from azure.cli.core._util import (show_version_info_exit, handle_exception)
@@ -27,37 +32,7 @@ from azure.cli.core.application import APPLICATION, Configuration
 import azure.cli.core.telemetry as telemetry
 from azure.cli.core._util import CLIError
 
-manager = KeyBindingManager(
-    enable_system_bindings=True,
-    enable_auto_suggest_bindings=True,
-)
-registry = manager.registry
 
-_SECTION = 1
-
-@registry.add_binding(Keys.ControlQ, eager=True)
-def exit_(event):
-    """ exits the program when Control Q is pressed """
-    event.cli.set_return_value(None)
-
-@registry.add_binding(Keys.Enter, eager=True)
-def enter_(event):
-    """ Sends the command to the terminal"""
-    event.cli.set_return_value(event.cli.current_buffer)
-
-@registry.add_binding(Keys.ControlP, eager=True)
-def panUp_(event):
-    """ Pans the example pan up"""
-    global _SECTION
-    if _SECTION > 0:
-        _SECTION -= 1
-
-@registry.add_binding(Keys.ControlL, eager=True)
-def panDown_(event):
-    """ Pans the example pan down"""
-    global _SECTION
-    if _SECTION < 5:
-        _SECTION += 1
 
 def default_style():
     """ Default coloring """
@@ -71,7 +46,7 @@ def default_style():
         Token.Az: '#7c2c80',
         Token.Prompt.Arg: '#888888',
         # Toolbar
-        Token.Toolbar: 'bg:#ffffff #551A8B',
+        Token.Toolbar: 'bg:#000000 #551A8B',
         # Pretty Words
         Token.Keyword: '#965699',
         Token.Keyword.Declaration: '#ab77ad',
@@ -80,7 +55,7 @@ def default_style():
 
         Token.Line: '#E500E5',
         Token.Number: '#3d79db',
-        Token.Operator: '#551A8B',
+        Token.Operator: 'bg:#000000 #ffffff',
     })
 
     return styles
@@ -103,6 +78,7 @@ class Shell(object):
         self.example_docs = u''
         self._env = os.environ.copy()
         self.last = None
+        self.last_exit = 0
 
     @property
     def cli(self):
@@ -126,7 +102,9 @@ class Shell(object):
         command = ""
         all_params = ""
         example = ""
-        notification = "No Notifications"
+        empty_space = ""
+        for i in range(int(cols)):
+            empty_space += " "
         any_documentation = False
         is_command = True
         for word in text.split():
@@ -167,28 +145,29 @@ class Shell(object):
         cli.buffers['examples'].reset(
             initial_document=Document(self.example_docs)
         )
+        empty_space = empty_space[:int(cols) - \
+        len("Notification Center: Press F1 to open Configuration Settings") - 3]
         cli.buffers['bottom_toolbar'].reset(
-            initial_document=Document(u'%s%s' % ('Notification Center: ', notification))
+            initial_document=Document(u'%s%s%s' % \
+            ('Notification Center: ', "Press F1 to open Configuration Settings", empty_space))
         )
         cli.request_redraw()
 
     def create_examples(self, cmdstp, rows):
         """ makes the example text """
-        global _SECTION
-
         example = self.completer.command_examples[cmdstp]
 
         num_newline = example.count('\n')
         if num_newline > rows / 2:
             len_of_excerpt = math.floor(rows / 2)
             group = example.split('\n')
-            if _SECTION * len_of_excerpt < num_newline:
-                end = _SECTION * len_of_excerpt
+            if get_section() * len_of_excerpt < num_newline:
+                end = get_section() * len_of_excerpt
                 example = '\n'.join(group[:-end]) + "\n"
             else: # default chops top off
                 example = '\n'.join(group) + "\n"
-                while (_SECTION * len_of_excerpt) % num_newline > len_of_excerpt:
-                    _SECTION -= 1
+                while (get_section() * len_of_excerpt) % num_newline > len_of_excerpt:
+                    sub_section()
         return example
 
     def create_application(self):
@@ -225,6 +204,13 @@ class Shell(object):
         app = self.create_application()
         return CommandLineInterface(application=app, eventloop=run_loop,)
 
+    def clear_prompt(self):
+        self.description_docs = u''
+        self.cli.buffers[DEFAULT_BUFFER].reset(
+            initial_document=Document(self.description_docs,\
+            cursor_position=0))
+        self.cli.request_redraw()
+
     def run(self):
         """ runs the CLI """
         while True:
@@ -244,14 +230,24 @@ class Shell(object):
                         outside = True
                     elif text.split()[0] == "az":
                         cmd = " ".join(text.split()[1:])
+                    elif text[0] == "$":
+                        print(self.last_exit)
+                        self.clear_prompt()
+                        continue
+                    elif text[0] == "?":
+                        answer = []
+                        if self.last and self.last.result:
+                            for item in self.last.result:
+                                if text.split()[1] in item:
+                                    answer.append(item[text.split()[1]])
+                        for ans in answer:
+                            print(ans)
+                        self.clear_prompt()
+                        continue
 
                 # except IndexError:  # enter blank for welcome message
                 self.history.append(cmd)
-                self.description_docs = u''
-                self.cli.buffers[DEFAULT_BUFFER].reset(
-                    initial_document=Document(self.description_docs,
-                                              cursor_position=0))
-                self.cli.request_redraw()
+                self.clear_prompt()
                 if outside:
                     subprocess.Popen(cmd, shell=True).communicate()
                 else:
@@ -265,12 +261,13 @@ class Shell(object):
                             formatter = OutputProducer.get_formatter(
                                 self.app.configuration.output_format)
                             OutputProducer(formatter=formatter, file=sys.stdout).out(result)
-                            self.last = format_json(result)
-                            # print(self.last)
+                            self.last = result
+                            self.last_exit = 0
                     except Exception as ex:  # pylint: disable=broad-except
-                        print(ex)
-                    except SystemExit:
-                        pass
+                        self.last_exit = handle_exception(ex)
+                    except SystemExit as ex:
+                        self.last_exit = ex.code
+                        # pass
 
         print('Have a lovely day!!')
-        print(self.last)
+        # print(self.last)
