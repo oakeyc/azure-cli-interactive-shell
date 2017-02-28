@@ -45,14 +45,14 @@ def enter_(event):
     """ Sends the command to the terminal"""
     event.cli.set_return_value(event.cli.current_buffer)
 
-@registry.add_binding(Keys.ControlP, eager=True)
+@registry.add_binding(Keys.ControlH, eager=True)
 def panUp_(event):
     """ Pans the example pan up"""
     global _SECTION
     if _SECTION > 0:
         _SECTION -= 1
 
-@registry.add_binding(Keys.ControlL, eager=True)
+@registry.add_binding(Keys.ControlN, eager=True)
 def panDown_(event):
     """ Pans the example pan down"""
     global _SECTION

@@ -27,4 +27,13 @@ Then type your commands and hit [Enter]
 
 *to run commands outside of the shell, start the command with #*
 
-To scroll through the examples Control P to page up and Control L to page down
+To scroll through the examples Control H to page up and Control N to page down
+
+Dev Setup
+########
+
+Fork and clone repository
+
+.. code-block:: console
+
+   $ . dev_setup.py
