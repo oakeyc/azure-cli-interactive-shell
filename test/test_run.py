@@ -6,7 +6,7 @@ from prompt_toolkit.keys import Keys
 
 import pytest
 import six
-from azure.clishell.app import Shell
+# from azure.clishell.app import Shell
 from unittest import TestCase
 
 # class ControlsTest(TestCase):
