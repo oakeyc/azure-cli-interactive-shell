@@ -12,14 +12,18 @@ from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 from prompt_toolkit.document import Document
 from prompt_toolkit.interface import CommandLineInterface, Application
 from prompt_toolkit.key_binding.manager import KeyBindingManager
-from prompt_toolkit.filters import Always
+from prompt_toolkit.filters import Always, Filter
 from prompt_toolkit.keys import Keys
 from prompt_toolkit.enums import DEFAULT_BUFFER
+from prompt_toolkit import prompt
+
 from pygments.token import Token
 
+import azure.clishell.configuration
 from azure.clishell.az_lexer import AzLexer
 from azure.clishell.az_completer import AzCompleter
 from azure.clishell.layout import create_layout
+from azure.clishell.key_bindings import registry
 
 import azure.cli.core.telemetry as telemetry
 from azure.cli.core._util import (show_version_info_exit, handle_exception)
@@ -27,42 +31,7 @@ from azure.cli.core.application import APPLICATION, Configuration
 import azure.cli.core.telemetry as telemetry
 from azure.cli.core._util import CLIError
 
-manager = KeyBindingManager(
-    enable_system_bindings=True,
-    enable_auto_suggest_bindings=True,
-)
-registry = manager.registry
 
-_SECTION = 1
-
-@registry.add_binding(Keys.ControlQ, eager=True)
-def exit_(event):
-    """ exits the program when Control Q is pressed """
-    event.cli.set_return_value(None)
-
-@registry.add_binding(Keys.Enter, eager=True)
-def enter_(event):
-    """ Sends the command to the terminal"""
-    event.cli.set_return_value(event.cli.current_buffer)
-
-@registry.add_binding(Keys.ControlH, eager=True)
-def panUp_(event):
-    """ Pans the example pan up"""
-    global _SECTION
-    if _SECTION > 0:
-        _SECTION -= 1
-
-@registry.add_binding(Keys.ControlN, eager=True)
-def panDown_(event):
-    """ Pans the example pan down"""
-    global _SECTION
-    if _SECTION < 5:
-        _SECTION += 1
-
-@registry.add_binding(Keys.F1, eager=True)
-def configsettings_(event):
-    """ opens the configuration """
-    event.cli.set_return_value(None)
 
 def default_style():
     """ Default coloring """
@@ -76,7 +45,7 @@ def default_style():
         Token.Az: '#7c2c80',
         Token.Prompt.Arg: '#888888',
         # Toolbar
-        Token.Toolbar: 'bg:#ffffff #551A8B',
+        Token.Toolbar: 'bg:#000000 #551A8B',
         # Pretty Words
         Token.Keyword: '#965699',
         Token.Keyword.Declaration: '#ab77ad',
@@ -85,7 +54,7 @@ def default_style():
 
         Token.Line: '#E500E5',
         Token.Number: '#3d79db',
-        Token.Operator: '#551A8B',
+        Token.Operator: 'bg:#000000 #ffffff',
     })
 
     return styles
@@ -131,7 +100,9 @@ class Shell(object):
         command = ""
         all_params = ""
         example = ""
-        notification = "No Notifications"
+        empty_space = ""
+        for i in range(int(cols)):
+            empty_space += " "
         any_documentation = False
         is_command = True
         for word in text.split():
@@ -172,9 +143,11 @@ class Shell(object):
         cli.buffers['examples'].reset(
             initial_document=Document(self.example_docs)
         )
+        empty_space = empty_space[:int(cols) - \
+        len("Notification Center: Press F1 to open Configuration Settings") - 3]
         cli.buffers['bottom_toolbar'].reset(
-            initial_document=Document(u'%s%s' % \
-            ('Notification Center: ', "Press F1 to open Configuration Settings"))
+            initial_document=Document(u'%s%s%s' % \
+            ('Notification Center: ', "Press F1 to open Configuration Settings", empty_space))
         )
         cli.request_redraw()
 

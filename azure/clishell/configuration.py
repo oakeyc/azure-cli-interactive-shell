@@ -6,8 +6,9 @@ import os
 from six.moves import configparser
 
 class Configuration():
-    _BOOLEAN_STATES = {'1': True, 'yes': True, 'true': True, 'on': True,
-                       '0': False, 'no': False, 'false': False, 'off': False}
+    BOOLEAN_STATES = {'1': True, 'yes': True, 'true': True, 'on': True,
+                      '0': False, 'no': False, 'false': False, 'off': False,
+                      'y': True, 'Y': True, 'n': False, 'N': False}
 
     """ Configuration information """
     def __init__(self):
@@ -61,6 +62,10 @@ class Configuration():
             return os.getenv('AZURE_CONFIG_DIR')
         else:
             return os.path.expanduser(os.path.join('~', '.azure-shell'))
+
+    def set_val(self, dir, section, val):
+        self.config.set(dir, section, val)
+        self.update()
 
     def update(self):
         """ updates the configuration settings """
