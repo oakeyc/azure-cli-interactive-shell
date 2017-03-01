@@ -58,7 +58,7 @@ class GatherCommands(object):
             return long_phrase
         if len(long_phrase) > line_min:
             for num in range(int(math.ceil(len(long_phrase) / line_min))):
-                index = (num + 1) * line_min
+                index = int((num + 1) * line_min)
                 while index < len(long_phrase) and \
                 not long_phrase[index].isspace() and index < tolerance + line_min:
                     index += 1

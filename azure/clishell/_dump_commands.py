@@ -94,9 +94,10 @@ def dump_command_table():
                      = param["short-summary"]
         if "examples" in diction_help:
             string_example = ""
-            for name in diction_help["examples"]:
-                for prop in name:
-                    string_example += name[prop] + "\n"
+            for example in diction_help["examples"]:
+                string_example += example['name'] + "\n" + example['text'] + "\n"
+                # for prop in name:
+                #     string_example += name[prop] + "\n"
             data[cmd]['examples'] = string_example
 
 
