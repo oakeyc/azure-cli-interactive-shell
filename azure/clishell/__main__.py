@@ -11,12 +11,13 @@ from azure.clishell.app import Shell
 from azure.clishell.az_completer import AzCompleter
 from azure.clishell.az_lexer import AzLexer
 
-from azure.cli.core.application import APPLICATION, Configuration
 import azure.cli.core.azlogging as azlogging
+import azure.cli.core.telemetry as telemetry
+import azure.cli.core.telemetry as telemetry
+from azure.cli.core.application import APPLICATION, Configuration
 from azure.cli.core._session import ACCOUNT, CONFIG, SESSION
 from azure.cli.core._util import (show_version_info_exit, handle_exception)
 from azure.cli.core._environment import get_config_dir
-import azure.cli.core.telemetry as telemetry
 from azure.cli.core.application import APPLICATION
 
 AZCOMPLETER = AzCompleter(GatherCommands())
@@ -33,8 +34,6 @@ def main():
     ACCOUNT.load(os.path.join(azure_folder, 'azureProfile.json'))
     CONFIG.load(os.path.join(azure_folder, 'az.json'))
     SESSION.load(os.path.join(azure_folder, 'az.sess'), max_age=3600)
-
-    # APPLICATION
 
     config = CONFIGURATION
     if config.get_lexer() == 'AzLexer':

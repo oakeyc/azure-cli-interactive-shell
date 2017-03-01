@@ -64,6 +64,7 @@ class Configuration():
             return os.path.expanduser(os.path.join('~', '.azure-shell'))
 
     def set_val(self, dir, section, val):
+        """ set the config values """
         self.config.set(dir, section, val)
         self.update()
 

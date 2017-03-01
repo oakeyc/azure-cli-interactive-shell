@@ -3,10 +3,17 @@ Azure CLI Interactive Shell
 The interactive shell for Microsoft Azure CLI (Command Line Interface)
 ######################################################################
 
-* Completion Suggestions
-* On the fly documentation
-* Auto-suggestions from history
-* Fun Colors
+* Lightweight Drop Down Completions 
+* Auto Cached Suggestions 
+* Dynamic parameter completion 
+* On the fly descriptions of the commands AND parameters 
+* On the fly examples of how to utilize each command 
+* Optional "az" component 
+* Query the previous command
+* Navigation of example pane 
+* Optional layout configurations 
+* Fun Colors 
+
 
 Installation
 ############
@@ -49,3 +56,9 @@ To get the Exit Code of the previous command:
 .. code-block:: console
 
    $ $
+
+But Wait, There Will Be More!
+#############################
+* Interactive Tutorials
+* Telemetry
+* Real-time Notifications

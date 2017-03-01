@@ -5,6 +5,7 @@ import os
 import sys
 import math
 import json
+
 from prompt_toolkit.buffer import Buffer
 from prompt_toolkit.shortcuts import create_eventloop
 from prompt_toolkit.history import InMemoryHistory
@@ -12,11 +13,8 @@ from prompt_toolkit.styles import style_from_dict
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 from prompt_toolkit.document import Document
 from prompt_toolkit.interface import CommandLineInterface, Application
-from prompt_toolkit.key_binding.manager import KeyBindingManager
-from prompt_toolkit.filters import Always, Filter
-from prompt_toolkit.keys import Keys
+from prompt_toolkit.filters import Always
 from prompt_toolkit.enums import DEFAULT_BUFFER
-from prompt_toolkit import prompt
 
 from pygments.token import Token
 
@@ -28,9 +26,8 @@ from azure.clishell.key_bindings import registry, get_section, sub_section
 
 import azure.cli.core.telemetry as telemetry
 from azure.cli.core._util import (show_version_info_exit, handle_exception)
-from azure.cli.core.application import APPLICATION, Configuration
-import azure.cli.core.telemetry as telemetry
 from azure.cli.core._util import CLIError
+from azure.cli.core.application import APPLICATION, Configuration
 
 
 
@@ -45,8 +42,7 @@ def default_style():
 
         Token.Az: '#7c2c80',
         Token.Prompt.Arg: '#888888',
-        # Toolbar
-        Token.Toolbar: 'bg:#000000 #551A8B',
+
         # Pretty Words
         Token.Keyword: '#965699',
         Token.Keyword.Declaration: '#ab77ad',
@@ -55,6 +51,7 @@ def default_style():
 
         Token.Line: '#E500E5',
         Token.Number: '#3d79db',
+        # toolbar
         Token.Operator: 'bg:#000000 #ffffff',
     })
 
@@ -128,7 +125,7 @@ class Shell(object):
                 self.completer.get_description(cmdstp)
 
                 if cmdstp in self.completer.command_examples:
-                    example = self.create_examples(cmdstp, rows)
+                    example = self.space_examples(cmdstp, rows)
 
         if not any_documentation:
             self.description_docs = u''
@@ -146,14 +143,14 @@ class Shell(object):
             initial_document=Document(self.example_docs)
         )
         empty_space = empty_space[:int(cols) - \
-        len("Notification Center: Press F1 to open Configuration Settings") - 3]
+        len("[Press F1] Layout Settings") - 3]
         cli.buffers['bottom_toolbar'].reset(
             initial_document=Document(u'%s%s%s' % \
-            ('Notification Center: ', "Press F1 to open Configuration Settings", empty_space))
+            ('', "[Press F1] Layout Settings", empty_space))
         )
         cli.request_redraw()
 
-    def create_examples(self, cmdstp, rows):
+    def space_examples(self, cmdstp, rows):
         """ makes the example text """
         example = self.completer.command_examples[cmdstp]
 
@@ -205,6 +202,7 @@ class Shell(object):
         return CommandLineInterface(application=app, eventloop=run_loop,)
 
     def clear_prompt(self):
+        """ clears the prompt line """
         self.description_docs = u''
         self.cli.buffers[DEFAULT_BUFFER].reset(
             initial_document=Document(self.description_docs,\
@@ -224,7 +222,7 @@ class Shell(object):
             else:
                 if text.strip() == "quit" or text.strip() == "exit":
                     break
-                if text:
+                if text: # some bandaids
                     if text[0] == "#":
                         cmd = text[1:]
                         outside = True
@@ -244,6 +242,9 @@ class Shell(object):
                             print(ans)
                         self.clear_prompt()
                         continue
+                    elif "|" in text:
+                        outside = True
+                        cmd = "az " + cmd
 
                 # except IndexError:  # enter blank for welcome message
                 self.history.append(cmd)
