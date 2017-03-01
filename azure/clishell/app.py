@@ -143,10 +143,10 @@ class Shell(object):
             initial_document=Document(self.example_docs)
         )
         empty_space = empty_space[:int(cols) - \
-        len("Notification Center: Press F1 to open Configuration Settings") - 3]
+        len("[Press F1] Layout Settings") - 3]
         cli.buffers['bottom_toolbar'].reset(
             initial_document=Document(u'%s%s%s' % \
-            ('Notification Center: ', "Press F1 to open Configuration Settings", empty_space))
+            ('', "[Press F1] Layout Settings", empty_space))
         )
         cli.request_redraw()
 

@@ -4,16 +4,16 @@ The interactive shell for Microsoft Azure CLI (Command Line Interface)
 ######################################################################
 
 * Lightweight Drop Down Completions 
-* Fun Colors 
 * Auto Cached Suggestions 
+* Dynamic parameter completion 
 * On the fly descriptions of the commands AND parameters 
 * On the fly examples of how to utilize each command 
-* Optional layout configurations 
-* Navigation of example pane 
-* Command recall with arrow keys 
-* Dynamic parameter completion 
 * Optional "az" component 
 * Query the previous command
+* Navigation of example pane 
+* Optional layout configurations 
+* Fun Colors 
+
 
 Installation
 ############
