@@ -1,17 +1,20 @@
 
 
 from prompt_toolkit.enums import DEFAULT_BUFFER, SEARCH_BUFFER
-from prompt_toolkit.layout.containers import VSplit, HSplit, Window, FloatContainer, Float
-from prompt_toolkit.layout.controls import BufferControl, FillControl
+from prompt_toolkit.layout.containers import VSplit, HSplit, Window, FloatContainer, Float, ConditionalContainer
+from prompt_toolkit.layout.controls import BufferControl, FillControl, TokenListControl
 from prompt_toolkit.layout.dimension import LayoutDimension as D
 from prompt_toolkit.layout.lexers import PygmentsLexer
-from prompt_toolkit.filters import Always, HasFocus
+# from prompt_toolkit.layout.toolbars import SearchToolbar
+
+from prompt_toolkit.filters import Always, IsDone, HasFocus, RendererHeightIsKnown
 from prompt_toolkit.layout.menus import CompletionsMenu
 from prompt_toolkit.layout.processors import HighlightSearchProcessor, \
     HighlightSelectionProcessor, \
     ConditionalProcessor, AppendAutoSuggestion
 from prompt_toolkit.layout.lexers import Lexer as PromptLex
 from prompt_toolkit.layout.prompt import DefaultPrompt
+from prompt_toolkit.layout.screen import Char
 
 from pygments.token import Token
 from pygments.lexer import Lexer as PygLex
@@ -44,6 +47,9 @@ def get_height(cli):
     """ gets the height of the cli """
     if not cli.is_done:
         return D(min=8)
+
+def get_toolbar_tokens(cli):
+    return [(Token.Toolbar, "[Layout Settings F1]")]
 
 def get_lexers(lex):
     lexer = None
@@ -86,20 +92,33 @@ def create_layout(lex):
                           extra_filter=(HasFocus(DEFAULT_BUFFER))
                           ))
             ]),
-        Window(width=D.exact(1), height=D.exact(1), content=FillControl('-', token=Token.Line)),
 
+        get_anyhline(config),
         get_descriptions(config, examLex, lexer),
         get_examplehline(config),
         get_example(config, examLex),
+
         Window(
             content=BufferControl(
                 buffer_name='bottom_toolbar',
                 lexer=toolbarLex
             ),
         ),
-
     ])
-    return layout
+    return ConditionalContainer(
+        layout,
+        filter=~IsDone() & RendererHeightIsKnown()
+    )
+
+def get_anyhline(config):
+    if config.BOOLEAN_STATES[config.config.get('Layout', 'command_description')] or\
+    config.BOOLEAN_STATES[config.config.get('Layout', 'param_description')]:
+        return Window(
+            width=D.exact(1),
+            height=D.exact(1),
+            content=FillControl('-', token=Token.Line))
+    else:
+        return get_empty()
 
 def get_descript(lexer):
     """ command description window """

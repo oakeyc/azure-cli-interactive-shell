@@ -59,7 +59,7 @@ def config_settings_(event):
     }
     for question in questions:
         while answer.lower() != 'y' and answer.lower() != 'n':
-            answer = prompt('\n%s (y/n): ' %question)
+            answer = prompt(u'\n%s (y/n): ' %question)
             # print(answer)
         config.set_val('Layout', questions[question], format_response(answer))
         # print('Layout' + questions[question] + format_response(answer))

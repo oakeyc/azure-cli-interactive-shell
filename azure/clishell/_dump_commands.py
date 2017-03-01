@@ -10,6 +10,7 @@ from azure.cli.core.application import APPLICATION, Application, Configuration
 from azure.cli.core.commands import CliArgumentType
 from azure.cli.core.commands import load_params, _update_command_definitions
 from azure.cli.core.help_files import helps
+import azure.cli.core._help as _help
 
 import azure.clishell.configuration as config
 
@@ -38,6 +39,8 @@ def dump_command_table():
             print("EXCPETION: " + ex.message)
     _update_command_definitions(cmd_table)
 
+    # for x in cmd_table['vm create']:
+    #     print(x)
     data = {}
     for cmd in cmd_table:
         com_descip = {}
@@ -67,8 +70,16 @@ def dump_command_table():
         com_descip['parameters'] = param_descrip
         data[cmd] = com_descip
 
+    # group_registry = []
     for cmd in helps:
         diction_help = yaml.load(helps[cmd])
+
+        # if 'parameters' in diction_help and diction_help['parameters'] and\
+        # 'group-name' in diction_help['parameters']:
+        #     group_registry = _help.ArgumentGroupRegistry(
+        #         [p['group-name'] for p in diction_help['parameters'] if p['group-name']])
+
+
         if "short-summary" in diction_help:
             if cmd in data:
                 data[cmd]['help'] = diction_help["short-summary"]
@@ -80,6 +91,7 @@ def dump_command_table():
 
         if "parameters" in diction_help:
             for param in diction_help["parameters"]:
+
                 if param["name"].split()[0] not in data[cmd]['parameters']:
                     options = {
                         'name' : name_options,
@@ -93,16 +105,18 @@ def dump_command_table():
                     data[cmd]['parameters'][param["name"].split()[0]]['help']\
                      = param["short-summary"]
         if "examples" in diction_help:
-            string_example = ""
+            examples = []
             for example in diction_help["examples"]:
-                string_example += example['name'] + "\n" + example['text'] + "\n"
+                examples.append(example['name'] + "\n" + example['text'] + "\n")
                 # for prop in name:
                 #     string_example += name[prop] + "\n"
-            data[cmd]['examples'] = string_example
+            data[cmd]['examples'] = examples
 
 
     with open(os.path.join(get_cache_dir(), command_file), 'w') as help_file:
         json.dump(data, help_file)
+
+    # print(group_registry)
 
 def get_cache_dir():
     """ gets the location of the cache """

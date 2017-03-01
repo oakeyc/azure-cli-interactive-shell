@@ -57,6 +57,7 @@ def default_style():
         Token.Number: '#3d79db',
         # toolbar
         Token.Operator: 'bg:#000000 #ffffff',
+        Token.Toolbar: 'bg:#000000 #ffffff'
     })
 
     return styles
@@ -129,7 +130,7 @@ class Shell(object):
                 self.completer.get_description(cmdstp)
 
                 if cmdstp in self.completer.command_examples:
-                    example = self.space_examples(cmdstp, rows)
+                    example = self.space_examples(self.completer.command_examples[cmdstp], rows)
 
         if not any_documentation:
             self.description_docs = u''
@@ -154,10 +155,9 @@ class Shell(object):
         )
         cli.request_redraw()
 
-    def space_examples(self, cmdstp, rows):
+    def space_examples(self, examples, rows):
         """ makes the example text """
-        example = self.completer.command_examples[cmdstp]
-
+        example = "".join(exam for exam in examples)
         num_newline = example.count('\n')
         if num_newline > rows / 2:
             len_of_excerpt = math.floor(rows / 3)
@@ -252,6 +252,10 @@ class Shell(object):
                         outside = True
                         cmd = "az " + cmd
 
+                if not text:
+                    self.clear_prompt()
+                    continue
+
                 # except IndexError:  # enter blank for welcome message
                 self.history.append(cmd)
                 self.clear_prompt()
@@ -267,7 +271,7 @@ class Shell(object):
                         ACCOUNT.load(os.path.join(azure_folder, 'azureProfile.json'))
                         CONFIG.load(os.path.join(azure_folder, 'az.json'))
                         SESSION.load(os.path.join(azure_folder, 'az.sess'), max_age=3600)
-                        
+
                         config = Configuration(args)
                         self.app.initialize(config)
 
