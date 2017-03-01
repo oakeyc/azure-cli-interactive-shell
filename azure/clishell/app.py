@@ -157,7 +157,10 @@ class Shell(object):
 
     def space_examples(self, examples, rows):
         """ makes the example text """
-        example = "".join(exam for exam in examples)
+        examples_with_index = []
+        for i in range(len(examples)):
+            examples_with_index.append("[" + str(i + 1) + "]" + examples[i])
+        example = "".join(exam for exam in examples_with_index)
         num_newline = example.count('\n')
         if num_newline > rows / 2:
             len_of_excerpt = math.floor(rows / 3)
