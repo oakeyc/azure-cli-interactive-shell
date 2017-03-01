@@ -42,7 +42,7 @@ def pan_up_(event):
 def pan_down_(event):
     """ Pans the example pan down"""
     global _SECTION
-    if _SECTION < 5:
+    if _SECTION < 10:
         _SECTION += 1
 
 @registry.add_binding(Keys.F1, eager=True)

@@ -156,14 +156,16 @@ class Shell(object):
 
         num_newline = example.count('\n')
         if num_newline > rows / 2:
-            len_of_excerpt = math.floor(rows / 2)
+            len_of_excerpt = math.floor(rows / 3)
             group = example.split('\n')
+            end = int(get_section() * len_of_excerpt)
+            begin = int((get_section() - 1) * len_of_excerpt)
+
             if get_section() * len_of_excerpt < num_newline:
-                end = get_section() * len_of_excerpt
-                example = '\n'.join(group[:-end]) + "\n"
+                example = '\n'.join(group[begin:end]) + "\n"
             else: # default chops top off
-                example = '\n'.join(group) + "\n"
-                while (get_section() * len_of_excerpt) % num_newline > len_of_excerpt:
+                example = '\n'.join(group[begin:]) + "\n"
+                while ((get_section() - 1) * len_of_excerpt) % num_newline > len_of_excerpt:
                     sub_section()
         return example
 
