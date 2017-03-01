@@ -24,12 +24,16 @@ from azure.clishell.az_completer import AzCompleter
 from azure.clishell.layout import create_layout
 from azure.clishell.key_bindings import registry, get_section, sub_section
 
+import azure.cli.core.azlogging as azlogging
 import azure.cli.core.telemetry as telemetry
 from azure.cli.core._util import (show_version_info_exit, handle_exception)
 from azure.cli.core._util import CLIError
 from azure.cli.core.application import APPLICATION, Configuration
+from azure.cli.core._session import ACCOUNT, CONFIG, SESSION
+from azure.cli.core._environment import get_config_dir
 
-
+logger = azlogging.get_az_logger(__name__)
+CONFIGURATION = azure.clishell.configuration.CONFIGURATION
 
 def default_style():
     """ Default coloring """
@@ -255,10 +259,19 @@ class Shell(object):
                     subprocess.Popen(cmd, shell=True).communicate()
                 else:
                     try:
-                        config = Configuration(str(command) for command in cmd.split())
+                        args = [str(command) for command in cmd.split()]
+                        azlogging.configure_logging(args)
+                        azure_folder = CONFIGURATION.get_config_dir()
+                        if not os.path.exists(azure_folder):
+                            os.makedirs(azure_folder)
+                        ACCOUNT.load(os.path.join(azure_folder, 'azureProfile.json'))
+                        CONFIG.load(os.path.join(azure_folder, 'az.json'))
+                        SESSION.load(os.path.join(azure_folder, 'az.sess'), max_age=3600)
+                        
+                        config = Configuration(args)
                         self.app.initialize(config)
 
-                        result = self.app.execute([str(command) for command in cmd.split()])
+                        result = self.app.execute(args)
                         if result and result.result is not None:
                             from azure.cli.core._output import OutputProducer, format_json
                             formatter = OutputProducer.get_formatter(
