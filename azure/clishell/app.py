@@ -130,7 +130,12 @@ class Shell(object):
                 self.completer.get_description(cmdstp)
 
                 if cmdstp in self.completer.command_examples:
-                    example = self.space_examples(self.completer.command_examples[cmdstp], rows)
+                    string_example = ""
+                    for example in self.completer.command_examples[cmdstp]:
+                        for part in example:
+                            string_example += part
+                    example = self.space_examples(
+                        string_example, self.completer.command_examples[cmdstp], rows)
 
         if not any_documentation:
             self.description_docs = u''
@@ -155,11 +160,13 @@ class Shell(object):
         )
         cli.request_redraw()
 
-    def space_examples(self, examples, rows):
+    def space_examples(self, string_examples, list_examples, rows):
         """ makes the example text """
         examples_with_index = []
-        for i in range(len(examples)):
-            examples_with_index.append("[" + str(i + 1) + "]" + examples[i])
+        for i in range(len(list_examples)):
+            examples_with_index.append("[" + str(i + 1) + "]" + list_examples[i][0] +\
+            list_examples[i][1])
+
         example = "".join(exam for exam in examples_with_index)
         num_newline = example.count('\n')
         if num_newline > rows / 2:
@@ -210,13 +217,38 @@ class Shell(object):
         app = self.create_application()
         return CommandLineInterface(application=app, eventloop=run_loop,)
 
-    def clear_prompt(self):
+    def set_prompt(self, prompt="", position=0):
         """ clears the prompt line """
-        self.description_docs = u''
+        self.description_docs = u'%s' %prompt
         self.cli.buffers[DEFAULT_BUFFER].reset(
             initial_document=Document(self.description_docs,\
-            cursor_position=0))
+            cursor_position=position))
         self.cli.request_redraw()
+
+    def handle_example(self, text):
+        cmd = text.partition(":")[0].rstrip()
+        num = text.partition(":")[2].strip()
+        example = ""
+        try:
+            num = int(num) - 1
+        except ValueError:
+            print("An Integer should follow the colon")
+        if cmd in self.completer.command_examples and num >= 0 and\
+        num < len(self.completer.command_examples[cmd]):
+            example = self.completer.command_examples[cmd][num][1]
+            example = example.replace('\n', '')
+
+        if example.split()[0] == 'az':
+            example = ' '.join(example.split()[1:])
+
+        starting_indices = []
+        counter = 0
+        for word in example.split():
+            if word.startswith('-'):
+                starting_indices.append(counter + len(word) + 1)
+            counter += 1 + len(word)
+
+        self.set_prompt(example, starting_indices[0])
 
     def run(self):
         """ runs the CLI """
@@ -239,29 +271,45 @@ class Shell(object):
                         cmd = " ".join(text.split()[1:])
                     elif text[0] == "$":
                         print(self.last_exit)
-                        self.clear_prompt()
+                        self.set_prompt()
                         continue
                     elif text[0] == "?":
                         answer = []
+                        failed = False
                         if self.last and self.last.result:
-                            for item in self.last.result:
-                                if text.split()[1] in item:
-                                    answer.append(item[text.split()[1]])
-                        for ans in answer:
-                            print(ans)
-                        self.clear_prompt()
-                        continue
+                            curr_dict = self.last.result
+                            try:
+                                for arg in text.split()[1:]:
+                                    if arg in curr_dict:
+                                        curr_dict = curr_dict[arg]
+                                    else:
+                                        for res in curr_dict:
+                                            if arg in res:
+                                                curr_dict = curr_dict[res][arg]
+                            except TypeError: # doesn't work
+                                failed = True
+                            for arg in curr_dict:
+                                answer.append(arg)
+                        if not failed:
+                            for ans in answer:
+                                print(ans)
+                            self.set_prompt()
+                            continue
                     elif "|" in text:
                         outside = True
                         cmd = "az " + cmd
+                    elif ":" in text:
+                        self.set_prompt()
+                        self.handle_example(text)
+                        continue
 
                 if not text:
-                    self.clear_prompt()
+                    self.set_prompt()
                     continue
 
                 # except IndexError:  # enter blank for welcome message
                 self.history.append(cmd)
-                self.clear_prompt()
+                self.set_prompt()
                 if outside:
                     subprocess.Popen(cmd, shell=True).communicate()
                 else:

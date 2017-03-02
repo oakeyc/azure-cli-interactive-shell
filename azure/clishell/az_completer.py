@@ -55,9 +55,9 @@ class AzCompleter(Completer):
         command = ""
         is_command = True
         branch = self.command_tree
+        if text_before_cursor and text_before_cursor.split()[0] == 'az': # remove optional az
+            text_before_cursor = ' '.join(text_before_cursor.split()[1:])
         if text_before_cursor.split():
-            if text_before_cursor.split()[0] == 'az': # remove optional az
-                text_before_cursor = ' '.join(text_before_cursor.split()[1:])
             if text_before_cursor.split():
                 for words in text_before_cursor.split():
                     if words.startswith("-") and not words.startswith("--"):

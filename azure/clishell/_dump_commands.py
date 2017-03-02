@@ -107,7 +107,8 @@ def dump_command_table():
         if "examples" in diction_help:
             examples = []
             for example in diction_help["examples"]:
-                examples.append(example['name'] + "\n" + example['text'] + "\n")
+                # double = list(example['name'], example['text'])
+                examples.append([example['name'], example['text']])
                 # for prop in name:
                 #     string_example += name[prop] + "\n"
             data[cmd]['examples'] = examples
