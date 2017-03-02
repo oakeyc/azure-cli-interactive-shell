@@ -5,6 +5,7 @@ import os
 import sys
 import math
 import json
+import collections
 
 from prompt_toolkit.buffer import Buffer
 from prompt_toolkit.shortcuts import create_eventloop
@@ -61,6 +62,28 @@ def default_style():
     })
 
     return styles
+
+def dict_path(keyword, dictionaries):
+    list_of_options = []
+    if isinstance(dictionaries, list):
+        for dictionary in dictionaries:
+            _dict_path(keyword, dictionary, list_of_options)
+    elif isinstance(dictionaries, dict):
+        _dict_path(keyword, dictionaries, list_of_options)
+    return list_of_options
+
+def _dict_path(keyword, dictionary, list_of_options):
+    if not isinstance(dictionary, collections.Iterable):
+        list_of_options.append(dictionary)
+    elif keyword in dictionary:
+        if isinstance(dictionary, dict):
+            list_of_options.append(dictionary[keyword])
+        else:
+            list_of_options.append(keyword)
+    else:
+        for item in dictionary:
+            if isinstance(item, dict):
+                list_of_options.extend(dict_path(keyword, item))
 
 class Shell(object):
     """ represents the shell """
@@ -274,28 +297,52 @@ class Shell(object):
                         print(self.last_exit)
                         self.set_prompt()
                         continue
-                    elif text[0] == "?":
+                    elif "?" in text:
                         answer = []
                         failed = False
+                        dump = False
+                        curr_dict = []
+                        curr_dict.append(self.last.result)
+
+
                         if self.last and self.last.result:
-                            curr_dict = self.last.result
-                            try:
-                                for arg in text.split()[1:]:
-                                    if arg in curr_dict:
-                                        curr_dict = curr_dict[arg]
-                                    else:
-                                        for res in curr_dict:
-                                            if arg in res:
-                                                curr_dict = curr_dict[res][arg]
-                            except TypeError: # doesn't work
-                                failed = True
-                            for arg in curr_dict:
-                                answer.append(arg)
+                            # try:
+                            # answer.append(self.last.result[0]['tags'])
+                            for arg in text.partition("?")[2].split():
+                                arg = str(arg)
+                                for value in dict_path(arg, curr_dict):
+                                    answer.append(value)
+
+                            #         if arg in curr_dict:
+                            #             curr_dict = curr_dict[arg]
+                            #         if isinstance(curr_dict, dict):
+                            #             for item in curr_dict:
+                            #                 if arg in item:
+                            #                     if isinstance(curr_dict[item][arg]):
+                            #                         curr_dict = curr_dict[item][arg]
+                            #                         break
+                            #                     else:
+                            #                         answer.append(curr_dict[item][arg])
+                            #                         dump = True
+                            #                         break
+                            #         if dump:
+                            #             break
+                            #         # else:
+                            #         #     for res in curr_dict:
+                            #         #         if arg in res:
+                            #         #             curr_dict = curr_dict[res][arg]
+                            #         #             if isinstance(curr_dict, dict):
+                            #         #                 break
+                            # except TypeError: # doesn't work
+                            #     failed = True
+                            # for arg in curr_dict:
+                            #     answer.append(arg)
                         if not failed:
                             for ans in answer:
                                 print(ans)
-                            self.set_prompt()
-                            continue
+                                print('\n')
+                        self.set_prompt()
+                        continue
                     elif "|" in text:
                         outside = True
                         cmd = "az " + cmd
@@ -317,12 +364,6 @@ class Shell(object):
                     try:
                         args = [str(command) for command in cmd.split()]
                         azlogging.configure_logging(args)
-                        azure_folder = CONFIGURATION.get_config_dir()
-                        if not os.path.exists(azure_folder):
-                            os.makedirs(azure_folder)
-                        ACCOUNT.load(os.path.join(azure_folder, 'azureProfile.json'))
-                        CONFIG.load(os.path.join(azure_folder, 'az.json'))
-                        SESSION.load(os.path.join(azure_folder, 'az.sess'), max_age=3600)
 
                         config = Configuration(args)
                         self.app.initialize(config)
