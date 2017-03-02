@@ -3,6 +3,7 @@ Azure CLI Interactive Shell
 The interactive shell for Microsoft Azure CLI (Command Line Interface)
 ######################################################################
 
+* Interactive Tutorials
 * Lightweight Drop Down Completions 
 * Auto Cached Suggestions 
 * Dynamic parameter completion 
@@ -34,13 +35,30 @@ Then type your commands and hit [Enter]
 
 *to run commands outside of the shell, start the command with #*
 
-To scroll through the examples Control H to page up and Control N to page down
-
 To Search through the last command as json
 
 .. code-block:: console
 
    $ ? [param]
+
+Use Examples
+########
+
+Type a command, for example:
+
+.. code-block:: console
+
+   $ vm create
+
+Look at the examples
+
+* Scroll through the pane with Control H for up and Control N for down #*
+
+Pick the example you want with:
+
+.. code-block:: console
+
+   $ vm create : [Example Number]
 
 Dev Setup
 ########
@@ -59,6 +77,5 @@ To get the Exit Code of the previous command:
 
 But Wait, There Will Be More!
 #############################
-* Interactive Tutorials
 * Telemetry
 * Real-time Notifications

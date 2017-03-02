@@ -97,7 +97,9 @@ class GatherCommands(object):
             if 'examples' in data[command]:
                 examples = []
                 for example in data[command]['examples']:
-                    examples.append(self.add_random_new_lines(example, int(COLS)))
+                    examples.append([
+                        self.add_random_new_lines(example[0], line_min=int(COLS)),
+                        self.add_random_new_lines(example[1], line_min=int(COLS))])
             self.command_example[command] = examples
 
             all_params = []

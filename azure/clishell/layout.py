@@ -74,7 +74,24 @@ def create_layout(lex):
 
     input_processors.append(DefaultPrompt(get_prompt_tokens))
 
-    layout = HSplit([
+    layout_lower = ConditionalContainer(
+        HSplit([
+            get_anyhline(config),
+            get_descriptions(config, examLex, lexer),
+            get_examplehline(config),
+            get_example(config, examLex),
+
+            Window(
+                content=BufferControl(
+                    buffer_name='bottom_toolbar',
+                    lexer=toolbarLex
+                ),
+            ),
+        ]),
+        filter=~IsDone() & RendererHeightIsKnown()
+    )
+
+    layout_full = HSplit([
         FloatContainer(
             Window(
                 BufferControl(
@@ -92,23 +109,10 @@ def create_layout(lex):
                           extra_filter=(HasFocus(DEFAULT_BUFFER))
                           ))
             ]),
+        layout_lower])
 
-        get_anyhline(config),
-        get_descriptions(config, examLex, lexer),
-        get_examplehline(config),
-        get_example(config, examLex),
+    return layout_full
 
-        Window(
-            content=BufferControl(
-                buffer_name='bottom_toolbar',
-                lexer=toolbarLex
-            ),
-        ),
-    ])
-    return ConditionalContainer(
-        layout,
-        filter=~IsDone() & RendererHeightIsKnown()
-    )
 
 def get_anyhline(config):
     if config.BOOLEAN_STATES[config.config.get('Layout', 'command_description')] or\
