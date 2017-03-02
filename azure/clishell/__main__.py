@@ -28,14 +28,12 @@ CONFIGURATION = azure.clishell.configuration.CONFIGURATION
 def main():
     """ the main function """
 
-    # azure_folder = CONFIGURATION.get_config_dir()
-    # if not os.path.exists(azure_folder):
-    #     os.makedirs(azure_folder)
-    # ACCOUNT.load(os.path.join(azure_folder, 'azureProfile.json'))
-    # CONFIG.load(os.path.join(azure_folder, 'az.json'))
-    # SESSION.load(os.path.join(azure_folder, 'az.sess'), max_age=3600)
-    # 
-
+    azure_folder = CONFIGURATION.get_config_dir()
+    if not os.path.exists(azure_folder):
+        os.makedirs(azure_folder)
+    ACCOUNT.load(os.path.join(azure_folder, 'azureProfile.json'))
+    CONFIG.load(os.path.join(azure_folder, 'az.json'))
+    SESSION.load(os.path.join(azure_folder, 'az.sess'), max_age=3600)
 
     config = CONFIGURATION
     if config.get_lexer() == 'AzLexer':

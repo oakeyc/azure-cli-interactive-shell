@@ -247,7 +247,8 @@ class Shell(object):
             if word.startswith('-'):
                 starting_indices.append(counter + len(word) + 1)
             counter += 1 + len(word)
-
+        if not starting_indices:
+            starting_indices.append(0)
         self.set_prompt(example, starting_indices[0])
 
     def run(self):
