@@ -68,7 +68,7 @@ def get_lexers(lex):
     return lexer, examLex, toolLex
 
 def create_layout_completions(lex):
-    lexer, _, _ = get_lexers(lex)
+    lexer, _, toolbarLex = get_lexers(lex)
     layout_full = HSplit([
         FloatContainer(
             Window(
@@ -86,7 +86,17 @@ def create_layout_completions(lex):
                           scroll_offset=1,
                           extra_filter=(HasFocus(DEFAULT_BUFFER))
                           ))
-            ])])
+            ]),
+        ConditionalContainer(
+            Window(
+                content=BufferControl(
+                    buffer_name='bottom_toolbar',
+                    lexer=toolbarLex
+                ),
+            ),
+            filter=~IsDone() & RendererHeightIsKnown()
+        )
+    ])
     return layout_full
 
 def create_layout(lex):

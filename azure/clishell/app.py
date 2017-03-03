@@ -36,6 +36,7 @@ from azure.cli.core._environment import get_config_dir
 
 logger = azlogging.get_az_logger(__name__)
 CONFIGURATION = azure.clishell.configuration.CONFIGURATION
+NOTIFICATIONS = ""
 
 def default_style():
     """ Default coloring """
@@ -129,7 +130,7 @@ class Shell(object):
         all_params = ""
         example = ""
         empty_space = ""
-        for i in range(int(cols)):
+        for i in range(int(int(cols) / 2)):
             empty_space += " "
         any_documentation = False
         is_command = True
@@ -177,10 +178,10 @@ class Shell(object):
             initial_document=Document(self.example_docs)
         )
         empty_space = empty_space[:int(cols) - \
-        len("[Press F1] Layout Settings") - 3]
+        len(NOTIFICATIONS) + len("[Press F1] Layout Settings") - 10]
         cli.buffers['bottom_toolbar'].reset(
             initial_document=Document(u'%s%s%s' % \
-            ('', "[Press F1] Layout Settings", empty_space))
+            (NOTIFICATIONS, "[Press F1] Layout Settings", empty_space))
         )
         cli.request_redraw()
 
@@ -364,8 +365,10 @@ class Shell(object):
                         outside = True
                         cmd = "az " + cmd
                     elif ":" in text:
-                        # self.set_prompt()
+                        global NOTIFICATIONS
+                        NOTIFICATIONS = "IN TUTORIAL MODE  "
                         cmd = self.handle_example(text)
+                        NOTIFICATIONS = ""
                         # continue 
 
                 if not text:
