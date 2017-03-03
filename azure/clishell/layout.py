@@ -67,6 +67,28 @@ def get_lexers(lex):
         toolLex = PygmentsLexer(toolLex)
     return lexer, examLex, toolLex
 
+def create_layout_completions(lex):
+    lexer, _, _ = get_lexers(lex)
+    layout_full = HSplit([
+        FloatContainer(
+            Window(
+                BufferControl(
+                    input_processors=input_processors,
+                    lexer=lexer,
+                    preview_search=Always()),
+                get_height=get_height,
+            ),
+            [
+                Float(xcursor=True,
+                      ycursor=True,
+                      content=CompletionsMenu(
+                          max_height=MAX_COMPLETION,
+                          scroll_offset=1,
+                          extra_filter=(HasFocus(DEFAULT_BUFFER))
+                          ))
+            ])])
+    return layout_full
+
 def create_layout(lex):
     """ creates the layout """
     config = azure.clishell.configuration.CONFIGURATION

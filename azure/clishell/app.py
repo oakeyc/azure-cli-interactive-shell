@@ -7,6 +7,7 @@ import math
 import json
 import collections
 
+from prompt_toolkit import prompt
 from prompt_toolkit.buffer import Buffer
 from prompt_toolkit.shortcuts import create_eventloop
 from prompt_toolkit.history import InMemoryHistory
@@ -22,8 +23,8 @@ from pygments.token import Token
 import azure.clishell.configuration
 from azure.clishell.az_lexer import AzLexer
 from azure.clishell.az_completer import AzCompleter
-from azure.clishell.layout import create_layout
-from azure.clishell.key_bindings import registry, get_section, sub_section
+from azure.clishell.layout import create_layout, create_layout_completions
+from azure.clishell.key_bindings import registry, get_section, sub_section, EXAMPLE_REPL
 
 import azure.cli.core.azlogging as azlogging
 import azure.cli.core.telemetry as telemetry
@@ -206,8 +207,13 @@ class Shell(object):
                     sub_section()
         return example
 
-    def create_application(self):
+    def create_application(self, with_layout=True):
         """ makes the application object and the buffers """
+        if with_layout:
+            layout = create_layout(self.lexer)
+        else:
+            layout = create_layout_completions(self.lexer)
+
         buffers = {
             DEFAULT_BUFFER: Buffer(is_multiline=True),
             'description': Buffer(is_multiline=True, read_only=True),
@@ -230,7 +236,7 @@ class Shell(object):
             buffer=writing_buffer,
             on_input_timeout=self.on_input_timeout,
             key_bindings_registry=registry,
-            layout=create_layout(self.lexer),
+            layout=layout,
             buffers=buffers,
         )
 
@@ -264,15 +270,53 @@ class Shell(object):
         if example.split()[0] == 'az':
             example = ' '.join(example.split()[1:])
 
-        starting_indices = []
+        starting_index = None
         counter = 0
+        example_no_fill = ""
+        flag_fill = True
         for word in example.split():
+            if flag_fill:
+                example_no_fill += word + " "
             if word.startswith('-'):
-                starting_indices.append(counter + len(word) + 1)
-            counter += 1 + len(word)
-        if not starting_indices:
-            starting_indices.append(0)
-        self.set_prompt(example, starting_indices[0])
+                example_no_fill += word + " "
+                if not starting_index:
+                    starting_index = counter
+                flag_fill = False
+            counter += 1
+        # if not starting_index:
+        #     starting_index = 0
+        return self.example_repl(example_no_fill, starting_index)
+
+    def example_repl(self, text, start_index):
+        global EXAMPLE_REPL
+        EXAMPLE_REPL = True
+        if start_index:
+            start_index = start_index + 1
+            cmd = ' '.join(text.split()[:start_index])
+            example_cli = CommandLineInterface(
+                application=self.create_application(with_layout=False),
+                eventloop=create_eventloop())
+
+            for i in range(len(text.split()) - start_index):
+                ########## BROKEN
+                example_cli.application.buffer.reset(
+                    initial_document=Document(u'%s' %cmd,\
+                    cursor_position=len(cmd)))
+                example_cli.request_redraw()
+                answer = example_cli.run(reset_current_buffer=True)
+                answer = answer.text
+                start_index += 1
+                cmd += " " + answer.split()[-1] + " " +\
+                u' '.join(text.split()[start_index:start_index + 1])
+            example_cli.exit()
+            del example_cli
+        else:
+            cmd = text
+
+        EXAMPLE_REPL = False
+        return cmd
+        # self.set_prompt(cmd)
+
 
     def run(self):
         """ runs the CLI """
@@ -306,37 +350,10 @@ class Shell(object):
 
 
                         if self.last and self.last.result:
-                            # try:
-                            # answer.append(self.last.result[0]['tags'])
                             for arg in text.partition("?")[2].split():
                                 arg = str(arg)
                                 for value in dict_path(arg, curr_dict):
                                     answer.append(value)
-
-                            #         if arg in curr_dict:
-                            #             curr_dict = curr_dict[arg]
-                            #         if isinstance(curr_dict, dict):
-                            #             for item in curr_dict:
-                            #                 if arg in item:
-                            #                     if isinstance(curr_dict[item][arg]):
-                            #                         curr_dict = curr_dict[item][arg]
-                            #                         break
-                            #                     else:
-                            #                         answer.append(curr_dict[item][arg])
-                            #                         dump = True
-                            #                         break
-                            #         if dump:
-                            #             break
-                            #         # else:
-                            #         #     for res in curr_dict:
-                            #         #         if arg in res:
-                            #         #             curr_dict = curr_dict[res][arg]
-                            #         #             if isinstance(curr_dict, dict):
-                            #         #                 break
-                            # except TypeError: # doesn't work
-                            #     failed = True
-                            # for arg in curr_dict:
-                            #     answer.append(arg)
                         if not failed:
                             for ans in answer:
                                 print(ans)
@@ -347,9 +364,9 @@ class Shell(object):
                         outside = True
                         cmd = "az " + cmd
                     elif ":" in text:
-                        self.set_prompt()
-                        self.handle_example(text)
-                        continue
+                        # self.set_prompt()
+                        cmd = self.handle_example(text)
+                        # continue 
 
                 if not text:
                     self.set_prompt()

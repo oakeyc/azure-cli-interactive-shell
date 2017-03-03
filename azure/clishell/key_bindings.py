@@ -16,17 +16,22 @@ registry = manager.registry
 _SECTION = 1
 
 PROMPTING = False
+EXAMPLE_REPL = False
 
 class _PromptFilter(Filter):
     def __call__(self, *a, **kw):
         return not PROMPTING
+
+class _ExampleFilter(Filter):
+    def __call__(self, *a, **kw):
+        return not EXAMPLE_REPL
 
 @registry.add_binding(Keys.ControlQ, eager=True)
 def exit_(event):
     """ exits the program when Control Q is pressed """
     event.cli.set_return_value(None)
 
-@registry.add_binding(Keys.Enter, filter=_PromptFilter())
+@registry.add_binding(Keys.Enter, filter=_PromptFilter() & _ExampleFilter())
 def enter_(event):
     """ Sends the command to the terminal"""
     event.cli.set_return_value(event.cli.current_buffer)
@@ -60,15 +65,11 @@ def config_settings_(event):
     for question in questions:
         while answer.lower() != 'y' and answer.lower() != 'n':
             answer = prompt(u'\n%s (y/n): ' %question)
-            # print(answer)
         config.set_val('Layout', questions[question], format_response(answer))
-        # print('Layout' + questions[question] + format_response(answer))
         answer = ""
     PROMPTING = False
     print("\nChanges won't take effect until you restart the program\n\n")
-    # cli.application.layout = create_layout(AzLexer)
     event.cli.set_return_value(event.cli.current_buffer)
-
 
 def format_response(response):
     """ formats a response in a binary """
