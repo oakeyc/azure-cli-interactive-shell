@@ -13,10 +13,10 @@ export PYTHONPATH=$PATHONPATH:./src
 # python -m azure.clishell -h
 
 # PyLint does not yet support Python 3.6 https://github.com/PyCQA/pylint/issues/1241
-if [ "$TRAVIS_PYTHON_VERSION" != "3.6" ]; then
-    # check_style --ci;
-    python -m unittest discover test
-else
-    python -m unittest discover -s test -p '*_test.py'
-fi
+# if [ "$TRAVIS_PYTHON_VERSION" != "3.6" ]; then
+#     # check_style --ci;
+#     python -m unittest discover test ''
+# else
+python -m unittest discover -s test -p '*_test.py'
+# fi
 
