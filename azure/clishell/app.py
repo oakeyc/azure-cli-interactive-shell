@@ -6,6 +6,7 @@ import sys
 import math
 import json
 import collections
+import shutil
 
 from prompt_toolkit import prompt
 from prompt_toolkit.buffer import Buffer
@@ -130,7 +131,7 @@ class Shell(object):
         all_params = ""
         example = ""
         empty_space = ""
-        for i in range(int(int(cols) / 2)):
+        for i in range(cols):
             empty_space += " "
         any_documentation = False
         is_command = True
@@ -177,11 +178,12 @@ class Shell(object):
         cli.buffers['examples'].reset(
             initial_document=Document(self.example_docs)
         )
-        empty_space = empty_space[:int(cols) - \
-        len(NOTIFICATIONS) + len("[Press F1] Layout Settings") - 10]
+        settings = "[Press F1] Layout Settings"
+        empty_space = empty_space[len(NOTIFICATIONS) + len(settings) + 1:]
+
         cli.buffers['bottom_toolbar'].reset(
             initial_document=Document(u'%s%s%s' % \
-            (NOTIFICATIONS, "[Press F1] Layout Settings", empty_space))
+            (NOTIFICATIONS, settings, empty_space))
         )
         cli.request_redraw()
 
@@ -204,7 +206,7 @@ class Shell(object):
                 example = '\n'.join(group[begin:end]) + "\n"
             else: # default chops top off
                 example = '\n'.join(group[begin:]) + "\n"
-                while ((get_section() - 1) * len_of_excerpt) % num_newline > len_of_excerpt:
+                while ((get_section() - 1) * len_of_excerpt) > num_newline:
                     sub_section()
         return example
 
@@ -321,6 +323,7 @@ class Shell(object):
 
     def run(self):
         """ runs the CLI """
+        telemetry.start()
         while True:
             try:
                 document = self.cli.run(reset_current_buffer=True)
@@ -366,10 +369,9 @@ class Shell(object):
                         cmd = "az " + cmd
                     elif ":" in text:
                         global NOTIFICATIONS
-                        NOTIFICATIONS = "IN TUTORIAL MODE  "
+                        NOTIFICATIONS = "IN TUTORIAL MODE        "
                         cmd = self.handle_example(text)
                         NOTIFICATIONS = ""
-                        # continue 
 
                 if not text:
                     self.set_prompt()
@@ -400,7 +402,10 @@ class Shell(object):
                         self.last_exit = handle_exception(ex)
                     except SystemExit as ex:
                         self.last_exit = ex.code
-                        # pass
+                    if self.last_exit != 0:
+                        telemetry.set_failure()
+                    else:
+                        telemetry.set_success()
 
         print('Have a lovely day!!')
-        # print(self.last)
+        telemetry.conclude()
