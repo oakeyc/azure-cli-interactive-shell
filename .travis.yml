@@ -1,6 +1,6 @@
 language: python
 python:
-#   - "2.7"
+  - "2.7"
   - "3.6"
 install:
   - pip install -qqq virtualenv
@@ -9,3 +9,7 @@ script:
   - . build_in_travis.sh
 notifications:
   email: false
+os:
+  - linux
+  - osx
+  - windows

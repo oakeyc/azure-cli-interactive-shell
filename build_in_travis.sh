@@ -16,6 +16,7 @@ export PYTHONPATH=$PATHONPATH:./src
 if [ "$TRAVIS_PYTHON_VERSION" != "3.6" ]; then
     # check_style --ci;
     python -m unittest discover test
+else
+    python -m unittest discover -s test -p '*_test.py'
 fi
 
-python -m unittest discover -s test -p '*_test.py'
