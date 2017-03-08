@@ -19,9 +19,9 @@ setup(
     packages=[
         "azure.clishell", "test"
     ],
-    # namespace_packages=[
-    #     'azure',
-    # ],
+    namespace_packages=[
+        'azure.clishell',
+    ],
     url='https://github.com/oakeyc/azure-cli-interactive-shell',
     install_requires=DEPENDENCIES,
 )
