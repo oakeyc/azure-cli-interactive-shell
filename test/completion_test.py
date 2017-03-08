@@ -5,7 +5,7 @@ from azure.clishell.az_completer import AzCompleter
 from prompt_toolkit.document import Document
 from prompt_toolkit.completion import Completion
 
-from unittest import TestCase
+import unittest
 
 
 class _Commands():
@@ -22,7 +22,7 @@ class _Commands():
         self.command_example = command_example
         self.same_param_doubles = same_param_doubles
 
-class CompletionTest(TestCase):
+class CompletionTest(unittest.TestCase):
     def init(self):
         com_tree1 = tree.generate_tree("command can")
         com_tree2 = tree.generate_tree("create")
@@ -51,3 +51,6 @@ class CompletionTest(TestCase):
         doc = Document(u'cr')
         gen = self.completer.get_completions(doc, None)
         self.assertEqual(gen.__next__(), Completion("create", -2))
+
+if __name__ == '__main__':
+    unittest.main()

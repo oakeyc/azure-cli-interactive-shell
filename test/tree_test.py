@@ -1,8 +1,8 @@
 import six
 from azure.clishell.command_tree import CommandBranch, CommandHead, CommandTree
-from unittest import TestCase
+import unittest
 
-class TreeTest(TestCase):
+class TreeTest(unittest.TestCase):
 
     def test_basic_children(self):
         tree = CommandTree(data=None)
@@ -28,3 +28,6 @@ class TreeTest(TestCase):
         tree = CommandHead()
         tree.add_child(tree1)
         self.assertEqual(tree.get_subbranch("Hello"), ["World", "Again"])
+
+if __name__ == '__main__':
+    unittest.main()

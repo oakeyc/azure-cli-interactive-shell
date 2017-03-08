@@ -7,9 +7,9 @@ from prompt_toolkit.keys import Keys
 import pytest
 import six
 # from azure.clishell.app import Shell
-from unittest import TestCase
+import unittest
 
-# class ControlsTest(TestCase):
+# class ControlsTest(unittest.TestCase):
 
 #     def registry(self, handlers):
 #         registry = Registry()
@@ -32,3 +32,6 @@ from unittest import TestCase
 #     def feed_key(self, key_press):
 #         self.keys.append(key_press)
 
+
+if __name__ == '__main__':
+    unittest.main()
