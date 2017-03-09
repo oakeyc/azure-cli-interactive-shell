@@ -13,3 +13,6 @@ notifications:
 os:
   - linux
   - windows
+matrix:
+  allowed_failures:
+    - python: 2.7
