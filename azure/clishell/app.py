@@ -26,6 +26,7 @@ from azure.clishell.az_lexer import AzLexer
 from azure.clishell.az_completer import AzCompleter
 from azure.clishell.layout import create_layout, create_layout_completions
 from azure.clishell.key_bindings import registry, get_section, sub_section, EXAMPLE_REPL
+from azure.clishell.util import dict_path
 
 import azure.cli.core.azlogging as azlogging
 import azure.cli.core.telemetry as telemetry
@@ -36,7 +37,7 @@ from azure.cli.core._session import ACCOUNT, CONFIG, SESSION
 from azure.cli.core._environment import get_config_dir
 
 logger = azlogging.get_az_logger(__name__)
-CONFIGURATION = azure.clishell.configuration.CONFIGURATION
+SHELL_CONFIGURATION = azure.clishell.configuration.CONFIGURATION
 NOTIFICATIONS = ""
 
 def default_style():
@@ -65,28 +66,6 @@ def default_style():
     })
 
     return styles
-
-def dict_path(keyword, dictionaries):
-    list_of_options = []
-    if isinstance(dictionaries, list):
-        for dictionary in dictionaries:
-            _dict_path(keyword, dictionary, list_of_options)
-    elif isinstance(dictionaries, dict):
-        _dict_path(keyword, dictionaries, list_of_options)
-    return list_of_options
-
-def _dict_path(keyword, dictionary, list_of_options):
-    if not isinstance(dictionary, collections.Iterable):
-        list_of_options.append(dictionary)
-    elif keyword in dictionary:
-        if isinstance(dictionary, dict):
-            list_of_options.append(dictionary[keyword])
-        else:
-            list_of_options.append(keyword)
-    else:
-        for item in dictionary:
-            if isinstance(item, dict):
-                list_of_options.extend(dict_path(keyword, item))
 
 class Shell(object):
     """ represents the shell """
@@ -178,7 +157,14 @@ class Shell(object):
         cli.buffers['examples'].reset(
             initial_document=Document(self.example_docs)
         )
-        settings = "[Press F1] Layout Settings"
+        spacing = '      '
+        settings_items = [
+            "[F1] Layout Settings",
+            "[Control-Q] Quit"
+        ]
+        settings = ""
+        for item in settings_items:
+            settings += item + spacing
         empty_space = empty_space[len(NOTIFICATIONS) + len(settings) + 1:]
 
         cli.buffers['bottom_toolbar'].reset(
@@ -297,7 +283,8 @@ class Shell(object):
             start_index = start_index + 1
             cmd = ' '.join(text.split()[:start_index])
             example_cli = CommandLineInterface(
-                application=self.create_application(all_layout=False),
+                application=self.create_application(
+                    all_layout=False),
                 eventloop=create_eventloop())
 
             for i in range(len(text.split()) - start_index):
@@ -369,9 +356,9 @@ class Shell(object):
                         cmd = "az " + cmd
                     elif ":" in text:
                         global NOTIFICATIONS
-                        NOTIFICATIONS = "IN TUTORIAL MODE        "
+                        # NOTIFICATIONS = "IN TUTORIAL MODE        "
                         cmd = self.handle_example(text)
-                        NOTIFICATIONS = ""
+                        # NOTIFICATIONS = ""
 
                 if not text:
                     self.set_prompt()
@@ -386,6 +373,13 @@ class Shell(object):
                     try:
                         args = [str(command) for command in cmd.split()]
                         azlogging.configure_logging(args)
+
+                        azure_folder = get_config_dir()
+                        if not os.path.exists(azure_folder):
+                            os.makedirs(azure_folder)
+                        ACCOUNT.load(os.path.join(azure_folder, 'azureProfile.json'))
+                        CONFIG.load(os.path.join(azure_folder, 'az.json'))
+                        SESSION.load(os.path.join(azure_folder, 'az.sess'), max_age=3600)
 
                         config = Configuration(args)
                         self.app.initialize(config)

@@ -9,6 +9,7 @@ import unittest
 
 
 class _Commands():
+    """ mock model for testing completer """
     def __init__(self, descrip=None, completable=None, command_param=None,\
     completable_param=None, command_tree=None, param_descript=None, \
     command_example=None, same_param_doubles=None):
@@ -23,7 +24,9 @@ class _Commands():
         self.same_param_doubles = same_param_doubles
 
 class CompletionTest(unittest.TestCase):
-    def init(self):
+    """ tests the completion generator """
+    def init1(self):
+        """ a variation of initializing """
         com_tree1 = tree.generate_tree("command can")
         com_tree2 = tree.generate_tree("create")
         com_tree3 = tree.CommandHead()
@@ -35,8 +38,66 @@ class CompletionTest(unittest.TestCase):
         )
         self.completer = AzCompleter(commands)
 
+    def init2(self):
+        """ a variation of initializing """
+        com_tree1 = tree.generate_tree("command can")
+        com_tree2 = tree.generate_tree("create")
+        com_tree3 = tree.CommandHead()
+        com_tree3.add_child(com_tree2)
+        com_tree3.add_child(com_tree1)
+        command_param = {
+            "create" : ["-funtime"],
+        }
+        completable_param = [
+            "-helloworld",
+            "-funtime"
+        ]
+        param_descript = {
+            "create -funtime" : "There is no work life balance, it's just your life"
+        }
+        commands = _Commands(
+            command_tree=com_tree3,
+            command_param=command_param,
+            completable_param=completable_param,
+            param_descript=param_descript
+        )
+        self.completer = AzCompleter(commands)
+
+    def init3(self):
+        """ a variation of initializing """
+        com_tree1 = tree.generate_tree("command can")
+        com_tree2 = tree.generate_tree("create")
+        com_tree3 = tree.CommandHead()
+        com_tree3.add_child(com_tree2)
+        com_tree3.add_child(com_tree1)
+        command_param = {
+            "create" : ["--funtimes", "-f", "--helloworld"],
+        }
+        completable_param = [
+            "--helloworld",
+            "--funtimes",
+            "-f"
+        ]
+        param_descript = {
+            "create -f" : "There is no work life balance, it's just your life",
+            "create --funtimes" : "There is no work life balance, it's just your life"
+        }
+        same_param_doubles = {
+            "-f" : "--funtimes",
+            "--funtimes" : '-f'
+        }
+        commands = _Commands(
+            command_tree=com_tree3,
+            command_param=command_param,
+            completable_param=completable_param,
+            param_descript=param_descript,
+            same_param_doubles=same_param_doubles
+        )
+        self.completer = AzCompleter(commands)
+
     def test_command_completion(self):
-        self.init()
+        """ tests general command completion """
+        self.init1()
 
         doc = Document(u'')
         gen = self.completer.get_completions(doc, None)
@@ -51,6 +112,37 @@ class CompletionTest(unittest.TestCase):
         doc = Document(u'cr')
         gen = self.completer.get_completions(doc, None)
         self.assertEqual(gen.__next__(), Completion("create", -2))
+
+        doc = Document(u'command ')
+        gen = self.completer.get_completions(doc, None)
+        self.assertEqual(gen.__next__(), Completion("can"))
+
+        doc = Document(u'create ')
+        gen = self.completer.get_completions(doc, None)
+        with self.assertRaises(StopIteration):
+            gen.__next__()
+
+    def test_param_completion(self):
+        """ tests param completion """
+        self.init2()
+        doc = Document(u'create -')
+        gen = self.completer.get_completions(doc, None)
+        self.assertEqual(gen.__next__(), Completion(
+            "-funtime", -1, display_meta="There is no work life balance, it's just your life"))
+
+        doc = Document(u'command can -')
+        gen = self.completer.get_completions(doc, None)
+        with self.assertRaises(StopIteration):
+            gen.__next__()
+
+    def test_param_double(self):
+        """ tests not generating doubles for parameters """
+        self.init3()
+        doc = Document(u'create -f --')
+        gen = self.completer.get_completions(doc, None)
+        self.assertEqual(gen.__next__(), Completion(
+            "--helloworld", -2))
+
 
 if __name__ == '__main__':
     unittest.main()

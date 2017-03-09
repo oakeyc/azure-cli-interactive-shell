@@ -30,7 +30,7 @@ class AzCompleter(Completer):
         # a dictionary of command to examples of how to use it
         self.command_examples = commands.command_example
         # a dictionary of which parameters mean the same thing
-        self.same_param_doubles = commands.same_param_doubles
+        self.same_param_doubles = commands.same_param_doubles or {}
 
         self.global_parser = AzCliCommandParser(prog='az', add_help=False)
         self.global_parser.add_argument_group('global', 'Global Arguments')
@@ -80,14 +80,15 @@ class AzCompleter(Completer):
                                     display_meta=self.get_param_description(
                                         command + " " + str(param)).replace('\n', ''))
                         else:
-                            for param in self.completable_param:
-                                if self.validate_param_completion(param, words, text_before_cursor):
-                                    if command + " " + str(param) in self.param_description:
-                                        yield Completion(param, -len(words),\
-                                        display_meta=self.get_param_description(\
-                                        command + " " + str(param)).replace('\n', ''))
-                                    else:
-                                        yield Completion(param, -len(words))
+                            raise Exception("No parameters")
+                            # for param in self.completable_param:
+                            #     if self.validate_param_completion(param, words, text_before_cursor):
+                            #         if command + " " + str(param) in self.param_description:
+                            #             yield Completion(param, -len(words),\
+                            #             display_meta=self.get_param_description(\
+                            #             command + " " + str(param)).replace('\n', ''))
+                            #         else:
+                            #             yield Completion(param, -len(words))
                     else:
                         if is_command:
                             if command:
