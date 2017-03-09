@@ -3,8 +3,8 @@ sudo: false
 language: python
 
 # python:
-#   - "2.7"
-#   - "3.6"
+  # - "2.7"
+  # - "3.6"
 
 env:
   - ALLOW_FAILURE=true
@@ -13,10 +13,11 @@ env:
 matrix:
   include:
     - python: 2.7
+      env: ALLOW_FAILURE=true
     - python: 3.6
-    - env: ALLOW_FAILURE=true
+
   allowed_failures:
-    - python: 2.7
+    # - python: 2.7
     - env: ALLOW_FAILURE=true
   fast_finish: true
 

@@ -4,7 +4,6 @@ from prompt_toolkit.key_binding.input_processor import InputProcessor, KeyPress
 from prompt_toolkit.key_binding.registry import Registry
 from prompt_toolkit.keys import Keys
 
-import pytest
 import six
 # from azure.clishell.app import Shell
 import unittest
