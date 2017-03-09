@@ -6,14 +6,14 @@ python:
 install:
   - pip install -qqq virtualenv
   - pip install -e .
-env: 
+# env: 
 matrix:
   include:
     - python: 2.7
-    - env: KEY=VALUE
+    # - env: KEY=VALUE
   allowed_failures:
     - python: 2.7
-    - env: KEY=VALUE
+    # - env: KEY=VALUE
 script:
   - . build_in_travis.sh
 notifications:
