@@ -18,6 +18,8 @@ export PYTHONPATH=$PATHONPATH:./src
 #     python -m unittest discover test ''
 # else
 python -c 'import sys;import os; print(os.getcwd()); print(sys.path)'
+python -c 'import azure; import azure.clishell'
 python -m unittest discover -s test -p '*_test.py'
+
 # fi
 
