@@ -20,6 +20,5 @@ else
 # python -c 'import sys;import os; print(os.getcwd()); print(sys.path)'
 # python -c 'import azure; import azure.clishell'
     python -m unittest discover -s test -p 'test_*.py'
-
-# fi
+fi
 
