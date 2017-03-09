@@ -51,7 +51,7 @@ class CompletionTest(unittest.TestCase):
         commands = _Commands(
             command_tree=com_tree3,
             command_param=command_param,
-            completable_param=completable_param
+            completable_param=completable_param,
         )
         self.completer = AzCompleter(commands)
 
@@ -78,7 +78,7 @@ class CompletionTest(unittest.TestCase):
 
         doc = Document(u'create ')
         gen = self.completer.get_completions(doc, None)
-        self.assertIsNone(gen.__next__())
+        self.assertIsNone(gen)
 
     def test_param_completion(self):
         self.init2()

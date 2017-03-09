@@ -30,7 +30,7 @@ class AzCompleter(Completer):
         # a dictionary of command to examples of how to use it
         self.command_examples = commands.command_example
         # a dictionary of which parameters mean the same thing
-        self.same_param_doubles = commands.same_param_doubles
+        self.same_param_doubles = commands.same_param_doubles or []
 
         self.global_parser = AzCliCommandParser(prog='az', add_help=False)
         self.global_parser.add_argument_group('global', 'Global Arguments')
