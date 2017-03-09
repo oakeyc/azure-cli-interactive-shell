@@ -36,7 +36,7 @@ from azure.cli.core._session import ACCOUNT, CONFIG, SESSION
 from azure.cli.core._environment import get_config_dir
 
 logger = azlogging.get_az_logger(__name__)
-CONFIGURATION = azure.clishell.configuration.CONFIGURATION
+SHELL_CONFIGURATION = azure.clishell.configuration.CONFIGURATION
 NOTIFICATIONS = ""
 
 def default_style():
@@ -386,6 +386,13 @@ class Shell(object):
                     try:
                         args = [str(command) for command in cmd.split()]
                         azlogging.configure_logging(args)
+
+                        azure_folder = get_config_dir()
+                        if not os.path.exists(azure_folder):
+                            os.makedirs(azure_folder)
+                        ACCOUNT.load(os.path.join(azure_folder, 'azureProfile.json'))
+                        CONFIG.load(os.path.join(azure_folder, 'az.json'))
+                        SESSION.load(os.path.join(azure_folder, 'az.sess'), max_age=3600)
 
                         config = Configuration(args)
                         self.app.initialize(config)

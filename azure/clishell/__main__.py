@@ -28,7 +28,7 @@ CONFIGURATION = azure.clishell.configuration.CONFIGURATION
 def main():
     """ the main function """
 
-    azure_folder = CONFIGURATION.get_config_dir()
+    azure_folder = get_config_dir()
     if not os.path.exists(azure_folder):
         os.makedirs(azure_folder)
     ACCOUNT.load(os.path.join(azure_folder, 'azureProfile.json'))
@@ -48,7 +48,7 @@ def main():
     shell_app = Shell(
         completer=AZCOMPLETER,
         lexer=lexer,
-        history=FileHistory(os.path.join(get_config_dir(), config.get_history())),
+        history=FileHistory(os.path.join(CONFIGURATION.get_config_dir(), config.get_history())),
         app=APPLICATION,
     )
 
