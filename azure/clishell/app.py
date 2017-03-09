@@ -210,9 +210,9 @@ class Shell(object):
                     sub_section()
         return example
 
-    def create_application(self, with_layout=True):
+    def create_application(self, all_layout=True):
         """ makes the application object and the buffers """
-        if with_layout:
+        if all_layout:
             layout = create_layout(self.lexer)
         else:
             layout = create_layout_completions(self.lexer)
@@ -297,7 +297,7 @@ class Shell(object):
             start_index = start_index + 1
             cmd = ' '.join(text.split()[:start_index])
             example_cli = CommandLineInterface(
-                application=self.create_application(with_layout=False),
+                application=self.create_application(all_layout=False),
                 eventloop=create_eventloop())
 
             for i in range(len(text.split()) - start_index):

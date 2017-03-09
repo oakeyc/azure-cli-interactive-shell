@@ -88,12 +88,17 @@ def create_layout_completions(lex):
                           ))
             ]),
         ConditionalContainer(
-            Window(
-                content=BufferControl(
-                    buffer_name='bottom_toolbar',
-                    lexer=toolbarLex
+            HSplit([
+                get_hline(),
+                get_param(lexer),
+                get_hline(),
+                Window(
+                    content=BufferControl(
+                        buffer_name='bottom_toolbar',
+                        lexer=toolbarLex
+                    ),
                 ),
-            ),
+            ]),
             filter=~IsDone() & RendererHeightIsKnown()
         )
     ])

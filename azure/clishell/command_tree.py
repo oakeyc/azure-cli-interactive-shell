@@ -69,3 +69,17 @@ class CommandBranch(CommandTree):
     """ represents a branch of the tree """
     def __init__(self, data, children=None):
         CommandTree.__init__(self, data, children)
+
+def generate_tree(commands):
+    data = commands.split()[::-1]
+    first = True
+    prev = None
+    node = None
+    for kid in data:
+        node = CommandTree(kid)
+        if first:
+            first = False
+            prev = node
+        else:
+            node.add_child(prev)
+    return node

@@ -1,11 +1,25 @@
+sudo: false
 language: python
 python:
-#   - "2.7"
+  # - "2.7"
   - "3.6"
 install:
   - pip install -qqq virtualenv
   - pip install -e .
+# env:
+#   matrix:
+#   - ALLOW_FAILURE=true
+# matrix:
+#   include:
+#     - python: "2.7"
+#     - env: ALLOW_FAILURE=true
+#   allowed_failures:
+#     - python: "2.7"
+#     - env: ALLOW_FAILURE=true
 script:
   - . build_in_travis.sh
 notifications:
   email: false
+os:
+  - linux
+  - windows
