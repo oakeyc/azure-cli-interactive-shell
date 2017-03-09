@@ -59,6 +59,35 @@ class CompletionTest(unittest.TestCase):
         )
         self.completer = AzCompleter(commands)
 
+    def init3(self):
+        com_tree1 = tree.generate_tree("command can")
+        com_tree2 = tree.generate_tree("create")
+        com_tree3 = tree.CommandHead()
+        com_tree3.add_child(com_tree2)
+        com_tree3.add_child(com_tree1)
+        command_param = {
+            "create" : ["-funtime", "-f"],
+        }
+        completable_param = [
+            "--helloworld",
+            "--funtime",
+            "-f"
+        ]
+        param_descript = {
+            "create -f" : "There is no work life balance, it's just your life",
+            "create --funtime" : "There is no work life balance, it's just your life"
+        }
+        same_param_doubles = {
+            "-f" : "--funtimes"
+        }
+        commands = _Commands(
+            command_tree=com_tree3,
+            command_param=command_param,
+            completable_param=completable_param,
+            param_descript=param_descript,
+            same_param_doubles=same_param_doubles
+        )
+        self.completer = AzCompleter(commands)
     def test_command_completion(self):
         self.init1()
 
