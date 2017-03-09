@@ -18,8 +18,8 @@ matrix:
       env: ALLOW_FAILURE=false
 
   allowed_failures:
-    # - python: 2.7
-    - env: ALLOW_FAILURE=true
+    - python: 2.7
+      env: ALLOW_FAILURE=true
   fast_finish: true
 
 install:
