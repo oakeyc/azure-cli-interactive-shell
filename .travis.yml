@@ -6,14 +6,18 @@ python:
 install:
   - pip install -qqq virtualenv
   - pip install -e .
-# env: 
+env:
+  global:
+  - SECRET_VAR1=SECRET1
+  matrix:
+  - SECRET_VAR2=SECRET2
 matrix:
-  # include:
-  #   - python: 2.7
-    # - env: KEY=VALUE
+  include:
+    - python: 2.7
+    - env: SECRET_VAR2=SECRET2
   allowed_failures:
     - python: "2.7"
-    # - env: KEY=VALUE
+    - env: SECRET_VAR2=SECRET2
 script:
   - . build_in_travis.sh
 notifications:
