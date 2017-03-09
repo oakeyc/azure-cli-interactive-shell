@@ -35,10 +35,12 @@ from azure.cli.core._util import CLIError
 from azure.cli.core.application import APPLICATION, Configuration
 from azure.cli.core._session import ACCOUNT, CONFIG, SESSION
 from azure.cli.core._environment import get_config_dir
+from azure.cli.core.cloud import get_active_cloud_name
 
 logger = azlogging.get_az_logger(__name__)
 SHELL_CONFIGURATION = azure.clishell.configuration.CONFIGURATION
 NOTIFICATIONS = ""
+# ACCOUNT_NAME = get_active_cloud_name()
 
 def default_style():
     """ Default coloring """
@@ -157,11 +159,16 @@ class Shell(object):
         cli.buffers['examples'].reset(
             initial_document=Document(self.example_docs)
         )
-        spacing = '      '
         settings_items = [
             "[F1] Layout Settings",
-            "[Control-Q] Quit"
+            "[Control-Q] Quit",
+            "Cloud: %s" % get_active_cloud_name(),
+            # "Account: %s" % 
         ]
+        counter = 0
+        for part in settings_items:
+            counter += len(part)
+        spacing = empty_space[:int(math.floor((cols - counter) / len(settings_items)))]
         settings = ""
         for item in settings_items:
             settings += item + spacing
