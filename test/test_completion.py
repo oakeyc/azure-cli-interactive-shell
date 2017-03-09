@@ -23,7 +23,7 @@ class _Commands():
         self.same_param_doubles = same_param_doubles
 
 class CompletionTest(unittest.TestCase):
-    def init(self):
+    def init1(self):
         com_tree1 = tree.generate_tree("command can")
         com_tree2 = tree.generate_tree("create")
         com_tree3 = tree.CommandHead()
@@ -35,8 +35,28 @@ class CompletionTest(unittest.TestCase):
         )
         self.completer = AzCompleter(commands)
 
+    def init2(self):
+        com_tree1 = tree.generate_tree("command can")
+        com_tree2 = tree.generate_tree("create")
+        com_tree3 = tree.CommandHead()
+        com_tree3.add_child(com_tree2)
+        com_tree3.add_child(com_tree1)
+        command_param = {
+            "create" : ["-funtime"],
+        }
+        completable_param = [
+            "-helloworld",
+            "-funtime"
+        ]
+        commands = _Commands(
+            command_tree=com_tree3,
+            command_param=command_param,
+            completable_param=completable_param
+        )
+        self.completer = AzCompleter(commands)
+
     def test_command_completion(self):
-        self.init()
+        self.init1()
 
         doc = Document(u'')
         gen = self.completer.get_completions(doc, None)
@@ -51,6 +71,27 @@ class CompletionTest(unittest.TestCase):
         doc = Document(u'cr')
         gen = self.completer.get_completions(doc, None)
         self.assertEqual(gen.__next__(), Completion("create", -2))
+
+        doc = Document(u'command ')
+        gen = self.completer.get_completions(doc, None)
+        self.assertEqual(gen.__next__(), Completion("can"))
+
+        doc = Document(u'create ')
+        gen = self.completer.get_completions(doc, None)
+        self.assertIsNone(gen.__next__())
+
+    def test_param_completion(self):
+        self.init2()
+        doc = Document(u'create -')
+        gen = self.completer.get_completions(doc, None)
+        self.assertEqual(gen.__next__(), Completion("-funtime", -1))
+
+        doc = Document(u'command can')
+        gen = self.completer.get_completions(doc, None)
+        self.assertEqual(gen.__next__(), Completion("-helloworld"))
+        self.assertEqual(gen.__next__(), Completion("-funtime"))
+
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -2,13 +2,23 @@ sudo: false
 
 language: python
 
-python:
-  - "2.7"
-  - "3.6"
+# python:
+#   - "2.7"
+#   - "3.6"
 
 env:
   - ALLOW_FAILURE=true
   - ALLOW_FAILURE=false
+
+matrix:
+  include:
+    - python: 2.7
+    - python: 3.6
+    - env: ALLOW_FAILURE=true
+  allowed_failures:
+    - python: 2.7
+    - env: ALLOW_FAILURE=true
+  fast_finish: true
 
 install:
   - pip install -qqq virtualenv
@@ -16,14 +26,6 @@ install:
 
 script:
   - . build_in_travis.sh
-
-matrix:
-  # include:
-  #   - python: 2.7
-  #   - env: ALLOW_FAILURE=true
-  allowed_failures:
-    - python: 2.7
-    - env: ALLOW_FAILURE=true
 
 notifications:
   email: false
