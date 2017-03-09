@@ -2,14 +2,6 @@ sudo: false
 
 language: python
 
-# python:
-#   - "2.7"
-#   - "3.6"
-
-# env:
-#   - ALLOW_FAILURE=true
-#   - ALLOW_FAILURE=false
-
 matrix:
   include:
     - python: 2.7
@@ -32,6 +24,6 @@ script:
 notifications:
   email: false
 
-# os:
-#   - linux
-#   - windows
+os:
+  - linux
+  - windows
