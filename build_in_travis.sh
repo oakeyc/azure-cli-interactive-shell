@@ -17,6 +17,7 @@ export PYTHONPATH=$PATHONPATH:./src
 #     # check_style --ci;
 #     python -m unittest discover test ''
 # else
+python -c 'import sys;import os; print(os.getcwd()); print(sys.path)'
 python -m unittest discover -s test -p '*_test.py'
 # fi
 
