@@ -5,7 +5,6 @@ from prompt_toolkit.layout.containers import VSplit, HSplit, Window, FloatContai
 from prompt_toolkit.layout.controls import BufferControl, FillControl, TokenListControl
 from prompt_toolkit.layout.dimension import LayoutDimension as D
 from prompt_toolkit.layout.lexers import PygmentsLexer
-# from prompt_toolkit.layout.toolbars import SearchToolbar
 
 from prompt_toolkit.filters import Always, IsDone, HasFocus, RendererHeightIsKnown
 from prompt_toolkit.layout.menus import CompletionsMenu
@@ -48,8 +47,9 @@ def get_height(cli):
     if not cli.is_done:
         return D(min=8)
 
-def get_toolbar_tokens(cli):
-    return [(Token.Toolbar, "[Layout Settings F1]")]
+def get_tutorial_tokens(cli):
+    """ tutorial tokens """
+    return [(Token.Toolbar, 'In Tutorial Mode: Press [Enter] after typing each part')]
 
 def get_lexers(lex):
     lexer = None
@@ -93,11 +93,10 @@ def create_layout_completions(lex):
                 get_param(lexer),
                 get_hline(),
                 Window(
-                    content=BufferControl(
-                        buffer_name='bottom_toolbar',
-                        lexer=toolbarLex
-                    ),
-                ),
+                    TokenListControl(
+                        get_tutorial_tokens,
+                        default_char=Char(' ', Token.Toolbar)),
+                    height=D.exact(1)),
             ]),
             filter=~IsDone() & RendererHeightIsKnown()
         )

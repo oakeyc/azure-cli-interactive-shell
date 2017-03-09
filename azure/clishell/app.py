@@ -297,7 +297,8 @@ class Shell(object):
             start_index = start_index + 1
             cmd = ' '.join(text.split()[:start_index])
             example_cli = CommandLineInterface(
-                application=self.create_application(all_layout=False),
+                application=self.create_application(
+                    all_layout=False),
                 eventloop=create_eventloop())
 
             for i in range(len(text.split()) - start_index):
@@ -369,9 +370,9 @@ class Shell(object):
                         cmd = "az " + cmd
                     elif ":" in text:
                         global NOTIFICATIONS
-                        NOTIFICATIONS = "IN TUTORIAL MODE        "
+                        # NOTIFICATIONS = "IN TUTORIAL MODE        "
                         cmd = self.handle_example(text)
-                        NOTIFICATIONS = ""
+                        # NOTIFICATIONS = ""
 
                 if not text:
                     self.set_prompt()
