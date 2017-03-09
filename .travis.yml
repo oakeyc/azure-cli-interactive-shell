@@ -6,8 +6,14 @@ matrix:
   include:
     - python: 2.7
       env: ALLOW_FAILURE=true
+      os:
+        - linux
+        - windows
     - python: 3.6
       env: ALLOW_FAILURE=false
+      os:
+        - linux
+        - windows
 
   allow_failures:
     - python: 2.7
@@ -23,7 +29,3 @@ script:
 
 notifications:
   email: false
-
-os:
-  - linux
-  - windows
