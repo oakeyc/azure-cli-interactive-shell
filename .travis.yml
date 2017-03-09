@@ -1,23 +1,21 @@
 sudo: false
 language: python
 python:
-  - "2.7"
+  # - "2.7"
   - "3.6"
 install:
   - pip install -qqq virtualenv
   - pip install -e .
 env:
-  global:
-  - SECRET_VAR1=SECRET1
   matrix:
-  - SECRET_VAR2=SECRET2
+  - ALLOW_FAILURE=true
 matrix:
   include:
-    - python: 2.7
-    - env: SECRET_VAR2=SECRET2
+    - python: "2.7"
+    - env: ALLOW_FAILURE=true
   allowed_failures:
     - python: "2.7"
-    - env: SECRET_VAR2=SECRET2
+    - env: ALLOW_FAILURE=true
 script:
   - . build_in_travis.sh
 notifications:
