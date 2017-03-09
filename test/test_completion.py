@@ -78,7 +78,7 @@ class CompletionTest(unittest.TestCase):
 
         doc = Document(u'create ')
         gen = self.completer.get_completions(doc, None)
-        self.assertIsNone(gen)
+        self.assertIsNone(gen.__next__)
 
     def test_param_completion(self):
         self.init2()
