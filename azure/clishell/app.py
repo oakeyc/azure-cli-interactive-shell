@@ -26,6 +26,7 @@ from azure.clishell.az_lexer import AzLexer
 from azure.clishell.az_completer import AzCompleter
 from azure.clishell.layout import create_layout, create_layout_completions
 from azure.clishell.key_bindings import registry, get_section, sub_section, EXAMPLE_REPL
+from azure.clishell.util import dict_path
 
 import azure.cli.core.azlogging as azlogging
 import azure.cli.core.telemetry as telemetry
@@ -65,28 +66,6 @@ def default_style():
     })
 
     return styles
-
-def dict_path(keyword, dictionaries):
-    list_of_options = []
-    if isinstance(dictionaries, list):
-        for dictionary in dictionaries:
-            _dict_path(keyword, dictionary, list_of_options)
-    elif isinstance(dictionaries, dict):
-        _dict_path(keyword, dictionaries, list_of_options)
-    return list_of_options
-
-def _dict_path(keyword, dictionary, list_of_options):
-    if not isinstance(dictionary, collections.Iterable):
-        list_of_options.append(dictionary)
-    elif keyword in dictionary:
-        if isinstance(dictionary, dict):
-            list_of_options.append(dictionary[keyword])
-        else:
-            list_of_options.append(keyword)
-    else:
-        for item in dictionary:
-            if isinstance(item, dict):
-                list_of_options.extend(dict_path(keyword, item))
 
 class Shell(object):
     """ represents the shell """
@@ -178,7 +157,14 @@ class Shell(object):
         cli.buffers['examples'].reset(
             initial_document=Document(self.example_docs)
         )
-        settings = "[Press F1] Layout Settings"
+        spacing = '      '
+        settings_items = [
+            "[F1] Layout Settings",
+            "[Control-Q] Quit"
+        ]
+        settings = ""
+        for item in settings_items:
+            settings += item + spacing
         empty_space = empty_space[len(NOTIFICATIONS) + len(settings) + 1:]
 
         cli.buffers['bottom_toolbar'].reset(

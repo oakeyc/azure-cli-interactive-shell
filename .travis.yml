@@ -6,9 +6,9 @@ python:
   - "2.7"
   - "3.6"
 
-# env:
-#   - ALLOW_FAILURE=true
-  # - ALLOW_FAILURE=false
+env:
+  - ALLOW_FAILURE=true
+  - ALLOW_FAILURE=false
 
 install:
   - pip install -qqq virtualenv
@@ -23,7 +23,7 @@ matrix:
   #   - env: ALLOW_FAILURE=true
   allowed_failures:
     - python: 2.7
-    # - env: ALLOW_FAILURE=true
+    - env: ALLOW_FAILURE=true
 
 notifications:
   email: false
