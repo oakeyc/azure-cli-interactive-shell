@@ -48,10 +48,14 @@ class CompletionTest(unittest.TestCase):
             "-helloworld",
             "-funtime"
         ]
+        param_descript = {
+            "create -funtime" : "There is no work life balance, it's just your life"
+        }
         commands = _Commands(
             command_tree=com_tree3,
             command_param=command_param,
             completable_param=completable_param,
+            param_descript=param_descript
         )
         self.completer = AzCompleter(commands)
 
@@ -78,13 +82,14 @@ class CompletionTest(unittest.TestCase):
 
         doc = Document(u'create ')
         gen = self.completer.get_completions(doc, None)
-        self.assertIsNone(gen.__next__)
+        self.assertIsNone(gen.__next__())
 
     def test_param_completion(self):
         self.init2()
         doc = Document(u'create -')
         gen = self.completer.get_completions(doc, None)
-        self.assertEqual(gen.__next__(), Completion("-funtime", -1))
+        self.assertEqual(gen.__next__(), Completion(
+            "-funtime", -1, display_meta="There is no work life balance, it's just your life"))
 
         doc = Document(u'command can')
         gen = self.completer.get_completions(doc, None)
