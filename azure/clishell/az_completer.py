@@ -128,11 +128,7 @@ class AzCompleter(Completer):
                     if arg_name:
                         break
                 if arg_name:
-                    # if self.cmdtab[command].arguments[arg_name].choices:
-                    #     print("STUFF")
                     try:
-                        # if self.cmdtab[command].arguments[arg_name].choices:
-                        #     print("enum")
                         for choice in self.cmdtab[command].arguments[arg_name].choices:
                             if started_param:
                                 if choice.lower().startswith(prefix.lower())\

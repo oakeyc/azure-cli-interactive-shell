@@ -8,14 +8,14 @@ from prompt_toolkit.key_binding.input_processor import KeyPress, InputProcessor
 from prompt_toolkit.keys import Keys
 
 from azure.clishell.key_bindings import registry as reg
-from azure.clishell.app import Shell
+# from azure.clishell.app import Shell
 
 class KeyBindingsTest(unittest.TestCase):
 
     def init(self):
         self.input = PipeInput()
         output = DummyOutput()
-        self.shell = Shell(input=self.input, output=output)
+        # self.shell = Shell(input=self.input, output=output)
         self.processor = InputProcessor
 
     def tearDown(self):
