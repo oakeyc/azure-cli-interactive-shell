@@ -45,6 +45,8 @@ To Search through the last command as json
 
    $ ? [param]
 
+* Note: Only if the previous command dumps out json, e.g. vm list *
+
 Use Examples
 ########
 

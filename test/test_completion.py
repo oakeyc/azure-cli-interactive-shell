@@ -143,6 +143,11 @@ class CompletionTest(unittest.TestCase):
         self.assertEqual(gen.__next__(), Completion(
             "--helloworld", -2))
 
+        doc = Document(u'create -f -')
+        gen = self.completer.get_completions(doc, None)
+        with self.assertRaises(StopIteration):
+            gen.__next__()
+
 
 if __name__ == '__main__':
     unittest.main()
