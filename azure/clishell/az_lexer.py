@@ -9,30 +9,24 @@ class AzLexer(RegexLexer):
     A custom lexer for Azure CLI
     """
     commands = GatherCommands()
-    # top_level = []
-    # top_level.append(kid.data for kid in completer.command_tree.children)
-    # top_level.append('az')
     tokens = {
         'root': [
             (words(
                 tuple(kid.data for kid in commands.command_tree.children),
                 prefix=r'\b',
                 suffix=r'\b'),
-             Keyword),
-            # describe-instances
+             Keyword), # top level commands
             (words(
                 tuple(commands.get_all_subcommands()),
                 prefix=r'\b',
                 suffix=r'\b'),
-             Keyword.Declaration),
-            # --instance-ids
+             Keyword.Declaration), # all other commands
             (words(
                 tuple(param for param in commands.completable_param),
                 prefix=r'',
                 suffix=r'\b'),
-             Name.Class),
-            # Everything else
-            (r'.', Text),
+             Name.Class), # parameters
+            (r'.', Text), # all else
             (r' .', Text),
         ]
     }

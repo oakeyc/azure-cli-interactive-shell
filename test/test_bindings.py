@@ -1,83 +1,54 @@
 from __future__ import unicode_literals
 
-from prompt_toolkit.key_binding.input_processor import InputProcessor, KeyPress
-from prompt_toolkit.key_binding.registry import Registry
+import unittest
+
+from prompt_toolkit.input import PipeInput
+from prompt_toolkit.output import DummyOutput
+from prompt_toolkit.key_binding.input_processor import KeyPress, InputProcessor
 from prompt_toolkit.keys import Keys
 
-import pytest
+from azure.clishell.key_bindings import registry as reg
+from azure.clishell.app import Shell
 
+class KeyBindingsTest(unittest.TestCase):
 
-class Handlers(object):
+    def init(self):
+        self.input = PipeInput()
+        output = DummyOutput()
+        self.shell = Shell(input=self.input, output=output)
+        self.processor = InputProcessor
 
-    def __init__(self):
-        self.called = []
+    def tearDown(self):
+        self.input.close()
 
-    def __getattr__(self, name):
-        def func(event):
-            self.called.append(name)
-        return func
+    # def feed_key(self, key):
+    #     self.processor.feed(KeyPress(key, u''))
+    #     self.processor.process_keys()
 
+    # def test_F2(self):
+    #     match_fuzzy = self.aws_shell.model_completer.match_fuzzy
+    #     self.feed_key(Keys.F2)
+    #     assert match_fuzzy != self.aws_shell.model_completer.match_fuzzy
 
-@pytest.fixture
-def handlers():
-    return Handlers()
+    # def test_F3(self):
+    #     enable_vi_bindings = self.aws_shell.enable_vi_bindings
+    #     with self.assertRaises(InputInterrupt):
+    #         self.feed_key(Keys.F3)
+    #         assert enable_vi_bindings != self.aws_shell.enable_vi_bindings
 
+    # def test_F4(self):
+    #     show_completion_columns = self.aws_shell.show_completion_columns
+    #     with self.assertRaises(InputInterrupt):
+    #         self.feed_key(Keys.F4)
+    #         assert show_completion_columns != \
+    #             self.aws_shell.show_completion_columns
 
-@pytest.fixture
-def registry(handlers):
-    registry = Registry()
-    registry.add_binding(
-        Keys.ControlX, Keys.ControlC)(handlers.controlx_controlc)
-    registry.add_binding(Keys.ControlX)(handlers.control_x)
-    registry.add_binding(Keys.ControlD)(handlers.control_d)
-    registry.add_binding(
-        Keys.ControlSquareClose, Keys.Any)(handlers.control_square_close_any)
+    # def test_F5(self):
+    #     show_help = self.aws_shell.show_help
+    #     with self.assertRaises(InputInterrupt):
+    #         self.feed_key(Keys.F5)
+    #         assert show_help != self.aws_shell.show_help
 
-    return registry
-
-
-@pytest.fixture
-def processor(registry):
-    return InputProcessor(registry, lambda: None)
-
-
-def test_feed_simple(processor, handlers):
-    processor.feed(KeyPress(Keys.ControlX, '\x18'))
-    processor.feed(KeyPress(Keys.ControlC, '\x03'))
-    processor.process_keys()
-
-    assert handlers.called == ['controlx_controlc']
-
-
-def test_feed_several(processor, handlers):
-    # First an unknown key first.
-    processor.feed(KeyPress(Keys.ControlQ, ''))
-    processor.process_keys()
-
-    assert handlers.called == []
-
-    # Followed by a know key sequence.
-    processor.feed(KeyPress(Keys.ControlX, ''))
-    processor.feed(KeyPress(Keys.ControlC, ''))
-    processor.process_keys()
-
-    assert handlers.called == ['controlx_controlc']
-
-    # Followed by another unknown sequence.
-    processor.feed(KeyPress(Keys.ControlR, ''))
-    processor.feed(KeyPress(Keys.ControlS, ''))
-
-    # Followed again by a know key sequence.
-    processor.feed(KeyPress(Keys.ControlD, ''))
-    processor.process_keys()
-
-    assert handlers.called == ['controlx_controlc', 'control_d']
-
-
-def test_control_square_closed_any(processor, handlers):
-    processor.feed(KeyPress(Keys.ControlSquareClose, ''))
-    processor.feed(KeyPress('C', 'C'))
-    processor.process_keys()
-
-    assert handlers.called == ['control_square_close_any']
-
+    # def test_F10(self):
+    #     self.feed_key(Keys.F10)
+    #     assert self.aws_shell.cli.is_exiting

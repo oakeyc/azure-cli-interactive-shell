@@ -75,7 +75,7 @@ class Shell(object):
     """ represents the shell """
 
     def __init__(self, completer=None, styles=None, lexer=None, history=InMemoryHistory(),
-                 app=None):
+                 app=None, input=sys.stdout, output=None):
         self.styles = styles or default_style()
         self.lexer = lexer or AzLexer
         self.app = app
@@ -90,6 +90,8 @@ class Shell(object):
         self._env = os.environ.copy()
         self.last = None
         self.last_exit = 0
+        self.input = input
+        self.output = output
 
     @property
     def cli(self):
@@ -178,7 +180,7 @@ class Shell(object):
             "[F1]Layout",
             "[CrtlQ]Quit",
             "Cloud: %s" % get_active_cloud_name(),
-            "Account: %s" % sub_name
+            "Subscription: %s" % sub_name
         ]
         counter = 0
         for part in settings_items:
@@ -305,12 +307,13 @@ class Shell(object):
                 eventloop=create_eventloop())
 
             for i in range(len(text.split()) - start_index):
-                ########## BROKEN
                 example_cli.application.buffer.reset(
                     initial_document=Document(u'%s' %cmd,\
                     cursor_position=len(cmd)))
                 example_cli.request_redraw()
                 answer = example_cli.run(reset_current_buffer=True)
+                if not answer:
+                    return ""
                 answer = answer.text
                 start_index += 1
                 cmd += " " + answer.split()[-1] + " " +\
@@ -322,7 +325,6 @@ class Shell(object):
 
         EXAMPLE_REPL = False
         return cmd
-        # self.set_prompt(cmd)
 
 
     def run(self):
@@ -373,15 +375,12 @@ class Shell(object):
                         cmd = "az " + cmd
                     elif ":" in text:
                         global NOTIFICATIONS
-                        # NOTIFICATIONS = "IN TUTORIAL MODE        "
                         cmd = self.handle_example(text)
-                        # NOTIFICATIONS = ""
 
                 if not text:
                     self.set_prompt()
                     continue
 
-                # except IndexError:  # enter blank for welcome message
                 self.history.append(cmd)
                 self.set_prompt()
                 if outside:
@@ -404,11 +403,14 @@ class Shell(object):
                         result = self.app.execute(args)
                         if result and result.result is not None:
                             from azure.cli.core._output import OutputProducer, format_json
-                            formatter = OutputProducer.get_formatter(
-                                self.app.configuration.output_format)
-                            OutputProducer(formatter=formatter, file=sys.stdout).out(result)
-                            self.last = result
-                            self.last_exit = 0
+                            if self.output:
+                                self.output.out(result)
+                            else:
+                                formatter = OutputProducer.get_formatter(
+                                    self.app.configuration.output_format)
+                                OutputProducer(formatter=formatter, file=self.input).out(result)
+                                self.last = result
+                                self.last_exit = 0
                     except Exception as ex:  # pylint: disable=broad-except
                         self.last_exit = handle_exception(ex)
                     except SystemExit as ex:

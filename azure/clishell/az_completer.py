@@ -73,22 +73,12 @@ class AzCompleter(Completer):
 
                     elif words.startswith("--"):
                         is_command = False
-                        if self.has_parameters(command):
+                        if self.has_parameters(command):  # Everything should, map to empty list
                             for param in self.get_param(command):
                                 if self.validate_param_completion(param, words, text_before_cursor):
                                     yield Completion(param, -len(words),\
                                     display_meta=self.get_param_description(
                                         command + " " + str(param)).replace('\n', ''))
-                        else:
-                            raise Exception("No parameters")
-                            # for param in self.completable_param:
-                            #     if self.validate_param_completion(param, words, text_before_cursor):
-                            #         if command + " " + str(param) in self.param_description:
-                            #             yield Completion(param, -len(words),\
-                            #             display_meta=self.get_param_description(\
-                            #             command + " " + str(param)).replace('\n', ''))
-                            #         else:
-                            #             yield Completion(param, -len(words))
                     else:
                         if is_command:
                             if command:
@@ -138,6 +128,21 @@ class AzCompleter(Completer):
                     if arg_name:
                         break
                 if arg_name:
+                    # if self.cmdtab[command].arguments[arg_name].choices:
+                    #     print("STUFF")
+                    try:
+                        # if self.cmdtab[command].arguments[arg_name].choices:
+                        #     print("enum")
+                        for choice in self.cmdtab[command].arguments[arg_name].choices:
+                            if started_param:
+                                if choice.lower().startswith(prefix.lower())\
+                                   and choice not in text_before_cursor.split():
+                                    yield Completion(choice, -len(prefix))
+                            else:
+                                yield Completion(choice, -len(prefix))
+                    except TypeError:
+                        # print(arg_name)
+                        pass
                     if self.cmdtab[command].arguments[arg_name].completer:
                         parsing_text = None
                         # try:
