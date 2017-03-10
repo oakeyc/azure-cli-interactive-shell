@@ -36,10 +36,12 @@ from azure.cli.core.application import APPLICATION, Configuration
 from azure.cli.core._session import ACCOUNT, CONFIG, SESSION
 from azure.cli.core._environment import get_config_dir
 from azure.cli.core.cloud import get_active_cloud_name
+from azure.cli.core._profile import _SUBSCRIPTION_NAME, Profile
 
 logger = azlogging.get_az_logger(__name__)
 SHELL_CONFIGURATION = azure.clishell.configuration.CONFIGURATION
 NOTIFICATIONS = ""
+PROFILE = Profile()
 # ACCOUNT_NAME = get_active_cloud_name()
 
 def default_style():
@@ -159,11 +161,16 @@ class Shell(object):
         cli.buffers['examples'].reset(
             initial_document=Document(self.example_docs)
         )
+        sub_name = ""
+        try:
+            sub_name = PROFILE.get_subscription()[_SUBSCRIPTION_NAME]
+        except CLIError:
+            pass
         settings_items = [
             "[F1] Layout Settings",
             "[Control-Q] Quit",
             "Cloud: %s" % get_active_cloud_name(),
-            # "Account: %s" % 
+            "Account: %s" % sub_name
         ]
         counter = 0
         for part in settings_items:
