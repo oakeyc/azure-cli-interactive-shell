@@ -144,13 +144,14 @@ class Shell(object):
                         for part in example:
                             string_example += part
                     example = self.space_examples(
-                        string_example, self.completer.command_examples[cmdstp], rows)
+                        self.completer.command_examples[cmdstp], rows)
 
         if not any_documentation:
             self.description_docs = u''
 
         self.param_docs = u"%s" % all_params
         self.example_docs = u'%s' % example
+        settings, empty_space = self._toolbar_info(cols, empty_space)
 
         cli.buffers['description'].reset(
             initial_document=Document(self.description_docs, cursor_position=0)
@@ -161,14 +162,21 @@ class Shell(object):
         cli.buffers['examples'].reset(
             initial_document=Document(self.example_docs)
         )
+        cli.buffers['bottom_toolbar'].reset(
+            initial_document=Document(u'%s%s%s' % \
+            (NOTIFICATIONS, settings, empty_space))
+        )
+        cli.request_redraw()
+
+    def _toolbar_info(self, cols, empty_space):
         sub_name = ""
         try:
             sub_name = PROFILE.get_subscription()[_SUBSCRIPTION_NAME]
         except CLIError:
             pass
         settings_items = [
-            "[F1] Layout Settings",
-            "[Control-Q] Quit",
+            "[F1]Layout",
+            "[CrtlQ]Quit",
             "Cloud: %s" % get_active_cloud_name(),
             "Account: %s" % sub_name
         ]
@@ -180,14 +188,9 @@ class Shell(object):
         for item in settings_items:
             settings += item + spacing
         empty_space = empty_space[len(NOTIFICATIONS) + len(settings) + 1:]
+        return settings, empty_space
 
-        cli.buffers['bottom_toolbar'].reset(
-            initial_document=Document(u'%s%s%s' % \
-            (NOTIFICATIONS, settings, empty_space))
-        )
-        cli.request_redraw()
-
-    def space_examples(self, string_examples, list_examples, rows):
+    def space_examples(self, list_examples, rows):
         """ makes the example text """
         examples_with_index = []
         for i in range(len(list_examples)):
