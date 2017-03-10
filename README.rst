@@ -45,7 +45,7 @@ To Search through the last command as json
 
    $ ? [param]
 
-* Note: Only if the previous command dumps out json, e.g. vm list *
+*Note: Only if the previous command dumps out json, e.g. vm list*
 
 Use Examples
 ########
@@ -58,7 +58,7 @@ Type a command, for example:
 
 Look at the examples
 
-* Scroll through the pane with Control H for up and Control N for down #*
+*Scroll through the pane with Control H for up and Control N for down #*
 
 Pick the example you want with:
 
