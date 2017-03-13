@@ -7,6 +7,7 @@ import math
 import json
 import collections
 import shutil
+import jmespath
 
 from prompt_toolkit import prompt
 from prompt_toolkit.buffer import Buffer
@@ -37,11 +38,14 @@ from azure.cli.core._session import ACCOUNT, CONFIG, SESSION
 from azure.cli.core._environment import get_config_dir
 from azure.cli.core.cloud import get_active_cloud_name
 from azure.cli.core._profile import _SUBSCRIPTION_NAME, Profile
+from azure.cli.core._output import format_json
 
 logger = azlogging.get_az_logger(__name__)
 SHELL_CONFIGURATION = azure.clishell.configuration.CONFIGURATION
 NOTIFICATIONS = ""
 PROFILE = Profile()
+SELECT_SYMBOL = azure.clishell.configuration.SELECT_SYMBOL
+
 # ACCOUNT_NAME = get_active_cloud_name()
 
 def default_style():
@@ -75,7 +79,7 @@ class Shell(object):
     """ represents the shell """
 
     def __init__(self, completer=None, styles=None, lexer=None, history=InMemoryHistory(),
-                 app=None):
+                 app=None, input=sys.stdout, output=None):
         self.styles = styles or default_style()
         self.lexer = lexer or AzLexer
         self.app = app
@@ -90,6 +94,8 @@ class Shell(object):
         self._env = os.environ.copy()
         self.last = None
         self.last_exit = 0
+        self.input = input
+        self.output = output
 
     @property
     def cli(self):
@@ -144,13 +150,14 @@ class Shell(object):
                         for part in example:
                             string_example += part
                     example = self.space_examples(
-                        string_example, self.completer.command_examples[cmdstp], rows)
+                        self.completer.command_examples[cmdstp], rows)
 
         if not any_documentation:
             self.description_docs = u''
 
         self.param_docs = u"%s" % all_params
         self.example_docs = u'%s' % example
+        settings, empty_space = self._toolbar_info(cols, empty_space)
 
         cli.buffers['description'].reset(
             initial_document=Document(self.description_docs, cursor_position=0)
@@ -161,33 +168,38 @@ class Shell(object):
         cli.buffers['examples'].reset(
             initial_document=Document(self.example_docs)
         )
-        sub_name = ""
-        try:
-            sub_name = PROFILE.get_subscription()[_SUBSCRIPTION_NAME]
-        except CLIError:
-            pass
-        settings_items = [
-            "[F1] Layout Settings",
-            "[Control-Q] Quit",
-            "Cloud: %s" % get_active_cloud_name(),
-            "Account: %s" % sub_name
-        ]
-        counter = 0
-        for part in settings_items:
-            counter += len(part)
-        spacing = empty_space[:int(math.floor((cols - counter) / len(settings_items)))]
-        settings = ""
-        for item in settings_items:
-            settings += item + spacing
-        empty_space = empty_space[len(NOTIFICATIONS) + len(settings) + 1:]
-
         cli.buffers['bottom_toolbar'].reset(
             initial_document=Document(u'%s%s%s' % \
             (NOTIFICATIONS, settings, empty_space))
         )
         cli.request_redraw()
 
-    def space_examples(self, string_examples, list_examples, rows):
+    def _toolbar_info(self, cols, empty_space):
+        sub_name = ""
+        try:
+            sub_name = PROFILE.get_subscription()[_SUBSCRIPTION_NAME]
+        except CLIError:
+            pass
+        settings_items = [
+            " [F1]Layout",
+            "[CrtlQ]Quit",
+            "Cloud: %s" % get_active_cloud_name(),
+            "Subscription: %s" % sub_name
+        ]
+        counter = 0
+        for part in settings_items:
+            counter += len(part)
+        spacing = empty_space[:int(math.floor((cols - counter) / (len(settings_items) - 1)))]
+        settings = ""
+        for i in range(len(settings_items)):
+            if i != len(settings_items) - 1:
+                settings += settings_items[i] + spacing
+            else:
+                settings += settings_items[i]
+        empty_space = empty_space[len(NOTIFICATIONS) + len(settings) + 1:]
+        return settings, empty_space
+
+    def space_examples(self, list_examples, rows):
         """ makes the example text """
         examples_with_index = []
         for i in range(len(list_examples)):
@@ -302,12 +314,13 @@ class Shell(object):
                 eventloop=create_eventloop())
 
             for i in range(len(text.split()) - start_index):
-                ########## BROKEN
                 example_cli.application.buffer.reset(
                     initial_document=Document(u'%s' %cmd,\
                     cursor_position=len(cmd)))
                 example_cli.request_redraw()
                 answer = example_cli.run(reset_current_buffer=True)
+                if not answer:
+                    return ""
                 answer = answer.text
                 start_index += 1
                 cmd += " " + answer.split()[-1] + " " +\
@@ -319,7 +332,6 @@ class Shell(object):
 
         EXAMPLE_REPL = False
         return cmd
-        # self.set_prompt(cmd)
 
 
     def run(self):
@@ -337,48 +349,45 @@ class Shell(object):
                 if text.strip() == "quit" or text.strip() == "exit":
                     break
                 if text: # some bandaids
-                    if text[0] == "#":
+                    if text[0] == SELECT_SYMBOL['outside']:
                         cmd = text[1:]
                         outside = True
                     elif text.split()[0] == "az":
                         cmd = " ".join(text.split()[1:])
-                    elif text[0] == "$":
+                    elif text[0] == SELECT_SYMBOL['exit_code']:
                         print(self.last_exit)
                         self.set_prompt()
                         continue
-                    elif "?" in text:
-                        answer = []
-                        failed = False
-                        dump = False
-                        curr_dict = []
-                        curr_dict.append(self.last.result)
-
-
+                    elif SELECT_SYMBOL['query'] in text:
                         if self.last and self.last.result:
-                            for arg in text.partition("?")[2].split():
-                                arg = str(arg)
-                                for value in dict_path(arg, curr_dict):
-                                    answer.append(value)
-                        if not failed:
-                            for ans in answer:
-                                print(ans)
-                                print('\n')
+
+                            if hasattr(self.last.result, '__dict__'):
+                                input_dict = dict(self.last.result)
+                            else:
+                                input_dict = self.last.result
+                            try:
+                                result = jmespath.search(
+                                    text.partition(SELECT_SYMBOL['query'])[2], input_dict)
+                                if isinstance(result, str):
+                                    print(result)
+                                else:
+                                    print(json.dumps(result, sort_keys=True, indent=2))
+                            except jmespath.exceptions.ParseError:
+                                print("Invalid Query")
+
                         self.set_prompt()
                         continue
                     elif "|" in text:
                         outside = True
                         cmd = "az " + cmd
-                    elif ":" in text:
+                    elif SELECT_SYMBOL['example'] in text:
                         global NOTIFICATIONS
-                        # NOTIFICATIONS = "IN TUTORIAL MODE        "
                         cmd = self.handle_example(text)
-                        # NOTIFICATIONS = ""
 
                 if not text:
                     self.set_prompt()
                     continue
 
-                # except IndexError:  # enter blank for welcome message
                 self.history.append(cmd)
                 self.set_prompt()
                 if outside:
@@ -401,11 +410,14 @@ class Shell(object):
                         result = self.app.execute(args)
                         if result and result.result is not None:
                             from azure.cli.core._output import OutputProducer, format_json
-                            formatter = OutputProducer.get_formatter(
-                                self.app.configuration.output_format)
-                            OutputProducer(formatter=formatter, file=sys.stdout).out(result)
-                            self.last = result
-                            self.last_exit = 0
+                            if self.output:
+                                self.output.out(result)
+                            else:
+                                formatter = OutputProducer.get_formatter(
+                                    self.app.configuration.output_format)
+                                OutputProducer(formatter=formatter, file=self.input).out(result)
+                                self.last = result
+                                self.last_exit = 0
                     except Exception as ex:  # pylint: disable=broad-except
                         self.last_exit = handle_exception(ex)
                     except SystemExit as ex:

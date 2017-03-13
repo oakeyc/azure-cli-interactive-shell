@@ -40,6 +40,7 @@ To use commands outside the application
    $ #[command]
 
 To Search through the last command as json
+jmespath format for querying
 
 .. code-block:: console
 

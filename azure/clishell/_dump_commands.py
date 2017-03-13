@@ -1,10 +1,9 @@
-from __future__ import print_function
+from importlib import import_module
 
 import json
 import os
 import pkgutil
 import yaml
-from importlib import import_module
 
 from azure.cli.core.application import APPLICATION, Application, Configuration
 from azure.cli.core.commands import CliArgumentType
@@ -32,15 +31,12 @@ def dump_command_table():
     except ImportError:
         pass
     for mod in installed_command_modules:
-        # print('loading params for', mod)
         try:
             import_module('azure.cli.command_modules.' + mod).load_params(mod)
         except Exception as ex:
             print("EXCPETION: " + ex.message)
     _update_command_definitions(cmd_table)
 
-    # for x in cmd_table['vm create']:
-    #     print(x)
     data = {}
     for cmd in cmd_table:
         com_descip = {}
@@ -70,16 +66,8 @@ def dump_command_table():
         com_descip['parameters'] = param_descrip
         data[cmd] = com_descip
 
-    # group_registry = []
     for cmd in helps:
         diction_help = yaml.load(helps[cmd])
-
-        # if 'parameters' in diction_help and diction_help['parameters'] and\
-        # 'group-name' in diction_help['parameters']:
-        #     group_registry = _help.ArgumentGroupRegistry(
-        #         [p['group-name'] for p in diction_help['parameters'] if p['group-name']])
-
-
         if "short-summary" in diction_help:
             if cmd in data:
                 data[cmd]['help'] = diction_help["short-summary"]
@@ -104,20 +92,17 @@ def dump_command_table():
                 if "short-summary" in param:
                     data[cmd]['parameters'][param["name"].split()[0]]['help']\
                      = param["short-summary"]
+                # if "choices" in param:
+                #     print("choices")
         if "examples" in diction_help:
             examples = []
             for example in diction_help["examples"]:
-                # double = list(example['name'], example['text'])
                 examples.append([example['name'], example['text']])
-                # for prop in name:
-                #     string_example += name[prop] + "\n"
             data[cmd]['examples'] = examples
 
 
     with open(os.path.join(get_cache_dir(), command_file), 'w') as help_file:
         json.dump(data, help_file)
-
-    # print(group_registry)
 
 def get_cache_dir():
     """ gets the location of the cache """
