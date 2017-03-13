@@ -5,6 +5,13 @@ import os
 
 from six.moves import configparser
 
+SELECT_SYMBOL = {
+    'outside' : '#',
+    'query' : '?',
+    'exit_code' : '$',
+    'example' : ':'
+}
+
 class Configuration():
     BOOLEAN_STATES = {'1': True, 'yes': True, 'true': True, 'on': True,
                       '0': False, 'no': False, 'false': False, 'off': False,

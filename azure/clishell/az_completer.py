@@ -9,9 +9,13 @@ from importlib import import_module
 from prompt_toolkit.contrib.completers import WordCompleter
 from prompt_toolkit.completion import Completer, Completion
 
+import azure.clishell.configuration
+
 from azure.cli.core.application import APPLICATION, Application, Configuration
 from azure.cli.core.commands import load_params, _update_command_definitions
 from azure.cli.core.parser import AzCliCommandParser
+
+SELECT_SYMBOL = azure.clishell.configuration.SELECT_SYMBOL
 
 
 class AzCompleter(Completer):
@@ -90,7 +94,8 @@ class AzCompleter(Completer):
                         try:
                             if branch.has_child(words):
                                 branch = branch.get_child(words, branch.children)
-                            else:
+                            elif text_before_cursor.split()[0] in SELECT_SYMBOL.values():
+                                # print('help')
                                 not_command = True
                         except ValueError:
                             continue # do something

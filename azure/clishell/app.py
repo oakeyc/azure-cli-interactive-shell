@@ -44,12 +44,7 @@ logger = azlogging.get_az_logger(__name__)
 SHELL_CONFIGURATION = azure.clishell.configuration.CONFIGURATION
 NOTIFICATIONS = ""
 PROFILE = Profile()
-SELECT_SYMBOL = {
-    'outside' : '#',
-    'query' : '?',
-    'exit_code' : '$',
-    'example' : ':'
-}
+SELECT_SYMBOL = azure.clishell.configuration.SELECT_SYMBOL
 
 # ACCOUNT_NAME = get_active_cloud_name()
 
