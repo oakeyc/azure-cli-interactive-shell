@@ -7,6 +7,7 @@ import math
 import json
 import collections
 import shutil
+import jmespath
 
 from prompt_toolkit import prompt
 from prompt_toolkit.buffer import Buffer
@@ -37,11 +38,19 @@ from azure.cli.core._session import ACCOUNT, CONFIG, SESSION
 from azure.cli.core._environment import get_config_dir
 from azure.cli.core.cloud import get_active_cloud_name
 from azure.cli.core._profile import _SUBSCRIPTION_NAME, Profile
+from azure.cli.core._output import format_json
 
 logger = azlogging.get_az_logger(__name__)
 SHELL_CONFIGURATION = azure.clishell.configuration.CONFIGURATION
 NOTIFICATIONS = ""
 PROFILE = Profile()
+SELECT_SYMBOL = {
+    'outside' : '#',
+    'query' : '?',
+    'exit_code' : '$',
+    'example' : ':'
+}
+
 # ACCOUNT_NAME = get_active_cloud_name()
 
 def default_style():
@@ -342,38 +351,37 @@ class Shell(object):
                 if text.strip() == "quit" or text.strip() == "exit":
                     break
                 if text: # some bandaids
-                    if text[0] == "#":
+                    if text[0] == SELECT_SYMBOL['outside']:
                         cmd = text[1:]
                         outside = True
                     elif text.split()[0] == "az":
                         cmd = " ".join(text.split()[1:])
-                    elif text[0] == "$":
+                    elif text[0] == SELECT_SYMBOL['exit_code']:
                         print(self.last_exit)
                         self.set_prompt()
                         continue
-                    elif "?" in text:
-                        answer = []
-                        failed = False
-                        dump = False
-                        curr_dict = []
-                        curr_dict.append(self.last.result)
-
-
+                    elif SELECT_SYMBOL['query'] in text:
                         if self.last and self.last.result:
-                            for arg in text.partition("?")[2].split():
-                                arg = str(arg)
-                                for value in dict_path(arg, curr_dict):
-                                    answer.append(value)
-                        if not failed:
-                            for ans in answer:
-                                print(ans)
-                                print('\n')
+
+                            if hasattr(self.last.result, '__dict__'):
+                                input_dict = dict(self.last.result)
+                            else:
+                                input_dict = self.last.result
+
+                            # last = json.loads(format_json(self.last))
+                            result = jmespath.search(
+                                text.partition(SELECT_SYMBOL['query'])[2], input_dict)
+                            if  isinstance(result, str):
+                                print(result)
+                            else:
+                                print(json.dumps(result, sort_keys=True, indent=2))
+
                         self.set_prompt()
                         continue
                     elif "|" in text:
                         outside = True
                         cmd = "az " + cmd
-                    elif ":" in text:
+                    elif SELECT_SYMBOL['example'] in text:
                         global NOTIFICATIONS
                         cmd = self.handle_example(text)
 

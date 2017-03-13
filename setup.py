@@ -8,7 +8,8 @@ DEPENDENCIES = [
     'prompt_toolkit',
     'six',
     'pyyaml',
-    'pytest'
+    'pytest',
+    'jmespath'
 ]
 
 setup(

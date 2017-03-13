@@ -3,6 +3,7 @@ from __future__ import print_function
 import math
 import pkgutil
 import argparse
+from operator import xor
 
 from importlib import import_module
 from prompt_toolkit.contrib.completers import WordCompleter
@@ -55,6 +56,7 @@ class AzCompleter(Completer):
         command = ""
         is_command = True
         branch = self.command_tree
+        not_command = False
         if len(text_before_cursor.split()) > 0\
         and text_before_cursor.split()[0] == 'az': # remove optional az
             text_before_cursor = ' '.join(text_before_cursor.split()[1:])
@@ -88,17 +90,23 @@ class AzCompleter(Completer):
                         try:
                             if branch.has_child(words):
                                 branch = branch.get_child(words, branch.children)
+                            else:
+                                not_command = True
                         except ValueError:
                             continue # do something
 
-                if branch.children is not None:
+                if branch.children is not None and not not_command:
                     for kid in branch.children:
                         if kid.data.lower().startswith(text_before_cursor.split()[-1].lower()):
                             yield Completion(str(kid.data),\
                                 -len(text_before_cursor.split()[-1]))
 
-        if not text_before_cursor.split() or text_before_cursor[-1] == " ":
+        if not text_before_cursor:
             if branch.children is not None:
+                for com in branch.children:
+                    yield Completion(com.data)
+        elif text_before_cursor[-1].isspace():
+            if branch is not self.command_tree:
                 for com in branch.children:
                     yield Completion(com.data)
 
