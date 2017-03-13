@@ -1,3 +1,5 @@
+""" dumps all the commands to cache """
+from __future__ import print_function
 from importlib import import_module
 
 import json

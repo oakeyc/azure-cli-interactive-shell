@@ -303,6 +303,7 @@ class Shell(object):
         return self.example_repl(example_no_fill, starting_index)
 
     def example_repl(self, text, start_index):
+        """ REPL for interactive tutorials """
         global EXAMPLE_REPL
         EXAMPLE_REPL = True
         if start_index:
@@ -348,6 +349,12 @@ class Shell(object):
             else:
                 if text.strip() == "quit" or text.strip() == "exit":
                     break
+                elif text.strip() == "clear":
+                    outside = True
+                    cmd = 'echo -n "" >' +\
+                        os.path.join(
+                            SHELL_CONFIGURATION.get_config_dir(),
+                            SHELL_CONFIGURATION.get_history())
                 if text: # some bandaids
                     if text[0] == SELECT_SYMBOL['outside']:
                         cmd = text[1:]
@@ -377,7 +384,7 @@ class Shell(object):
 
                         self.set_prompt()
                         continue
-                    elif "|" in text:
+                    elif "|" in text or ">" in text:
                         outside = True
                         cmd = "az " + cmd
                     elif SELECT_SYMBOL['example'] in text:
