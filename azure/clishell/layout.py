@@ -1,7 +1,8 @@
 
 
 from prompt_toolkit.enums import DEFAULT_BUFFER, SEARCH_BUFFER
-from prompt_toolkit.layout.containers import VSplit, HSplit, Window, FloatContainer, Float, ConditionalContainer
+from prompt_toolkit.layout.containers import VSplit, HSplit, \
+Window, FloatContainer, Float, ConditionalContainer
 from prompt_toolkit.layout.controls import BufferControl, FillControl, TokenListControl
 from prompt_toolkit.layout.dimension import LayoutDimension as D
 from prompt_toolkit.layout.lexers import PygmentsLexer
@@ -52,6 +53,7 @@ def get_tutorial_tokens(cli):
     return [(Token.Toolbar, 'In Tutorial Mode: Press [Enter] after typing each part')]
 
 def get_lexers(lex):
+    """ gets all the lexer wrappers """
     lexer = None
     if issubclass(lex, PromptLex):
         lexer = lex
@@ -68,7 +70,8 @@ def get_lexers(lex):
     return lexer, examLex, toolLex
 
 def create_layout_completions(lex):
-    lexer, _, toolbarLex = get_lexers(lex)
+    """ layout for example tutorial """
+    lexer, _, _ = get_lexers(lex)
     layout_full = HSplit([
         FloatContainer(
             Window(
@@ -92,6 +95,12 @@ def create_layout_completions(lex):
                 get_hline(),
                 get_param(lexer),
                 get_hline(),
+                Window(
+                    content=BufferControl(
+                        buffer_name='example_line',
+                        lexer=lexer
+                    ),
+                ),
                 Window(
                     TokenListControl(
                         get_tutorial_tokens,
@@ -151,6 +160,7 @@ def create_layout(lex):
 
 
 def get_anyhline(config):
+    """ if there is a line between descriptions and example """
     if config.BOOLEAN_STATES[config.config.get('Layout', 'command_description')] or\
     config.BOOLEAN_STATES[config.config.get('Layout', 'param_description')]:
         return Window(

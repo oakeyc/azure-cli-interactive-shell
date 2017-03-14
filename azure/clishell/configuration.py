@@ -13,6 +13,7 @@ SELECT_SYMBOL = {
 }
 
 class Configuration():
+    """ configuration for program """
     BOOLEAN_STATES = {'1': True, 'yes': True, 'true': True, 'on': True,
                       '0': False, 'no': False, 'false': False, 'off': False,
                       'y': True, 'Y': True, 'n': False, 'N': False}
@@ -21,7 +22,7 @@ class Configuration():
     def __init__(self):
         self.config = configparser.ConfigParser({
             'firsttime' : 'yes',
-            'lexer' : 'AzLexer',
+            'colors' : 'yes'
         })
         self.config.add_section('Help Files')
         self.config.add_section('Layout')
@@ -54,10 +55,6 @@ class Configuration():
         """ loads the configuration settings """
         self.config.read(path)
 
-    def get_lexer(self):
-        """ gets the kind of the lexer """
-        return self.config.get('DEFAULT', 'lexer')
-
     def firsttime(self):
         """ sets it as already done"""
         self.config.set('DEFAULT', 'firsttime', 'no')
@@ -70,9 +67,9 @@ class Configuration():
         else:
             return os.path.expanduser(os.path.join('~', '.azure-shell'))
 
-    def set_val(self, dir, section, val):
+    def set_val(self, direct, section, val):
         """ set the config values """
-        self.config.set(dir, section, val)
+        self.config.set(direct, section, val)
         self.update()
 
     def update(self):

@@ -86,3 +86,4 @@ But Wait, There Will Be More!
 #############################
 * Telemetry
 * Real-time Notifications
+* Global Environment Settings

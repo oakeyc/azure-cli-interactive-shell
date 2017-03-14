@@ -1,3 +1,5 @@
+""" dumps all the commands to cache """
+from __future__ import print_function
 from importlib import import_module
 
 import json
@@ -16,6 +18,7 @@ import azure.clishell.configuration as config
 CMD_TABLE = APPLICATION.configuration.get_command_table()
 
 def dump_command_table():
+    """ dumps the command table """
     global CMD_TABLE
     cmd_table = CMD_TABLE
 

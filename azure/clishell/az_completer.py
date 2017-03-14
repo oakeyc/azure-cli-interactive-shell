@@ -1,22 +1,11 @@
+""" a completer for the commands and parameters """
 from __future__ import print_function
 
-import math
-import pkgutil
-import argparse
-from operator import xor
-
-from importlib import import_module
-from prompt_toolkit.contrib.completers import WordCompleter
 from prompt_toolkit.completion import Completer, Completion
-
 import azure.clishell.configuration
-
-from azure.cli.core.application import APPLICATION, Application, Configuration
-from azure.cli.core.commands import load_params, _update_command_definitions
 from azure.cli.core.parser import AzCliCommandParser
 
 SELECT_SYMBOL = azure.clishell.configuration.SELECT_SYMBOL
-
 
 class AzCompleter(Completer):
     """ Completes Azure CLI commands """
@@ -51,9 +40,9 @@ class AzCompleter(Completer):
         if param in self.same_param_doubles:
             double_flag = self.same_param_doubles[param] not in text_before_cursor.split()
         return param.lower().startswith(words.lower()) and \
-                                param.lower() != words.lower() and\
-                                param not in text_before_cursor.split()\
-                                and double_flag
+                param.lower() != words.lower() and\
+                param not in text_before_cursor.split()\
+                and double_flag
 
     def get_completions(self, document, complete_event):
         text_before_cursor = document.text_before_cursor
@@ -150,23 +139,8 @@ class AzCompleter(Completer):
                             else:
                                 yield Completion(choice, -len(prefix))
                     except TypeError:
-                        # print(arg_name)
                         pass
                     if self.cmdtab[command].arguments[arg_name].completer:
-                        parsing_text = None
-                        # try:
-                        # parsed_args = argparse.Namespace()
-                        # if text_before_cursor.split()[-1].startswith("-n"):
-                        #     parsing_text = \
-                        #     self.parser.parse_known_args(
-                        #         list(text_before_cursor.split()), namespace=parsed_args)
-                        # except SystemExit as ex:
-                        #     print("System Exit: " +  str(ex))
-                        # except SystemError as ex2:
-                        #     print("System Error" + str(ex2))
-                        # print("Namespace: " + str(parsed_args))
-                        # print("Parsing text: " + str(parsing_text))
-
                         try:
                             for comp in self.cmdtab[command].\
                             arguments[arg_name].completer(prefix=prefix, action=None,\
@@ -199,7 +173,6 @@ class AzCompleter(Completer):
                                             yield Completion(comp, -len(prefix))
                                 except TypeError:
                                     print("TypeError: " + TypeError.message)
-
 
     def is_completable(self, symbol):
         """ whether the word can be completed as a command or parameter """

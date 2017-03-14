@@ -14,6 +14,37 @@ ROWS, COLS = os.popen('stty size', 'r').read().split()
 TOLERANCE = 10
 LINE_MINIMUM = math.floor(int(COLS) / 2 - 15)
 
+def add_random_new_lines(long_phrase, line_min, tolerance=TOLERANCE):
+    """ not everything fits on the screen, based on the size, add newlines """
+    if long_phrase is None:
+        return long_phrase
+    nl_loc = []
+    skip = False
+    index = 0
+    if len(long_phrase) > line_min:
+        for num in range(int(math.floor(len(long_phrase) / line_min))):
+            previous = index
+            index += line_min
+            if skip:
+                index += 1
+                skip = False
+            while index < len(long_phrase) and \
+            not long_phrase[index].isspace() and \
+            index < tolerance + previous + line_min:
+                index += 1
+            if index < len(long_phrase):
+                if long_phrase[index].isspace():
+                    index += 1
+                    skip = True
+                nl_loc.append(index)
+
+    counter = 0
+    for loc in nl_loc:
+        long_phrase = long_phrase[:loc + counter] +\
+        '\n' + long_phrase[loc + counter:]
+        counter += 1
+    return long_phrase + "\n"
+
 class GatherCommands(object):
     """ grabs all the cached commands from files """
     def __init__(self):
@@ -52,23 +83,6 @@ class GatherCommands(object):
         self.command_tree.children.append(CommandBranch("az"))
         self.command_param["az"] = ""
 
-    def add_random_new_lines(self, long_phrase, line_min, tolerance=TOLERANCE):
-        """ not everything fits on the screen, based on the size, add newlines """
-        if long_phrase is None:
-            return long_phrase
-        if len(long_phrase) > line_min:
-            for num in range(int(math.ceil(len(long_phrase) / line_min))):
-                index = int((num + 1) * line_min)
-                while index < len(long_phrase) and \
-                not long_phrase[index].isspace() and index < tolerance + line_min:
-                    index += 1
-                if index < len(long_phrase):
-                    if long_phrase[index].isspace():
-                        index += 1
-                    long_phrase = long_phrase[:index] + "\n" \
-                    + long_phrase[index:]
-        return long_phrase + "\n"
-
     def gather_from_files(self):
         """ gathers from the files in a way that is convienent to use """
         command_file = CONFIGURATION.get_help_files()
@@ -92,14 +106,14 @@ class GatherCommands(object):
                 branch = branch.get_child(word, branch.children)
 
             description = data[command]['help']
-            self.descrip[command] = self.add_random_new_lines(description, LINE_MINIMUM)
+            self.descrip[command] = add_random_new_lines(description, LINE_MINIMUM)
 
             if 'examples' in data[command]:
                 examples = []
                 for example in data[command]['examples']:
                     examples.append([
-                        self.add_random_new_lines(example[0], line_min=int(COLS)),
-                        self.add_random_new_lines(example[1], line_min=int(COLS))])
+                        add_random_new_lines(example[0], line_min=int(COLS) - 2 * TOLERANCE),
+                        add_random_new_lines(example[1], line_min=int(COLS) - 2 * TOLERANCE)])
             self.command_example[command] = examples
 
             all_params = []
@@ -119,7 +133,7 @@ class GatherCommands(object):
                             self.same_param_doubles[param_double] = par
 
                         self.param_descript[command + " " + par] =  \
-                        self.add_random_new_lines(data[command]['parameters'][param]['required']\
+                        add_random_new_lines(data[command]['parameters'][param]['required']\
                         + " " + data[command]['parameters'][param]['help'], LINE_MINIMUM)
                         if par not in self.completable_param:
                             self.completable_param.append(par)

@@ -71,6 +71,7 @@ class CommandBranch(CommandTree):
         CommandTree.__init__(self, data, children)
 
 def generate_tree(commands):
+    """ short cut to make a tree """
     data = commands.split()[::-1]
     first = True
     prev = None
