@@ -150,23 +150,8 @@ class AzCompleter(Completer):
                             else:
                                 yield Completion(choice, -len(prefix))
                     except TypeError:
-                        # print(arg_name)
                         pass
                     if self.cmdtab[command].arguments[arg_name].completer:
-                        parsing_text = None
-                        # try:
-                        # parsed_args = argparse.Namespace()
-                        # if text_before_cursor.split()[-1].startswith("-n"):
-                        #     parsing_text = \
-                        #     self.parser.parse_known_args(
-                        #         list(text_before_cursor.split()), namespace=parsed_args)
-                        # except SystemExit as ex:
-                        #     print("System Exit: " +  str(ex))
-                        # except SystemError as ex2:
-                        #     print("System Error" + str(ex2))
-                        # print("Namespace: " + str(parsed_args))
-                        # print("Parsing text: " + str(parsing_text))
-
                         try:
                             for comp in self.cmdtab[command].\
                             arguments[arg_name].completer(prefix=prefix, action=None,\
@@ -199,7 +184,6 @@ class AzCompleter(Completer):
                                             yield Completion(comp, -len(prefix))
                                 except TypeError:
                                     print("TypeError: " + TypeError.message)
-
 
     def is_completable(self, symbol):
         """ whether the word can be completed as a command or parameter """

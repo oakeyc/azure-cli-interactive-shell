@@ -208,7 +208,7 @@ class Shell(object):
 
         example = "".join(exam for exam in examples_with_index)
         num_newline = example.count('\n')
-        if num_newline > rows / 2:
+        if num_newline > rows / 3:
             len_of_excerpt = math.floor(rows / 3)
             group = example.split('\n')
             end = int(get_section() * len_of_excerpt)
@@ -261,15 +261,16 @@ class Shell(object):
         app = self.create_application()
         return CommandLineInterface(application=app, eventloop=run_loop,)
 
-    def set_prompt(self, prompt="", position=0):
+    def set_prompt(self, prompt_command="", position=0):
         """ clears the prompt line """
-        self.description_docs = u'%s' %prompt
+        self.description_docs = u'%s' %prompt_command
         self.cli.buffers[DEFAULT_BUFFER].reset(
             initial_document=Document(self.description_docs,\
             cursor_position=position))
         self.cli.request_redraw()
 
     def handle_example(self, text):
+        """ parses for the tutortial """
         cmd = text.partition(":")[0].rstrip()
         num = text.partition(":")[2].strip()
         example = ""
@@ -298,8 +299,7 @@ class Shell(object):
                     starting_index = counter
                 flag_fill = False
             counter += 1
-        # if not starting_index:
-        #     starting_index = 0
+
         return self.example_repl(example_no_fill, starting_index)
 
     def example_repl(self, text, start_index):
@@ -349,25 +349,24 @@ class Shell(object):
             else:
                 if text.strip() == "quit" or text.strip() == "exit":
                     break
-                elif text.strip() == "clear":
+                elif text.strip() == "clear":  # clears the history, but only when you restart
                     outside = True
                     cmd = 'echo -n "" >' +\
                         os.path.join(
                             SHELL_CONFIGURATION.get_config_dir(),
                             SHELL_CONFIGURATION.get_history())
-                if text: # some bandaids
+                if text:
                     if text[0] == SELECT_SYMBOL['outside']:
                         cmd = text[1:]
                         outside = True
-                    elif text.split()[0] == "az":
+                    elif text.split()[0] == "az":  # dumps the extra az
                         cmd = " ".join(text.split()[1:])
                     elif text[0] == SELECT_SYMBOL['exit_code']:
                         print(self.last_exit)
                         self.set_prompt()
                         continue
-                    elif SELECT_SYMBOL['query'] in text:
+                    elif SELECT_SYMBOL['query'] in text:  # query previous output
                         if self.last and self.last.result:
-
                             if hasattr(self.last.result, '__dict__'):
                                 input_dict = dict(self.last.result)
                             else:
@@ -384,14 +383,14 @@ class Shell(object):
 
                         self.set_prompt()
                         continue
-                    elif "|" in text or ">" in text:
+                    elif "|" in text or ">" in text:  # anything I don't parse, send off
                         outside = True
                         cmd = "az " + cmd
                     elif SELECT_SYMBOL['example'] in text:
                         global NOTIFICATIONS
                         cmd = self.handle_example(text)
 
-                if not text:
+                if not text: # not input
                     self.set_prompt()
                     continue
 
