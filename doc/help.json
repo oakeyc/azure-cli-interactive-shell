@@ -1,0 +1,6 @@
+{
+    "#[command]" : "use commands outside the application",
+    "?[path]" : "query previous command using jmespath syntax",
+    "[command] : [example number]" : "do a step by step tutorial of example",
+    "$" : "get the exit code of the previous command"
+}

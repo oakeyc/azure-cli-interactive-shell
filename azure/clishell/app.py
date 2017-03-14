@@ -1,3 +1,4 @@
+""" The Main Application """
 from __future__ import unicode_literals, print_function
 
 import subprocess
@@ -22,6 +23,9 @@ from prompt_toolkit.enums import DEFAULT_BUFFER
 
 from pygments.token import Token
 
+from tabulate import tabulate
+
+# import azure.clishell.help.json as shell_help
 import azure.clishell.configuration
 from azure.clishell.az_lexer import AzLexer
 from azure.clishell.az_completer import AzCompleter
@@ -38,7 +42,7 @@ from azure.cli.core._session import ACCOUNT, CONFIG, SESSION
 from azure.cli.core._environment import get_config_dir
 from azure.cli.core.cloud import get_active_cloud_name
 from azure.cli.core._profile import _SUBSCRIPTION_NAME, Profile
-from azure.cli.core._output import format_json
+from azure.cli.core._output import format_json, TableOutput
 
 logger = azlogging.get_az_logger(__name__)
 SHELL_CONFIGURATION = azure.clishell.configuration.CONFIGURATION
@@ -46,7 +50,13 @@ NOTIFICATIONS = ""
 PROFILE = Profile()
 SELECT_SYMBOL = azure.clishell.configuration.SELECT_SYMBOL
 
-# ACCOUNT_NAME = get_active_cloud_name()
+shell_help = {
+    "#[command]" : "use commands outside the application",
+    "?[path]" : "query previous command using jmespath syntax",
+    "[command] : [example number]" : "do a step by step tutorial of example",
+    "$" : "get the exit code of the previous command"
+}
+help_doc = TableOutput()
 
 def default_style():
     """ Default coloring """
@@ -235,6 +245,7 @@ class Shell(object):
             'parameter' : Buffer(is_multiline=True, read_only=True),
             'examples' : Buffer(is_multiline=True, read_only=True),
             'bottom_toolbar' : Buffer(is_multiline=True),
+            'example_line' : Buffer(is_multiline=True)
         }
 
         writing_buffer = Buffer(
@@ -300,9 +311,9 @@ class Shell(object):
                 flag_fill = False
             counter += 1
 
-        return self.example_repl(example_no_fill, starting_index)
+        return self.example_repl(example_no_fill, example, starting_index)
 
-    def example_repl(self, text, start_index):
+    def example_repl(self, text, example, start_index):
         """ REPL for interactive tutorials """
         global EXAMPLE_REPL
         EXAMPLE_REPL = True
@@ -313,6 +324,9 @@ class Shell(object):
                 application=self.create_application(
                     all_layout=False),
                 eventloop=create_eventloop())
+            example_cli.buffers['example_line'].reset(
+                initial_document=Document(u'%s\n' %example)
+            )
 
             for i in range(len(text.split()) - start_index):
                 example_cli.application.buffer.reset(
@@ -355,6 +369,8 @@ class Shell(object):
                         os.path.join(
                             SHELL_CONFIGURATION.get_config_dir(),
                             SHELL_CONFIGURATION.get_history())
+                elif text.strip() == "help":
+                    print(help_doc.dump(shell_help))
                 if text:
                     if text[0] == SELECT_SYMBOL['outside']:
                         cmd = text[1:]

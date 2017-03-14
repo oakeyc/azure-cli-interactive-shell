@@ -1,22 +1,11 @@
+""" a completer for the commands and parameters """
 from __future__ import print_function
 
-import math
-import pkgutil
-import argparse
-from operator import xor
-
-from importlib import import_module
-from prompt_toolkit.contrib.completers import WordCompleter
 from prompt_toolkit.completion import Completer, Completion
-
 import azure.clishell.configuration
-
-from azure.cli.core.application import APPLICATION, Application, Configuration
-from azure.cli.core.commands import load_params, _update_command_definitions
 from azure.cli.core.parser import AzCliCommandParser
 
 SELECT_SYMBOL = azure.clishell.configuration.SELECT_SYMBOL
-
 
 class AzCompleter(Completer):
     """ Completes Azure CLI commands """
@@ -51,9 +40,9 @@ class AzCompleter(Completer):
         if param in self.same_param_doubles:
             double_flag = self.same_param_doubles[param] not in text_before_cursor.split()
         return param.lower().startswith(words.lower()) and \
-                                param.lower() != words.lower() and\
-                                param not in text_before_cursor.split()\
-                                and double_flag
+                param.lower() != words.lower() and\
+                param not in text_before_cursor.split()\
+                and double_flag
 
     def get_completions(self, document, complete_event):
         text_before_cursor = document.text_before_cursor

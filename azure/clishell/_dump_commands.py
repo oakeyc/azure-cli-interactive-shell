@@ -18,6 +18,7 @@ import azure.clishell.configuration as config
 CMD_TABLE = APPLICATION.configuration.get_command_table()
 
 def dump_command_table():
+    """ dumps the command table """
     global CMD_TABLE
     cmd_table = CMD_TABLE
 

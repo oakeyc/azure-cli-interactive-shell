@@ -1,8 +1,8 @@
+""" highlighting and colors """
 from pygments.lexer import RegexLexer, words
-from pygments.token import Name, Literal, Keyword, Operator, Text, Number
+from pygments.token import Name, Keyword, Operator, Text, Number
 
 from azure.clishell.gather_commands import GatherCommands
-
 
 class AzLexer(RegexLexer):
     """
