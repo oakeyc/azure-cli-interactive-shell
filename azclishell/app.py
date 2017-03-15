@@ -275,7 +275,7 @@ class Shell(object):
     def set_prompt(self, prompt_command="", position=0):
         """ clears the prompt line """
         self.description_docs = u'%s' %prompt_command
-        self.cli.buffers[DEFAULT_BUFFER].reset(
+        self.cli.current_buffer.reset(
             initial_document=Document(self.description_docs,\
             cursor_position=position))
         self.cli.request_redraw()
@@ -327,19 +327,19 @@ class Shell(object):
             example_cli.buffers['example_line'].reset(
                 initial_document=Document(u'%s\n' %example)
             )
-
             for i in range(len(text.split()) - start_index):
-                example_cli.application.buffer.reset(
+                example_cli.buffers[DEFAULT_BUFFER].reset(
                     initial_document=Document(u'%s' %cmd,\
                     cursor_position=len(cmd)))
                 example_cli.request_redraw()
-                answer = example_cli.run(reset_current_buffer=True)
+                answer = example_cli.run()
                 if not answer:
                     return ""
                 answer = answer.text
                 start_index += 1
-                cmd += " " + answer.split()[-1] + " " +\
-                u' '.join(text.split()[start_index:start_index + 1])
+                if len(answer.split()) > 1:
+                    cmd += " " + answer.split()[-1] + " " +\
+                    u' '.join(text.split()[start_index:start_index + 1])
             example_cli.exit()
             del example_cli
         else:
