@@ -13,7 +13,7 @@ from azure.cli.core.commands import load_params, _update_command_definitions
 from azure.cli.core.help_files import helps
 import azure.cli.core._help as _help
 
-import azure.clishell.configuration as config
+import azclishell.configuration as config
 
 CMD_TABLE = APPLICATION.configuration.get_command_table()
 

@@ -1,10 +1,10 @@
-import shutil
 import os
 import collections
 
 def get_window_dim():
     """ returns the rows, columns of terminal """
-    dim = shutil.get_terminal_size()
+    from shutil import get_terminal_size
+    dim = get_terminal_size()
     return dim.lines, dim.columns
 
 # def get_window_size_osx():

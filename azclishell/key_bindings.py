@@ -6,7 +6,7 @@ from prompt_toolkit.filters import Filter
 from prompt_toolkit.keys import Keys
 from prompt_toolkit import prompt
 
-import azure.clishell.configuration
+import azclishell.configuration
 
 manager = KeyBindingManager(
     enable_system_bindings=True,
@@ -56,7 +56,7 @@ def config_settings_(event):
     """ opens the configuration """
     global PROMPTING
     PROMPTING = True
-    config = azure.clishell.configuration.CONFIGURATION
+    config = azclishell.configuration.CONFIGURATION
     answer = ""
     questions = {
         "Do you want command descriptions" : "command_description",
@@ -74,7 +74,7 @@ def config_settings_(event):
 
 def format_response(response):
     """ formats a response in a binary """
-    conversion = azure.clishell.configuration.CONFIGURATION.BOOLEAN_STATES
+    conversion = azclishell.configuration.CONFIGURATION.BOOLEAN_STATES
     if response in conversion:
         if conversion[response]:
             return 'yes'

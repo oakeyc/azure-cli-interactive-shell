@@ -1,7 +1,7 @@
 import six
 
-import azure.clishell.command_tree as tree
-from azure.clishell.az_completer import AzCompleter
+import azclishell.command_tree as tree
+from azclishell.az_completer import AzCompleter
 from prompt_toolkit.document import Document
 from prompt_toolkit.completion import Completion
 

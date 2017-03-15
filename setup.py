@@ -9,7 +9,7 @@ DEPENDENCIES = [
     'six',
     'pyyaml',
     'pytest',
-    'jmespath'
+    'jmespath',
 ]
 
 setup(
@@ -18,10 +18,10 @@ setup(
     author='Microsoft Corporation',
     scripts=['dev_setup.py', 'az-cli'],
     packages=[
-        "azure.clishell", "test"
+        "azclishell", "test"
     ],
     namespace_packages=[
-        'azure',
+        'azclishell',
     ],
     url='https://github.com/oakeyc/azure-cli-interactive-shell',
     install_requires=DEPENDENCIES,

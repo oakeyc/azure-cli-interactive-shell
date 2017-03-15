@@ -2,6 +2,6 @@
 setlocal
 
 SET PYTHONPATH=%~dp0/src;%PYTHONPATH%
-python -m azure.clishell
+python -m azclishell
 
 endlocal
