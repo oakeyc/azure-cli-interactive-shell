@@ -6,10 +6,11 @@ from prompt_toolkit.contrib.completers import WordCompleter
 from prompt_toolkit.completion import Completer, Completion
 
 from azure.clishell.command_tree import CommandBranch, CommandHead
+from azure.clishell.util import get_window_dim
 import azure.clishell.configuration
 
 CONFIGURATION = azure.clishell.configuration.CONFIGURATION
-ROWS, COLS = os.popen('stty size', 'r').read().split()
+ROWS, COLS = get_window_dim()
 
 TOLERANCE = 10
 LINE_MINIMUM = math.floor(int(COLS) / 2 - 15)
