@@ -1,5 +1,5 @@
 import six
-from azure.clishell.command_tree import CommandBranch, CommandHead, CommandTree
+from azclishell.command_tree import CommandBranch, CommandHead, CommandTree
 import unittest
 
 class TreeTest(unittest.TestCase):

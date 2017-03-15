@@ -9,7 +9,7 @@ DEPENDENCIES = [
     'six',
     'pyyaml',
     'pytest',
-    'jmespath'
+    'jmespath',
 ]
 
 setup(

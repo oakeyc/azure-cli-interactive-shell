@@ -1,6 +1,6 @@
 import unittest
 import six
-from azure.clishell.gather_commands import add_random_new_lines as nl
+from azclishell.gather_commands import add_random_new_lines as nl
 
 
 class GatherTest(unittest.TestCase):

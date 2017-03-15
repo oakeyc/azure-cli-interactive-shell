@@ -5,7 +5,7 @@ from prompt_toolkit.key_binding.registry import Registry
 from prompt_toolkit.keys import Keys
 
 import six
-# from azure.clishell.app import Shell
+# from azclishell.app import Shell
 import unittest
 
 # class ControlsTest(unittest.TestCase):

@@ -7,8 +7,8 @@ from prompt_toolkit.output import DummyOutput
 from prompt_toolkit.key_binding.input_processor import KeyPress, InputProcessor
 from prompt_toolkit.keys import Keys
 
-from azure.clishell.key_bindings import registry as reg
-# from azure.clishell.app import Shell
+from azclishell.key_bindings import registry as reg
+# from azclishell.app import Shell
 
 class KeyBindingsTest(unittest.TestCase):
 
