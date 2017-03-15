@@ -31,7 +31,7 @@ from azure.clishell.az_lexer import AzLexer
 from azure.clishell.az_completer import AzCompleter
 from azure.clishell.layout import create_layout, create_layout_completions
 from azure.clishell.key_bindings import registry, get_section, sub_section, EXAMPLE_REPL
-from azure.clishell.util import dict_path
+from azure.clishell.util import get_window_dim
 
 import azure.cli.core.azlogging as azlogging
 import azure.cli.core.telemetry as telemetry
@@ -121,7 +121,7 @@ class Shell(object):
         Brings up the metadata for the command if
         there is a valid command already typed
         """
-        rows, cols = os.popen('stty size', 'r').read().split()
+        rows, cols = get_window_dim()
         rows = int(rows)
         cols = int(cols)
         document = cli.current_buffer.document
