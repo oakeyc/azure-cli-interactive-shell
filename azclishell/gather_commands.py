@@ -19,6 +19,7 @@ def add_random_new_lines(long_phrase, line_min, tolerance=TOLERANCE):
     """ not everything fits on the screen, based on the size, add newlines """
     if long_phrase is None:
         return long_phrase
+    line_min = int(line_min)
     nl_loc = []
     skip = False
     index = 0

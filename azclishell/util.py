@@ -1,7 +1,21 @@
 import os
 import collections
+import platform
 
 def get_window_dim():
+    """ gets the dimensions depending on python version and os"""
+    if platform.system() == 'Windows':
+        return _size_36_windows()
+    if platform.python_version() == "3.6.0":
+        return _size_36_windows()
+    else:
+        return _size_27()
+
+def _size_27():
+    """ works for python """
+    return os.popen('stty size', 'r').read().split()
+
+def _size_36_windows():
     """ returns the rows, columns of terminal """
     from shutil import get_terminal_size
     dim = get_terminal_size()

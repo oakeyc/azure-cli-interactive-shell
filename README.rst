@@ -65,7 +65,7 @@ Pick the example you want with:
 
 .. code-block:: console
 
-   $ vm create : [Example Number]
+   $ vm create :: [Example Number]
 
 Dev Setup
 ########

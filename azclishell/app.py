@@ -53,7 +53,7 @@ SELECT_SYMBOL = azclishell.configuration.SELECT_SYMBOL
 shell_help = {
     "#[command]" : "use commands outside the application",
     "?[path]" : "query previous command using jmespath syntax",
-    "[command] : [example number]" : "do a step by step tutorial of example",
+    "[command] :: [example number]" : "do a step by step tutorial of example",
     "$" : "get the exit code of the previous command"
 }
 help_doc = TableOutput()
@@ -282,13 +282,14 @@ class Shell(object):
 
     def handle_example(self, text):
         """ parses for the tutortial """
-        cmd = text.partition(":")[0].rstrip()
-        num = text.partition(":")[2].strip()
+        cmd = text.partition(SELECT_SYMBOL['example'])[0].rstrip()
+        num = text.partition(SELECT_SYMBOL['example'])[2].strip()
         example = ""
         try:
             num = int(num) - 1
         except ValueError:
             print("An Integer should follow the colon")
+            return ""
         if cmd in self.completer.command_examples and num >= 0 and\
         num < len(self.completer.command_examples[cmd]):
             example = self.completer.command_examples[cmd][num][1]
