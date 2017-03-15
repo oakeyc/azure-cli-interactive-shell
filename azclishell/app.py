@@ -25,13 +25,13 @@ from pygments.token import Token
 
 from tabulate import tabulate
 
-# import azure.clishell.help.json as shell_help
-import azure.clishell.configuration
-from azure.clishell.az_lexer import AzLexer
-from azure.clishell.az_completer import AzCompleter
-from azure.clishell.layout import create_layout, create_layout_completions
-from azure.clishell.key_bindings import registry, get_section, sub_section, EXAMPLE_REPL
-from azure.clishell.util import get_window_dim
+# import azclishell.help.json as shell_help
+import azclishell.configuration
+from azclishell.az_lexer import AzLexer
+from azclishell.az_completer import AzCompleter
+from azclishell.layout import create_layout, create_layout_completions
+from azclishell.key_bindings import registry, get_section, sub_section, EXAMPLE_REPL
+from azclishell.util import get_window_dim
 
 import azure.cli.core.azlogging as azlogging
 import azure.cli.core.telemetry as telemetry
@@ -45,10 +45,10 @@ from azure.cli.core._profile import _SUBSCRIPTION_NAME, Profile
 from azure.cli.core._output import format_json, TableOutput
 
 logger = azlogging.get_az_logger(__name__)
-SHELL_CONFIGURATION = azure.clishell.configuration.CONFIGURATION
+SHELL_CONFIGURATION = azclishell.configuration.CONFIGURATION
 NOTIFICATIONS = ""
 PROFILE = Profile()
-SELECT_SYMBOL = azure.clishell.configuration.SELECT_SYMBOL
+SELECT_SYMBOL = azclishell.configuration.SELECT_SYMBOL
 
 shell_help = {
     "#[command]" : "use commands outside the application",

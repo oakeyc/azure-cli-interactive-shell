@@ -5,11 +5,11 @@ import json
 from prompt_toolkit.contrib.completers import WordCompleter
 from prompt_toolkit.completion import Completer, Completion
 
-from azure.clishell.command_tree import CommandBranch, CommandHead
-from azure.clishell.util import get_window_dim
-import azure.clishell.configuration
+from azclishell.command_tree import CommandBranch, CommandHead
+from azclishell.util import get_window_dim
+import azclishell.configuration
 
-CONFIGURATION = azure.clishell.configuration.CONFIGURATION
+CONFIGURATION = azclishell.configuration.CONFIGURATION
 ROWS, COLS = get_window_dim()
 
 TOLERANCE = 10

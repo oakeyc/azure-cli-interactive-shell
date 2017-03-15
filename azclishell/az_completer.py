@@ -2,10 +2,10 @@
 from __future__ import print_function
 
 from prompt_toolkit.completion import Completer, Completion
-import azure.clishell.configuration
+import azclishell.configuration
 from azure.cli.core.parser import AzCliCommandParser
 
-SELECT_SYMBOL = azure.clishell.configuration.SELECT_SYMBOL
+SELECT_SYMBOL = azclishell.configuration.SELECT_SYMBOL
 
 class AzCompleter(Completer):
     """ Completes Azure CLI commands """
@@ -30,7 +30,7 @@ class AzCompleter(Completer):
         self.global_parser.add_argument_group('global', 'Global Arguments')
         self.parser = AzCliCommandParser(prog='az', parents=[self.global_parser])
 
-        from azure.clishell._dump_commands import CMD_TABLE as cmd_table
+        from azclishell._dump_commands import CMD_TABLE as cmd_table
         self.cmdtab = cmd_table
         self.parser.load_command_table(self.cmdtab)
 

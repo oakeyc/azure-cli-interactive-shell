@@ -3,14 +3,14 @@ from __future__ import print_function
 import os
 from prompt_toolkit.history import FileHistory
 
-import azure.clishell.configuration
-from azure.clishell._dump_commands import dump_command_table
+import azclishell.configuration
+from azclishell._dump_commands import dump_command_table
 dump_command_table() # order of imports
-
-from azure.clishell.gather_commands import GatherCommands
-from azure.clishell.app import Shell
-from azure.clishell.az_completer import AzCompleter
-from azure.clishell.az_lexer import AzLexer
+azclishell
+from azclishell.gather_commands import GatherCommands
+from azclishell.app import Shell
+from azclishell.az_completer import AzCompleter
+from azclishell.az_lexer import AzLexer
 
 import azure.cli.core.azlogging as azlogging
 import azure.cli.core.telemetry as telemetry
@@ -22,7 +22,7 @@ from azure.cli.core._environment import get_config_dir as cli_config_dir
 from azure.cli.core.application import APPLICATION
 
 AZCOMPLETER = AzCompleter(GatherCommands())
-CONFIGURATION = azure.clishell.configuration.CONFIGURATION
+CONFIGURATION = azclishell.configuration.CONFIGURATION
 
 def main():
     """ the main function """

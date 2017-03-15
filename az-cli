@@ -9,4 +9,4 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
 export PYTHONPATH="${DIR}/src:${PYTHONPATH}"
 
-python -m azure.clishell "$@"
+python -m azclishell "$@"

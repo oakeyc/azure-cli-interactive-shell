@@ -19,8 +19,8 @@ from prompt_toolkit.layout.screen import Char
 from pygments.token import Token
 from pygments.lexer import Lexer as PygLex
 
-import azure.clishell.configuration
-from azure.clishell.az_lexer import ExampleLexer, ToolbarLexer
+import azclishell.configuration
+from azclishell.az_lexer import ExampleLexer, ToolbarLexer
 
 MAX_COMPLETION = 16
 
@@ -114,7 +114,7 @@ def create_layout_completions(lex):
 
 def create_layout(lex):
     """ creates the layout """
-    config = azure.clishell.configuration.CONFIGURATION
+    config = azclishell.configuration.CONFIGURATION
     lexer, examLex, toolbarLex = get_lexers(lex)
 
     input_processors.append(DefaultPrompt(get_prompt_tokens))
