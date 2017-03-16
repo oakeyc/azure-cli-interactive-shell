@@ -9,7 +9,9 @@ SELECT_SYMBOL = {
     'outside' : '#',
     'query' : '?',
     'exit_code' : '$',
-    'example' : '::'
+    'example' : '::',
+    'default' : '%%',
+    'undefault' : '^^'
 }
 
 class Configuration():
