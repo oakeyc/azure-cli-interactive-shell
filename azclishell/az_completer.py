@@ -129,7 +129,8 @@ class AzCompleter(Completer):
                             break
                     if arg_name:
                         break
-                if arg_name:
+                if arg_name and (text_before_cursor.split()[-1].startswith('-') or\
+                text_before_cursor.split()[-2].startswith('-')):
                     try:
                         for choice in self.cmdtab[command].arguments[arg_name].choices:
                             if started_param:
