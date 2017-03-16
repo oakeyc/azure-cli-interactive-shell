@@ -29,7 +29,7 @@ from tabulate import tabulate
 import azclishell.configuration
 from azclishell.az_lexer import AzLexer
 from azclishell.az_completer import AzCompleter
-from azclishell.layout import create_layout, create_layout_completions
+from azclishell.layout import create_layout, create_layout_completions, vm_create
 from azclishell.key_bindings import registry, get_section, sub_section, EXAMPLE_REPL
 from azclishell.util import get_window_dim
 
@@ -409,6 +409,10 @@ class Shell(object):
 
                 if not text: # not input
                     self.set_prompt()
+                    continue
+
+                if text == 'wait':
+                    vm_create()
                     continue
 
                 self.history.append(cmd)

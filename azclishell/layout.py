@@ -8,6 +8,8 @@ from prompt_toolkit.layout.dimension import LayoutDimension as D
 from prompt_toolkit.layout.lexers import PygmentsLexer
 
 from prompt_toolkit.filters import Always, IsDone, HasFocus, RendererHeightIsKnown
+from prompt_toolkit.filters.base import Filter
+
 from prompt_toolkit.layout.menus import CompletionsMenu
 from prompt_toolkit.layout.processors import HighlightSearchProcessor, \
     HighlightSelectionProcessor, \
@@ -38,6 +40,23 @@ input_processors = [
     ConditionalProcessor(
         AppendAutoSuggestion(), HasFocus(DEFAULT_BUFFER)),
 ]
+
+VM_CREATED = False
+
+def vm_create():
+    global VM_CREATED
+    VM_CREATED = True
+
+class IsNotification(Filter):
+    """ filter for the notification center """
+    def __call__(self, *a, **kw):
+        return VM_CREATED
+
+    def __repr__(self):
+        return 'IsNotification()'
+
+def get_not_tokens(cli):
+    return [(Token.Notification, 'Creation Done')]
 
 def get_prompt_tokens(cli):
     """ returns prompt tokens """
@@ -100,6 +119,14 @@ def create_layout_completions(lex):
                         buffer_name='example_line',
                         lexer=lexer
                     ),
+                ),
+                ConditionalContainer(
+                    Window(
+                        TokenListControl(
+                            get_not_tokens,
+                            default_char=Char(' ', Token.Notification)),
+                        height=D.exact(1)),
+                    filter=RendererHeightIsKnown()
                 ),
                 Window(
                     TokenListControl(
