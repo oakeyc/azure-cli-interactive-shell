@@ -27,9 +27,9 @@ from tabulate import tabulate
 
 # import azclishell.help.json as shell_help
 import azclishell.configuration
-from azclishell.az_lexer import AzLexer
+from azclishell.az_lexer import AzLexer, ExampleLexer, ToolbarLexer
 from azclishell.az_completer import AzCompleter
-from azclishell.layout import create_layout, create_layout_completions
+from azclishell.layout import create_layout, create_layout_completions, set_default_command
 from azclishell.key_bindings import registry, get_section, sub_section, EXAMPLE_REPL
 from azclishell.util import get_window_dim
 
@@ -54,7 +54,9 @@ shell_help = {
     "#[command]" : "use commands outside the application",
     "?[path]" : "query previous command using jmespath syntax",
     "[command] :: [example number]" : "do a step by step tutorial of example",
-    "$" : "get the exit code of the previous command"
+    "$" : "get the exit code of the previous command",
+    "%%" : "default a value",
+    "^^" : "undefault a value"
 }
 help_doc = TableOutput()
 
@@ -106,6 +108,8 @@ class Shell(object):
         self.last_exit = 0
         self.input = input_custom
         self.output = output_costom
+        self.default_params = []
+        self.default_command = ""
 
     @property
     def cli(self):
@@ -190,10 +194,16 @@ class Shell(object):
             sub_name = PROFILE.get_subscription()[_SUBSCRIPTION_NAME]
         except CLIError:
             pass
+
+        if self.default_params:
+            toolbar_value = "Default Param: %s" % ' '.join(self.default_params)
+        else:
+            toolbar_value = "Cloud: %s" % get_active_cloud_name()
+
         settings_items = [
             " [F1]Layout",
             "[CrtlQ]Quit",
-            "Cloud: %s" % get_active_cloud_name(),
+            toolbar_value,
             "Subscription: %s" % sub_name
         ]
         counter = 0
@@ -235,7 +245,7 @@ class Shell(object):
     def create_application(self, all_layout=True):
         """ makes the application object and the buffers """
         if all_layout:
-            layout = create_layout(self.lexer)
+            layout = create_layout(self.lexer, ExampleLexer, ToolbarLex)
         else:
             layout = create_layout_completions(self.lexer)
 
@@ -279,6 +289,23 @@ class Shell(object):
             initial_document=Document(self.description_docs,\
             cursor_position=position))
         self.cli.request_redraw()
+
+    def handle_default_param(self, text):
+        """ defaults a value """
+        # assert len(text) > 2
+        value = " ".join(text[:2])
+        self.default_params.append(value)
+        return value
+
+    def handle_default_command(self, text):
+        """ default commands """
+        value = text[0]
+        set_default_command(value)
+        if self.default_command:
+            self.default_command += ' ' + value
+        else:
+            self.default_command += value
+        return value
 
     def handle_example(self, text):
         """ parses for the tutortial """
@@ -359,6 +386,14 @@ class Shell(object):
                 text = document.text
                 cmd = text
                 outside = False
+                if text.split() and text.split()[0] == 'az':
+                    cmd = ' '.join(text.split()[1:])
+                if self.default_command:
+                    cmd = self.default_command + " " + cmd
+                if self.default_params:
+                    for param in self.default_params:
+                        cmd += ' ' + param
+
             except AttributeError:  # when the user pressed Control Q
                 break
             else:
@@ -376,8 +411,8 @@ class Shell(object):
                     if text[0] == SELECT_SYMBOL['outside']:
                         cmd = text[1:]
                         outside = True
-                    elif text.split()[0] == "az":  # dumps the extra az
-                        cmd = " ".join(text.split()[1:])
+                    # elif text.split()[0] == "az":  # dumps the extra az
+                    #     cmd = " ".join(text.split()[1:])
                     elif text[0] == SELECT_SYMBOL['exit_code']:
                         print(self.last_exit)
                         self.set_prompt()
@@ -406,6 +441,26 @@ class Shell(object):
                     elif SELECT_SYMBOL['example'] in text:
                         global NOTIFICATIONS
                         cmd = self.handle_example(text)
+                if SELECT_SYMBOL['default'] in text:
+                    default = text.partition(SELECT_SYMBOL['default'])[2].split()
+                    if default[0].startswith('-'):
+                        value = self.handle_default_param(default)
+                    else:
+                        value = self.handle_default_command(default)
+                    print("defaulting: " + value)
+                    self.set_prompt()
+                    continue
+                if SELECT_SYMBOL['undefault'] in text:
+                    value = text.partition(SELECT_SYMBOL['undefault'])[2].split()
+                    if len(value) > 0 and value[0] == self.default_command:
+                        self.default_command = ""
+                        set_default_command("", add=False)
+                        print('undefaulting: ' + value[0])
+                    if len(value) > 1 and ' '.join(value[:2]) in self.default_params:
+                        self.default_params.remove(' '.join(value[:2]))
+                        print('undefaulting: ' + ' '.join(value[:2]))
+                    self.set_prompt()
+                    continue
 
                 if not text: # not input
                     self.set_prompt()

@@ -20,7 +20,8 @@ from pygments.token import Token
 from pygments.lexer import Lexer as PygLex
 
 import azclishell.configuration
-from azclishell.az_lexer import ExampleLexer, ToolbarLexer
+# from azclishell.az_lexer import ExampleLexer, ToolbarLexer
+# from azclishell.az_lexer import ExampleLexer, ToolbarLexer
 
 MAX_COMPLETION = 16
 
@@ -38,10 +39,20 @@ input_processors = [
     ConditionalProcessor(
         AppendAutoSuggestion(), HasFocus(DEFAULT_BUFFER)),
 ]
+DEFAULT_COMMAND = ""
+def default_command():
+    return DEFAULT_COMMAND
+
+def set_default_command(com, add=True):
+    global DEFAULT_COMMAND
+    if add:
+        DEFAULT_COMMAND += " " + com
+    else:
+        DEFAULT_COMMAND = com
 
 def get_prompt_tokens(cli):
     """ returns prompt tokens """
-    return [(Token.Az, 'az>> ')]
+    return [(Token.Az, 'az%s>> '%DEFAULT_COMMAND)]
 
 def get_height(cli):
     """ gets the height of the cli """
@@ -52,7 +63,7 @@ def get_tutorial_tokens(cli):
     """ tutorial tokens """
     return [(Token.Toolbar, 'In Tutorial Mode: Press [Enter] after typing each part')]
 
-def get_lexers(lex):
+def get_lexers(lex, examLex,toolLex):
     """ gets all the lexer wrappers """
     lexer = None
     if issubclass(lex, PromptLex):
@@ -60,18 +71,17 @@ def get_lexers(lex):
     elif issubclass(lex, PygLex):
         lexer = PygmentsLexer(lex)
 
-    examLex = ExampleLexer
-    if issubclass(examLex, PygLex):
-        examLex = PygmentsLexer(examLex)
-
-    toolLex = ToolbarLexer
-    if issubclass(toolLex, PygLex):
-        toolLex = PygmentsLexer(toolLex)
+    if examLex:
+        if issubclass(examLex, PygLex):
+            examLex = PygmentsLexer(examLex)
+    if toolLex:
+        if issubclass(toolLex, PygLex):
+            toolLex = PygmentsLexer(toolLex)
     return lexer, examLex, toolLex
 
 def create_layout_completions(lex):
     """ layout for example tutorial """
-    lexer, _, _ = get_lexers(lex)
+    lexer, _, _ = get_lexers(lex, None, None)
     layout_full = HSplit([
         FloatContainer(
             Window(
@@ -112,10 +122,10 @@ def create_layout_completions(lex):
     ])
     return layout_full
 
-def create_layout(lex):
+def create_layout(lex, examLex, toolbarLex):
     """ creates the layout """
     config = azclishell.configuration.CONFIGURATION
-    lexer, examLex, toolbarLex = get_lexers(lex)
+    lexer, examLex, toolbarLex = get_lexers(lex, examLex, toolbarLex)
 
     input_processors.append(DefaultPrompt(get_prompt_tokens))
 

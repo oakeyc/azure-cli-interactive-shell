@@ -3,6 +3,8 @@ from __future__ import print_function
 
 from prompt_toolkit.completion import Completer, Completion
 import azclishell.configuration
+from azclishell.layout import default_command
+
 from azure.cli.core.parser import AzCliCommandParser
 
 SELECT_SYMBOL = azclishell.configuration.SELECT_SYMBOL
@@ -53,6 +55,10 @@ class AzCompleter(Completer):
         if len(text_before_cursor.split()) > 0\
         and text_before_cursor.split()[0] == 'az': # remove optional az
             text_before_cursor = ' '.join(text_before_cursor.split()[1:])
+        if default_command():
+            # print(DEFAULT_COMMAND)
+            text_before_cursor = default_command() + ' ' + text_before_cursor
+
         if text_before_cursor.split():
             if text_before_cursor.split():
                 for words in text_before_cursor.split():

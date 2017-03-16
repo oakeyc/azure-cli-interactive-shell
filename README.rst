@@ -48,6 +48,25 @@ jmespath format for querying
 
 *Note: Only if the previous command dumps out json, e.g. vm list*
 
+To only see the commands for a command
+
+.. code-block:: console
+
+   $ %% [top-level command]
+
+To default a parameter, like a resource group
+
+.. code-block:: console
+
+   $ %% -g [group name]
+
+To undefault a value
+
+.. code-block:: console
+
+   $ ^^ [value to undefault]
+
+
 Use Examples
 ########
 
