@@ -54,7 +54,9 @@ shell_help = {
     "#[command]" : "use commands outside the application",
     "?[path]" : "query previous command using jmespath syntax",
     "[command] :: [example number]" : "do a step by step tutorial of example",
-    "$" : "get the exit code of the previous command"
+    "$" : "get the exit code of the previous command",
+    "%%" : "default a value",
+    "^^" : "undefault a value"
 }
 help_doc = TableOutput()
 
@@ -449,7 +451,6 @@ class Shell(object):
                     self.set_prompt()
                     continue
                 if SELECT_SYMBOL['undefault'] in text:
-                    print('symbol')
                     value = text.partition(SELECT_SYMBOL['undefault'])[2].split()
                     if len(value) > 0 and value[0] == self.default_command:
                         self.default_command = ""
