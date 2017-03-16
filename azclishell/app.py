@@ -89,7 +89,7 @@ class Shell(object):
     """ represents the shell """
 
     def __init__(self, completer=None, styles=None, lexer=None, history=InMemoryHistory(),
-                 app=None, input=sys.stdout, output=None):
+                 app=None, input_custom=sys.stdout, output_costom=None):
         self.styles = styles or default_style()
         self.lexer = lexer or AzLexer
         self.app = app
@@ -104,8 +104,8 @@ class Shell(object):
         self._env = os.environ.copy()
         self.last = None
         self.last_exit = 0
-        self.input = input
-        self.output = output
+        self.input = input_custom
+        self.output = output_costom
 
     @property
     def cli(self):
