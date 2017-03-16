@@ -27,7 +27,7 @@ from tabulate import tabulate
 
 # import azclishell.help.json as shell_help
 import azclishell.configuration
-from azclishell.az_lexer import AzLexer
+from azclishell.az_lexer import AzLexer, ExampleLexer, ToolbarLexer
 from azclishell.az_completer import AzCompleter
 from azclishell.layout import create_layout, create_layout_completions, set_default_command
 from azclishell.key_bindings import registry, get_section, sub_section, EXAMPLE_REPL
@@ -245,7 +245,7 @@ class Shell(object):
     def create_application(self, all_layout=True):
         """ makes the application object and the buffers """
         if all_layout:
-            layout = create_layout(self.lexer)
+            layout = create_layout(self.lexer, ExampleLexer, ToolbarLex)
         else:
             layout = create_layout_completions(self.lexer)
 
