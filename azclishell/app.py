@@ -188,6 +188,7 @@ class Shell(object):
         self.config_default = ""
         for opt in options:
             self.config_default += opt + ": " + az_config.get(DEFAULTS_SECTION, opt) + "  "
+        
 
         settings, empty_space = self._toolbar_info(cols, empty_space)
 
