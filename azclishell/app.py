@@ -215,6 +215,7 @@ class Shell(object):
 
         settings_items = [
             " [F1]Layout",
+            "[F2]Defaults",
             "[CrtlQ]Quit",
             toolbar_value,
             "Subscription: %s" % sub_name
