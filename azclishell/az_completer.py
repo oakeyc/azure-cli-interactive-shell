@@ -55,6 +55,12 @@ class AzCompleter(Completer):
         if len(text_before_cursor.split()) > 0\
         and text_before_cursor.split()[0] == 'az': # remove optional az
             text_before_cursor = ' '.join(text_before_cursor.split()[1:])
+
+        if SELECT_SYMBOL['default'] in text_before_cursor:
+            text_before_cursor = text_before_cursor.replace(SELECT_SYMBOL['default'], "")
+        if SELECT_SYMBOL['undefault'] in text_before_cursor:
+            text_before_cursor = text_before_cursor.replace(SELECT_SYMBOL['undefault'], "")
+
         if default_command():
             # print(DEFAULT_COMMAND)
             text_before_cursor = default_command() + ' ' + text_before_cursor

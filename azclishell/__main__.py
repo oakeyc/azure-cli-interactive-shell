@@ -47,6 +47,7 @@ def main():
         lexer=AzLexer,
         history=FileHistory(os.path.join(CONFIGURATION.get_config_dir(), config.get_history())),
         app=APPLICATION,
+        # cli_config=os.path.join(azure_folder, 'config')
     )
     shell_app.run()
 

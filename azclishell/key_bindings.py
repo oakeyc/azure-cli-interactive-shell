@@ -18,6 +18,7 @@ _SECTION = 1
 
 PROMPTING = False
 EXAMPLE_REPL = False
+SHOW_DEFAULT = False
 
 class _PromptFilter(Filter):
     def __call__(self, *a, **kw):
@@ -71,6 +72,15 @@ def config_settings_(event):
     PROMPTING = False
     print("\nChanges won't take effect until you restart the program\n\n")
     event.cli.set_return_value(event.cli.current_buffer)
+
+@registry.add_binding(Keys.F2, eager=True)
+def show_default_(event):
+    """ Pans the example pan down"""
+    global SHOW_DEFAULT
+    SHOW_DEFAULT = not SHOW_DEFAULT
+
+def get_show_default():
+    return SHOW_DEFAULT
 
 def format_response(response):
     """ formats a response in a binary """
