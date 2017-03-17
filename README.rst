@@ -54,12 +54,6 @@ To only see the commands for a command
 
    $ %% [top-level command]
 
-To default a parameter, like a resource group
-
-.. code-block:: console
-
-   $ %% -g [group name]
-
 To undefault a value
 
 .. code-block:: console

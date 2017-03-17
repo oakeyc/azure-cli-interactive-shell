@@ -7,7 +7,7 @@ from prompt_toolkit.layout.controls import BufferControl, FillControl, TokenList
 from prompt_toolkit.layout.dimension import LayoutDimension as D
 from prompt_toolkit.layout.lexers import PygmentsLexer
 
-from prompt_toolkit.filters import Always, IsDone, HasFocus, RendererHeightIsKnown
+from prompt_toolkit.filters import Filter, Always, IsDone, HasFocus, RendererHeightIsKnown
 from prompt_toolkit.layout.menus import CompletionsMenu
 from prompt_toolkit.layout.processors import HighlightSearchProcessor, \
     HighlightSelectionProcessor, \
@@ -20,6 +20,8 @@ from pygments.token import Token
 from pygments.lexer import Lexer as PygLex
 
 import azclishell.configuration
+from azclishell.key_bindings import get_show_default, get_symbols
+
 # from azclishell.az_lexer import ExampleLexer, ToolbarLexer
 # from azclishell.az_lexer import ExampleLexer, ToolbarLexer
 
@@ -39,6 +41,18 @@ input_processors = [
     ConditionalProcessor(
         AppendAutoSuggestion(), HasFocus(DEFAULT_BUFFER)),
 ]
+# SHOW_DEFAULT = False
+
+class ShowDefault(Filter):
+    """ toggle on and off seeing the default """
+    def __call__(self, *a, **kw):
+        return get_show_default()
+
+class ShowSymbol(Filter):
+    """ toggle showing the symbols """
+    def __call__(self, *a, **kw):
+        return get_symbols()
+
 DEFAULT_COMMAND = ""
 def default_command():
     return DEFAULT_COMMAND
@@ -136,6 +150,32 @@ def create_layout(lex, examLex, toolbarLex):
             get_examplehline(config),
             get_example(config, examLex),
 
+            ConditionalContainer(
+                get_hline(),
+                filter=ShowDefault() | ShowSymbol()
+            ),
+            ConditionalContainer(
+                Window(
+                    content=BufferControl(
+                        buffer_name='default_values',
+                        lexer=lexer
+                    )
+                ),
+                filter=ShowDefault()
+            ),
+            ConditionalContainer(
+                get_hline(),
+                filter=ShowDefault() & ShowSymbol()
+            ),
+            ConditionalContainer(
+                Window(
+                    content=BufferControl(
+                        buffer_name='symbols',
+                        lexer=lexer
+                    )
+                ),
+                filter=ShowSymbol()
+            ),
             Window(
                 content=BufferControl(
                     buffer_name='bottom_toolbar',

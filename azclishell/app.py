@@ -10,6 +10,8 @@ import collections
 import shutil
 import jmespath
 
+from six.moves import configparser
+
 from prompt_toolkit import prompt
 from prompt_toolkit.buffer import Buffer
 from prompt_toolkit.shortcuts import create_eventloop
@@ -43,6 +45,7 @@ from azure.cli.core._environment import get_config_dir
 from azure.cli.core.cloud import get_active_cloud_name
 from azure.cli.core._profile import _SUBSCRIPTION_NAME, Profile
 from azure.cli.core._output import format_json, TableOutput
+from azure.cli.core._config import az_config, DEFAULTS_SECTION
 
 logger = azlogging.get_az_logger(__name__)
 SHELL_CONFIGURATION = azclishell.configuration.CONFIGURATION
@@ -50,14 +53,22 @@ NOTIFICATIONS = ""
 PROFILE = Profile()
 SELECT_SYMBOL = azclishell.configuration.SELECT_SYMBOL
 
-shell_help = {
-    "#[command]" : "use commands outside the application",
-    "?[path]" : "query previous command using jmespath syntax",
-    "[command] :: [example number]" : "do a step by step tutorial of example",
-    "$" : "get the exit code of the previous command",
-    "%%" : "default a value",
-    "^^" : "undefault a value"
-}
+# shell_help = {
+#     "#[command]" : "use commands outside the application",
+#     "?[path]" : "query previous command using jmespath syntax",
+#     "[command] :: [example number]" : "do a step by step tutorial of example",
+#     "$" : "get the exit code of the previous command",
+#     "%%" : "default a value",
+#     "^^" : "undefault a value"
+# }
+shell_help = \
+    "#[cmd]          : use commands outside the application\n" +\
+    "?[path]         : query previous command using jmespath syntax\n" +\
+    "[cmd] :: [num]  : do a step by step tutorial of example\n" +\
+    "$               : get the exit code of the previous command\n" +\
+    "%%              : default a value\n" +\
+    "^^              : undefault a value"
+
 help_doc = TableOutput()
 
 def default_style():
@@ -108,7 +119,8 @@ class Shell(object):
         self.last_exit = 0
         self.input = input_custom
         self.output = output_costom
-        self.default_params = []
+        self.config_default = ""
+        # self.default_params = []
         self.default_command = ""
 
     @property
@@ -171,6 +183,12 @@ class Shell(object):
 
         self.param_docs = u"%s" % all_params
         self.example_docs = u'%s' % example
+
+        options = az_config.config_parser.options(DEFAULTS_SECTION)
+        self.config_default = ""
+        for opt in options:
+            self.config_default += opt + ": " + az_config.get(DEFAULTS_SECTION, opt) + "  "
+
         settings, empty_space = self._toolbar_info(cols, empty_space)
 
         cli.buffers['description'].reset(
@@ -186,6 +204,9 @@ class Shell(object):
             initial_document=Document(u'%s%s%s' % \
             (NOTIFICATIONS, settings, empty_space))
         )
+        cli.buffers['default_values'].reset(
+            initial_document=Document(u'%s' %self.config_default)
+        )
         cli.request_redraw()
 
     def _toolbar_info(self, cols, empty_space):
@@ -195,15 +216,17 @@ class Shell(object):
         except CLIError:
             pass
 
-        if self.default_params:
-            toolbar_value = "Default Param: %s" % ' '.join(self.default_params)
-        else:
-            toolbar_value = "Cloud: %s" % get_active_cloud_name()
+        # if self.default_params:
+        #     toolbar_value = "Default Param: %s" % ' '.join(self.default_params)
+        # else:
+        toolbar_value = "Cloud: %s" % get_active_cloud_name()
 
         settings_items = [
             " [F1]Layout",
+            "[F2]Defaults",
+            "[F3]Keys",
             "[CrtlQ]Quit",
-            toolbar_value,
+            # toolbar_value,
             "Subscription: %s" % sub_name
         ]
         counter = 0
@@ -245,7 +268,7 @@ class Shell(object):
     def create_application(self, all_layout=True):
         """ makes the application object and the buffers """
         if all_layout:
-            layout = create_layout(self.lexer, ExampleLexer, ToolbarLex)
+            layout = create_layout(self.lexer, ExampleLexer, ToolbarLexer)
         else:
             layout = create_layout_completions(self.lexer)
 
@@ -255,7 +278,9 @@ class Shell(object):
             'parameter' : Buffer(is_multiline=True, read_only=True),
             'examples' : Buffer(is_multiline=True, read_only=True),
             'bottom_toolbar' : Buffer(is_multiline=True),
-            'example_line' : Buffer(is_multiline=True)
+            'example_line' : Buffer(is_multiline=True),
+            'default_values' : Buffer(),
+            'symbols' : Buffer()
         }
 
         writing_buffer = Buffer(
@@ -290,12 +315,12 @@ class Shell(object):
             cursor_position=position))
         self.cli.request_redraw()
 
-    def handle_default_param(self, text):
-        """ defaults a value """
-        # assert len(text) > 2
-        value = " ".join(text[:2])
-        self.default_params.append(value)
-        return value
+    # def handle_default_param(self, text):
+    #     """ defaults a value """
+    #     # assert len(text) > 2
+    #     value = " ".join(text[:2])
+    #     self.default_params.append(value)
+    #     return value
 
     def handle_default_command(self, text):
         """ default commands """
@@ -380,6 +405,9 @@ class Shell(object):
     def run(self):
         """ runs the CLI """
         telemetry.start()
+        self.cli.buffers['symbols'].reset(
+            initial_document=Document(u'%s' %shell_help)
+        )
         while True:
             try:
                 document = self.cli.run(reset_current_buffer=True)
@@ -390,9 +418,9 @@ class Shell(object):
                     cmd = ' '.join(text.split()[1:])
                 if self.default_command:
                     cmd = self.default_command + " " + cmd
-                if self.default_params:
-                    for param in self.default_params:
-                        cmd += ' ' + param
+                # if self.default_params:
+                #     for param in self.default_params:
+                #         cmd += ' ' + param
 
             except AttributeError:  # when the user pressed Control Q
                 break
@@ -452,13 +480,19 @@ class Shell(object):
                     continue
                 if SELECT_SYMBOL['undefault'] in text:
                     value = text.partition(SELECT_SYMBOL['undefault'])[2].split()
-                    if len(value) > 0 and value[0] == self.default_command:
+                    if len(value) == 0:
+                        self.default_command = ""
+                        set_default_command("", add=False)
+                        # self.default_params = []
+                        print('undefaulting all')
+                    elif len(value) == 1 and value[0] == self.default_command:
                         self.default_command = ""
                         set_default_command("", add=False)
                         print('undefaulting: ' + value[0])
-                    if len(value) > 1 and ' '.join(value[:2]) in self.default_params:
-                        self.default_params.remove(' '.join(value[:2]))
-                        print('undefaulting: ' + ' '.join(value[:2]))
+                    # elif len(value) == 2 and ' '.join(value[:2]) in self.default_params:
+                    #     self.default_params.remove(' '.join(value[:2]))
+                    #     print('undefaulting: ' + ' '.join(value[:2]))
+
                     self.set_prompt()
                     continue
 
