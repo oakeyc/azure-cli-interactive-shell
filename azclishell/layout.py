@@ -157,7 +157,8 @@ def create_layout(lex, examLex, toolbarLex):
             ConditionalContainer(
                 Window(
                     content=BufferControl(
-                        buffer_name='default_values'
+                        buffer_name='default_values',
+                        lexer=lexer
                     )
                 ),
                 filter=ShowDefault()
@@ -169,7 +170,8 @@ def create_layout(lex, examLex, toolbarLex):
             ConditionalContainer(
                 Window(
                     content=BufferControl(
-                        buffer_name='symbols'
+                        buffer_name='symbols',
+                        lexer=lexer
                     )
                 ),
                 filter=ShowSymbol()
