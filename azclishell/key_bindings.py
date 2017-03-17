@@ -19,6 +19,7 @@ _SECTION = 1
 PROMPTING = False
 EXAMPLE_REPL = False
 SHOW_DEFAULT = False
+SYMBOLS = False
 
 class _PromptFilter(Filter):
     def __call__(self, *a, **kw):
@@ -75,9 +76,18 @@ def config_settings_(event):
 
 @registry.add_binding(Keys.F2, eager=True)
 def show_default_(event):
-    """ Pans the example pan down"""
+    """ shows the defaults"""
     global SHOW_DEFAULT
     SHOW_DEFAULT = not SHOW_DEFAULT
+
+@registry.add_binding(Keys.F3, eager=True)
+def show_symboles(event):
+    """ shows the symbol bindings"""
+    global SYMBOLS
+    SYMBOLS = not SYMBOLS
+
+def get_symbols():
+    return SYMBOLS
 
 def get_show_default():
     return SHOW_DEFAULT

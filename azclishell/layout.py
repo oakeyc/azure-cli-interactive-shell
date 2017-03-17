@@ -20,7 +20,7 @@ from pygments.token import Token
 from pygments.lexer import Lexer as PygLex
 
 import azclishell.configuration
-from azclishell.key_bindings import get_show_default
+from azclishell.key_bindings import get_show_default, get_symbols
 
 # from azclishell.az_lexer import ExampleLexer, ToolbarLexer
 # from azclishell.az_lexer import ExampleLexer, ToolbarLexer
@@ -47,6 +47,11 @@ class ShowDefault(Filter):
     """ toggle on and off seeing the default """
     def __call__(self, *a, **kw):
         return get_show_default()
+
+class ShowSymbol(Filter):
+    """ toggle showing the symbols """
+    def __call__(self, *a, **kw):
+        return get_symbols()
 
 DEFAULT_COMMAND = ""
 def default_command():
@@ -151,6 +156,14 @@ def create_layout(lex, examLex, toolbarLex):
                     )
                 ),
                 filter=ShowDefault()
+            ),
+            ConditionalContainer(
+                Window(
+                    content=BufferControl(
+                        buffer_name='symbols'
+                    )
+                ),
+                filter=ShowSymbol()
             ),
             Window(
                 content=BufferControl(

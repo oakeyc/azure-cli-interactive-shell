@@ -53,14 +53,22 @@ NOTIFICATIONS = ""
 PROFILE = Profile()
 SELECT_SYMBOL = azclishell.configuration.SELECT_SYMBOL
 
-shell_help = {
-    "#[command]" : "use commands outside the application",
-    "?[path]" : "query previous command using jmespath syntax",
-    "[command] :: [example number]" : "do a step by step tutorial of example",
-    "$" : "get the exit code of the previous command",
-    "%%" : "default a value",
-    "^^" : "undefault a value"
-}
+# shell_help = {
+#     "#[command]" : "use commands outside the application",
+#     "?[path]" : "query previous command using jmespath syntax",
+#     "[command] :: [example number]" : "do a step by step tutorial of example",
+#     "$" : "get the exit code of the previous command",
+#     "%%" : "default a value",
+#     "^^" : "undefault a value"
+# }
+shell_help = \
+    "#[cmd]          : use commands outside the application\n" +\
+    "?[path]         : query previous command using jmespath syntax\n" +\
+    "[cmd] :: [num]  : do a step by step tutorial of example\n" +\
+    "$               : get the exit code of the previous command\n" +\
+    "%%              : default a value\n" +\
+    "^^              : undefault a value"
+
 help_doc = TableOutput()
 
 def default_style():
@@ -216,8 +224,9 @@ class Shell(object):
         settings_items = [
             " [F1]Layout",
             "[F2]Defaults",
+            "[F3]Keys",
             "[CrtlQ]Quit",
-            toolbar_value,
+            # toolbar_value,
             "Subscription: %s" % sub_name
         ]
         counter = 0
@@ -270,7 +279,8 @@ class Shell(object):
             'examples' : Buffer(is_multiline=True, read_only=True),
             'bottom_toolbar' : Buffer(is_multiline=True),
             'example_line' : Buffer(is_multiline=True),
-            'default_values' : Buffer()
+            'default_values' : Buffer(),
+            'symbols' : Buffer()
         }
 
         writing_buffer = Buffer(
@@ -395,6 +405,9 @@ class Shell(object):
     def run(self):
         """ runs the CLI """
         telemetry.start()
+        self.cli.buffers['symbols'].reset(
+            initial_document=Document(u'%s' %shell_help)
+        )
         while True:
             try:
                 document = self.cli.run(reset_current_buffer=True)
