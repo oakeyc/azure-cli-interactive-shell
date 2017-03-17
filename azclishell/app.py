@@ -197,7 +197,7 @@ class Shell(object):
             (NOTIFICATIONS, settings, empty_space))
         )
         cli.buffers['default_values'].reset(
-            initial_document=Document(u'DEFAULT VALUES: %s' %self.config_default)
+            initial_document=Document(u'%s' %self.config_default)
         )
         cli.request_redraw()
 
