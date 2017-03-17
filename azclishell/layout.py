@@ -149,6 +149,11 @@ def create_layout(lex, examLex, toolbarLex):
             get_descriptions(config, examLex, lexer),
             get_examplehline(config),
             get_example(config, examLex),
+
+            ConditionalContainer(
+                get_hline(),
+                filter=ShowDefault() | ShowSymbol()
+            ),
             ConditionalContainer(
                 Window(
                     content=BufferControl(
@@ -156,6 +161,10 @@ def create_layout(lex, examLex, toolbarLex):
                     )
                 ),
                 filter=ShowDefault()
+            ),
+            ConditionalContainer(
+                get_hline(),
+                filter=ShowDefault() & ShowSymbol()
             ),
             ConditionalContainer(
                 Window(
