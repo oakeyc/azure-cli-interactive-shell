@@ -1,12 +1,10 @@
-FROM oakeyc/az-cli-shell
+FROM azuresdk/azure-cli-python
 
-WORKDIR azclishell
-COPY . /azclishell
+# WORKDIR azclishell
+# COPY . /azclishell
 
-RUN pip install azure-cli-shell
+RUN pip install -e .
 
-# RUN az-shell
-
-WORKDIR /
+# WORKDIR /
 
 CMD bash
