@@ -15,7 +15,7 @@ OUTPUT_OPTIONS = ['--output', '-o']
 
 class AzCompleter(Completer):
     """ Completes Azure CLI commands """
-    def __init__(self, commands):
+    def __init__(self, commands, global_params=True):
         # dictionary of command to descriptions
         self.command_description = commands.descrip
         # from a command to a list of parameters
@@ -31,6 +31,12 @@ class AzCompleter(Completer):
         self.command_examples = commands.command_example
         # a dictionary of which parameters mean the same thing
         self.same_param_doubles = commands.same_param_doubles or {}
+
+        if not global_params:
+            global GLOBAL_PARAM, OUTPUT_CHOICES, OUTPUT_OPTIONS
+            GLOBAL_PARAM = []
+            OUTPUT_CHOICES = []
+            OUTPUT_OPTIONS = []
 
         self.global_parser = AzCliCommandParser(prog='az', add_help=False)
         self.global_parser.add_argument_group('global', 'Global Arguments')

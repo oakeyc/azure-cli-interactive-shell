@@ -36,7 +36,7 @@ class CompletionTest(unittest.TestCase):
         commands = _Commands(
             command_tree=com_tree3
         )
-        self.completer = AzCompleter(commands)
+        self.completer = AzCompleter(commands, global_params=False)
 
     def init2(self):
         """ a variation of initializing """
@@ -61,7 +61,7 @@ class CompletionTest(unittest.TestCase):
             completable_param=completable_param,
             param_descript=param_descript
         )
-        self.completer = AzCompleter(commands)
+        self.completer = AzCompleter(commands, global_params=False)
 
     def init3(self):
         """ a variation of initializing """
@@ -93,7 +93,7 @@ class CompletionTest(unittest.TestCase):
             param_descript=param_descript,
             same_param_doubles=same_param_doubles
         )
-        self.completer = AzCompleter(commands)
+        self.completer = AzCompleter(commands, global_params=False)
 
     def test_command_completion(self):
         """ tests general command completion """
