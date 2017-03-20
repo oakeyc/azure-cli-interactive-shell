@@ -1,0 +1,6 @@
+azure-cli
+prompt_toolkit
+six
+pyyaml
+pytest
+jmespath

@@ -71,7 +71,7 @@ def config_settings_(event):
         config.set_val('Layout', questions[question], format_response(answer))
         answer = ""
     PROMPTING = False
-    print("\nChanges won't take effect until you restart the program\n\n")
+    print("\nPlease restart shell for changes to take effect\n\n")
     event.cli.set_return_value(event.cli.current_buffer)
 
 @registry.add_binding(Keys.F2, eager=True)

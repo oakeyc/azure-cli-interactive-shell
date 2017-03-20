@@ -1,27 +1,29 @@
-from os import path
-from setuptools import setup
+# --------------------------------------------------------------------------------------------
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License. See License.txt in the project root for license information.
+# --------------------------------------------------------------------------------------------
 
-here = path.abspath(path.dirname(__file__))
+from setuptools import setup
 
 DEPENDENCIES = [
     'azure-cli',
     'prompt_toolkit',
     'six',
     'pyyaml',
-    'pytest',
     'jmespath',
 ]
+with open('README.rst', 'r', encoding='utf-8') as f:
+    README = f.read()
 
 setup(
-    name='az-cli-shell',
-    version='0.1.1a27',
+    name='azure-cli-shell',
+    version='0.1.0',
+    description='Microsoft Azure Command-Line Interactive Shell',
+    long_description=README + '\n\n',
     author='Microsoft Corporation',
-    scripts=['dev_setup.py', 'az-cli'],
+    scripts=['az-shell.bat', 'az-shell'],
     packages=[
-        "azclishell", "test"
-    ],
-    namespace_packages=[
-        'azclishell',
+        "azclishell"
     ],
     url='https://github.com/oakeyc/azure-cli-interactive-shell',
     install_requires=DEPENDENCIES,

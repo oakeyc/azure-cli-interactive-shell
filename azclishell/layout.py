@@ -171,7 +171,7 @@ def create_layout(lex, examLex, toolbarLex):
                 Window(
                     content=BufferControl(
                         buffer_name='symbols',
-                        lexer=lexer
+                        lexer=examLex
                     )
                 ),
                 filter=ShowSymbol()

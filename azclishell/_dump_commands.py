@@ -37,15 +37,15 @@ def dump_command_table():
         try:
             import_module('azure.cli.command_modules.' + mod).load_params(mod)
         except Exception as ex:
-            print("EXCPETION: " + ex.message)
+            print("Exception: " + ex.message)
     _update_command_definitions(cmd_table)
 
     data = {}
     for cmd in cmd_table:
-        com_descip = {}
+        com_descrip = {}
         param_descrip = {}
-        com_descip['help'] = cmd_table[cmd].description
-        com_descip['examples'] = ""
+        com_descrip['help'] = cmd_table[cmd].description
+        com_descrip['examples'] = ""
 
         for key in cmd_table[cmd].arguments:
             required = ""
@@ -66,8 +66,8 @@ def dump_command_table():
             }
             param_descrip[cmd_table[cmd].arguments[key].options_list[0]] = options
 
-        com_descip['parameters'] = param_descrip
-        data[cmd] = com_descip
+        com_descrip['parameters'] = param_descrip
+        data[cmd] = com_descrip
 
     for cmd in helps:
         diction_help = yaml.load(helps[cmd])

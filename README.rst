@@ -94,8 +94,3 @@ To get the Exit Code of the previous command:
 .. code-block:: console
 
    $ $
-
-But Wait, There Will Be More!
-#############################
-* Telemetry
-* Real-time Notifications
