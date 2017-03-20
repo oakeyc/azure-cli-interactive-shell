@@ -20,7 +20,7 @@ Installation
 ############
 .. code-block:: console
 
-   $ pip install az-cli-shell
+   $ pip install azure-cli-shell
 
 Running
 ########
@@ -29,7 +29,7 @@ To start the application
 
 .. code-block:: console
 
-   $ az-cli
+   $ az-shell
 
 Then type your commands and hit [Enter]
 
