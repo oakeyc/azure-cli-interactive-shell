@@ -5,15 +5,13 @@ from prompt_toolkit.history import FileHistory
 
 import azclishell.configuration
 from azclishell._dump_commands import dump_command_table
-dump_command_table() # order of imports
-azclishell
+dump_command_table() # because need to write to files before read them
 from azclishell.gather_commands import GatherCommands
 from azclishell.app import Shell
 from azclishell.az_completer import AzCompleter
 from azclishell.az_lexer import AzLexer
 
 import azure.cli.core.azlogging as azlogging
-import azure.cli.core.telemetry as telemetry
 import azure.cli.core.telemetry as telemetry
 from azure.cli.core.application import APPLICATION, Configuration
 from azure.cli.core._session import ACCOUNT, CONFIG, SESSION
@@ -38,7 +36,7 @@ def main():
     config = CONFIGURATION
 
     if config.BOOLEAN_STATES[config.config.get('DEFAULT', 'firsttime')]:
-        APPLICATION.execute(["configure"])
+        # APPLICATION.execute(["configure"])
         print("When in doubt, ask for 'help'")
         config.firsttime()
 
