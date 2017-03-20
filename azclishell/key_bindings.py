@@ -39,6 +39,16 @@ def enter_(event):
     """ Sends the command to the terminal"""
     event.cli.set_return_value(event.cli.current_buffer)
 
+@registry.add_binding(Keys.ShiftDelete)
+def backspace_(event):
+    """ Sends the command to the terminal"""
+    text = event.cli.current_buffer.document.text
+    event.cli.current_buffer.reset(
+        initial_document=Document(
+            u'{}'.format(text[:-1]),
+            cursor_position=len(text) - 1
+        ))
+
 @registry.add_binding(Keys.ControlH, eager=True)
 def pan_up_(event):
     """ Pans the example pan up"""
