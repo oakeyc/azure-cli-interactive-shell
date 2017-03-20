@@ -104,3 +104,8 @@ There is a docker image on docker hub
 
    $ docker run -i -t oakeyc/az-cli-shell:latest
    root:/# az-shell
+   
+Windows Usage
+#############
+
+To backspace on Windows Powershell, use ShiftBackspace
