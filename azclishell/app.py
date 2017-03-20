@@ -420,8 +420,8 @@ class Shell(object):
                 os.path.join(
                     SHELL_CONFIGURATION.get_config_dir(),
                     SHELL_CONFIGURATION.get_history())
-        elif text.strip() == "help":
-            print(shell_help)
+        # elif text.strip() == "help":
+        #     print(shell_help)
         if text:
             if text[0] == SELECT_SYMBOL['outside']:
                 cmd = text[1:]

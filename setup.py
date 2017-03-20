@@ -4,6 +4,7 @@
 # --------------------------------------------------------------------------------------------
 
 from setuptools import setup
+from codecs import open
 
 DEPENDENCIES = [
     'azure-cli',
@@ -17,10 +18,12 @@ with open('README.rst', 'r', encoding='utf-8') as f:
 
 setup(
     name='azure-cli-shell',
-    version='0.1.1a2',
+    version='0.1.1a3',
     description='Microsoft Azure Command-Line Interactive Shell',
     long_description=README + '\n\n',
+    license='MIT',
     author='Microsoft Corporation',
+    author_email='azpycli@microsoft.com',
     scripts=['az-shell.bat', 'az-shell'],
     packages=[
         "azclishell"

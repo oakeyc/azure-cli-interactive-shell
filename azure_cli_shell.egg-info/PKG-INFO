@@ -1,6 +1,6 @@
 Metadata-Version: 1.0
 Name: azure-cli-shell
-Version: 0.1.1a2
+Version: 0.1.1a3
 Summary: Microsoft Azure Command-Line Interactive Shell
 Home-page: https://github.com/oakeyc/azure-cli-interactive-shell
 Author: Microsoft Corporation
@@ -28,7 +28,7 @@ Description: Azure CLI Interactive Shell
         ############
         .. code-block:: console
         
-           $ pip install az-cli-shell
+           $ pip install azure-cli-shell
         
         Running
         ########
@@ -37,7 +37,7 @@ Description: Azure CLI Interactive Shell
         
         .. code-block:: console
         
-           $ az-cli
+           $ az-shell
         
         Then type your commands and hit [Enter]
         
@@ -102,6 +102,21 @@ Description: Azure CLI Interactive Shell
         .. code-block:: console
         
            $ $
+        
+        Docker Image
+        ############
+        
+        There is a docker image on docker hub
+        
+        .. code-block:: console
+        
+           $ docker run -i -t oakeyc/az-cli-shell:latest
+           root:/# az-shell
+           
+        Windows Usage
+        #############
+        
+        To backspace on Windows Powershell, use ShiftBackspace or ControlBackspace
         
         
         
