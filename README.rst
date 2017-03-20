@@ -108,4 +108,4 @@ There is a docker image on docker hub
 Windows Usage
 #############
 
-To backspace on Windows Powershell, use ShiftBackspace
+To backspace on Windows Powershell, use ShiftBackspace or ControlBackspace
