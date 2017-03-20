@@ -5,7 +5,7 @@ from prompt_toolkit.history import FileHistory
 
 import azclishell.configuration
 from azclishell._dump_commands import dump_command_table
-dump_command_table() # order of imports
+dump_command_table() # because need to write to files before read them
 from azclishell.gather_commands import GatherCommands
 from azclishell.app import Shell
 from azclishell.az_completer import AzCompleter

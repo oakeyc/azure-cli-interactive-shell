@@ -6,6 +6,7 @@ import azclishell.configuration
 from azclishell.layout import default_command
 
 from azure.cli.core.parser import AzCliCommandParser
+from azure.cli.core._util import CLIError
 
 SELECT_SYMBOL = azclishell.configuration.SELECT_SYMBOL
 
@@ -47,127 +48,118 @@ class AzCompleter(Completer):
                 and double_flag
 
     def get_completions(self, document, complete_event):
-        text_before_cursor = document.text_before_cursor
-        command = ""
-        is_command = True
-        branch = self.command_tree
-        not_command = False
-        if len(text_before_cursor.split()) > 0\
-        and text_before_cursor.split()[0] == 'az': # remove optional az
-            text_before_cursor = ' '.join(text_before_cursor.split()[1:])
+        try:
+            text_before_cursor = document.text_before_cursor
+            command = ""
+            is_command = True
+            branch = self.command_tree
+            not_command = False
+            if len(text_before_cursor.split()) > 0\
+            and text_before_cursor.split()[0] == 'az': # remove optional az
+                text_before_cursor = ' '.join(text_before_cursor.split()[1:])
 
-        if SELECT_SYMBOL['default'] in text_before_cursor:
-            text_before_cursor = text_before_cursor.replace(SELECT_SYMBOL['default'], "")
-        if SELECT_SYMBOL['undefault'] in text_before_cursor:
-            text_before_cursor = text_before_cursor.replace(SELECT_SYMBOL['undefault'], "")
+            if SELECT_SYMBOL['default'] in text_before_cursor:
+                text_before_cursor = text_before_cursor.replace(SELECT_SYMBOL['default'], "")
+            if SELECT_SYMBOL['undefault'] in text_before_cursor:
+                text_before_cursor = text_before_cursor.replace(SELECT_SYMBOL['undefault'], "")
 
-        if default_command():
-            # print(DEFAULT_COMMAND)
-            text_before_cursor = default_command() + ' ' + text_before_cursor
+            if default_command():
+                # print(DEFAULT_COMMAND)
+                text_before_cursor = default_command() + ' ' + text_before_cursor
 
-        if text_before_cursor.split():
             if text_before_cursor.split():
-                for words in text_before_cursor.split():
-                    if words.startswith("-") and not words.startswith("--"):
-                        is_command = False
-                        if self.has_parameters(command):
-                            for param in self.get_param(command):
-                                if self.validate_param_completion(param, words, text_before_cursor)\
-                                and not param.startswith("--"):
-                                    yield Completion(param, -len(words), display_meta=\
-                                    self.get_param_description(
-                                        command + " " + str(param)).replace('\n', ''))
+                if text_before_cursor.split():
+                    for words in text_before_cursor.split():
+                        if words.startswith("-") and not words.startswith("--"):
+                            is_command = False
+                            if self.has_parameters(command):
+                                for param in self.get_param(command):
+                                    if self.validate_param_completion(param, words, text_before_cursor)\
+                                    and not param.startswith("--"):
+                                        yield Completion(param, -len(words), display_meta=\
+                                        self.get_param_description(
+                                            command + " " + str(param)).replace('\n', ''))
 
-                    elif words.startswith("--"):
-                        is_command = False
-                        if self.has_parameters(command):  # Everything should, map to empty list
-                            for param in self.get_param(command):
-                                if self.validate_param_completion(param, words, text_before_cursor):
-                                    yield Completion(param, -len(words),\
-                                    display_meta=self.get_param_description(
-                                        command + " " + str(param)).replace('\n', ''))
-                    else:
-                        if is_command:
-                            if command:
-                                command += " " + str(words)
-                            else:
-                                command += str(words)
-                        try:
-                            if branch.has_child(words):
-                                branch = branch.get_child(words, branch.children)
-                            elif text_before_cursor.split()[0] in SELECT_SYMBOL.values():
-                                # print('help')
-                                not_command = True
-                        except ValueError:
-                            continue # do something
-
-                if branch.children is not None and not not_command:
-                    for kid in branch.children:
-                        if kid.data.lower().startswith(text_before_cursor.split()[-1].lower()):
-                            yield Completion(str(kid.data),\
-                                -len(text_before_cursor.split()[-1]))
-
-        if not text_before_cursor:
-            if branch.children is not None:
-                for com in branch.children:
-                    yield Completion(com.data)
-        elif text_before_cursor[-1].isspace():
-            if branch is not self.command_tree:
-                for com in branch.children:
-                    yield Completion(com.data)
-
-        is_param = False
-        started_param = False
-        prefix = ""
-        param = ""
-        if text_before_cursor.split():
-            param = text_before_cursor.split()[-1]
-            if param.startswith("-"):
-                is_param = True
-            elif len(text_before_cursor.split()) > 2 and text_before_cursor.split()[-2]\
-            and text_before_cursor.split()[-2].startswith('-'):
-                is_param = True
-                param = text_before_cursor.split()[-2]
-                started_param = True
-                prefix = text_before_cursor.split()[-1]
-
-        arg_name = ""
-        if command in self.cmdtab:
-            if is_param:
-                for arg in self.cmdtab[command].arguments:
-                    for name in self.cmdtab[command].arguments[arg].options_list:
-                        if name == param:
-                            arg_name = arg
-                            break
-                    if arg_name:
-                        break
-                if arg_name and (text_before_cursor.split()[-1].startswith('-') or\
-                text_before_cursor.split()[-2].startswith('-')):
-                    try:
-                        for choice in self.cmdtab[command].arguments[arg_name].choices:
-                            if started_param:
-                                if choice.lower().startswith(prefix.lower())\
-                                   and choice not in text_before_cursor.split():
-                                    yield Completion(choice, -len(prefix))
-                            else:
-                                yield Completion(choice, -len(prefix))
-                    except TypeError:
-                        pass
-                    if self.cmdtab[command].arguments[arg_name].completer:
-                        try:
-                            for comp in self.cmdtab[command].\
-                            arguments[arg_name].completer(prefix=prefix, action=None,\
-                            parser=self.parser, parsed_args=None):
-                                if started_param:
-                                    if comp.lower().startswith(prefix.lower())\
-                                        and comp not in text_before_cursor.split():
-                                        yield Completion(comp, -len(prefix))
+                        elif words.startswith("--"):
+                            is_command = False
+                            if self.has_parameters(command):  # Everything should, map to empty list
+                                for param in self.get_param(command):
+                                    if self.validate_param_completion(param, words, text_before_cursor):
+                                        yield Completion(param, -len(words),\
+                                        display_meta=self.get_param_description(
+                                            command + " " + str(param)).replace('\n', ''))
+                        else:
+                            if is_command:
+                                if command:
+                                    command += " " + str(words)
                                 else:
-                                    yield Completion(comp, -len(prefix))
+                                    command += str(words)
+                            try:
+                                if branch.has_child(words):
+                                    branch = branch.get_child(words, branch.children)
+                                elif text_before_cursor.split()[0] in SELECT_SYMBOL.values():
+                                    # print('help')
+                                    not_command = True
+                            except ValueError:
+                                continue # do something
+
+                    if branch.children is not None and not not_command:
+                        for kid in branch.children:
+                            if kid.data.lower().startswith(text_before_cursor.split()[-1].lower()):
+                                yield Completion(str(kid.data),\
+                                    -len(text_before_cursor.split()[-1]))
+
+            if not text_before_cursor:
+                if branch.children is not None:
+                    for com in branch.children:
+                        yield Completion(com.data)
+            elif text_before_cursor[-1].isspace():
+                if branch is not self.command_tree:
+                    for com in branch.children:
+                        yield Completion(com.data)
+
+            is_param = False
+            started_param = False
+            prefix = ""
+            param = ""
+            if text_before_cursor.split():
+                param = text_before_cursor.split()[-1]
+                if param.startswith("-"):
+                    is_param = True
+                elif len(text_before_cursor.split()) > 2 and text_before_cursor.split()[-2]\
+                and text_before_cursor.split()[-2].startswith('-'):
+                    is_param = True
+                    param = text_before_cursor.split()[-2]
+                    started_param = True
+                    prefix = text_before_cursor.split()[-1]
+
+            arg_name = ""
+            if command in self.cmdtab:
+                if is_param:
+                    for arg in self.cmdtab[command].arguments:
+                        for name in self.cmdtab[command].arguments[arg].options_list:
+                            if name == param:
+                                arg_name = arg
+                                break
+                        if arg_name:
+                            break
+                    if arg_name and (text_before_cursor.split()[-1].startswith('-') or\
+                    text_before_cursor.split()[-2].startswith('-')):
+                        try:
+                            for choice in self.cmdtab[command].arguments[arg_name].choices:
+                                if started_param:
+                                    if choice.lower().startswith(prefix.lower())\
+                                    and choice not in text_before_cursor.split():
+                                        yield Completion(choice, -len(prefix))
+                                else:
+                                    yield Completion(choice, -len(prefix))
                         except TypeError:
+                            pass
+                        if self.cmdtab[command].arguments[arg_name].completer:
                             try:
                                 for comp in self.cmdtab[command].\
-                                arguments[arg_name].completer(prefix):
+                                arguments[arg_name].completer(prefix=prefix, action=None,\
+                                parser=self.parser, parsed_args=None):
                                     if started_param:
                                         if comp.lower().startswith(prefix.lower())\
                                             and comp not in text_before_cursor.split():
@@ -177,7 +169,7 @@ class AzCompleter(Completer):
                             except TypeError:
                                 try:
                                     for comp in self.cmdtab[command].\
-                                    arguments[arg_name].completer():
+                                    arguments[arg_name].completer(prefix):
                                         if started_param:
                                             if comp.lower().startswith(prefix.lower())\
                                                 and comp not in text_before_cursor.split():
@@ -185,7 +177,21 @@ class AzCompleter(Completer):
                                         else:
                                             yield Completion(comp, -len(prefix))
                                 except TypeError:
-                                    print("TypeError: " + TypeError.message)
+                                    try:
+                                        for comp in self.cmdtab[command].\
+                                        arguments[arg_name].completer():
+                                            if started_param:
+                                                if comp.lower().startswith(prefix.lower())\
+                                                    and comp not in text_before_cursor.split():
+                                                    yield Completion(comp, -len(prefix))
+                                            else:
+                                                yield Completion(comp, -len(prefix))
+                                    except TypeError:
+                                        print("TypeError: " + TypeError.message)
+        except CLIError:
+            print("\nPlease login\n")
+            # yield Completion('')
+
 
     def is_completable(self, symbol):
         """ whether the word can be completed as a command or parameter """

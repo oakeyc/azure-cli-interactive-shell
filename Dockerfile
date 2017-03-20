@@ -1,11 +1,11 @@
-FROM python:3.6
+FROM oakeyc/az-cli-shell
 
 WORKDIR azclishell
 COPY . /azclishell
 
-RUN pip install az-cli-shell
+RUN pip install azure-cli-shell
 
-RUN az-cli
+# RUN az-shell
 
 WORKDIR /
 

@@ -1,5 +1,6 @@
 README.rst
 az-shell
+az-shell.bat
 dev_setup.py
 setup.py
 azclishell/__init__.py
@@ -17,7 +18,6 @@ azclishell/util.py
 azure_cli_shell.egg-info/PKG-INFO
 azure_cli_shell.egg-info/SOURCES.txt
 azure_cli_shell.egg-info/dependency_links.txt
-azure_cli_shell.egg-info/namespace_packages.txt
 azure_cli_shell.egg-info/requires.txt
 azure_cli_shell.egg-info/top_level.txt
 test/__init__.py

@@ -66,8 +66,8 @@ shell_help = \
     "?[path]         : query previous command using jmespath syntax\n" +\
     "[cmd] :: [num]  : do a step by step tutorial of example\n" +\
     "$               : get the exit code of the previous command\n" +\
-    "%%              : default a value\n" +\
-    "^^              : undefault a value"
+    "%%              : default a scope\n" +\
+    "^^              : undefault a scope"
 
 help_doc = TableOutput()
 
@@ -184,11 +184,13 @@ class Shell(object):
         self.param_docs = u'{}'.format(all_params)
         self.example_docs = u'{}'.format(example)
 
-        options = az_config.config_parser.options(DEFAULTS_SECTION)
-        self.config_default = ""
-        for opt in options:
-            self.config_default += opt + ": " + az_config.get(DEFAULTS_SECTION, opt) + "  "
-
+        try:
+            options = az_config.config_parser.options(DEFAULTS_SECTION)
+            self.config_default = ""
+            for opt in options:
+                self.config_default += opt + ": " + az_config.get(DEFAULTS_SECTION, opt) + "  "
+        except configparser.NoSectionError:
+            self.config_default = ""
         settings, empty_space = self._toolbar_info(cols, empty_space)
 
         cli.buffers['description'].reset(
@@ -219,14 +221,13 @@ class Shell(object):
         #     toolbar_value = "Default Param: %s" % ' '.join(self.default_params)
         # else:
         toolbar_value = "Cloud: {}".format(get_active_cloud_name())
-        sub_value = "Subscription: {}".format(sub_name if sub_name else "")
+        sub_value = '{}'.format('Subscription: {}'.format(sub_name) if sub_name else toolbar_value)
 
         settings_items = [
             " [F1]Layout",
             "[F2]Defaults",
             "[F3]Keys",
             "[Crtl+Q]Quit",
-            # toolbar_value,
             sub_value
         ]
         counter = 0
@@ -305,7 +306,7 @@ class Shell(object):
         """ instantiates the intereface """
         run_loop = create_eventloop()
         app = self.create_application()
-        return CommandLineInterface(application=app, eventloop=run_loop,)
+        return CommandLineInterface(application=app, eventloop=run_loop)
 
     def set_prompt(self, prompt_command="", position=0):
         """ clears the prompt line """
@@ -402,6 +403,87 @@ class Shell(object):
         EXAMPLE_REPL = False
         return cmd
 
+    def _special_cases(self, text, cmd, outside):
+        b_flag = False
+        c_flag = False
+        if text.split() and text.split()[0] == 'az':
+            cmd = ' '.join(text.split()[1:])
+        if self.default_command:
+            cmd = self.default_command + " " + cmd
+
+        if text.strip() == "quit" or text.strip() == "exit":
+            b_flag = True
+        elif text.strip() == "clear":  # clears the history, but only when you restart
+            outside = True
+            cmd = 'echo -n "" >' +\
+                os.path.join(
+                    SHELL_CONFIGURATION.get_config_dir(),
+                    SHELL_CONFIGURATION.get_history())
+        elif text.strip() == "help":
+            print(help_doc.dump(shell_help))
+        if text:
+            if text[0] == SELECT_SYMBOL['outside']:
+                cmd = text[1:]
+                outside = True
+            # elif text.split()[0] == "az":  # dumps the extra az
+            #     cmd = " ".join(text.split()[1:])
+            elif text[0] == SELECT_SYMBOL['exit_code']:
+                print(self.last_exit)
+                self.set_prompt()
+                c_flag = True
+            elif SELECT_SYMBOL['query'] in text:  # query previous output
+                if self.last and self.last.result:
+                    if hasattr(self.last.result, '__dict__'):
+                        input_dict = dict(self.last.result)
+                    else:
+                        input_dict = self.last.result
+                    try:
+                        result = jmespath.search(
+                            text.partition(SELECT_SYMBOL['query'])[2], input_dict)
+                        if isinstance(result, str):
+                            print(result)
+                        else:
+                            print(json.dumps(result, sort_keys=True, indent=2))
+                    except jmespath.exceptions.ParseError:
+                        print("Invalid Query")
+
+                self.set_prompt()
+                c_flag = True
+            elif "|" in text or ">" in text:  # anything I don't parse, send off
+                outside = True
+                cmd = "az " + cmd
+            elif SELECT_SYMBOL['example'] in text:
+                global NOTIFICATIONS
+                cmd = self.handle_example(text)
+        if SELECT_SYMBOL['default'] in text:
+            default = text.partition(SELECT_SYMBOL['default'])[2].split()
+            # if default[0].startswith('-'):
+            #     value = self.handle_default_param(default)
+            # else:
+            value = self.handle_default_command(default)
+            print("defaulting: " + value)
+            self.set_prompt()
+            c_flag = True
+        if SELECT_SYMBOL['undefault'] in text:
+            value = text.partition(SELECT_SYMBOL['undefault'])[2].split()
+            if len(value) == 0:
+                self.default_command = ""
+                set_default_command("", add=False)
+                # self.default_params = []
+                print('undefaulting all')
+            elif len(value) == 1 and value[0] == self.default_command:
+                self.default_command = ""
+                set_default_command("", add=False)
+                print('undefaulting: ' + value[0])
+            # elif len(value) == 2 and ' '.join(value[:2]) in self.default_params:
+            #     self.default_params.remove(' '.join(value[:2]))
+            #     print('undefaulting: ' + ' '.join(value[:2]))
+
+            self.set_prompt()
+            c_flag = True
+
+        return b_flag, c_flag, outside, cmd
+
 
     def run(self):
         """ runs the CLI """
@@ -413,92 +495,18 @@ class Shell(object):
             try:
                 document = self.cli.run(reset_current_buffer=True)
                 text = document.text
+                if not text: # not input
+                    self.set_prompt()
+                    continue
                 cmd = text
                 outside = False
-                if text.split() and text.split()[0] == 'az':
-                    cmd = ' '.join(text.split()[1:])
-                if self.default_command:
-                    cmd = self.default_command + " " + cmd
-                # if self.default_params:
-                #     for param in self.default_params:
-                #         cmd += ' ' + param
-
             except AttributeError:  # when the user pressed Control Q
                 break
             else:
-                if text.strip() == "quit" or text.strip() == "exit":
+                b_flag, c_flag, outside, cmd = self._special_cases(text, cmd, outside)
+                if b_flag:
                     break
-                elif text.strip() == "clear":  # clears the history, but only when you restart
-                    outside = True
-                    cmd = 'echo -n "" >' +\
-                        os.path.join(
-                            SHELL_CONFIGURATION.get_config_dir(),
-                            SHELL_CONFIGURATION.get_history())
-                elif text.strip() == "help":
-                    print(help_doc.dump(shell_help))
-                if text:
-                    if text[0] == SELECT_SYMBOL['outside']:
-                        cmd = text[1:]
-                        outside = True
-                    # elif text.split()[0] == "az":  # dumps the extra az
-                    #     cmd = " ".join(text.split()[1:])
-                    elif text[0] == SELECT_SYMBOL['exit_code']:
-                        print(self.last_exit)
-                        self.set_prompt()
-                        continue
-                    elif SELECT_SYMBOL['query'] in text:  # query previous output
-                        if self.last and self.last.result:
-                            if hasattr(self.last.result, '__dict__'):
-                                input_dict = dict(self.last.result)
-                            else:
-                                input_dict = self.last.result
-                            try:
-                                result = jmespath.search(
-                                    text.partition(SELECT_SYMBOL['query'])[2], input_dict)
-                                if isinstance(result, str):
-                                    print(result)
-                                else:
-                                    print(json.dumps(result, sort_keys=True, indent=2))
-                            except jmespath.exceptions.ParseError:
-                                print("Invalid Query")
-
-                        self.set_prompt()
-                        continue
-                    elif "|" in text or ">" in text:  # anything I don't parse, send off
-                        outside = True
-                        cmd = "az " + cmd
-                    elif SELECT_SYMBOL['example'] in text:
-                        global NOTIFICATIONS
-                        cmd = self.handle_example(text)
-                if SELECT_SYMBOL['default'] in text:
-                    default = text.partition(SELECT_SYMBOL['default'])[2].split()
-                    if default[0].startswith('-'):
-                        value = self.handle_default_param(default)
-                    else:
-                        value = self.handle_default_command(default)
-                    print("defaulting: " + value)
-                    self.set_prompt()
-                    continue
-                if SELECT_SYMBOL['undefault'] in text:
-                    value = text.partition(SELECT_SYMBOL['undefault'])[2].split()
-                    if len(value) == 0:
-                        self.default_command = ""
-                        set_default_command("", add=False)
-                        # self.default_params = []
-                        print('undefaulting all')
-                    elif len(value) == 1 and value[0] == self.default_command:
-                        self.default_command = ""
-                        set_default_command("", add=False)
-                        print('undefaulting: ' + value[0])
-                    # elif len(value) == 2 and ' '.join(value[:2]) in self.default_params:
-                    #     self.default_params.remove(' '.join(value[:2]))
-                    #     print('undefaulting: ' + ' '.join(value[:2]))
-
-                    self.set_prompt()
-                    continue
-
-                if not text: # not input
-                    self.set_prompt()
+                if c_flag:
                     continue
 
                 self.history.append(cmd)
