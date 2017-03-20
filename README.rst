@@ -94,3 +94,13 @@ To get the Exit Code of the previous command:
 .. code-block:: console
 
    $ $
+
+Docker Image
+############
+
+There is a docker image on docker hub
+
+.. code-block:: console
+
+   $ docker run -i -t oakeyc/az-cli-shell:latest
+   root:/# az-shell
