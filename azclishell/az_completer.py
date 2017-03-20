@@ -225,8 +225,9 @@ class AzCompleter(Completer):
                                     except TypeError:
                                         print("TypeError: " + TypeError.message)
         except CLIError:
-            print("\nPlease login\n")
+            # print("\nPlease login\n")
             # yield Completion('')
+            pass
 
 
     def is_completable(self, symbol):

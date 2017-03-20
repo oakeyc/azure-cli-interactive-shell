@@ -1,11 +1,11 @@
 Metadata-Version: 1.0
 Name: azure-cli-shell
-Version: 0.1.1a3
+Version: 0.1.1a4
 Summary: Microsoft Azure Command-Line Interactive Shell
 Home-page: https://github.com/oakeyc/azure-cli-interactive-shell
 Author: Microsoft Corporation
-Author-email: UNKNOWN
-License: UNKNOWN
+Author-email: azpycli@microsoft.com
+License: MIT
 Description: Azure CLI Interactive Shell
         ****************************
         The interactive shell for Microsoft Azure CLI (Command Line Interface)
