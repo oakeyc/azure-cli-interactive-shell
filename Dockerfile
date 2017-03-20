@@ -1,10 +1,10 @@
 FROM azuresdk/azure-cli-python
 
-# WORKDIR azclishell
-# COPY . /azclishell
+WORKDIR .
+# COPY .
 
 RUN pip install -e .
 
-# WORKDIR /
+WORKDIR /
 
 CMD bash
