@@ -82,10 +82,10 @@ class AzCompleter(Completer):
                 for param in GLOBAL_PARAM:
                     if self.validate_param_completion(
                             param,
-                            text_before_cursor[-len(param):],
+                            text_before_cursor.split()[-1], ## not what you meant
                             text_before_cursor,
                             double=False):
-                        yield Completion(param, -len(param))
+                        yield Completion(param, -len(text_before_cursor.split()[-1]))
                 if text_before_cursor.split()[-1] in OUTPUT_OPTIONS:
                     for opt in OUTPUT_CHOICES:
                         yield Completion(opt)
@@ -94,11 +94,11 @@ class AzCompleter(Completer):
                     for opt in OUTPUT_CHOICES:
                         if self.validate_param_completion(
                                 opt,
-                                text_before_cursor[-len(opt):],
+                                text_before_cursor.split()[-1],
                                 text_before_cursor,
                                 double=False
                             ):
-                            yield Completion(opt, -len(opt))
+                            yield Completion(opt, -len(text_before_cursor.split()[-1]))
 
             if text_before_cursor.split():
                 if text_before_cursor.split():
@@ -141,7 +141,7 @@ class AzCompleter(Completer):
                     if branch.children is not None and not not_command:
                         for kid in branch.children:
                             if kid.data.lower().startswith(
-                                    text_before_cursor[-len(kid.data):].lower()):
+                                    text_before_cursor.split()[-1].lower()):
                                 yield Completion(str(kid.data),\
                                     -len(text_before_cursor.split()[-1]))
 
