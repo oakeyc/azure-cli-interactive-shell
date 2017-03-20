@@ -206,7 +206,8 @@ class Shell(object):
             initial_document=Document(u'{}{}{}'.format(NOTIFICATIONS, settings, empty_space))
         )
         cli.buffers['default_values'].reset(
-            initial_document=Document(u'{}'.format(self.config_default))
+            initial_document=Document(
+                u'{}'.format(self.config_default if self.config_default else 'No Default Values'))
         )
         cli.request_redraw()
 
@@ -420,7 +421,7 @@ class Shell(object):
                     SHELL_CONFIGURATION.get_config_dir(),
                     SHELL_CONFIGURATION.get_history())
         elif text.strip() == "help":
-            print(help_doc.dump(shell_help))
+            print(shell_help)
         if text:
             if text[0] == SELECT_SYMBOL['outside']:
                 cmd = text[1:]

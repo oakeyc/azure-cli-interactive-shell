@@ -9,6 +9,9 @@ from azure.cli.core.parser import AzCliCommandParser
 from azure.cli.core._util import CLIError
 
 SELECT_SYMBOL = azclishell.configuration.SELECT_SYMBOL
+GLOBAL_PARAM = ['--output', '-o', '--verbose', '--debug']
+OUTPUT_CHOICES = ['json', 'tsv', 'table', 'jsonc']
+OUTPUT_OPTIONS = ['--output', '-o']
 
 class AzCompleter(Completer):
     """ Completes Azure CLI commands """
@@ -37,15 +40,23 @@ class AzCompleter(Completer):
         self.cmdtab = cmd_table
         self.parser.load_command_table(self.cmdtab)
 
-    def validate_param_completion(self, param, words, text_before_cursor):
+    def validate_param_completion(self, param, words, text_before_cursor, double=True):
         """ validates that a param should be completed """
         double_flag = True
-        if param in self.same_param_doubles:
-            double_flag = self.same_param_doubles[param] not in text_before_cursor.split()
+        if double:
+            if param in self.same_param_doubles:
+                double_flag = self.same_param_doubles[param] not in text_before_cursor.split()
         return param.lower().startswith(words.lower()) and \
                 param.lower() != words.lower() and\
                 param not in text_before_cursor.split()\
                 and double_flag
+
+    # def get_global_params(self, text):
+    #     """ completions for global params """
+    #     if text.split() and len(text.split()) > 1:
+    #         for param in GLOBAL_PARAM:
+    #             if self.validate_param_completion(param, text.split()[-1], text, double=False):
+    #                 return Completion(param, -len(param))
 
     def get_completions(self, document, complete_event):
         try:
@@ -67,6 +78,28 @@ class AzCompleter(Completer):
                 # print(DEFAULT_COMMAND)
                 text_before_cursor = default_command() + ' ' + text_before_cursor
 
+            if text_before_cursor.split() and len(text_before_cursor.split()) > 0:
+                for param in GLOBAL_PARAM:
+                    if self.validate_param_completion(
+                            param,
+                            text_before_cursor[-len(param):],
+                            text_before_cursor,
+                            double=False):
+                        yield Completion(param, -len(param))
+                if text_before_cursor.split()[-1] in OUTPUT_OPTIONS:
+                    for opt in OUTPUT_CHOICES:
+                        yield Completion(opt)
+                if len(text_before_cursor.split()) > 1 and\
+                text_before_cursor.split()[-2] in OUTPUT_OPTIONS:
+                    for opt in OUTPUT_CHOICES:
+                        if self.validate_param_completion(
+                                opt,
+                                text_before_cursor[-len(opt):],
+                                text_before_cursor,
+                                double=False
+                            ):
+                            yield Completion(opt, -len(opt))
+
             if text_before_cursor.split():
                 if text_before_cursor.split():
                     for words in text_before_cursor.split():
@@ -74,7 +107,8 @@ class AzCompleter(Completer):
                             is_command = False
                             if self.has_parameters(command):
                                 for param in self.get_param(command):
-                                    if self.validate_param_completion(param, words, text_before_cursor)\
+                                    if self.validate_param_completion(
+                                            param, words, text_before_cursor)\
                                     and not param.startswith("--"):
                                         yield Completion(param, -len(words), display_meta=\
                                         self.get_param_description(
@@ -84,7 +118,8 @@ class AzCompleter(Completer):
                             is_command = False
                             if self.has_parameters(command):  # Everything should, map to empty list
                                 for param in self.get_param(command):
-                                    if self.validate_param_completion(param, words, text_before_cursor):
+                                    if self.validate_param_completion(
+                                            param, words, text_before_cursor):
                                         yield Completion(param, -len(words),\
                                         display_meta=self.get_param_description(
                                             command + " " + str(param)).replace('\n', ''))
@@ -105,7 +140,8 @@ class AzCompleter(Completer):
 
                     if branch.children is not None and not not_command:
                         for kid in branch.children:
-                            if kid.data.lower().startswith(text_before_cursor.split()[-1].lower()):
+                            if kid.data.lower().startswith(
+                                    text_before_cursor[-len(kid.data):].lower()):
                                 yield Completion(str(kid.data),\
                                     -len(text_before_cursor.split()[-1]))
 

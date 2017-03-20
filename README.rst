@@ -20,7 +20,7 @@ Installation
 ############
 .. code-block:: console
 
-   $ pip install az-cli-shell
+   $ pip install azure-cli-shell
 
 Running
 ########
@@ -29,7 +29,7 @@ To start the application
 
 .. code-block:: console
 
-   $ az-cli
+   $ az-shell
 
 Then type your commands and hit [Enter]
 
@@ -94,3 +94,13 @@ To get the Exit Code of the previous command:
 .. code-block:: console
 
    $ $
+
+Docker Image
+############
+
+There is a docker image on docker hub
+
+.. code-block:: console
+
+   $ docker run -i -t oakeyc/az-cli-shell:latest
+   root:/# az-shell
