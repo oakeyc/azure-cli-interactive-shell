@@ -1,6 +1,7 @@
 """ makes all the key bindings for the app """
 from __future__ import print_function
 
+from prompt_toolkit.document import Document
 from prompt_toolkit.key_binding.manager import KeyBindingManager
 from prompt_toolkit.filters import Filter
 from prompt_toolkit.keys import Keys
@@ -11,6 +12,7 @@ import azclishell.configuration
 manager = KeyBindingManager(
     enable_system_bindings=True,
     enable_auto_suggest_bindings=True,
+    enable_abort_and_exit_bindings=True
 )
 registry = manager.registry
 
@@ -39,17 +41,7 @@ def enter_(event):
     """ Sends the command to the terminal"""
     event.cli.set_return_value(event.cli.current_buffer)
 
-@registry.add_binding(Keys.ShiftDelete)
-def backspace_(event):
-    """ Sends the command to the terminal"""
-    text = event.cli.current_buffer.document.text
-    event.cli.current_buffer.reset(
-        initial_document=Document(
-            u'{}'.format(text[:-1]),
-            cursor_position=len(text) - 1
-        ))
-
-@registry.add_binding(Keys.ControlH, eager=True)
+@registry.add_binding(Keys.ControlY, eager=True)
 def pan_up_(event):
     """ Pans the example pan up"""
     global _SECTION

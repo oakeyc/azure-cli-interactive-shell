@@ -70,7 +70,7 @@ shell_help = \
     "%%              : default a scope\n" +\
     "^^              : undefault a scope\n" + \
     "Crtl+N          : Scroll down the documentation\n" +\
-    "Crtl+H          : Scroll up the documentation"
+    "Crtl+Y          : Scroll up the documentation"
 
 help_doc = TableOutput()
 

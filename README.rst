@@ -72,7 +72,7 @@ Type a command, for example:
 
 Look at the examples
 
-*Scroll through the pane with Control H for up and Control N for down #*
+*Scroll through the pane with Control Y for up and Control N for down #*
 
 Pick the example you want with:
 
@@ -102,10 +102,6 @@ There is a docker image on docker hub
 
 .. code-block:: console
 
+   $ docker pull oakeyc/az-cli-shell:latest
    $ docker run -i -t oakeyc/az-cli-shell:latest
    root:/# az-shell
-   
-Windows Usage
-#############
-
-To backspace on Windows Powershell, use ShiftBackspace or ControlBackspace
