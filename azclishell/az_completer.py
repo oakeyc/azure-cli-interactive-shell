@@ -150,8 +150,10 @@ class AzCompleter(Completer):
                                     command += " " + str(words)
                                 else:
                                     command += str(words)
-                        elif text_before_cursor.find(words) + 1 < len(text_before_cursor) and \
-                        text_before_cursor[text_before_cursor.find(words) + 1].isspace():
+                        elif text_before_cursor.find(words) + len(words) <\
+                        len(text_before_cursor) and \
+                        text_before_cursor[
+                                text_before_cursor.find(words) + len(words)].isspace():
                             is_command = False
 
                 if branch.children is not None and is_command: # all underneath commands
