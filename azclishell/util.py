@@ -2,6 +2,9 @@ import os
 import collections
 import platform
 
+from prompt_toolkit.styles import style_from_dict
+from pygments.token import Token
+
 def get_window_dim():
     """ gets the dimensions depending on python version and os"""
     if platform.system() == 'Windows':
@@ -21,6 +24,57 @@ def _size_36_windows():
     dim = get_terminal_size()
     return dim.lines, dim.columns
 
+def default_style():
+    """ Default coloring """
+    if platform.system() == 'Windows':
+        styles = style_from_dict({
+            # Completion colors
+            Token.Menu.Completions.Completion.Current: 'bg:#7c2c80 #ffffff',
+            Token.Menu.Completions.Completion: 'bg:#00b7b7 #ffffff',
+            Token.Menu.Completions.ProgressButton: 'bg:#b78991',
+            Token.Menu.Completions.ProgressBar: 'bg:#ffc0cb',
+
+            Token.Az: '#7c2c80',
+            Token.Prompt.Arg: '#888888',
+
+            # Pretty Words
+            Token.Keyword: '#965699',
+            Token.Keyword.Declaration: '#ab77ad',
+            Token.Name.Class: '#c49fc5',
+            Token.Text: '#0f5050',
+
+            Token.Line: '#E500E5',
+            Token.Number: '#00ffff',
+            # toolbar
+            Token.Operator: 'bg:#000000 #ffffff',
+            Token.Toolbar: 'bg:#000000 #ffffff'
+        })
+
+    else:
+        styles = style_from_dict({
+            # Completion colors
+            Token.Menu.Completions.Completion.Current: 'bg:#7c2c80 #ffffff',
+            Token.Menu.Completions.Completion: 'bg:#00b7b7 #ffffff',
+            Token.Menu.Completions.ProgressButton: 'bg:#b78991',
+            Token.Menu.Completions.ProgressBar: 'bg:#ffc0cb',
+
+            Token.Az: '#7c2c80',
+            Token.Prompt.Arg: '#888888',
+
+            # Pretty Words
+            Token.Keyword: '#965699',
+            Token.Keyword.Declaration: '#ab77ad',
+            Token.Name.Class: '#c49fc5',
+            Token.Text: '#666666',
+
+            Token.Line: '#E500E5',
+            Token.Number: '#3d79db',
+            # toolbar
+            Token.Operator: 'bg:#000000 #ffffff',
+            Token.Toolbar: 'bg:#000000 #ffffff'
+        })
+
+    return styles
 # def get_window_size_osx():
 #     rows, cols = os.popen('stty size', 'r').read().split()
 #     return int(cols), int(cols)
