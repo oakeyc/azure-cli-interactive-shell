@@ -34,6 +34,7 @@ from azclishell.az_completer import AzCompleter
 from azclishell.layout import create_layout, create_layout_completions, set_default_command
 from azclishell.key_bindings import registry, get_section, sub_section, EXAMPLE_REPL
 from azclishell.util import get_window_dim
+from azclishell.gather_commands import add_random_new_lines
 
 import azure.cli.core.azlogging as azlogging
 import azure.cli.core.telemetry as telemetry
@@ -67,7 +68,9 @@ shell_help = \
     "[cmd] :: [num]  : do a step by step tutorial of example\n" +\
     "$               : get the exit code of the previous command\n" +\
     "%%              : default a scope\n" +\
-    "^^              : undefault a scope"
+    "^^              : undefault a scope\n" + \
+    "Crtl+N          : Scroll down the documentation\n" +\
+    "Crtl+H          : Scroll up the documentation"
 
 help_doc = TableOutput()
 
@@ -380,9 +383,11 @@ class Shell(object):
                     all_layout=False),
                 eventloop=create_eventloop())
             example_cli.buffers['example_line'].reset(
-                initial_document=Document(u'{}\n'.format(example))
+                initial_document=Document(u'{}\n'.format(
+                    add_random_new_lines(example)))
             )
-            for i in range(len(text.split()) - start_index):
+            # counter = 0
+            while start_index < len(text.split()):
                 example_cli.buffers[DEFAULT_BUFFER].reset(
                     initial_document=Document(
                         u'{}'.format(cmd),
@@ -392,10 +397,13 @@ class Shell(object):
                 if not answer:
                     return ""
                 answer = answer.text
-                start_index += 1
-                if len(answer.split()) > 1:
-                    cmd += " " + answer.split()[-1] + " " +\
-                    u' '.join(text.split()[start_index:start_index + 1])
+                if answer.strip('\n') == cmd.strip('\n'):
+                    continue
+                else:
+                    if len(answer.split()) > 1:
+                        start_index += 1
+                        cmd += " " + answer.split()[-1] + " " +\
+                        u' '.join(text.split()[start_index:start_index + 1])
             example_cli.exit()
             del example_cli
         else:
