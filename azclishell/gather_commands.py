@@ -15,7 +15,7 @@ ROWS, COLS = get_window_dim()
 TOLERANCE = 10
 LINE_MINIMUM = math.floor(int(COLS) / 2 - 15)
 
-def add_random_new_lines(long_phrase, line_min, tolerance=TOLERANCE):
+def add_random_new_lines(long_phrase, line_min=LINE_MINIMUM, tolerance=TOLERANCE):
     """ not everything fits on the screen, based on the size, add newlines """
     if long_phrase is None:
         return long_phrase
@@ -108,7 +108,7 @@ class GatherCommands(object):
                 branch = branch.get_child(word, branch.children)
 
             description = data[command]['help']
-            self.descrip[command] = add_random_new_lines(description, LINE_MINIMUM)
+            self.descrip[command] = add_random_new_lines(description)
 
             if 'examples' in data[command]:
                 examples = []
@@ -136,7 +136,7 @@ class GatherCommands(object):
 
                         self.param_descript[command + " " + par] =  \
                         add_random_new_lines(data[command]['parameters'][param]['required']\
-                        + " " + data[command]['parameters'][param]['help'], LINE_MINIMUM)
+                        + " " + data[command]['parameters'][param]['help'])
                         if par not in self.completable_param:
                             self.completable_param.append(par)
                         all_params.append(par)
