@@ -12,11 +12,10 @@ import jmespath
 
 from six.moves import configparser
 
-from prompt_toolkit import prompt
+# from prompt_toolkit import prompt
 from prompt_toolkit.buffer import Buffer
 from prompt_toolkit.shortcuts import create_eventloop
 from prompt_toolkit.history import InMemoryHistory
-from prompt_toolkit.styles import style_from_dict
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 from prompt_toolkit.document import Document
 from prompt_toolkit.interface import CommandLineInterface, Application
@@ -25,15 +24,14 @@ from prompt_toolkit.enums import DEFAULT_BUFFER
 
 from pygments.token import Token
 
-from tabulate import tabulate
+# from tabulate import tabulate
 
-# import azclishell.help.json as shell_help
 import azclishell.configuration
 from azclishell.az_lexer import AzLexer, ExampleLexer, ToolbarLexer
 from azclishell.az_completer import AzCompleter
 from azclishell.layout import create_layout, create_layout_completions, set_default_command
 from azclishell.key_bindings import registry, get_section, sub_section, EXAMPLE_REPL
-from azclishell.util import get_window_dim
+from azclishell.util import get_window_dim, default_style
 from azclishell.gather_commands import add_random_new_lines
 
 import azure.cli.core.azlogging as azlogging
@@ -72,34 +70,6 @@ shell_help = \
     "Crtl+N          : Scroll down the documentation\n" +\
     "Crtl+Y          : Scroll up the documentation"
 
-help_doc = TableOutput()
-
-def default_style():
-    """ Default coloring """
-    styles = style_from_dict({
-        # Completion colors
-        Token.Menu.Completions.Completion.Current: 'bg:#7c2c80 #ffffff',
-        Token.Menu.Completions.Completion: 'bg:#00b7b7 #ffffff',
-        Token.Menu.Completions.ProgressButton: 'bg:#b78991',
-        Token.Menu.Completions.ProgressBar: 'bg:#ffc0cb',
-
-        Token.Az: '#7c2c80',
-        Token.Prompt.Arg: '#888888',
-
-        # Pretty Words
-        Token.Keyword: '#965699',
-        Token.Keyword.Declaration: '#ab77ad',
-        Token.Name.Class: '#c49fc5',
-        Token.Text: '#666666',
-
-        Token.Line: '#E500E5',
-        Token.Number: '#3d79db',
-        # toolbar
-        Token.Operator: 'bg:#000000 #ffffff',
-        Token.Toolbar: 'bg:#000000 #ffffff'
-    })
-
-    return styles
 
 class Shell(object):
     """ represents the shell """
