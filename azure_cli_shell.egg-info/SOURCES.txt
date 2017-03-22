@@ -25,5 +25,6 @@ test/__init__.py
 test/test_bindings.py
 test/test_completion.py
 test/test_gather.py
+test/test_quote_parse.py
 test/test_run.py
 test/test_tree.py

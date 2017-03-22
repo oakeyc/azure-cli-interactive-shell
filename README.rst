@@ -7,6 +7,7 @@ The interactive shell for Microsoft Azure CLI (Command Line Interface)
 * Lightweight Drop Down Completions 
 * Auto Cached Suggestions 
 * Dynamic parameter completion 
+* Defaulting scopes of commands
 * On the fly descriptions of the commands AND parameters 
 * On the fly examples of how to utilize each command 
 * Optional "az" component 
