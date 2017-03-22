@@ -7,7 +7,7 @@ import sys
 import math
 import json
 import collections
-import shutil
+import re
 import jmespath
 
 from six.moves import configparser
@@ -31,7 +31,7 @@ from azclishell.az_lexer import AzLexer, ExampleLexer, ToolbarLexer
 from azclishell.az_completer import AzCompleter
 from azclishell.layout import create_layout, create_layout_completions, set_default_command
 from azclishell.key_bindings import registry, get_section, sub_section, EXAMPLE_REPL
-from azclishell.util import get_window_dim, default_style
+from azclishell.util import get_window_dim, default_style, parse_quotes
 from azclishell.gather_commands import add_random_new_lines
 
 import azure.cli.core.azlogging as azlogging
@@ -436,9 +436,6 @@ class Shell(object):
                 cmd = self.handle_example(text)
         if SELECT_SYMBOL['default'] in text:
             default = text.partition(SELECT_SYMBOL['default'])[2].split()
-            # if default[0].startswith('-'):
-            #     value = self.handle_default_param(default)
-            # else:
             value = self.handle_default_command(default)
             print("defaulting: " + value)
             self.set_prompt()
@@ -448,15 +445,11 @@ class Shell(object):
             if len(value) == 0:
                 self.default_command = ""
                 set_default_command("", add=False)
-                # self.default_params = []
                 print('undefaulting all')
             elif len(value) == 1 and value[0] == self.default_command:
                 self.default_command = ""
                 set_default_command("", add=False)
                 print('undefaulting: ' + value[0])
-            # elif len(value) == 2 and ' '.join(value[:2]) in self.default_params:
-            #     self.default_params.remove(' '.join(value[:2]))
-            #     print('undefaulting: ' + ' '.join(value[:2]))
 
             self.set_prompt()
             c_flag = True
@@ -468,8 +461,7 @@ class Shell(object):
         """ runs the CLI """
         telemetry.start()
         self.cli.buffers['symbols'].reset(
-            initial_document=Document(u'{}'.format(shell_help))
-        )
+            initial_document=Document(u'{}'.format(shell_help)))
         while True:
             try:
                 document = self.cli.run(reset_current_buffer=True)
@@ -494,7 +486,7 @@ class Shell(object):
                     subprocess.Popen(cmd, shell=True).communicate()
                 else:
                     try:
-                        args = [str(command) for command in cmd.split()]
+                        args = parse_quotes(cmd)
                         azlogging.configure_logging(args)
 
                         azure_folder = get_config_dir()
@@ -508,8 +500,9 @@ class Shell(object):
                         self.app.initialize(config)
 
                         result = self.app.execute(args)
+                        self.last_exit = 0
                         if result and result.result is not None:
-                            from azure.cli.core._output import OutputProducer, format_json
+                            from azure.cli.core._output import OutputProducer
                             if self.output:
                                 self.output.out(result)
                             else:
@@ -517,7 +510,7 @@ class Shell(object):
                                     self.app.configuration.output_format)
                                 OutputProducer(formatter=formatter, file=self.input).out(result)
                                 self.last = result
-                                self.last_exit = 0
+
                     except Exception as ex:  # pylint: disable=broad-except
                         self.last_exit = handle_exception(ex)
                     except SystemExit as ex:
