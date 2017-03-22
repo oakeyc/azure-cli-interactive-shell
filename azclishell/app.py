@@ -7,7 +7,7 @@ import sys
 import math
 import json
 import collections
-import shutil
+import re
 import jmespath
 
 from six.moves import configparser
@@ -31,7 +31,7 @@ from azclishell.az_lexer import AzLexer, ExampleLexer, ToolbarLexer
 from azclishell.az_completer import AzCompleter
 from azclishell.layout import create_layout, create_layout_completions, set_default_command
 from azclishell.key_bindings import registry, get_section, sub_section, EXAMPLE_REPL
-from azclishell.util import get_window_dim, default_style
+from azclishell.util import get_window_dim, default_style, parse_quotes
 from azclishell.gather_commands import add_random_new_lines
 
 import azure.cli.core.azlogging as azlogging
@@ -486,7 +486,7 @@ class Shell(object):
                     subprocess.Popen(cmd, shell=True).communicate()
                 else:
                     try:
-                        args = [str(command) for command in cmd.split()]
+                        args = parse_quotes(cmd)
                         azlogging.configure_logging(args)
 
                         azure_folder = get_config_dir()
@@ -502,7 +502,7 @@ class Shell(object):
                         result = self.app.execute(args)
                         self.last_exit = 0
                         if result and result.result is not None:
-                            from azure.cli.core._output import OutputProducer, format_json
+                            from azure.cli.core._output import OutputProducer
                             if self.output:
                                 self.output.out(result)
                             else:
