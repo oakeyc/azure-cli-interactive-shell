@@ -9,4 +9,4 @@ pip install azure-cli-shell -f $TMP_PKG_DIR;'
 
 WORKDIR /
 
-CMD az-shell
+CMD bash

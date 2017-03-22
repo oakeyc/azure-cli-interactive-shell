@@ -104,3 +104,4 @@ There is a docker image on docker hub
 
    $ docker pull oakeyc/az-cli-shell:latest
    $ docker run -it oakeyc/az-cli-shell:latest
+   root#: az-shell
