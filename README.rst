@@ -20,7 +20,7 @@ Installation
 ############
 .. code-block:: console
 
-   $ pip install azure-cli-shell
+   $ pip install --user azure-cli-shell
 
 Running
 ########

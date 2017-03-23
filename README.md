@@ -20,7 +20,7 @@
 ## Installation
 
 ```bash
-   $ pip install azure-cli-shell
+   $ pip install --user azure-cli-shell
 ```
 
 ## Running

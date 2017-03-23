@@ -24,3 +24,4 @@ az_cli_shell.egg-info/
 build/
 install_script.sh
 .cache/
+release.sh

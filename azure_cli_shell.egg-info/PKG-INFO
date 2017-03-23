@@ -1,6 +1,6 @@
 Metadata-Version: 1.0
 Name: azure-cli-shell
-Version: 0.1.1a12
+Version: 0.1.1a17
 Summary: Microsoft Azure Command-Line Interactive Shell
 Home-page: https://github.com/oakeyc/azure-cli-interactive-shell
 Author: Microsoft Corporation
@@ -24,12 +24,11 @@ Description: Azure CLI Interactive Shell
         * Optional layout configurations 
         * Fun Colors 
         
-        
         Installation
         ############
         .. code-block:: console
         
-           $ pip install azure-cli-shell
+           $ pip install --user azure-cli-shell
         
         Running
         ########
@@ -114,6 +113,7 @@ Description: Azure CLI Interactive Shell
            $ docker pull oakeyc/az-cli-shell:latest
            $ docker run -it oakeyc/az-cli-shell:latest
            root#: az-shell
+        
         
         
 Platform: UNKNOWN
