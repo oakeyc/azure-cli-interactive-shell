@@ -1,3 +1,4 @@
+README.rst
 az-shell
 az-shell.bat
 dev_setup.py
