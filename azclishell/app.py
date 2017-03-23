@@ -123,12 +123,15 @@ class Shell(object):
             empty_space += " "
         any_documentation = False
         is_command = True
+        text = text.replace('az', '')
+        if self.default_command:
+            text = self.default_command + ' ' + text
+
         for word in text.split():
             if word.startswith("-"):
                 is_command = False
             if is_command:
-                if not word == 'az':
-                    command += str(word) + " "
+                command += str(word) + " "
 
             if self.completer.is_completable(command.rstrip()):
                 cmdstp = command.rstrip()
