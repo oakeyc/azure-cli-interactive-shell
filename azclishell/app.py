@@ -325,8 +325,7 @@ class Shell(object):
             example = self.completer.command_examples[cmd][num][1]
             example = example.replace('\n', '')
 
-        if example.split()[0] == 'az':
-            example = ' '.join(example.split()[1:])
+        example = example.replace('az', '')
 
         starting_index = None
         counter = 0
@@ -361,6 +360,8 @@ class Shell(object):
             )
             # counter = 0
             while start_index < len(text.split()):
+                if self.default_command:
+                    cmd = cmd.replace(self.default_command + ' ', '')
                 example_cli.buffers[DEFAULT_BUFFER].reset(
                     initial_document=Document(
                         u'{}'.format(cmd),
@@ -436,7 +437,7 @@ class Shell(object):
                 cmd = "az " + cmd
             elif SELECT_SYMBOL['example'] in text:
                 global NOTIFICATIONS
-                cmd = self.handle_example(text)
+                cmd = self.handle_example(cmd)
         if SELECT_SYMBOL['default'] in text:
             default = text.partition(SELECT_SYMBOL['default'])[2].split()
             value = self.handle_default_command(default)
