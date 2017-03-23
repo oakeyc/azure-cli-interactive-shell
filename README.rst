@@ -17,6 +17,7 @@ The interactive shell for Microsoft Azure CLI (Command Line Interface)
 * Fun Colors 
 
 
+
 Installation
 ############
 .. code-block:: console
