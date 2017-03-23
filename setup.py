@@ -13,12 +13,12 @@ DEPENDENCIES = [
     'pyyaml',
     'jmespath',
 ]
-with open('README.rst', 'r', encoding='utf-8') as f:
+with open('_README.rst', 'r', encoding='utf-8') as f:
     README = f.read()
 
 setup(
     name='azure-cli-shell',
-    version='0.1.1a12',
+    version='0.1.1a15',
     description='Microsoft Azure Command-Line Interactive Shell',
     long_description=README + '\n\n',
     license='MIT',

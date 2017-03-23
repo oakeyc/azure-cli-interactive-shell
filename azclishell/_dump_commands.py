@@ -37,7 +37,7 @@ def dump_command_table():
         try:
             import_module('azure.cli.command_modules.' + mod).load_params(mod)
         except Exception as ex:
-            print("Exception: " + ex.message)
+            print("Error loading: {}".format(mod))
     _update_command_definitions(cmd_table)
 
     data = {}
@@ -95,14 +95,17 @@ def dump_command_table():
                 if "short-summary" in param:
                     data[cmd]['parameters'][param["name"].split()[0]]['help']\
                      = param["short-summary"]
-                # if "choices" in param:
-                #     print("choices")
         if "examples" in diction_help:
             examples = []
             for example in diction_help["examples"]:
                 examples.append([example['name'], example['text']])
-            data[cmd]['examples'] = examples
-
+            if cmd in data:
+                data[cmd]['examples'] = examples
+            else:
+                data[cmd] = {
+                    'examples' : examples,
+                    'help' : "",
+                    'parameters' : {}}
 
     with open(os.path.join(get_cache_dir(), command_file), 'w') as help_file:
         json.dump(data, help_file)
