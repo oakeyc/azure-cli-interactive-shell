@@ -96,29 +96,6 @@ class AzCompleter(Completer):
             if default_command():
                 text_before_cursor = default_command() + ' ' + text_before_cursor
 
-            # Global parameter stuff hard-coded in
-            if text_before_cursor.split() and len(text_before_cursor.split()) > 0:
-                for param in GLOBAL_PARAM:
-                    if self.validate_completion(
-                            param,
-                            text_before_cursor.split()[-1], ## not what you meant
-                            text_before_cursor,
-                            double=False):
-                        yield Completion(param, -len(text_before_cursor.split()[-1]))
-                if text_before_cursor.split()[-1] in OUTPUT_OPTIONS:
-                    for opt in OUTPUT_CHOICES:
-                        yield Completion(opt)
-                if len(text_before_cursor.split()) > 1 and\
-                text_before_cursor.split()[-2] in OUTPUT_OPTIONS:
-                    for opt in OUTPUT_CHOICES:
-                        if self.validate_completion(
-                                opt,
-                                text_before_cursor.split()[-1],
-                                text_before_cursor,
-                                double=False
-                            ):
-                            yield Completion(opt, -len(text_before_cursor.split()[-1]))
-
             if text_before_cursor.split():
                 for words in text_before_cursor.split():
                     # this is for single char parameters
@@ -237,6 +214,28 @@ class AzCompleter(Completer):
                                                 yield Completion(comp, -len(prefix))
                                     except TypeError:
                                         print("TypeError: " + TypeError.message)
+                    # Global parameter stuff hard-coded in
+            if text_before_cursor.split() and len(text_before_cursor.split()) > 0:
+                for param in GLOBAL_PARAM:
+                    if self.validate_completion(
+                            param,
+                            text_before_cursor.split()[-1], ## not what you meant
+                            text_before_cursor,
+                            double=False):
+                        yield Completion(param, -len(text_before_cursor.split()[-1]))
+                if text_before_cursor.split()[-1] in OUTPUT_OPTIONS:
+                    for opt in OUTPUT_CHOICES:
+                        yield Completion(opt)
+                if len(text_before_cursor.split()) > 1 and\
+                text_before_cursor.split()[-2] in OUTPUT_OPTIONS:
+                    for opt in OUTPUT_CHOICES:
+                        if self.validate_completion(
+                                opt,
+                                text_before_cursor.split()[-1],
+                                text_before_cursor,
+                                double=False
+                            ):
+                            yield Completion(opt, -len(text_before_cursor.split()[-1]))
         except CLIError:  # if the user isn't logged in
             pass
 
