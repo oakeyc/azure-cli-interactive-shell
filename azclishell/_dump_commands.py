@@ -80,9 +80,12 @@ def dump_command_table():
                     'parameters' : {}
                 }
 
+        if cmd not in data:
+            print("Command: {} not in Command Table".format(cmd))
+            continue
+
         if "parameters" in diction_help:
             for param in diction_help["parameters"]:
-
                 if param["name"].split()[0] not in data[cmd]['parameters']:
                     options = {
                         'name' : name_options,
@@ -99,13 +102,7 @@ def dump_command_table():
             examples = []
             for example in diction_help["examples"]:
                 examples.append([example['name'], example['text']])
-            if cmd in data:
-                data[cmd]['examples'] = examples
-            else:
-                data[cmd] = {
-                    'examples' : examples,
-                    'help' : "",
-                    'parameters' : {}}
+            data[cmd]['examples'] = examples
 
     with open(os.path.join(get_cache_dir(), command_file), 'w') as help_file:
         json.dump(data, help_file)
