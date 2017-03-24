@@ -389,8 +389,8 @@ class Shell(object):
     def _special_cases(self, text, cmd, outside):
         b_flag = False
         c_flag = False
-        if text.split() and text.split()[0] == 'az':
-            cmd = ' '.join(text.split()[1:])
+        if 'az' in text:
+            cmd = cmd.replace('az', '')
         if self.default_command:
             cmd = self.default_command + " " + cmd
 
@@ -402,17 +402,12 @@ class Shell(object):
                 os.path.join(
                     SHELL_CONFIGURATION.get_config_dir(),
                     SHELL_CONFIGURATION.get_history())
-        # elif text.strip() == "help":
-        #     print(shell_help)
         if text:
             if text[0] == SELECT_SYMBOL['outside']:
                 cmd = text[1:]
                 outside = True
-            # elif text.split()[0] == "az":  # dumps the extra az
-            #     cmd = " ".join(text.split()[1:])
             elif text[0] == SELECT_SYMBOL['exit_code']:
                 print(self.last_exit)
-                self.set_prompt()
                 c_flag = True
             elif SELECT_SYMBOL['query'] in text:  # query previous output
                 if self.last and self.last.result:
@@ -421,16 +416,16 @@ class Shell(object):
                     else:
                         input_dict = self.last.result
                     try:
-                        result = jmespath.search(
-                            text.partition(SELECT_SYMBOL['query'])[2], input_dict)
-                        if isinstance(result, str):
-                            print(result)
-                        else:
-                            print(json.dumps(result, sort_keys=True, indent=2))
+                        if text.partition(SELECT_SYMBOL['query'])[2]:
+                            result = jmespath.search(
+                                text.partition(SELECT_SYMBOL['query'])[2], input_dict)
+                            if isinstance(result, str):
+                                print(result)
+                            else:
+                                print(json.dumps(result, sort_keys=True, indent=2))
                     except jmespath.exceptions.ParseError:
                         print("Invalid Query")
 
-                self.set_prompt()
                 c_flag = True
             elif "|" in text or ">" in text:  # anything I don't parse, send off
                 outside = True
@@ -442,21 +437,21 @@ class Shell(object):
             default = text.partition(SELECT_SYMBOL['default'])[2].split()
             value = self.handle_default_command(default)
             print("defaulting: " + value)
-            self.set_prompt()
-            c_flag = True
+            cmd = cmd.replace(SELECT_SYMBOL['default'], '')
+
         if SELECT_SYMBOL['undefault'] in text:
             value = text.partition(SELECT_SYMBOL['undefault'])[2].split()
             if len(value) == 0:
                 self.default_command = ""
                 set_default_command("", add=False)
                 print('undefaulting all')
-            elif len(value) == 1 and value[0] == self.default_command:
-                self.default_command = ""
-                set_default_command("", add=False)
+            elif len(value) == 1 and value[0] in self.default_command:
+                self.default_command = " " + self.default_command.replace(value[0], '')
+                if not self.default_command.strip():
+                    self.default_command = self.default_command.strip()
+                set_default_command(self.default_command, add=False)
                 print('undefaulting: ' + value[0])
-
-            self.set_prompt()
-            c_flag = True
+            cmd = cmd.replace(SELECT_SYMBOL['undefault'], '')
 
         return b_flag, c_flag, outside, cmd
 
@@ -482,6 +477,7 @@ class Shell(object):
                 if b_flag:
                     break
                 if c_flag:
+                    self.set_prompt()
                     continue
 
                 self.history.append(cmd)
