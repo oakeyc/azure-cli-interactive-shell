@@ -455,6 +455,7 @@ class Shell(object):
                 set_default_command(self.default_command, add=False)
                 print('undefaulting: ' + value[0])
             cmd = cmd.replace(SELECT_SYMBOL['undefault'], '')
+            c_flag = True
 
         return b_flag, c_flag, outside, cmd
 
