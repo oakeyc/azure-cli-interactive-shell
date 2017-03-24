@@ -402,6 +402,9 @@ class Shell(object):
                 os.path.join(
                     SHELL_CONFIGURATION.get_config_dir(),
                     SHELL_CONFIGURATION.get_history())
+        if '--version' in text:
+            cmd = 'az ' + cmd
+            outside = True
         if text:
             if text[0] == SELECT_SYMBOL['outside']:
                 cmd = text[1:]
