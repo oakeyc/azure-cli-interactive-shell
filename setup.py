@@ -19,6 +19,7 @@ with open('README.rst', 'r', encoding='utf-8') as f:
 setup(
     name='azure-cli-shell',
     version='0.1.1a19',
+    version='0.1.1a17',
     description='Microsoft Azure Command-Line Interactive Shell',
     long_description=README + '\n\n',
     license='MIT',
