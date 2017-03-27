@@ -35,7 +35,7 @@ from azclishell.util import get_window_dim, default_style, parse_quotes
 from azclishell.gather_commands import add_random_new_lines
 
 import azure.cli.core.azlogging as azlogging
-import azure.cli.core.telemetry as telemetry
+# import azure.cli.core.telemetry as 
 from azure.cli.core._util import (show_version_info_exit, handle_exception)
 from azure.cli.core._util import CLIError
 from azure.cli.core.application import APPLICATION, Configuration
@@ -462,7 +462,7 @@ class Shell(object):
 
     def run(self):
         """ runs the CLI """
-        telemetry.start()
+        # telemetry.start()
         self.cli.buffers['symbols'].reset(
             initial_document=Document(u'{}'.format(shell_help)))
         while True:
@@ -519,10 +519,10 @@ class Shell(object):
                         self.last_exit = handle_exception(ex)
                     except SystemExit as ex:
                         self.last_exit = ex.code
-                    if self.last_exit != 0:
-                        telemetry.set_failure()
-                    else:
-                        telemetry.set_success()
+                    # if self.last_exit != 0:
+                        # telemetry.set_failure()
+                    # else:
+                        # telemetry.set_success()
 
         print('Have a lovely day!!')
-        telemetry.conclude()
+        # telemetry.conclude()

@@ -11,7 +11,7 @@ from azclishell.az_completer import AzCompleter
 from azclishell.az_lexer import AzLexer
 
 import azure.cli.core.azlogging as azlogging
-import azure.cli.core.telemetry as telemetry
+# import azure.cli.core.telemetry as telemetry
 from azure.cli.core.application import APPLICATION, Configuration
 from azure.cli.core._session import ACCOUNT, CONFIG, SESSION
 from azure.cli.core._util import (show_version_info_exit, handle_exception)
