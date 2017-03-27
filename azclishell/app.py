@@ -35,7 +35,7 @@ from azclishell.util import get_window_dim, default_style, parse_quotes
 from azclishell.gather_commands import add_random_new_lines
 
 import azure.cli.core.azlogging as azlogging
-import azure.cli.core.telemetry as telemetry
+# import azure.cli.core.telemetry as 
 from azure.cli.core._util import (show_version_info_exit, handle_exception)
 from azure.cli.core._util import CLIError
 from azure.cli.core.application import APPLICATION, Configuration
@@ -402,6 +402,9 @@ class Shell(object):
                 os.path.join(
                     SHELL_CONFIGURATION.get_config_dir(),
                     SHELL_CONFIGURATION.get_history())
+        if '--version' in text:
+            cmd = 'az ' + cmd
+            outside = True
         if text:
             if text[0] == SELECT_SYMBOL['outside']:
                 cmd = text[1:]
@@ -452,13 +455,14 @@ class Shell(object):
                 set_default_command(self.default_command, add=False)
                 print('undefaulting: ' + value[0])
             cmd = cmd.replace(SELECT_SYMBOL['undefault'], '')
+            c_flag = True
 
         return b_flag, c_flag, outside, cmd
 
 
     def run(self):
         """ runs the CLI """
-        telemetry.start()
+        # telemetry.start()
         self.cli.buffers['symbols'].reset(
             initial_document=Document(u'{}'.format(shell_help)))
         while True:
@@ -515,10 +519,10 @@ class Shell(object):
                         self.last_exit = handle_exception(ex)
                     except SystemExit as ex:
                         self.last_exit = ex.code
-                    if self.last_exit != 0:
-                        telemetry.set_failure()
-                    else:
-                        telemetry.set_success()
+                    # if self.last_exit != 0:
+                        # telemetry.set_failure()
+                    # else:
+                        # telemetry.set_success()
 
         print('Have a lovely day!!')
-        telemetry.conclude()
+        # telemetry.conclude()
