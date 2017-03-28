@@ -76,33 +76,35 @@ def default_style():
 
     return styles
 
-def parse_quotes(cmd):
+def parse_quotes(cmd, quotes=True):
     """ parses quotes """
     string_literals = ['\'', '\"']
     args = []
     words = cmd
     open_q = False
+    if quotes:
+        for quote in string_literals:
+            if quote in cmd:
+                if cmd.count(quote) % 2 != 0:
+                    raise ValueError("Invalid input: all quotes need accompanied closing quote")
+                while quote in words:
+                    if words.partition(quote)[0] is None:
+                        break
+                    if open_q:
+                        args.append(words.partition(quote)[0])
+                        open_q = False
+                    else:
+                        args.extend(words.partition(quote)[0].split())
+                        open_q = True
 
-    for quote in string_literals:
-        if quote in cmd:
-            if cmd.count(quote) % 2 != 0:
-                raise ValueError("Invalid input: all quotes need accompanied closing quote")
-            while quote in words:
-                if words.partition(quote)[0] is None:
-                    break
-                if open_q:
-                    args.append(words.partition(quote)[0])
-                    open_q = False
-                else:
-                    args.extend(words.partition(quote)[0].split())
-                    open_q = True
-
-                words = words.partition(quote)[2]
-            if words is not "":
-                args.extend(words.split())
-            break
+                    words = words.partition(quote)[2]
+                if words is not "":
+                    args.extend(words.split())
+                break
+        else:
+            args.extend(words.split())
     else:
-        args.extend(words.split())
+        args = words.split()
     return args
 
 def dict_path(keyword, dictionaries):

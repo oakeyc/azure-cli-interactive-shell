@@ -15,6 +15,8 @@ azclishell/configuration.py
 azclishell/gather_commands.py
 azclishell/key_bindings.py
 azclishell/layout.py
+azclishell/telemetry.py
+azclishell/telemetry_upload.py
 azclishell/util.py
 azure_cli_shell.egg-info/PKG-INFO
 azure_cli_shell.egg-info/SOURCES.txt

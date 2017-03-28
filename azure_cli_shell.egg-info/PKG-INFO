@@ -1,6 +1,6 @@
 Metadata-Version: 1.0
 Name: azure-cli-shell
-Version: 0.1.1a19
+Version: 0.1.1a20
 Summary: Microsoft Azure Command-Line Interactive Shell
 Home-page: https://github.com/oakeyc/azure-cli-interactive-shell
 Author: Microsoft Corporation
@@ -8,6 +8,7 @@ Author-email: azpycli@microsoft.com
 License: MIT
 Description: Azure CLI Interactive Shell
         ****************************
+        
         The interactive shell for Microsoft Azure CLI (Command Line Interface)
         ######################################################################
         
@@ -24,11 +25,13 @@ Description: Azure CLI Interactive Shell
         * Optional layout configurations 
         * Fun Colors 
         
+        
         Installation
         ############
         .. code-block:: console
         
            $ pip install --user azure-cli-shell
+        
         
         Running
         ########
@@ -39,6 +42,7 @@ Description: Azure CLI Interactive Shell
         
            $ az-shell
         
+        
         Then type your commands and hit [Enter]
         
         To use commands outside the application
@@ -47,12 +51,14 @@ Description: Azure CLI Interactive Shell
         
            $ #[command]
         
+        
         To Search through the last command as json
         jmespath format for querying
         
         .. code-block:: console
         
            $ ? [param]
+        
         
         *Note: Only if the previous command dumps out json, e.g. vm list*
         
@@ -62,6 +68,7 @@ Description: Azure CLI Interactive Shell
         
            $ %% [top-level command]
         
+        
         To undefault a value
         
         .. code-block:: console
@@ -70,13 +77,14 @@ Description: Azure CLI Interactive Shell
         
         
         Use Examples
-        ########
+        ############
         
         Type a command, for example:
         
         .. code-block:: console
         
            $ vm create
+        
         
         Look at the examples
         
@@ -88,8 +96,9 @@ Description: Azure CLI Interactive Shell
         
            $ vm create :: [Example Number]
         
+        
         Dev Setup
-        ########
+        #########
         
         Fork and clone repository
         
@@ -97,11 +106,13 @@ Description: Azure CLI Interactive Shell
         
            $ . dev_setup.py
         
+        
         To get the Exit Code of the previous command:
         
         .. code-block:: console
         
            $ $
+        
         
         Docker Image
         ############
@@ -113,6 +124,7 @@ Description: Azure CLI Interactive Shell
            $ docker pull oakeyc/az-cli-shell:latest
            $ docker run -it oakeyc/az-cli-shell:latest
            root#: az-shell
+        
         
         
         
