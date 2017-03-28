@@ -2,9 +2,8 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
-
-from setuptools import setup
 from codecs import open
+from setuptools import setup
 
 DEPENDENCIES = [
     'applicationinsights',
