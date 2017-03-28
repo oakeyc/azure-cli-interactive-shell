@@ -1,23 +1,7 @@
 """ a completer for the commands and parameters """
 from __future__ import print_function, absolute_import, division, unicode_literals
-from importlib import import_module
 
-import pkgutil
-
-from azure.cli.core.application import Configuration
-from azure.cli.core.commands import CliArgumentType
-from azure.cli.core.commands import load_params, _update_command_definitions
-from azure.cli.core.help_files import helps
-import azure.cli.core._help as _help
-
-import azclishell.configuration as config
-
-"""" end of imports that I'm messing around with """
-
-import argparse
-import sys
-import os
-import contextlib
+from argcomplete import mute_stderr
 
 from prompt_toolkit.completion import Completer, Completion
 import azclishell.configuration
@@ -27,7 +11,6 @@ from azclishell.argfinder import ArgsFinder
 
 from azure.cli.core.parser import AzCliCommandParser
 from azure.cli.core._util import CLIError
-from azure.cli.core.application import APPLICATION
 
 
 SELECT_SYMBOL = azclishell.configuration.SELECT_SYMBOL
@@ -67,6 +50,8 @@ class AzCompleter(Completer):
         from azclishell._dump_commands import CMD_TABLE
         self.cmdtab = CMD_TABLE
         self.parser.load_command_table(CMD_TABLE)
+        self.argsfinder = ArgsFinder(self.parser)
+
 
     def validate_completion(self, param, words, text_before_cursor, double=True):
         """ validates that a param should be completed """
@@ -200,8 +185,8 @@ class AzCompleter(Completer):
                         except TypeError:
                             pass
 
-                        comp = ArgsFinder(self.parser)
-                        parse_args = comp.get_parsed_args(
+                        # self.argsfinder = ArgsFinder(self.parser)
+                        parse_args = self.argsfinder.get_parsed_args(
                             parse_quotes(text_before_cursor, quotes=False))
 
                         # there are 3 formats for completers the cli uses
