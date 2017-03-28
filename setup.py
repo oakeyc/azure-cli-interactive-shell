@@ -6,18 +6,22 @@ from codecs import open
 from setuptools import setup
 
 DEPENDENCIES = [
+    'applicationinsights',
     'azure-cli',
-    'prompt_toolkit',
-    'six',
-    'pyyaml',
     'jmespath',
+    'prompt_toolkit',
+    'pyyaml',
+    'six',
 ]
+
 with open('README.rst', 'r', encoding='utf-8') as f:
     README = f.read()
 
+__version__ = '0.1.1a20'
+
 setup(
     name='azure-cli-shell',
-    version='0.1.1a21',
+    version=__version__,
     description='Microsoft Azure Command-Line Interactive Shell',
     long_description=README + '\n\n',
     license='MIT',

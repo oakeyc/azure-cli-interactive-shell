@@ -10,13 +10,11 @@ from azclishell.app import Shell
 from azclishell.az_completer import AzCompleter
 from azclishell.az_lexer import AzLexer
 
-import azure.cli.core.azlogging as azlogging
+# import azure.cli.core.azlogging as azlogging
 # import azure.cli.core.telemetry as telemetry
-from azure.cli.core.application import APPLICATION, Configuration
-from azure.cli.core._session import ACCOUNT, CONFIG, SESSION
-from azure.cli.core._util import (show_version_info_exit, handle_exception)
-from azure.cli.core._environment import get_config_dir as cli_config_dir
 from azure.cli.core.application import APPLICATION
+from azure.cli.core._session import ACCOUNT, CONFIG, SESSION
+from azure.cli.core._environment import get_config_dir as cli_config_dir
 from azure.cli.core.commands.client_factory import ENV_ADDITIONAL_USER_AGENT
 
 AZCOMPLETER = AzCompleter(GatherCommands())
@@ -46,7 +44,6 @@ def main():
         lexer=AzLexer,
         history=FileHistory(os.path.join(CONFIGURATION.get_config_dir(), config.get_history())),
         app=APPLICATION,
-        # cli_config=os.path.join(azure_folder, 'config')
     )
     shell_app.run()
 

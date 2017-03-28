@@ -8,6 +8,7 @@ from prompt_toolkit.keys import Keys
 from prompt_toolkit import prompt
 
 import azclishell.configuration
+from azclishell.telemetry import TC as telemetry
 
 manager = KeyBindingManager(
     enable_system_bindings=True,
@@ -34,6 +35,7 @@ class _ExampleFilter(Filter):
 @registry.add_binding(Keys.ControlQ, eager=True)
 def exit_(event):
     """ exits the program when Control Q is pressed """
+    telemetry.track_key('ControlQ')
     event.cli.set_return_value(None)
 
 @registry.add_binding(Keys.Enter, filter=_PromptFilter() & _ExampleFilter())
@@ -45,6 +47,8 @@ def enter_(event):
 def pan_up_(event):
     """ Pans the example pan up"""
     global _SECTION
+    telemetry.track_key('ControlY')
+
     if _SECTION > 1:
         _SECTION -= 1
 
@@ -52,6 +56,8 @@ def pan_up_(event):
 def pan_down_(event):
     """ Pans the example pan down"""
     global _SECTION
+    telemetry.track_key('ControlN')
+
     if _SECTION < 10:
         _SECTION += 1
 
@@ -59,6 +65,8 @@ def pan_down_(event):
 def config_settings_(event):
     """ opens the configuration """
     global PROMPTING
+    telemetry.track_key('F1')
+
     PROMPTING = True
     config = azclishell.configuration.CONFIGURATION
     answer = ""
@@ -80,12 +88,16 @@ def config_settings_(event):
 def show_default_(event):
     """ shows the defaults"""
     global SHOW_DEFAULT
+    telemetry.track_key('F2')
+
     SHOW_DEFAULT = not SHOW_DEFAULT
 
 @registry.add_binding(Keys.F3, eager=True)
 def show_symboles(event):
     """ shows the symbol bindings"""
     global SYMBOLS
+    telemetry.track_key('F3')
+
     SYMBOLS = not SYMBOLS
 
 def get_symbols():

@@ -10,7 +10,7 @@ import six
 import azure.cli.core.decorators as decorators
 
 DIAGNOSTICS_TELEMETRY_ENV_NAME = 'AZURE_CLI_SHELL_DIAGNOSTICS_TELEMETRY'
-INSTRUMENTATION_KEY = '' ## UNKNOWN
+INSTRUMENTATION_KEY = '762871d5-45a2-4d67-bf47-e396caf53d9d'
 
 def in_diagnostic_mode():
     """
