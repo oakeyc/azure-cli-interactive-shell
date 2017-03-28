@@ -33,9 +33,9 @@ from azclishell.layout import create_layout, create_layout_completions, set_defa
 from azclishell.key_bindings import registry, get_section, sub_section, EXAMPLE_REPL
 from azclishell.util import get_window_dim, default_style, parse_quotes
 from azclishell.gather_commands import add_random_new_lines
+from azclishell.telemetry import TC as telemetry
 
 import azure.cli.core.azlogging as azlogging
-# import azure.cli.core.telemetry as 
 from azure.cli.core._util import (show_version_info_exit, handle_exception)
 from azure.cli.core._util import CLIError
 from azure.cli.core.application import APPLICATION, Configuration
@@ -303,13 +303,6 @@ class Shell(object):
             cursor_position=position))
         self.cli.request_redraw()
 
-    # def handle_default_param(self, text):
-    #     """ defaults a value """
-    #     # assert len(text) > 2
-    #     value = " ".join(text[:2])
-    #     self.default_params.append(value)
-    #     return value
-
     def handle_default_command(self, text):
         """ default commands """
         value = text[0]
@@ -368,7 +361,6 @@ class Shell(object):
                 initial_document=Document(u'{}\n'.format(
                     add_random_new_lines(example)))
             )
-            # counter = 0
             while start_index < len(text.split()):
                 if self.default_command:
                     cmd = cmd.replace(self.default_command + ' ', '')
@@ -474,7 +466,7 @@ class Shell(object):
 
     def run(self):
         """ runs the CLI """
-        # telemetry.start()
+        telemetry.start()
         self.cli.buffers['symbols'].reset(
             initial_document=Document(u'{}'.format(shell_help)))
         while True:
@@ -498,6 +490,7 @@ class Shell(object):
 
                 if not self.default_command:
                     self.history.append(text)
+
                 self.set_prompt()
                 if outside:
                     subprocess.Popen(cmd, shell=True).communicate()
@@ -538,4 +531,4 @@ class Shell(object):
                         # telemetry.set_success()
 
         print('Have a lovely day!!')
-        # telemetry.conclude()
+        telemetry.conclude()

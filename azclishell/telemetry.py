@@ -1,33 +1,20 @@
 """ use telemetry to measure ux key bindings """
 import logging
+import datetime
+import sys
+import os
 
-import azure.cli.core.telemetry_upload as telemetry_core
-import azure.cli.core.telemetry as telemetry
+import azclishell.telemetry_upload as telemetry_core
+# import azure.cli.core.telemetry as telemetry
 
 from applicationinsights import TelemetryClient
 from applicationinsights.logging import LoggingHandler
 
-INSTRUMENTATION_KEY = 'cc625aa7-58b2-40ad-97f7-5fef9395643b'
+INSTRUMENTATION_KEY = '762871d5-45a2-4d67-bf47-e396caf53d9d'
 
 PRODUCT_NAME = 'azureclishell'
 TELEMETRY_VERSION = '0.0.1.1'
-# AZURE_CLI_PREFIX = 'Context.Default.AzureCLI.'
 
-TC = TelemetryClient(INSTRUMENTATION_KEY)
-TC.track_event('Event', {'foo': 'bar'})
-TC.flush()
-
-
-# set up logging
-handler = LoggingHandler(INSTRUMENTATION_KEY)
-handler.setLevel(logging.DEBUG)
-handler.setFormatter(logging.Formatter('%(levelname)s: %(message)s'))
-my_logger = logging.getLogger('simple_logger')
-my_logger.setLevel(logging.DEBUG)
-my_logger.addHandler(handler)
-
-# log something (this will be sent to the Application Insights service as a trace)
-my_logger.debug('This is a message')
 
 def my_context(tc):
     tc.context.application.id = 'Azure Shell'
@@ -36,14 +23,45 @@ def my_context(tc):
     tc.track_trace('My trace with context')
     tc.flush()
 
-my_context(TC)
+def generate_data():
+    """ gets the data to return """
+    return ' '.join(TC.keys)
 
-# class Telemetry(telemetry.TelemetrySession):
-#     """ base telemetry sessions """
-#     keys = []
+class Telemetry(TelemetryClient):
+    """ base telemetry sessions """
+    keys = []
+    start_time = None
+    end_time = None
 
-# _session = Telemetry()
+    def track_key(self, key):
+        """ tracks the special key bindings """
+        self.keys.append(key)
+        self.track_event('Key Press', key)
 
-# def key_bindings(key):
-#     """ measure key bindings """
-#     _session.keys.append(key)
+    def start(self):
+        """ starts recording stuff """
+        self.start_time = datetime.datetime.now()
+
+    def conclude(self):
+        """ concludings recording stuff """
+        self.end_time = datetime.datetime.now()
+        payload = generate_data()
+        # if payload:
+        #     import subprocess
+        #     subprocess.Popen([sys.executable, os.path.realpath(telemetry_core.__file__), payload])
+        self.flush()
+
+
+TC = Telemetry(INSTRUMENTATION_KEY)
+
+# set up logging
+# handler = LoggingHandler(INSTRUMENTATION_KEY)
+# handler.setLevel(logging.DEBUG)
+# handler.setFormatter(logging.Formatter('%(levelname)s: %(message)s'))
+# my_logger = logging.getLogger('simple_logger')
+# my_logger.setLevel(logging.DEBUG)
+# my_logger.addHandler(handler)
+
+# # log something (this will be sent to the Application Insights service as a trace)
+# my_logger.debug('This is a message')
+# my_context(TC)
