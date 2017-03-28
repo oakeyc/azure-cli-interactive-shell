@@ -389,15 +389,16 @@ class Shell(object):
         return cmd
 
     def _special_cases(self, text, cmd, outside):
-        b_flag = False
-        c_flag = False
+        break_flag = False
+        continue_flag = False
         if 'az' in text:
+            telemetry.track_ssg('az', text)
             cmd = cmd.replace('az', '')
         if self.default_command:
             cmd = self.default_command + " " + cmd
 
         if text.strip() == "quit" or text.strip() == "exit":
-            b_flag = True
+            break_flag = True
         elif text.strip() == "clear":  # clears the history, but only when you restart
             outside = True
             cmd = 'echo -n "" >' +\
@@ -405,17 +406,24 @@ class Shell(object):
                     SHELL_CONFIGURATION.get_config_dir(),
                     SHELL_CONFIGURATION.get_history())
         if '--version' in text:
-            cmd = 'az ' + cmd
-            outside = True
+            try:
+                show_version_info_exit(sys.stdout)
+            except SystemExit:
+                pass
         if text:
             if text[0] == SELECT_SYMBOL['outside']:
                 cmd = text[1:]
                 outside = True
                 if cmd.split()[0] == 'cd':
                     handle_cd(parse_quotes(cmd))
+                    continue_flag = True
+                telemetry.track_ssg('outside', cmd)
+
             elif text[0] == SELECT_SYMBOL['exit_code']:
                 print(self.last_exit)
-                c_flag = True
+                continue_flag = True
+                telemetry.track_ssg('exit code', cmd)
+
             elif SELECT_SYMBOL['query'] in text:  # query previous output
                 if self.last and self.last.result:
                     if hasattr(self.last.result, '__dict__'):
@@ -432,19 +440,24 @@ class Shell(object):
                                 print(json.dumps(result, sort_keys=True, indent=2))
                     except jmespath.exceptions.ParseError:
                         print("Invalid Query")
+                continue_flag = True
+                telemetry.track_ssg('query', text)
 
-                c_flag = True
             elif "|" in text or ">" in text:  # anything I don't parse, send off
                 outside = True
                 cmd = "az " + cmd
+
             elif SELECT_SYMBOL['example'] in text:
                 global NOTIFICATIONS
                 cmd = self.handle_example(cmd)
+                telemetry.track_ssg('tutorial', text)
+
         if SELECT_SYMBOL['default'] in text:
             default = text.partition(SELECT_SYMBOL['default'])[2].split()
             value = self.handle_default_command(default)
             print("defaulting: " + value)
             cmd = cmd.replace(SELECT_SYMBOL['default'], '')
+            telemetry.track_ssg('default command', value)
 
         if SELECT_SYMBOL['undefault'] in text:
             value = text.partition(SELECT_SYMBOL['undefault'])[2].split()
@@ -459,9 +472,9 @@ class Shell(object):
                 set_default_command(self.default_command, add=False)
                 print('undefaulting: ' + value[0])
             cmd = cmd.replace(SELECT_SYMBOL['undefault'], '')
-            c_flag = True
+            continue_flag = True
 
-        return b_flag, c_flag, outside, cmd
+        return break_flag, continue_flag, outside, cmd
 
 
     def run(self):
@@ -525,10 +538,6 @@ class Shell(object):
                         self.last_exit = handle_exception(ex)
                     except SystemExit as ex:
                         self.last_exit = ex.code
-                    # if self.last_exit != 0:
-                        # telemetry.set_failure()
-                    # else:
-                        # telemetry.set_success()
 
         print('Have a lovely day!!')
         telemetry.conclude()

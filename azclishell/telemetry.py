@@ -33,6 +33,10 @@ class Telemetry(TelemetryClient):
     start_time = None
     end_time = None
 
+    def track_ssg(self, gesture, cmd):
+        """ track shell specific gestures """
+        self.track_event('Shell Specific Gesture', gesture, cmd)
+
     def track_key(self, key):
         """ tracks the special key bindings """
         self.keys.append(key)
