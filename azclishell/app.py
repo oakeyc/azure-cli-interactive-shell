@@ -70,6 +70,16 @@ shell_help = \
     "Crtl+N          : Scroll down the documentation\n" +\
     "Crtl+Y          : Scroll up the documentation"
 
+def handle_cd(cmd):
+    """changes dir """
+    if len(cmd) != 2:
+        print("Invalid syntax: cd path")
+        return
+    path = os.path.expandvars(os.path.expanduser(cmd[1]))
+    try:
+        os.chdir(path)
+    except OSError as ex:
+        print("cd: %s\n" % ex)
 
 class Shell(object):
     """ represents the shell """
@@ -409,6 +419,8 @@ class Shell(object):
             if text[0] == SELECT_SYMBOL['outside']:
                 cmd = text[1:]
                 outside = True
+                if cmd.split()[0] == 'cd':
+                    handle_cd(parse_quotes(cmd))
             elif text[0] == SELECT_SYMBOL['exit_code']:
                 print(self.last_exit)
                 c_flag = True
@@ -484,7 +496,8 @@ class Shell(object):
                     self.set_prompt()
                     continue
 
-                self.history.append(cmd)
+                if not self.default_command:
+                    self.history.append(text)
                 self.set_prompt()
                 if outside:
                     subprocess.Popen(cmd, shell=True).communicate()
