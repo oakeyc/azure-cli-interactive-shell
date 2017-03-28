@@ -105,9 +105,7 @@ class AzCompleter(Completer):
             branch = self.command_tree
 
             # remove az if there
-            if len(text_before_cursor.split()) > 0\
-            and text_before_cursor.split()[0] == 'az':
-                text_before_cursor = ' '.join(text_before_cursor.split()[1:])
+            text_before_cursor = text_before_cursor.replace('az', '')
 
             # disregard defaulting symbols
             if SELECT_SYMBOL['default'] in text_before_cursor:
@@ -149,11 +147,11 @@ class AzCompleter(Completer):
                                     command += " " + str(words)
                                 else:
                                     command += str(words)
-                        elif text_before_cursor.find(words) + len(words) <\
-                        len(text_before_cursor) and \
-                        text_before_cursor[
-                                text_before_cursor.find(words) + len(words)].isspace():
-                            is_command = False
+                        # elif text_before_cursor.find(words) + len(words) <\
+                        #     len(text_before_cursor) and \
+                        #     text_before_cursor[
+                        #         text_before_cursor.find(words) + len(words)].isspace():
+                        #     is_command = False
 
                 if branch.children is not None and is_command: # all underneath commands
                     for kid in branch.children:
@@ -166,7 +164,7 @@ class AzCompleter(Completer):
                                 -len(text_before_cursor.split()[-1]))
 
             # if nothing, so first level commands
-            if not text_before_cursor and is_command:
+            if not text_before_cursor.split() and is_command:
                 if branch.children is not None:
                     for com in branch.children:
                         yield Completion(com.data)
