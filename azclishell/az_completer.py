@@ -105,9 +105,7 @@ class AzCompleter(Completer):
             branch = self.command_tree
 
             # remove az if there
-            if len(text_before_cursor.split()) > 0\
-            and text_before_cursor.split()[0] == 'az':
-                text_before_cursor = ' '.join(text_before_cursor.split()[1:])
+            text_before_cursor = text_before_cursor.replace('az', '')
 
             # disregard defaulting symbols
             if SELECT_SYMBOL['default'] in text_before_cursor:
@@ -149,11 +147,11 @@ class AzCompleter(Completer):
                                     command += " " + str(words)
                                 else:
                                     command += str(words)
-                        elif text_before_cursor.find(words) + len(words) <\
-                        len(text_before_cursor) and \
-                        text_before_cursor[
-                                text_before_cursor.find(words) + len(words)].isspace():
-                            is_command = False
+                        # elif text_before_cursor.find(words) + len(words) <\
+                        #     len(text_before_cursor) and \
+                        #     text_before_cursor[
+                        #         text_before_cursor.find(words) + len(words)].isspace():
+                        #     is_command = False
 
                 if branch.children is not None and is_command: # all underneath commands
                     for kid in branch.children:
@@ -166,7 +164,7 @@ class AzCompleter(Completer):
                                 -len(text_before_cursor.split()[-1]))
 
             # if nothing, so first level commands
-            if not text_before_cursor and is_command:
+            if not text_before_cursor.split() and is_command:
                 if branch.children is not None:
                     for com in branch.children:
                         yield Completion(com.data)
@@ -213,32 +211,45 @@ class AzCompleter(Completer):
                                 for comp in self.cmdtab[command].\
                                 arguments[arg_name].completer(prefix=prefix, action=None,\
                                 parser=None, parsed_args=parse_args):
+                                    if len(comp.split()) > 1:
+                                        completion = '\"' + comp + '\"'
+                                    else:
+                                        completion = comp
+
                                     if started_param:
                                         if comp.lower().startswith(prefix.lower())\
                                             and comp not in text_before_cursor.split():
-                                            yield Completion(comp, -len(prefix))
+                                            yield Completion(completion, -len(prefix))
                                     else:
-                                        yield Completion(comp, -len(prefix))
+                                        yield Completion(completion, -len(prefix))
                             except TypeError:
                                 try:
                                     for comp in self.cmdtab[command].\
                                     arguments[arg_name].completer(prefix):
+                                        if len(comp.split()) > 1:
+                                            completion = '\"' + comp + '\"'
+                                        else:
+                                            completion = comp
                                         if started_param:
                                             if comp.lower().startswith(prefix.lower())\
                                                 and comp not in text_before_cursor.split():
-                                                yield Completion(comp, -len(prefix))
+                                                yield Completion(completion, -len(prefix))
                                         else:
-                                            yield Completion(comp, -len(prefix))
+                                            yield Completion(completion, -len(prefix))
                                 except TypeError:
                                     try:
                                         for comp in self.cmdtab[command].\
                                         arguments[arg_name].completer():
+                                            if len(comp.split()) > 1:
+                                                completion = '\"' + comp + '\"'
+                                            else:
+                                                completion = comp
                                             if started_param:
                                                 if comp.lower().startswith(prefix.lower())\
                                                     and comp not in text_before_cursor.split():
-                                                    yield Completion(comp, -len(prefix))
+                                                    yield Completion(completion, -len(prefix))
                                             else:
-                                                yield Completion(comp, -len(prefix))
+                                                yield Completion(completion, -len(prefix))
                                     except TypeError:
                                         print("TypeError: " + TypeError.message)
             # Global parameter stuff hard-coded in

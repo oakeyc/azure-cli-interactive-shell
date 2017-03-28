@@ -148,21 +148,21 @@ class CompletionTest(unittest.TestCase):
         with self.assertRaises(StopIteration):
             six.next(gen)
 
-    def test_second_completion(self):
-        self.init3()
-        doc = Document(u'crea ')
-        gen = self.completer.get_completions(doc, None)
-        with self.assertRaises(StopIteration):
-            six.next(gen)
-        doc = Document(u'create --fun ')
-        gen = self.completer.get_completions(doc, None)
-        with self.assertRaises(StopIteration):
-            six.next(gen)
+    # def test_second_completion(self):
+    #     self.init3()
+    #     doc = Document(u'crea ')
+    #     gen = self.completer.get_completions(doc, None)
+    #     with self.assertRaises(StopIteration):
+    #         six.next(gen)
+    #     doc = Document(u'create --fun ')
+    #     gen = self.completer.get_completions(doc, None)
+    #     with self.assertRaises(StopIteration):
+    #         six.next(gen)
 
-        doc = Document(u'command d ')
-        gen = self.completer.get_completions(doc, None)
-        with self.assertRaises(StopIteration):
-            six.next(gen)
+    #     doc = Document(u'command d ')
+    #     gen = self.completer.get_completions(doc, None)
+    #     with self.assertRaises(StopIteration):
+    #         six.next(gen)
 
 
 if __name__ == '__main__':
