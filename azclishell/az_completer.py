@@ -1,12 +1,34 @@
 """ a completer for the commands and parameters """
-from __future__ import print_function
+from __future__ import print_function, absolute_import, division, unicode_literals
+from importlib import import_module
+
+import pkgutil
+
+from azure.cli.core.application import Configuration
+from azure.cli.core.commands import CliArgumentType
+from azure.cli.core.commands import load_params, _update_command_definitions
+from azure.cli.core.help_files import helps
+import azure.cli.core._help as _help
+
+import azclishell.configuration as config
+
+"""" end of imports that I'm messing around with """
+
+import argparse
+import sys
+import os
+import contextlib
 
 from prompt_toolkit.completion import Completer, Completion
 import azclishell.configuration
 from azclishell.layout import default_command
+from azclishell.util import parse_quotes
+from azclishell.argfinder import ArgsFinder
 
 from azure.cli.core.parser import AzCliCommandParser
 from azure.cli.core._util import CLIError
+from azure.cli.core.application import APPLICATION
+
 
 SELECT_SYMBOL = azclishell.configuration.SELECT_SYMBOL
 GLOBAL_PARAM = ['--output', '-o', '--verbose', '--debug']
@@ -38,13 +60,13 @@ class AzCompleter(Completer):
             OUTPUT_CHOICES = []
             OUTPUT_OPTIONS = []
 
-        self.global_parser = AzCliCommandParser(prog='az', add_help=False)
+        self.global_parser = AzCliCommandParser(add_help=False)
         self.global_parser.add_argument_group('global', 'Global Arguments')
-        self.parser = AzCliCommandParser(prog='az', parents=[self.global_parser])
+        self.parser = AzCliCommandParser(parents=[self.global_parser])
 
-        from azclishell._dump_commands import CMD_TABLE as cmd_table
-        self.cmdtab = cmd_table
-        self.parser.load_command_table(self.cmdtab)
+        from azclishell._dump_commands import CMD_TABLE
+        self.cmdtab = CMD_TABLE
+        self.parser.load_command_table(CMD_TABLE)
 
     def validate_completion(self, param, words, text_before_cursor, double=True):
         """ validates that a param should be completed """
@@ -179,13 +201,18 @@ class AzCompleter(Completer):
                                     yield Completion(choice, -len(prefix))
                         except TypeError:
                             pass
+
+                        comp = ArgsFinder(self.parser)
+                        parse_args = comp.get_parsed_args(
+                            parse_quotes(text_before_cursor, quotes=False))
+
                         # there are 3 formats for completers the cli uses
                         # this try catches which format it is
                         if self.cmdtab[command].arguments[arg_name].completer:
                             try:
                                 for comp in self.cmdtab[command].\
                                 arguments[arg_name].completer(prefix=prefix, action=None,\
-                                parser=self.parser, parsed_args=None):
+                                parser=None, parsed_args=parse_args):
                                     if started_param:
                                         if comp.lower().startswith(prefix.lower())\
                                             and comp not in text_before_cursor.split():
@@ -214,7 +241,7 @@ class AzCompleter(Completer):
                                                 yield Completion(comp, -len(prefix))
                                     except TypeError:
                                         print("TypeError: " + TypeError.message)
-                    # Global parameter stuff hard-coded in
+            # Global parameter stuff hard-coded in
             if text_before_cursor.split() and len(text_before_cursor.split()) > 0:
                 for param in GLOBAL_PARAM:
                     if self.validate_completion(
@@ -233,8 +260,7 @@ class AzCompleter(Completer):
                                 opt,
                                 text_before_cursor.split()[-1],
                                 text_before_cursor,
-                                double=False
-                            ):
+                                double=False):
                             yield Completion(opt, -len(text_before_cursor.split()[-1]))
         except CLIError:  # if the user isn't logged in
             pass

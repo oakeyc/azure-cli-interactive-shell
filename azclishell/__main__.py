@@ -17,12 +17,14 @@ from azure.cli.core._session import ACCOUNT, CONFIG, SESSION
 from azure.cli.core._util import (show_version_info_exit, handle_exception)
 from azure.cli.core._environment import get_config_dir as cli_config_dir
 from azure.cli.core.application import APPLICATION
+from azure.cli.core.commands.client_factory import ENV_ADDITIONAL_USER_AGENT
 
 AZCOMPLETER = AzCompleter(GatherCommands())
 CONFIGURATION = azclishell.configuration.CONFIGURATION
 
 def main():
     """ the main function """
+    # os.environ([ENV_ADDITIONAL_USER_AGENT]) = os.environ([ENV_ADDITIONAL_USER_AGENT]) + ' Shell'
 
     azure_folder = cli_config_dir()
     if not os.path.exists(azure_folder):
