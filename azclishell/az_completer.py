@@ -17,7 +17,7 @@ import azclishell.configuration as config
 
 CMD_TABLE = APPLICATION.configuration.get_command_table()
 
-
+"""" end of imports that I'm messing around with """
 
 import argparse
 import sys
@@ -327,7 +327,7 @@ class AzCompleter(Completer):
 
 
 
-
+""" Clean up what you need later """
 
 
 
