@@ -21,7 +21,7 @@ def my_context(tc):
     tc.context.application.ver = '0.1.1a20'
     tc.context.user.id = 't-cooka@microsoft.com'
     tc.track_trace('My trace with context')
-    tc.flush()
+    # tc.flush()
 
 def generate_data():
     """ gets the data to return """
@@ -53,6 +53,7 @@ class Telemetry(TelemetryClient):
 
 
 TC = Telemetry(INSTRUMENTATION_KEY)
+my_context(TC)
 
 # set up logging
 # handler = LoggingHandler(INSTRUMENTATION_KEY)
