@@ -8,6 +8,7 @@ azclishell/__main__.py
 azclishell/_dump_commands.py
 azclishell/_dump_help.py
 azclishell/app.py
+azclishell/argfinder.py
 azclishell/az_completer.py
 azclishell/az_lexer.py
 azclishell/command_tree.py

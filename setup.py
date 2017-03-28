@@ -2,9 +2,8 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
-
-from setuptools import setup
 from codecs import open
+from setuptools import setup
 
 DEPENDENCIES = [
     'azure-cli',
@@ -18,7 +17,7 @@ with open('README.rst', 'r', encoding='utf-8') as f:
 
 setup(
     name='azure-cli-shell',
-    version='0.1.1a20',
+    version='0.1.1a21',
     description='Microsoft Azure Command-Line Interactive Shell',
     long_description=README + '\n\n',
     license='MIT',
