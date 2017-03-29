@@ -35,14 +35,12 @@ def main(args):
     parser = argparse.ArgumentParser(prog='az-shell')
     # parser.add_argument('--error-color', nargs='?')
     parser.add_argument(
-        '--style', dest='style', nargs='?',
-        choices=['none'], help='the colors of the shell')
+        '--no-style', dest='style', action='store_true', help='the colors of the shell')
     args = parser.parse_args(args)
 
     style = default_style()
     if args.style:
-        if args.style == 'none':
-            style = None
+        style = None
 
     azure_folder = cli_config_dir()
     if not os.path.exists(azure_folder):
