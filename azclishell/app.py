@@ -84,10 +84,14 @@ def handle_cd(cmd):
 class Shell(object):
     """ represents the shell """
 
-    def __init__(self, completer=None, styles=None, lexer=None, history=InMemoryHistory(),
+    def __init__(self, completer=None, styles=default_style(),
+                 lexer=None, history=InMemoryHistory(),
                  app=None, input_custom=sys.stdout, output_custom=None):
-        self.styles = styles or default_style()
-        self.lexer = lexer or AzLexer
+        self.styles = styles
+        if styles:
+            self.lexer = lexer or AzLexer
+        else:
+            self.lexer = None
         self.app = app
         self.completer = completer
         self.history = history
@@ -103,7 +107,6 @@ class Shell(object):
         self.input = input_custom
         self.output = output_custom
         self.config_default = ""
-        # self.default_params = []
         self.default_command = ""
 
     @property

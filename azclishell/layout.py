@@ -79,6 +79,8 @@ def get_tutorial_tokens(cli):
 
 def get_lexers(lex, examLex,toolLex):
     """ gets all the lexer wrappers """
+    if not lex:
+        return None, None, None
     lexer = None
     if issubclass(lex, PromptLex):
         lexer = lex
