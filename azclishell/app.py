@@ -24,8 +24,6 @@ from prompt_toolkit.enums import DEFAULT_BUFFER
 
 from pygments.token import Token
 
-# from tabulate import tabulate
-
 import azclishell.configuration
 from azclishell.az_lexer import AzLexer, ExampleLexer, ToolbarLexer
 from azclishell.az_completer import AzCompleter
@@ -76,7 +74,7 @@ def handle_cd(cmd):
 class Shell(object):
     """ represents the shell """
 
-    def __init__(self, completer=None, styles=default_style(),
+    def __init__(self, completer=None, styles=None,
                  lexer=None, history=InMemoryHistory(),
                  app=None, input_custom=sys.stdout, output_custom=None):
         self.styles = styles
