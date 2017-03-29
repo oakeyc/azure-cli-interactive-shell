@@ -52,14 +52,6 @@ NOTIFICATIONS = ""
 PROFILE = Profile()
 SELECT_SYMBOL = azclishell.configuration.SELECT_SYMBOL
 
-# shell_help = {
-#     "#[command]" : "use commands outside the application",
-#     "?[path]" : "query previous command using jmespath syntax",
-#     "[command] :: [example number]" : "do a step by step tutorial of example",
-#     "$" : "get the exit code of the previous command",
-#     "%%" : "default a value",
-#     "^^" : "undefault a value"
-# }
 shell_help = \
     "#[cmd]          : use commands outside the application\n" +\
     "?[path]         : query previous command using jmespath syntax\n" +\
@@ -207,9 +199,6 @@ class Shell(object):
         except CLIError:
             pass
 
-        # if self.default_params:
-        #     toolbar_value = "Default Param: %s" % ' '.join(self.default_params)
-        # else:
         toolbar_value = "Cloud: {}".format(get_active_cloud_name())
         sub_value = '{}'.format('Subscription: {}'.format(sub_name) if sub_name else toolbar_value)
 
@@ -308,6 +297,8 @@ class Shell(object):
 
     def handle_default_command(self, text):
         """ default commands """
+        if not text:
+            return ''
         value = text[0]
         set_default_command(value)
         if self.default_command:
