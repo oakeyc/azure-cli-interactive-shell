@@ -62,6 +62,6 @@ class Telemetry(TelemetryClient):
 TC = Telemetry(INSTRUMENTATION_KEY)
 enable(INSTRUMENTATION_KEY)
 my_context(TC)
-TC.track_trace()
+TC.track_trace('Context')
 # TC.flush()
 

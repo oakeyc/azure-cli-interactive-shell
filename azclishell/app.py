@@ -12,7 +12,6 @@ import jmespath
 
 from six.moves import configparser
 
-# from prompt_toolkit import prompt
 from prompt_toolkit.buffer import Buffer
 from prompt_toolkit.shortcuts import create_eventloop
 from prompt_toolkit.history import InMemoryHistory
