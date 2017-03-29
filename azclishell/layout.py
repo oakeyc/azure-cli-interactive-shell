@@ -26,6 +26,12 @@ from azclishell.key_bindings import get_show_default, get_symbols
 # from azclishell.az_lexer import ExampleLexer, ToolbarLexer
 
 MAX_COMPLETION = 16
+DEFAULT_COMMAND = ""
+
+class HasDefaultScope(Filter):
+    def __call__(self, *a, **kw):
+        global DEFAULT_COMMAND
+        return DEFAULT_COMMAND == ""
 
 # TODO fix this somehow
 input_processors = [
@@ -39,9 +45,8 @@ input_processors = [
         HasFocus(SEARCH_BUFFER)),
     HighlightSelectionProcessor(),
     ConditionalProcessor(
-        AppendAutoSuggestion(), HasFocus(DEFAULT_BUFFER)),
+        AppendAutoSuggestion(), HasFocus(DEFAULT_BUFFER) & HasDefaultScope()),
 ]
-# SHOW_DEFAULT = False
 
 class ShowDefault(Filter):
     """ toggle on and off seeing the default """
@@ -53,7 +58,6 @@ class ShowSymbol(Filter):
     def __call__(self, *a, **kw):
         return get_symbols()
 
-DEFAULT_COMMAND = ""
 def default_command():
     return DEFAULT_COMMAND
 
@@ -79,6 +83,8 @@ def get_tutorial_tokens(cli):
 
 def get_lexers(lex, examLex,toolLex):
     """ gets all the lexer wrappers """
+    if not lex:
+        return None, None, None
     lexer = None
     if issubclass(lex, PromptLex):
         lexer = lex

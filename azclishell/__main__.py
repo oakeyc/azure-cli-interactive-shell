@@ -1,6 +1,9 @@
 """ main function """
 from __future__ import print_function
 import os
+import argparse
+import sys
+
 from prompt_toolkit.history import FileHistory
 
 import azclishell.configuration
@@ -9,6 +12,8 @@ from azclishell.gather_commands import GatherCommands
 from azclishell.app import Shell
 from azclishell.az_completer import AzCompleter
 from azclishell.az_lexer import AzLexer
+from azclishell.util import default_style
+
 
 # import azure.cli.core.azlogging as azlogging
 # import azure.cli.core.telemetry as telemetry
@@ -20,9 +25,22 @@ from azure.cli.core.commands.client_factory import ENV_ADDITIONAL_USER_AGENT
 AZCOMPLETER = AzCompleter(GatherCommands())
 CONFIGURATION = azclishell.configuration.CONFIGURATION
 
-def main():
+class StyleAction(argparse.Action):
+    def __call__(self, parser, *args, **kargs):
+        parser.exit(message='quitting')
+
+def main(args):
     """ the main function """
     # os.environ([ENV_ADDITIONAL_USER_AGENT]) = os.environ([ENV_ADDITIONAL_USER_AGENT]) + ' Shell'
+    parser = argparse.ArgumentParser(prog='az-shell')
+    # parser.add_argument('--error-color', nargs='?')
+    parser.add_argument(
+        '--no-style', dest='style', action='store_true', help='the colors of the shell')
+    args = parser.parse_args(args)
+
+    style = default_style()
+    if args.style:
+        style = None
 
     azure_folder = cli_config_dir()
     if not os.path.exists(azure_folder):
@@ -35,7 +53,6 @@ def main():
     config = CONFIGURATION
 
     if config.BOOLEAN_STATES[config.config.get('DEFAULT', 'firsttime')]:
-        # APPLICATION.execute(["configure"])
         print("When in doubt, ask for 'help'")
         config.firsttime()
 
@@ -44,8 +61,9 @@ def main():
         lexer=AzLexer,
         history=FileHistory(os.path.join(CONFIGURATION.get_config_dir(), config.get_history())),
         app=APPLICATION,
+        styles=style
     )
     shell_app.run()
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])

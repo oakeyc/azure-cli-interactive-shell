@@ -52,14 +52,6 @@ NOTIFICATIONS = ""
 PROFILE = Profile()
 SELECT_SYMBOL = azclishell.configuration.SELECT_SYMBOL
 
-# shell_help = {
-#     "#[command]" : "use commands outside the application",
-#     "?[path]" : "query previous command using jmespath syntax",
-#     "[command] :: [example number]" : "do a step by step tutorial of example",
-#     "$" : "get the exit code of the previous command",
-#     "%%" : "default a value",
-#     "^^" : "undefault a value"
-# }
 shell_help = \
     "#[cmd]          : use commands outside the application\n" +\
     "?[path]         : query previous command using jmespath syntax\n" +\
@@ -84,10 +76,14 @@ def handle_cd(cmd):
 class Shell(object):
     """ represents the shell """
 
-    def __init__(self, completer=None, styles=None, lexer=None, history=InMemoryHistory(),
+    def __init__(self, completer=None, styles=default_style(),
+                 lexer=None, history=InMemoryHistory(),
                  app=None, input_custom=sys.stdout, output_custom=None):
-        self.styles = styles or default_style()
-        self.lexer = lexer or AzLexer
+        self.styles = styles
+        if styles:
+            self.lexer = lexer or AzLexer
+        else:
+            self.lexer = None
         self.app = app
         self.completer = completer
         self.history = history
@@ -103,7 +99,6 @@ class Shell(object):
         self.input = input_custom
         self.output = output_custom
         self.config_default = ""
-        # self.default_params = []
         self.default_command = ""
 
     @property
@@ -204,9 +199,6 @@ class Shell(object):
         except CLIError:
             pass
 
-        # if self.default_params:
-        #     toolbar_value = "Default Param: %s" % ' '.join(self.default_params)
-        # else:
         toolbar_value = "Cloud: {}".format(get_active_cloud_name())
         sub_value = '{}'.format('Subscription: {}'.format(sub_name) if sub_name else toolbar_value)
 
@@ -305,6 +297,8 @@ class Shell(object):
 
     def handle_default_command(self, text):
         """ default commands """
+        if not text:
+            return ''
         value = text[0]
         set_default_command(value)
         if self.default_command:
