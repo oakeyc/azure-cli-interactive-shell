@@ -237,15 +237,28 @@ class AzCompleter(Completer):
                                                 yield Completion(completion, -len(prefix))
                                     except TypeError:
                                         print("TypeError: " + TypeError.message)
+
             # Global parameter stuff hard-coded in
             if text_before_cursor.split() and len(text_before_cursor.split()) > 0:
                 for param in GLOBAL_PARAM:
-                    if self.validate_completion(
-                            param,
-                            text_before_cursor.split()[-1], ## not what you meant
-                            text_before_cursor,
-                            double=False):
+                    if text_before_cursor.split()[-1].startswith('-') \
+                        and not text_before_cursor.split()[-1].startswith('--') and \
+                        param.startswith('-') and not param.startswith('--') and\
+                        self.validate_completion(
+                                param,
+                                text_before_cursor.split()[-1], ## not what you meant
+                                text_before_cursor,
+                                double=False):
                         yield Completion(param, -len(text_before_cursor.split()[-1]))
+
+                    elif text_before_cursor.split()[-1].startswith('--') and \
+                        self.validate_completion(
+                                param,
+                                text_before_cursor.split()[-1], ## not what you meant
+                                text_before_cursor,
+                                double=False):
+                        yield Completion(param, -len(text_before_cursor.split()[-1]))
+
                 if text_before_cursor.split()[-1] in OUTPUT_OPTIONS:
                     for opt in OUTPUT_CHOICES:
                         yield Completion(opt)
