@@ -15,7 +15,6 @@ from applicationinsights.exceptions import enable
 PRODUCT_NAME = 'azureclishell'
 TELEMETRY_VERSION = '0.0.1.1'
 
-
 def my_context(tc):
     tc.context.application.id = 'Azure Shell'
     tc.context.application.ver = '0.1.1a'

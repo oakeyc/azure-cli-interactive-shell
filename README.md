@@ -36,7 +36,7 @@ Then type your commands and hit [Enter]
 To use commands outside the application
 
 ```bash
-   $ \#[command]
+   $ #[command]
 ```
 
 To Search through the last command as json
