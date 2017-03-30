@@ -1,7 +1,8 @@
 """ a completer for the commands and parameters """
 from __future__ import print_function, absolute_import, division, unicode_literals
 
-from argcomplete import mute_stderr
+import sys
+import os
 
 from prompt_toolkit.completion import Completer, Completion
 import azclishell.configuration
@@ -110,8 +111,7 @@ class AzCompleter(Completer):
         text = self.reformat_cmd(text)
 
         if text.split():
-            com_param_completions = self.generate_command_and_parameters_completions(text)
-            for comp in com_param_completions:
+            for comp in self.gen_cmd_and_param_completions(text):
                 yield comp
 
         for cmd in self.gen_cmd_completions(text):
@@ -121,6 +121,7 @@ class AzCompleter(Completer):
             yield val
 
     def gen_dynamic_completions(self, text):
+        """ generates the dynamic values, like the names of resource groups """
         try:
             is_param, started_param, prefix, param = self.dynamic_param_logic(text)
 
@@ -202,13 +203,14 @@ class AzCompleter(Completer):
                                     except TypeError:
                                         print("TypeError: " + TypeError.message)
 
-            global_params = self.global_param_completions(text)
+            global_params = self.gen_global_param_completions(text)
             for param in global_params:
                 yield param
         except CLIError:  # if the user isn't logged in
             pass
 
     def gen_cmd_completions(self, text):
+        """ whether is a space or no text typed, send the current branch """
         # if nothing, so first level commands
         if not text.split() and self._is_command:
             if self.branch.children is not None:
@@ -221,7 +223,7 @@ class AzCompleter(Completer):
                 for com in self.branch.children:
                     yield Completion(com.data)
 
-    def generate_command_and_parameters_completions(self, text):
+    def gen_cmd_and_param_completions(self, text):
         """ generates command and parameter completions """
 
         for words in text.split():
@@ -268,7 +270,7 @@ class AzCompleter(Completer):
                     yield Completion(str(kid.data),\
                         -len(text.split()[-1]))
 
-    def global_param_completions(self, text):
+    def gen_global_param_completions(self, text):
         """ Global parameter stuff hard-coded in """
         if text.split() and len(text.split()) > 0:
             for param in GLOBAL_PARAM:
