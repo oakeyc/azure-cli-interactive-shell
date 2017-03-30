@@ -1,6 +1,5 @@
 """ gets the parsed args """
 import argparse
-import contextlib
 import os
 import sys
 
@@ -32,7 +31,6 @@ class ArgsFinder(CompletionFinder):
             sys.stderr = stderr
         except BaseException as e:
             pass
-            # print("\nexception", type(e), str(e), "while parsing args")
 
         self.completing = False
         return parsed_args

@@ -99,7 +99,7 @@ def get_lexers(lex, examLex,toolLex):
             toolLex = PygmentsLexer(toolLex)
     return lexer, examLex, toolLex
 
-def create_layout_completions(lex):
+def create_tutorial_layout(lex):
     """ layout for example tutorial """
     lexer, _, _ = get_lexers(lex, None, None)
     layout_full = HSplit([

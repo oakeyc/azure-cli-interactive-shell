@@ -21,7 +21,7 @@ from prompt_toolkit.enums import DEFAULT_BUFFER
 
 import azclishell.configuration
 from azclishell.az_lexer import AzLexer, ExampleLexer, ToolbarLexer
-from azclishell.layout import create_layout, create_layout_completions, set_default_command
+from azclishell.layout import create_layout, create_tutorial_layout, set_default_command
 from azclishell.key_bindings import registry, get_section, sub_section
 from azclishell.util import get_window_dim, parse_quotes, shell_help
 from azclishell.gather_commands import add_random_new_lines
@@ -100,7 +100,7 @@ class Shell(object):
     """ represents the shell """
     def __init__(self, completer=None, styles=None,
                  lexer=None, history=InMemoryHistory(),
-                 app=None, input_custom=sys.stdin, output_custom=None):
+                 app=None, input_custom=sys.stdout, output_custom=None):
         self.styles = styles
         if styles:
             self.lexer = lexer or AzLexer
@@ -232,13 +232,12 @@ class Shell(object):
         empty_space = empty_space[len(NOTIFICATIONS) + len(settings) + 1:]
         return settings, empty_space
 
-
-    def create_application(self, all_layout=True):
+    def create_application(self, full_layout=True):
         """ makes the application object and the buffers """
-        if all_layout:
+        if full_layout:
             layout = create_layout(self.lexer, ExampleLexer, ToolbarLexer)
         else:
-            layout = create_layout_completions(self.lexer)
+            layout = create_tutorial_layout(self.lexer)
 
         buffers = {
             DEFAULT_BUFFER: Buffer(is_multiline=True),
@@ -271,20 +270,20 @@ class Shell(object):
 
     def create_interface(self):
         """ instantiates the intereface """
-        run_loop = create_eventloop()
-        app = self.create_application()
-        return CommandLineInterface(application=app, eventloop=run_loop)
+        return CommandLineInterface(
+            application=self.create_application(),
+            eventloop=create_eventloop())
 
     def set_prompt(self, prompt_command="", position=0):
-        """ clears the prompt line """
+        """ writes the prompt line """
         self.description_docs = u'{}'.format(prompt_command)
         self.cli.current_buffer.reset(
             initial_document=Document(self.description_docs,\
             cursor_position=position))
         self.cli.request_redraw()
 
-    def handle_default_command(self, text):
-        """ default commands """
+    def handle_scoping(self, text):
+        """ narrows the scopes the commands """
         if not text:
             return ''
         value = text[0]
@@ -337,7 +336,7 @@ class Shell(object):
             cmd = ' '.join(text.split()[:start_index])
             example_cli = CommandLineInterface(
                 application=self.create_application(
-                    all_layout=False),
+                    full_layout=False),
                 eventloop=create_eventloop())
             example_cli.buffers['example_line'].reset(
                 initial_document=Document(u'{}\n'.format(
@@ -436,7 +435,7 @@ class Shell(object):
 
         if SELECT_SYMBOL['default'] in text:
             default = text.partition(SELECT_SYMBOL['default'])[2].split()
-            value = self.handle_default_command(default)
+            value = self.handle_scoping(default)
             print("defaulting: " + value)
             cmd = cmd.replace(SELECT_SYMBOL['default'], '')
             telemetry.track_ssg('default command', value)
@@ -455,9 +454,7 @@ class Shell(object):
                 print('undefaulting: ' + value[0])
             cmd = cmd.replace(SELECT_SYMBOL['undefault'], '')
             continue_flag = True
-
         return break_flag, continue_flag, outside, cmd
-
 
     def run(self):
         """ runs the CLI """
