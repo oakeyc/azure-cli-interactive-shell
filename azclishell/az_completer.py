@@ -6,7 +6,7 @@ import os
 
 from prompt_toolkit.completion import Completer, Completion
 import azclishell.configuration
-from azclishell.layout import default_command
+from azclishell.layout import get_scope
 from azclishell.util import parse_quotes
 from azclishell.argfinder import ArgsFinder
 
@@ -97,8 +97,8 @@ class AzCompleter(Completer):
             text = text.replace(SELECT_SYMBOL['default'], "")
         if SELECT_SYMBOL['undefault'] in text:
             text = text.replace(SELECT_SYMBOL['undefault'], "")
-        if default_command():
-            text = default_command() + ' ' + text
+        if get_scope():
+            text = get_scope() + ' ' + text
         return text
 
     def get_completions(self, document, complete_event):

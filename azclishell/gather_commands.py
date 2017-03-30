@@ -1,9 +1,7 @@
+""" gets all the information from cached commands """
 import math
 import os
 import json
-
-from prompt_toolkit.contrib.completers import WordCompleter
-from prompt_toolkit.completion import Completer, Completion
 
 from azclishell.command_tree import CommandBranch, CommandHead
 from azclishell.util import get_window_dim

@@ -21,7 +21,7 @@ from prompt_toolkit.enums import DEFAULT_BUFFER
 
 import azclishell.configuration
 from azclishell.az_lexer import AzLexer, ExampleLexer, ToolbarLexer
-from azclishell.layout import create_layout, create_tutorial_layout, set_default_command
+from azclishell.layout import create_layout, create_tutorial_layout, set_scope
 from azclishell.key_bindings import registry, get_section, sub_section
 from azclishell.util import get_window_dim, parse_quotes, shell_help
 from azclishell.gather_commands import add_random_new_lines
@@ -287,7 +287,7 @@ class Shell(object):
         if not text:
             return ''
         value = text[0]
-        set_default_command(value)
+        set_scope(value)
         if self.default_command:
             self.default_command += ' ' + value
         else:
@@ -444,13 +444,13 @@ class Shell(object):
             value = text.partition(SELECT_SYMBOL['undefault'])[2].split()
             if len(value) == 0:
                 self.default_command = ""
-                set_default_command("", add=False)
+                set_scope("", add=False)
                 print('undefaulting all')
             elif len(value) == 1 and value[0] in self.default_command:
                 self.default_command = " " + self.default_command.replace(value[0], '')
                 if not self.default_command.strip():
                     self.default_command = self.default_command.strip()
-                set_default_command(self.default_command, add=False)
+                set_scope(self.default_command, add=False)
                 print('undefaulting: ' + value[0])
             cmd = cmd.replace(SELECT_SYMBOL['undefault'], '')
             continue_flag = True

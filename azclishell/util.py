@@ -1,3 +1,5 @@
+""" utility functions """
+
 import os
 import collections
 import platform
