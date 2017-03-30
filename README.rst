@@ -1,5 +1,5 @@
 Azure CLI Interactive Shell
-****************************
+***************************
 
 The interactive shell for Microsoft Azure CLI (Command Line Interface)
 ######################################################################
@@ -26,7 +26,7 @@ Installation
 
 
 Running
-########
+#######
 
 To start the application
 

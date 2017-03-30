@@ -22,13 +22,11 @@ from pygments.lexer import Lexer as PygLex
 import azclishell.configuration
 from azclishell.key_bindings import get_show_default, get_symbols
 
-# from azclishell.az_lexer import ExampleLexer, ToolbarLexer
-# from azclishell.az_lexer import ExampleLexer, ToolbarLexer
-
 MAX_COMPLETION = 16
 DEFAULT_COMMAND = ""
 
 class HasDefaultScope(Filter):
+    """ if there is a scope on the input """
     def __call__(self, *a, **kw):
         global DEFAULT_COMMAND
         return DEFAULT_COMMAND == ""
@@ -58,10 +56,12 @@ class ShowSymbol(Filter):
     def __call__(self, *a, **kw):
         return get_symbols()
 
-def default_command():
+def get_scope():
+    """" returns the default command """
     return DEFAULT_COMMAND
 
-def set_default_command(com, add=True):
+def set_scope(com, add=True):
+    """ sets the scope """
     global DEFAULT_COMMAND
     if add:
         DEFAULT_COMMAND += " " + com
@@ -81,15 +81,15 @@ def get_tutorial_tokens(cli):
     """ tutorial tokens """
     return [(Token.Toolbar, 'In Tutorial Mode: Press [Enter] after typing each part')]
 
-def get_lexers(lex, examLex,toolLex):
+def get_lexers(mainLex, examLex, toolLex):
     """ gets all the lexer wrappers """
-    if not lex:
+    if not mainLex:
         return None, None, None
     lexer = None
-    if issubclass(lex, PromptLex):
-        lexer = lex
-    elif issubclass(lex, PygLex):
-        lexer = PygmentsLexer(lex)
+    if issubclass(mainLex, PromptLex):
+        lexer = mainLex
+    elif issubclass(mainLex, PygLex):
+        lexer = PygmentsLexer(mainLex)
 
     if examLex:
         if issubclass(examLex, PygLex):
@@ -99,7 +99,7 @@ def get_lexers(lex, examLex,toolLex):
             toolLex = PygmentsLexer(toolLex)
     return lexer, examLex, toolLex
 
-def create_layout_completions(lex):
+def create_tutorial_layout(lex):
     """ layout for example tutorial """
     lexer, _, _ = get_lexers(lex, None, None)
     layout_full = HSplit([

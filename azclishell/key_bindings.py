@@ -1,7 +1,6 @@
 """ makes all the key bindings for the app """
 from __future__ import print_function
 
-from prompt_toolkit.document import Document
 from prompt_toolkit.key_binding.manager import KeyBindingManager
 from prompt_toolkit.filters import Filter
 from prompt_toolkit.keys import Keys

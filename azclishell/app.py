@@ -6,8 +6,6 @@ import os
 import sys
 import math
 import json
-import collections
-import re
 import jmespath
 
 from six.moves import configparser
@@ -21,43 +19,29 @@ from prompt_toolkit.interface import CommandLineInterface, Application
 from prompt_toolkit.filters import Always
 from prompt_toolkit.enums import DEFAULT_BUFFER
 
-from pygments.token import Token
-
 import azclishell.configuration
 from azclishell.az_lexer import AzLexer, ExampleLexer, ToolbarLexer
-from azclishell.az_completer import AzCompleter
-from azclishell.layout import create_layout, create_layout_completions, set_default_command
-from azclishell.key_bindings import registry, get_section, sub_section, EXAMPLE_REPL
-from azclishell.util import get_window_dim, default_style, parse_quotes
+from azclishell.layout import create_layout, create_tutorial_layout, set_scope
+from azclishell.key_bindings import registry, get_section, sub_section
+from azclishell.util import get_window_dim, parse_quotes, shell_help
 from azclishell.gather_commands import add_random_new_lines
 from azclishell.telemetry import TC as telemetry
 
 import azure.cli.core.azlogging as azlogging
 from azure.cli.core._util import (show_version_info_exit, handle_exception)
 from azure.cli.core._util import CLIError
-from azure.cli.core.application import APPLICATION, Configuration
+from azure.cli.core.application import Configuration
 from azure.cli.core._session import ACCOUNT, CONFIG, SESSION
 from azure.cli.core._environment import get_config_dir
 from azure.cli.core.cloud import get_active_cloud_name
 from azure.cli.core._profile import _SUBSCRIPTION_NAME, Profile
-from azure.cli.core._output import format_json, TableOutput
 from azure.cli.core._config import az_config, DEFAULTS_SECTION
 
-logger = azlogging.get_az_logger(__name__)
 SHELL_CONFIGURATION = azclishell.configuration.CONFIGURATION
 NOTIFICATIONS = ""
 PROFILE = Profile()
 SELECT_SYMBOL = azclishell.configuration.SELECT_SYMBOL
-
-shell_help = \
-    "#[cmd]          : use commands outside the application\n" +\
-    "?[path]         : query previous command using jmespath syntax\n" +\
-    "[cmd] :: [num]  : do a step by step tutorial of example\n" +\
-    "$               : get the exit code of the previous command\n" +\
-    "%%              : default a scope\n" +\
-    "^^              : undefault a scope\n" + \
-    "Crtl+N          : Scroll down the documentation\n" +\
-    "Crtl+Y          : Scroll up the documentation"
+PART_SCREEN_EXAMPLE = 1/3
 
 def handle_cd(cmd):
     """changes dir """
@@ -70,9 +54,50 @@ def handle_cd(cmd):
     except OSError as ex:
         print("cd: %s\n" % ex)
 
+def space_examples(list_examples, rows):
+    """ makes the example text """
+    examples_with_index = []
+    for i in range(len(list_examples)):
+        examples_with_index.append("[" + str(i + 1) + "] " + list_examples[i][0] +\
+        list_examples[i][1])
+
+    example = "".join(exam for exam in examples_with_index)
+    num_newline = example.count('\n')
+    if num_newline > rows * PART_SCREEN_EXAMPLE:
+        len_of_excerpt = math.floor(rows * PART_SCREEN_EXAMPLE)
+        group = example.split('\n')
+        end = int(get_section() * len_of_excerpt)
+        begin = int((get_section() - 1) * len_of_excerpt)
+
+        if get_section() * len_of_excerpt < num_newline:
+            example = '\n'.join(group[begin:end]) + "\n"
+        else: # default chops top off
+            example = '\n'.join(group[begin:]) + "\n"
+            while ((get_section() - 1) * len_of_excerpt) > num_newline:
+                sub_section()
+    return example
+
+def _toolbar_info():
+    sub_name = ""
+    try:
+        sub_name = PROFILE.get_subscription()[_SUBSCRIPTION_NAME]
+    except CLIError:
+        pass
+
+    curr_cloud = "Cloud: {}".format(get_active_cloud_name())
+    tool_val = '{}'.format('Subscription: {}'.format(sub_name) if sub_name else curr_cloud)
+
+    settings_items = [
+        " [F1]Layout",
+        "[F2]Defaults",
+        "[F3]Keys",
+        "[Crtl+Q]Quit",
+        tool_val
+    ]
+    return settings_items
+
 class Shell(object):
     """ represents the shell """
-
     def __init__(self, completer=None, styles=None,
                  lexer=None, history=InMemoryHistory(),
                  app=None, input_custom=sys.stdout, output_custom=None):
@@ -108,29 +133,52 @@ class Shell(object):
 
     def on_input_timeout(self, cli):
         """
-        When there is a pause in typing
-        Brings up the metadata for the command if
-        there is a valid command already typed
+        brings up the metadata for the command if there is a valid command already typed
         """
-        rows, cols = get_window_dim()
-        rows = int(rows)
+        _, cols = get_window_dim()
         cols = int(cols)
         document = cli.current_buffer.document
         text = document.text
-        command = ""
-        all_params = ""
-        example = ""
         empty_space = ""
         for i in range(cols):
             empty_space += " "
-        any_documentation = False
-        is_command = True
+
         text = text.replace('az', '')
         if self.default_command:
             text = self.default_command + ' ' + text
 
+        param_info, example = self.generate_help_text(text)
+
+        self.param_docs = u'{}'.format(param_info)
+        self.example_docs = u'{}'.format(example)
+
+        self._update_default_info()
+
+        settings, empty_space = self.space_toolbar(_toolbar_info(), cols, empty_space)
+
+        cli.buffers['description'].reset(
+            initial_document=Document(self.description_docs, cursor_position=0))
+        cli.buffers['parameter'].reset(
+            initial_document=Document(self.param_docs))
+        cli.buffers['examples'].reset(
+            initial_document=Document(self.example_docs))
+        cli.buffers['bottom_toolbar'].reset(
+            initial_document=Document(u'{}{}{}'.format(NOTIFICATIONS, settings, empty_space)))
+        cli.buffers['default_values'].reset(
+            initial_document=Document(
+                u'{}'.format(self.config_default if self.config_default else 'No Default Values')))
+        cli.request_redraw()
+
+    def generate_help_text(self, text):
+        """ generates the help text based on commands typed """
+        command = param_descrip = example = ""
+        any_documentation = False
+        is_command = True
+        rows, _ = get_window_dim()
+        rows = int(rows)
+
         for word in text.split():
-            if word.startswith("-"):
+            if word.startswith("-"): # any parameter
                 is_command = False
             if is_command:
                 command += str(word) + " "
@@ -141,7 +189,7 @@ class Shell(object):
 
                 if word in self.completer.command_parameters[cmdstp] and \
                 self.completer.has_description(cmdstp + " " + word):
-                    all_params = word + ":\n" + \
+                    param_descrip = word + ":\n" + \
                     self.completer.get_param_description(cmdstp+ \
                     " " + word)
 
@@ -153,15 +201,14 @@ class Shell(object):
                     for example in self.completer.command_examples[cmdstp]:
                         for part in example:
                             string_example += part
-                    example = self.space_examples(
+                    example = space_examples(
                         self.completer.command_examples[cmdstp], rows)
 
         if not any_documentation:
             self.description_docs = u''
+        return param_descrip, example
 
-        self.param_docs = u'{}'.format(all_params)
-        self.example_docs = u'{}'.format(example)
-
+    def _update_default_info(self):
         try:
             options = az_config.config_parser.options(DEFAULTS_SECTION)
             self.config_default = ""
@@ -169,43 +216,9 @@ class Shell(object):
                 self.config_default += opt + ": " + az_config.get(DEFAULTS_SECTION, opt) + "  "
         except configparser.NoSectionError:
             self.config_default = ""
-        settings, empty_space = self._toolbar_info(cols, empty_space)
 
-        cli.buffers['description'].reset(
-            initial_document=Document(self.description_docs, cursor_position=0)
-        )
-        cli.buffers['parameter'].reset(
-            initial_document=Document(self.param_docs)
-        )
-        cli.buffers['examples'].reset(
-            initial_document=Document(self.example_docs)
-        )
-        cli.buffers['bottom_toolbar'].reset(
-            initial_document=Document(u'{}{}{}'.format(NOTIFICATIONS, settings, empty_space))
-        )
-        cli.buffers['default_values'].reset(
-            initial_document=Document(
-                u'{}'.format(self.config_default if self.config_default else 'No Default Values'))
-        )
-        cli.request_redraw()
-
-    def _toolbar_info(self, cols, empty_space):
-        sub_name = ""
-        try:
-            sub_name = PROFILE.get_subscription()[_SUBSCRIPTION_NAME]
-        except CLIError:
-            pass
-
-        toolbar_value = "Cloud: {}".format(get_active_cloud_name())
-        sub_value = '{}'.format('Subscription: {}'.format(sub_name) if sub_name else toolbar_value)
-
-        settings_items = [
-            " [F1]Layout",
-            "[F2]Defaults",
-            "[F3]Keys",
-            "[Crtl+Q]Quit",
-            sub_value
-        ]
+    def space_toolbar(self, settings_items, cols, empty_space):
+        """ formats the toolbar """
         counter = 0
         for part in settings_items:
             counter += len(part)
@@ -219,35 +232,12 @@ class Shell(object):
         empty_space = empty_space[len(NOTIFICATIONS) + len(settings) + 1:]
         return settings, empty_space
 
-    def space_examples(self, list_examples, rows):
-        """ makes the example text """
-        examples_with_index = []
-        for i in range(len(list_examples)):
-            examples_with_index.append("[" + str(i + 1) + "] " + list_examples[i][0] +\
-            list_examples[i][1])
-
-        example = "".join(exam for exam in examples_with_index)
-        num_newline = example.count('\n')
-        if num_newline > rows / 3:
-            len_of_excerpt = math.floor(rows / 3)
-            group = example.split('\n')
-            end = int(get_section() * len_of_excerpt)
-            begin = int((get_section() - 1) * len_of_excerpt)
-
-            if get_section() * len_of_excerpt < num_newline:
-                example = '\n'.join(group[begin:end]) + "\n"
-            else: # default chops top off
-                example = '\n'.join(group[begin:]) + "\n"
-                while ((get_section() - 1) * len_of_excerpt) > num_newline:
-                    sub_section()
-        return example
-
-    def create_application(self, all_layout=True):
+    def create_application(self, full_layout=True):
         """ makes the application object and the buffers """
-        if all_layout:
+        if full_layout:
             layout = create_layout(self.lexer, ExampleLexer, ToolbarLexer)
         else:
-            layout = create_layout_completions(self.lexer)
+            layout = create_tutorial_layout(self.lexer)
 
         buffers = {
             DEFAULT_BUFFER: Buffer(is_multiline=True),
@@ -280,24 +270,24 @@ class Shell(object):
 
     def create_interface(self):
         """ instantiates the intereface """
-        run_loop = create_eventloop()
-        app = self.create_application()
-        return CommandLineInterface(application=app, eventloop=run_loop)
+        return CommandLineInterface(
+            application=self.create_application(),
+            eventloop=create_eventloop())
 
     def set_prompt(self, prompt_command="", position=0):
-        """ clears the prompt line """
+        """ writes the prompt line """
         self.description_docs = u'{}'.format(prompt_command)
         self.cli.current_buffer.reset(
             initial_document=Document(self.description_docs,\
             cursor_position=position))
         self.cli.request_redraw()
 
-    def handle_default_command(self, text):
-        """ default commands """
+    def handle_scoping(self, text):
+        """ narrows the scopes the commands """
         if not text:
             return ''
         value = text[0]
-        set_default_command(value)
+        set_scope(value)
         if self.default_command:
             self.default_command += ' ' + value
         else:
@@ -346,7 +336,7 @@ class Shell(object):
             cmd = ' '.join(text.split()[:start_index])
             example_cli = CommandLineInterface(
                 application=self.create_application(
-                    all_layout=False),
+                    full_layout=False),
                 eventloop=create_eventloop())
             example_cli.buffers['example_line'].reset(
                 initial_document=Document(u'{}\n'.format(
@@ -445,7 +435,7 @@ class Shell(object):
 
         if SELECT_SYMBOL['default'] in text:
             default = text.partition(SELECT_SYMBOL['default'])[2].split()
-            value = self.handle_default_command(default)
+            value = self.handle_scoping(default)
             print("defaulting: " + value)
             cmd = cmd.replace(SELECT_SYMBOL['default'], '')
             telemetry.track_ssg('default command', value)
@@ -454,19 +444,17 @@ class Shell(object):
             value = text.partition(SELECT_SYMBOL['undefault'])[2].split()
             if len(value) == 0:
                 self.default_command = ""
-                set_default_command("", add=False)
+                set_scope("", add=False)
                 print('undefaulting all')
             elif len(value) == 1 and value[0] in self.default_command:
                 self.default_command = " " + self.default_command.replace(value[0], '')
                 if not self.default_command.strip():
                     self.default_command = self.default_command.strip()
-                set_default_command(self.default_command, add=False)
+                set_scope(self.default_command, add=False)
                 print('undefaulting: ' + value[0])
             cmd = cmd.replace(SELECT_SYMBOL['undefault'], '')
             continue_flag = True
-
         return break_flag, continue_flag, outside, cmd
-
 
     def run(self):
         """ runs the CLI """
@@ -522,7 +510,7 @@ class Shell(object):
                             else:
                                 formatter = OutputProducer.get_formatter(
                                     self.app.configuration.output_format)
-                                OutputProducer(formatter=formatter, file=self.input).out(result)
+                                OutputProducer(formatter=formatter, file=sys.stdout).out(result)
                                 self.last = result
 
                     except Exception as ex:  # pylint: disable=broad-except

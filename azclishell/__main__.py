@@ -14,26 +14,18 @@ from azclishell.az_completer import AzCompleter
 from azclishell.az_lexer import AzLexer
 from azclishell.util import default_style
 
-
-# import azure.cli.core.azlogging as azlogging
-# import azure.cli.core.telemetry as telemetry
 from azure.cli.core.application import APPLICATION
 from azure.cli.core._session import ACCOUNT, CONFIG, SESSION
 from azure.cli.core._environment import get_config_dir as cli_config_dir
-from azure.cli.core.commands.client_factory import ENV_ADDITIONAL_USER_AGENT
+# from azure.cli.core.commands.client_factory import ENV_ADDITIONAL_USER_AGENT
 
 AZCOMPLETER = AzCompleter(GatherCommands())
-CONFIGURATION = azclishell.configuration.CONFIGURATION
-
-class StyleAction(argparse.Action):
-    def __call__(self, parser, *args, **kargs):
-        parser.exit(message='quitting')
+SHELL_CONFIGURATION = azclishell.configuration.CONFIGURATION
 
 def main(args):
     """ the main function """
     # os.environ([ENV_ADDITIONAL_USER_AGENT]) = os.environ([ENV_ADDITIONAL_USER_AGENT]) + ' Shell'
     parser = argparse.ArgumentParser(prog='az-shell')
-    # parser.add_argument('--error-color', nargs='?')
     parser.add_argument(
         '--no-style', dest='style', action='store_true', help='the colors of the shell')
     args = parser.parse_args(args)
@@ -50,7 +42,7 @@ def main(args):
     CONFIG.load(os.path.join(azure_folder, 'az.json'))
     SESSION.load(os.path.join(azure_folder, 'az.sess'), max_age=3600)
 
-    config = CONFIGURATION
+    config = SHELL_CONFIGURATION
 
     if config.BOOLEAN_STATES[config.config.get('DEFAULT', 'firsttime')]:
         print("When in doubt, ask for 'help'")
@@ -59,7 +51,8 @@ def main(args):
     shell_app = Shell(
         completer=AZCOMPLETER,
         lexer=AzLexer,
-        history=FileHistory(os.path.join(CONFIGURATION.get_config_dir(), config.get_history())),
+        history=FileHistory(
+            os.path.join(SHELL_CONFIGURATION.get_config_dir(), config.get_history())),
         app=APPLICATION,
         styles=style
     )
