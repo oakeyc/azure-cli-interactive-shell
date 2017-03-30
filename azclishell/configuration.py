@@ -14,6 +14,7 @@ SELECT_SYMBOL = {
     'undefault' : '^^'
 }
 
+
 class Configuration():
     """ configuration for program """
     BOOLEAN_STATES = {'1': True, 'yes': True, 'true': True, 'on': True,
@@ -78,5 +79,6 @@ class Configuration():
         """ updates the configuration settings """
         with open(os.path.join(self.get_config_dir(), 'config'), 'w') as config_file:
             self.config.write(config_file)
+
 
 CONFIGURATION = Configuration()

@@ -29,7 +29,7 @@ class ArgsFinder(CompletionFinder):
 
             sys.stderr.close()
             sys.stderr = stderr
-        except BaseException as e:
+        except BaseException:
             pass
 
         self.completing = False

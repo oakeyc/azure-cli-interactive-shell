@@ -1,11 +1,12 @@
 """ utility functions """
 
-import os
 import collections
+import os
 import platform
 
 from prompt_toolkit.styles import style_from_dict
 from pygments.token import Token
+
 
 def get_window_dim():
     """ gets the dimensions depending on python version and os"""
@@ -16,15 +17,18 @@ def get_window_dim():
     else:
         return _size_27()
 
+
 def _size_27():
     """ works for python """
     return os.popen('stty size', 'r').read().split()
+
 
 def _size_36_windows():
     """ returns the rows, columns of terminal """
     from shutil import get_terminal_size
     dim = get_terminal_size()
     return dim.lines, dim.columns
+
 
 def default_style():
     """ Default coloring """
@@ -78,6 +82,7 @@ def default_style():
 
     return styles
 
+
 def parse_quotes(cmd, quotes=True):
     """ parses quotes """
     string_literals = ['\'', '\"']
@@ -109,6 +114,7 @@ def parse_quotes(cmd, quotes=True):
         args = words.split()
     return args
 
+
 def dict_path(keyword, dictionaries):
     """ finds the path to the keyword """
     list_of_options = []
@@ -118,6 +124,7 @@ def dict_path(keyword, dictionaries):
     elif isinstance(dictionaries, dict):
         _dict_path(keyword, dictionaries, list_of_options)
     return list_of_options
+
 
 def _dict_path(keyword, dictionary, list_of_options):
     if not isinstance(dictionary, collections.Iterable):
@@ -131,6 +138,7 @@ def _dict_path(keyword, dictionary, list_of_options):
         for item in dictionary:
             if isinstance(item, dict):
                 list_of_options.extend(dict_path(keyword, item))
+
 
 shell_help = \
     "#[cmd]          : use commands outside the application\n" +\

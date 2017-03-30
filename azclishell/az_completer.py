@@ -1,17 +1,15 @@
 """ a completer for the commands and parameters """
-from __future__ import print_function, absolute_import, division, unicode_literals
+from __future__ import absolute_import, division, print_function, unicode_literals
 
-import sys
-import os
-
-from prompt_toolkit.completion import Completer, Completion
 import azclishell.configuration
+from azclishell.argfinder import ArgsFinder
 from azclishell.layout import get_scope
 from azclishell.util import parse_quotes
-from azclishell.argfinder import ArgsFinder
 
 from azure.cli.core.parser import AzCliCommandParser
 from azure.cli.core._util import CLIError
+
+from prompt_toolkit.completion import Completer, Completion
 
 
 SELECT_SYMBOL = azclishell.configuration.SELECT_SYMBOL
@@ -19,8 +17,10 @@ GLOBAL_PARAM = ['--output', '-o', '--verbose', '--debug']
 OUTPUT_CHOICES = ['json', 'tsv', 'table', 'jsonc']
 OUTPUT_OPTIONS = ['--output', '-o']
 
+
 class AzCompleter(Completer):
     """ Completes Azure CLI commands """
+
     def __init__(self, commands, global_params=True):
         # dictionary of command to descriptions
         self.command_description = commands.descrip
@@ -43,7 +43,6 @@ class AzCompleter(Completer):
         self.branch = self.command_tree
         self.curr_command = ""
 
-
         if not global_params:
             global GLOBAL_PARAM, OUTPUT_CHOICES, OUTPUT_OPTIONS
             GLOBAL_PARAM = []
@@ -59,7 +58,6 @@ class AzCompleter(Completer):
         self.parser.load_command_table(CMD_TABLE)
         self.argsfinder = ArgsFinder(self.parser)
 
-
     def validate_completion(self, param, words, text_before_cursor, double=True):
         """ validates that a param should be completed """
         double_flag = True
@@ -73,6 +71,7 @@ class AzCompleter(Completer):
                 and double_flag
 
     def dynamic_param_logic(self, text):
+        """ validates parameter values for dynamic completion """
         is_param = False
         started_param = False
         prefix = ""
@@ -90,6 +89,7 @@ class AzCompleter(Completer):
         return is_param, started_param, prefix, param
 
     def reformat_cmd(self, text):
+        """ reformat the text to be stripped of noise """
         # remove az if there
         text = text.replace('az', '')
         # disregard defaulting symbols
@@ -102,7 +102,6 @@ class AzCompleter(Completer):
         return text
 
     def get_completions(self, document, complete_event):
-
         text = document.text_before_cursor
         self.branch = self.command_tree
         self.curr_command = ''
@@ -139,18 +138,17 @@ class AzCompleter(Completer):
                     if arg_name and (text.split()[-1].startswith('-') or\
                     text.split()[-2].startswith('-')):
                         try:  # if enum completion
-                            for choice in \
-                            self.cmdtab[self.curr_command].arguments[arg_name].choices:
+                            for choice in self.cmdtab[
+                                    self.curr_command].arguments[arg_name].choices:
                                 if started_param:
                                     if choice.lower().startswith(prefix.lower())\
                                     and choice not in text.split():
                                         yield Completion(choice, -len(prefix))
                                 else:
                                     yield Completion(choice, -len(prefix))
-                        except TypeError:
+                        except TypeError: # there is no choices option
                             pass
 
-                        # self.argsfinder = ArgsFinder(self.parser)
                         parse_args = self.argsfinder.get_parsed_args(
                             parse_quotes(text, quotes=False))
 
@@ -161,45 +159,21 @@ class AzCompleter(Completer):
                                 for comp in self.cmdtab[self.curr_command].\
                                 arguments[arg_name].completer(prefix=prefix, action=None,\
                                 parser=None, parsed_args=parse_args):
-                                    if len(comp.split()) > 1:
-                                        completion = '\"' + comp + '\"'
-                                    else:
-                                        completion = comp
+                                    self.gen_dyn_completion(comp, started_param, prefix, text)
 
-                                    if started_param:
-                                        if comp.lower().startswith(prefix.lower())\
-                                            and comp not in text.split():
-                                            yield Completion(completion, -len(prefix))
-                                    else:
-                                        yield Completion(completion, -len(prefix))
                             except TypeError:
                                 try:
                                     for comp in self.cmdtab[self.curr_command].\
                                     arguments[arg_name].completer(prefix):
-                                        if len(comp.split()) > 1:
-                                            completion = '\"' + comp + '\"'
-                                        else:
-                                            completion = comp
-                                        if started_param:
-                                            if comp.lower().startswith(prefix.lower())\
-                                                and comp not in text.split():
-                                                yield Completion(completion, -len(prefix))
-                                        else:
-                                            yield Completion(completion, -len(prefix))
+                                        self.gen_dyn_completion(comp, started_param, prefix, text)
+
                                 except TypeError:
                                     try:
                                         for comp in self.cmdtab[self.curr_command].\
                                         arguments[arg_name].completer():
-                                            if len(comp.split()) > 1:
-                                                completion = '\"' + comp + '\"'
-                                            else:
-                                                completion = comp
-                                            if started_param:
-                                                if comp.lower().startswith(prefix.lower())\
-                                                    and comp not in text.split():
-                                                    yield Completion(completion, -len(prefix))
-                                            else:
-                                                yield Completion(completion, -len(prefix))
+                                            self.gen_dyn_completion(
+                                                comp, started_param, prefix, text)
+
                                     except TypeError:
                                         print("TypeError: " + TypeError.message)
 
@@ -208,6 +182,19 @@ class AzCompleter(Completer):
                 yield param
         except CLIError:  # if the user isn't logged in
             pass
+
+    def gen_dyn_completion(self, comp, started_param, prefix, text):
+        """ how to validate and generate completion for dynamic params """
+        if len(comp.split()) > 1:
+            completion = '\"' + comp + '\"'
+        else:
+            completion = comp
+        if started_param:
+            if comp.lower().startswith(prefix.lower())\
+                and comp not in text.split():
+                yield Completion(completion, -len(prefix))
+        else:
+            yield Completion(completion, -len(prefix))
 
     def gen_cmd_completions(self, text):
         """ whether is a space or no text typed, send the current branch """

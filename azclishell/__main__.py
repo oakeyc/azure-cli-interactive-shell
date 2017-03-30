@@ -22,6 +22,7 @@ from azure.cli.core._environment import get_config_dir as cli_config_dir
 AZCOMPLETER = AzCompleter(GatherCommands())
 SHELL_CONFIGURATION = azclishell.configuration.CONFIGURATION
 
+
 def main(args):
     """ the main function """
     # os.environ([ENV_ADDITIONAL_USER_AGENT]) = os.environ([ENV_ADDITIONAL_USER_AGENT]) + ' Shell'
@@ -57,6 +58,7 @@ def main(args):
         styles=style
     )
     shell_app.run()
+
 
 if __name__ == '__main__':
     main(sys.argv[1:])

@@ -15,6 +15,7 @@ import azclishell.configuration as config
 
 CMD_TABLE = APPLICATION.configuration.get_command_table()
 
+
 def dump_command_table():
     """ dumps the command table """
     global CMD_TABLE
@@ -103,6 +104,7 @@ def dump_command_table():
 
     with open(os.path.join(get_cache_dir(), command_file), 'w') as help_file:
         json.dump(data, help_file)
+
 
 def get_cache_dir():
     """ gets the location of the cache """
