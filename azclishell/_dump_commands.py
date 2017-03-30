@@ -7,11 +7,9 @@ import os
 import pkgutil
 import yaml
 
-from azure.cli.core.application import APPLICATION, Application, Configuration
-from azure.cli.core.commands import CliArgumentType
-from azure.cli.core.commands import load_params, _update_command_definitions
+from azure.cli.core.application import APPLICATION
+from azure.cli.core.commands import _update_command_definitions
 from azure.cli.core.help_files import helps
-import azure.cli.core._help as _help
 
 import azclishell.configuration as config
 
@@ -20,12 +18,11 @@ CMD_TABLE = APPLICATION.configuration.get_command_table()
 def dump_command_table():
     """ dumps the command table """
     global CMD_TABLE
-    cmd_table = CMD_TABLE
 
     command_file = config.CONFIGURATION.get_help_files()
 
-    for cmd in cmd_table:
-        cmd_table[cmd].load_arguments()
+    for cmd in CMD_TABLE:
+        CMD_TABLE[cmd].load_arguments()
 
     try:
         mods_ns_pkg = import_module('azure.cli.command_modules')
@@ -38,25 +35,25 @@ def dump_command_table():
             import_module('azure.cli.command_modules.' + mod).load_params(mod)
         except Exception as ex:
             print("Error loading: {}".format(mod))
-    _update_command_definitions(cmd_table)
+    _update_command_definitions(CMD_TABLE)
 
     data = {}
-    for cmd in cmd_table:
+    for cmd in CMD_TABLE:
         com_descrip = {}
         param_descrip = {}
-        com_descrip['help'] = cmd_table[cmd].description
+        com_descrip['help'] = CMD_TABLE[cmd].description
         com_descrip['examples'] = ""
 
-        for key in cmd_table[cmd].arguments:
+        for key in CMD_TABLE[cmd].arguments:
             required = ""
             help_desc = ""
-            if cmd_table[cmd].arguments[key].type.settings.get('required'):
+            if CMD_TABLE[cmd].arguments[key].type.settings.get('required'):
                 required = "[REQUIRED]"
-            if cmd_table[cmd].arguments[key].type.settings.get('help'):
-                help_desc = cmd_table[cmd].arguments[key].type.settings.get('help')
+            if CMD_TABLE[cmd].arguments[key].type.settings.get('help'):
+                help_desc = CMD_TABLE[cmd].arguments[key].type.settings.get('help')
 
             name_options = []
-            for name in cmd_table[cmd].arguments[key].options_list:
+            for name in CMD_TABLE[cmd].arguments[key].options_list:
                 name_options.append(name)
 
             options = {
@@ -64,7 +61,7 @@ def dump_command_table():
                 'required' : required,
                 'help' : help_desc
             }
-            param_descrip[cmd_table[cmd].arguments[key].options_list[0]] = options
+            param_descrip[CMD_TABLE[cmd].arguments[key].options_list[0]] = options
 
         com_descrip['parameters'] = param_descrip
         data[cmd] = com_descrip

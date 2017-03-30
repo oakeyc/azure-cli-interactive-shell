@@ -6,11 +6,15 @@ import os
 
 import azclishell.telemetry_upload as telemetry_core
 from azclishell.telemetry_upload import INSTRUMENTATION_KEY
-# import azure.cli.core.telemetry as telemetry
+
+from azure.cli.core import __version__ as core_version
 
 from applicationinsights import TelemetryClient
 from applicationinsights.logging import LoggingHandler
 from applicationinsights.exceptions import enable
+
+UA_AGENT = "AZURECLI/{}/{}".format(core_version, 'SHELL')
+# ENV_ADDITIONAL_USER_AGENT = 'SHELL'
 
 PRODUCT_NAME = 'azureclishell'
 TELEMETRY_VERSION = '0.0.1.1'
@@ -34,15 +38,15 @@ class Telemetry(TelemetryClient):
 
     def track_ssg(self, gesture, cmd):
         """ track shell specific gestures """
-        TC.track_event('Shell Specific Gesture', {gesture : cmd})
-        TC.flush()
+        self.track_event('Shell Specific Gesture', {gesture : cmd})
+        # self.flush()
 
 
     def track_key(self, key):
         """ tracks the special key bindings """
         self.keys.append(key)
-        TC.track_event('Key Press', {"key": key})
-        TC.flush()
+        self.track_event('Key Press', {"key": key})
+        # self.flush()
 
     def start(self):
         """ starts recording stuff """
@@ -55,12 +59,12 @@ class Telemetry(TelemetryClient):
         # if payload:
         #     import subprocess
         #     subprocess.Popen([sys.executable, os.path.realpath(telemetry_core.__file__), payload])
-        TC.flush()
+        self.flush()
 
 
 TC = Telemetry(INSTRUMENTATION_KEY)
 enable(INSTRUMENTATION_KEY)
 my_context(TC)
-TC.track_trace('Context')
+# TC.track_trace('Context')
 # TC.flush()
 
