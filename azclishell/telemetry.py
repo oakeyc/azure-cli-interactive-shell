@@ -52,6 +52,8 @@ class Telemetry(TelemetryClient):
     def conclude(self):
         """ concludings recording stuff """
         self.end_time = datetime.datetime.now()
+        self.track_event('Run', {'start time' : self.start_time,
+                                 'end time' : self.end_time})
         payload = generate_data()
         # if payload:
         #     import subprocess
