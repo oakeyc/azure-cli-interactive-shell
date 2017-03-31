@@ -63,8 +63,8 @@ class AzCompleter(Completer):
         return  param.lower().startswith(words.lower()) and \
                 param.lower() != words.lower() and\
                 param not in text_before_cursor.split()\
-                and not text_before_cursor[-1].isspace()\
-                and (not (double and param in self.same_param_doubles)\
+                and not text_before_cursor[-1].isspace() and\
+                (not (double and param in self.same_param_doubles)\
                 or self.same_param_doubles[param] not in text_before_cursor.split())
 
     def dynamic_param_logic(self, text):
