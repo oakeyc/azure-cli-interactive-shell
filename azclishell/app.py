@@ -200,7 +200,7 @@ class Shell(object):
                     " " + word)
 
                 self.description_docs = u'{}'.format(
-                    self.completer.get_description(cmdstp))
+                    self.completer.command_description[cmdstp])
 
                 if cmdstp in self.completer.command_examples:
                     string_example = ""

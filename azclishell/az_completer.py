@@ -95,8 +95,10 @@ class AzCompleter(Completer):
         # disregard defaulting symbols
         if SELECT_SYMBOL['default'] in text:
             text = text.replace(SELECT_SYMBOL['default'], "")
+
         if SELECT_SYMBOL['undefault'] in text:
             text = text.replace(SELECT_SYMBOL['undefault'], "")
+
         if get_scope():
             text = get_scope() + ' ' + text
         return text
@@ -129,12 +131,15 @@ class AzCompleter(Completer):
             if self.curr_command in self.cmdtab:
                 if is_param: # finding the name of the arg
                     for arg in self.cmdtab[self.curr_command].arguments:
+
                         for name in self.cmdtab[self.curr_command].arguments[arg].options_list:
                             if name == param:
                                 arg_name = arg
                                 break
+
                         if arg_name:
                             break
+
                     if arg_name and (text.split()[-1].startswith('-') or\
                     text.split()[-2].startswith('-')):
                         try:  # if enum completion
@@ -146,6 +151,7 @@ class AzCompleter(Completer):
                                         yield Completion(choice, -len(prefix))
                                 else:
                                     yield Completion(choice, -len(prefix))
+
                         except TypeError: # there is no choices option
                             pass
 
@@ -159,6 +165,7 @@ class AzCompleter(Completer):
                                 for comp in self.cmdtab[self.curr_command].\
                                 arguments[arg_name].completer(prefix=prefix, action=None,\
                                 parser=None, parsed_args=parse_args):
+
                                     for comp in self.gen_dyn_completion(
                                             comp, started_param, prefix, text):
                                         yield comp
@@ -167,6 +174,7 @@ class AzCompleter(Completer):
                                 try:
                                     for comp in self.cmdtab[self.curr_command].\
                                     arguments[arg_name].completer(prefix):
+
                                         for comp in self.gen_dyn_completion(
                                                 comp, started_param, prefix, text):
                                             yield comp
@@ -174,6 +182,7 @@ class AzCompleter(Completer):
                                     try:
                                         for comp in self.cmdtab[self.curr_command].\
                                         arguments[arg_name].completer():
+
                                             for comp in self.gen_dyn_completion(
                                                     comp, started_param, prefix, text):
                                                 yield comp
@@ -223,7 +232,7 @@ class AzCompleter(Completer):
                 self._is_command = False
 
                 if self.has_parameters(self.curr_command):
-                    for param in self.get_param(self.curr_command):
+                    for param in self.command_parameters[self.curr_command]:
                         if self.validate_completion(param, words, text) and\
                         not param.startswith("--"):
                             yield Completion(param, -len(words), display_meta=\
@@ -234,7 +243,7 @@ class AzCompleter(Completer):
                 self._is_command = False
 
                 if self.has_parameters(self.curr_command):  # Everything should, map to empty list
-                    for param in self.get_param(self.curr_command):
+                    for param in self.command_parameters[self.curr_command]:
                         if self.validate_completion(param, words, text):
                             yield Completion(
                                 param, -len(words),
@@ -248,12 +257,6 @@ class AzCompleter(Completer):
                             self.curr_command += " " + str(words)
                         else:
                             self.curr_command += str(words)
-
-                # elif text_before_cursor.find(words) + len(words) <\
-                #     len(text_before_cursor) and \
-                #     text_before_cursor[
-                #         text_before_cursor.find(words) + len(words)].isspace():
-                #     self._is_command = False
 
         if self.branch.children is not None and self._is_command: # all underneath commands
             for kid in self.branch.children:
@@ -281,20 +284,12 @@ class AzCompleter(Completer):
             if len(text.split()) > 1 and\
             text.split()[-2] in OUTPUT_OPTIONS:
                 for opt in OUTPUT_CHOICES:
-                    if self.validate_completion(
-                            opt,
-                            text.split()[-1],
-                            text,
-                            double=False):
+                    if self.validate_completion(opt, text.split()[-1], text, double=False):
                         yield Completion(opt, -len(text.split()[-1]))
 
     def is_completable(self, symbol):
         """ whether the word can be completed as a command or parameter """
         return self.has_parameters(symbol) or symbol in self.param_description.keys()
-
-    def get_param(self, command):
-        """ returns the parameters for a given command """
-        return self.command_parameters[command]
 
     def get_param_description(self, param):
         """ gets a description of an empty string """
@@ -302,10 +297,6 @@ class AzCompleter(Completer):
             return self.param_description[param]
         else:
             return ""
-
-    def get_description(self, command):
-        """ returns the description for a given command """
-        return self.command_description[command]
 
     def has_parameters(self, command):
         """ returns whether given command is valid """
