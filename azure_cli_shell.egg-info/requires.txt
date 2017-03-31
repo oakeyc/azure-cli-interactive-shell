@@ -1,6 +1,0 @@
-applicationinsights
-azure-cli
-jmespath
-prompt_toolkit
-pyyaml
-six
