@@ -17,7 +17,7 @@ DEPENDENCIES = [
 with open('README.rst', 'r', encoding='utf-8') as f:
     README = f.read()
 
-__version__ = '0.1.1a25'
+__version__ = '0.1.1a26'
 
 setup(
     name='azure-cli-shell',
