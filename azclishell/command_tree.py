@@ -28,6 +28,7 @@ class CommandTree(object):
             return False
         return any(kid.data == name for kid in self.children)
 
+
 class CommandHead(CommandTree):
     """ represents the head of the tree, no data"""
 
@@ -65,10 +66,12 @@ class CommandHead(CommandTree):
             subcommands.append(list(set(self.get_subbranch(command.data))))
         return subcommands
 
+
 class CommandBranch(CommandTree):
     """ represents a branch of the tree """
     def __init__(self, data, children=None):
         CommandTree.__init__(self, data, children)
+
 
 def generate_tree(commands):
     """ short cut to make a tree """

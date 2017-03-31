@@ -3,15 +3,16 @@ import math
 import os
 import json
 
+import azclishell.configuration
 from azclishell.command_tree import CommandBranch, CommandHead
 from azclishell.util import get_window_dim
-import azclishell.configuration
 
 CONFIGURATION = azclishell.configuration.CONFIGURATION
 ROWS, COLS = get_window_dim()
 
 TOLERANCE = 10
 LINE_MINIMUM = math.floor(int(COLS) / 2 - 15)
+
 
 def add_random_new_lines(long_phrase, line_min=LINE_MINIMUM, tolerance=TOLERANCE):
     """ not everything fits on the screen, based on the size, add newlines """
@@ -44,6 +45,7 @@ def add_random_new_lines(long_phrase, line_min=LINE_MINIMUM, tolerance=TOLERANCE
         '\n' + long_phrase[loc + counter:]
         counter += 1
     return long_phrase + "\n"
+
 
 class GatherCommands(object):
     """ grabs all the cached commands from files """

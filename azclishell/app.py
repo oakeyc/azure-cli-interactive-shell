@@ -1,47 +1,49 @@
 """ The Main Application """
 from __future__ import unicode_literals, print_function
 
-import subprocess
-import os
-import sys
-import math
 import json
+import math
+import os
+import subprocess
+import sys
+
 import jmespath
-
-from six.moves import configparser
-
-from prompt_toolkit.buffer import Buffer
-from prompt_toolkit.shortcuts import create_eventloop
-from prompt_toolkit.history import InMemoryHistory
-from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
-from prompt_toolkit.document import Document
-from prompt_toolkit.interface import CommandLineInterface, Application
-from prompt_toolkit.filters import Always
-from prompt_toolkit.enums import DEFAULT_BUFFER
 
 import azclishell.configuration
 from azclishell.az_lexer import AzLexer, ExampleLexer, ToolbarLexer
-from azclishell.layout import create_layout, create_tutorial_layout, set_scope
-from azclishell.key_bindings import registry, get_section, sub_section
-from azclishell.util import get_window_dim, parse_quotes, shell_help
 from azclishell.gather_commands import add_random_new_lines
+from azclishell.key_bindings import registry, get_section, sub_section
+from azclishell.layout import create_layout, create_tutorial_layout, set_scope
 from azclishell.telemetry import TC as telemetry
+from azclishell.util import get_window_dim, parse_quotes, shell_help
 
 import azure.cli.core.azlogging as azlogging
+from azure.cli.core.application import Configuration
+from azure.cli.core.cloud import get_active_cloud_name
+from azure.cli.core._config import az_config, DEFAULTS_SECTION
+from azure.cli.core._environment import get_config_dir
+from azure.cli.core._profile import _SUBSCRIPTION_NAME, Profile
+from azure.cli.core._session import ACCOUNT, CONFIG, SESSION
 from azure.cli.core._util import (show_version_info_exit, handle_exception)
 from azure.cli.core._util import CLIError
-from azure.cli.core.application import Configuration
-from azure.cli.core._session import ACCOUNT, CONFIG, SESSION
-from azure.cli.core._environment import get_config_dir
-from azure.cli.core.cloud import get_active_cloud_name
-from azure.cli.core._profile import _SUBSCRIPTION_NAME, Profile
-from azure.cli.core._config import az_config, DEFAULTS_SECTION
+
+from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
+from prompt_toolkit.buffer import Buffer
+from prompt_toolkit.document import Document
+from prompt_toolkit.enums import DEFAULT_BUFFER
+from prompt_toolkit.filters import Always
+from prompt_toolkit.history import InMemoryHistory
+from prompt_toolkit.interface import CommandLineInterface, Application
+from prompt_toolkit.shortcuts import create_eventloop
+
+from six.moves import configparser
 
 SHELL_CONFIGURATION = azclishell.configuration.CONFIGURATION
 NOTIFICATIONS = ""
 PROFILE = Profile()
 SELECT_SYMBOL = azclishell.configuration.SELECT_SYMBOL
 PART_SCREEN_EXAMPLE = 1/3
+
 
 def handle_cd(cmd):
     """changes dir """
@@ -53,6 +55,7 @@ def handle_cd(cmd):
         os.chdir(path)
     except OSError as ex:
         print("cd: %s\n" % ex)
+
 
 def space_examples(list_examples, rows):
     """ makes the example text """
@@ -77,6 +80,7 @@ def space_examples(list_examples, rows):
                 sub_section()
     return example
 
+
 def _toolbar_info():
     sub_name = ""
     try:
@@ -96,8 +100,10 @@ def _toolbar_info():
     ]
     return settings_items
 
+
 class Shell(object):
     """ represents the shell """
+
     def __init__(self, completer=None, styles=None,
                  lexer=None, history=InMemoryHistory(),
                  app=None, input_custom=sys.stdout, output_custom=None):
