@@ -32,9 +32,13 @@ class CompletionTest(unittest.TestCase):
         com_tree3 = tree.CommandHead()
         com_tree3.add_child(com_tree2)
         com_tree3.add_child(com_tree1)
-
+        command_description = {
+            "create" : '',
+            "command can" : ''
+        }
         commands = _Commands(
-            command_tree=com_tree3
+            command_tree=com_tree3,
+            descrip=command_description
         )
         self.completer = AzCompleter(commands, global_params=False)
 
@@ -55,11 +59,16 @@ class CompletionTest(unittest.TestCase):
         param_descript = {
             "create -funtime" : "There is no work life balance, it's just your life"
         }
+        command_description = {
+            "create" : '',
+            "command can" : ''
+        }
         commands = _Commands(
             command_tree=com_tree3,
             command_param=command_param,
             completable_param=completable_param,
-            param_descript=param_descript
+            param_descript=param_descript,
+            descrip=command_description
         )
         self.completer = AzCompleter(commands, global_params=False)
 
@@ -86,12 +95,17 @@ class CompletionTest(unittest.TestCase):
             "-f" : "--funtimes",
             "--funtimes" : '-f'
         }
+        command_description = {
+            "create" : '',
+            "command can" : ''
+        }
         commands = _Commands(
             command_tree=com_tree3,
             command_param=command_param,
             completable_param=completable_param,
             param_descript=param_descript,
-            same_param_doubles=same_param_doubles
+            same_param_doubles=same_param_doubles,
+            descrip=command_description
         )
         self.completer = AzCompleter(commands, global_params=False)
 
@@ -148,21 +162,22 @@ class CompletionTest(unittest.TestCase):
         with self.assertRaises(StopIteration):
             six.next(gen)
 
-    # def test_second_completion(self):
-    #     self.init3()
-    #     doc = Document(u'crea ')
-    #     gen = self.completer.get_completions(doc, None)
-    #     with self.assertRaises(StopIteration):
-    #         six.next(gen)
-    #     doc = Document(u'create --fun ')
-    #     gen = self.completer.get_completions(doc, None)
-    #     with self.assertRaises(StopIteration):
-    #         six.next(gen)
+    def test_second_completion(self):
+        self.init3()
+        doc = Document(u'crea ')
+        gen = self.completer.get_completions(doc, None)
+        with self.assertRaises(StopIteration):
+            six.next(gen)
 
-    #     doc = Document(u'command d ')
-    #     gen = self.completer.get_completions(doc, None)
-    #     with self.assertRaises(StopIteration):
-    #         six.next(gen)
+        doc = Document(u'create --fun ')
+        gen = self.completer.get_completions(doc, None)
+        with self.assertRaises(StopIteration):
+            six.next(gen)
+
+        doc = Document(u'command d ')
+        gen = self.completer.get_completions(doc, None)
+        with self.assertRaises(StopIteration):
+            six.next(gen)
 
 
 if __name__ == '__main__':

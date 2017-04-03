@@ -15,7 +15,7 @@ from azclishell.gather_commands import add_random_new_lines
 from azclishell.key_bindings import registry, get_section, sub_section
 from azclishell.layout import create_layout, create_tutorial_layout, set_scope
 from azclishell.telemetry import TC as telemetry
-from azclishell.util import get_window_dim, parse_quotes, shell_help
+from azclishell.util import get_window_dim, parse_quotes
 
 import azure.cli.core.azlogging as azlogging
 from azure.cli.core.application import Configuration
@@ -452,8 +452,9 @@ class Shell(object):
                 self.default_command = ""
                 set_scope("", add=False)
                 print('undefaulting all')
-            elif len(value) == 1 and value[0] in self.default_command:
-                self.default_command = " " + self.default_command.replace(value[0], '')
+            elif len(value) == 1 and len(self.default_command.split()) > 0\
+                 and value[0] == self.default_command.split()[-1]:
+                self.default_command = ' ' + ' '.join(self.default_command.split()[:-1])
                 if not self.default_command.strip():
                     self.default_command = self.default_command.strip()
                 set_scope(self.default_command, add=False)
@@ -465,8 +466,11 @@ class Shell(object):
     def run(self):
         """ runs the CLI """
         telemetry.start()
+
+        from azclishell.configuration import SHELL_HELP
         self.cli.buffers['symbols'].reset(
-            initial_document=Document(u'{}'.format(shell_help)))
+            initial_document=Document(u'{}'.format(SHELL_HELP)))
+
         while True:
             try:
                 document = self.cli.run(reset_current_buffer=True)

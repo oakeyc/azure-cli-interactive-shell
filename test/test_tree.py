@@ -1,5 +1,5 @@
 import six
-from azclishell.command_tree import CommandBranch, CommandHead, CommandTree
+from azclishell.command_tree import CommandBranch, CommandHead, CommandTree, in_tree
 import unittest
 
 class TreeTest(unittest.TestCase):
@@ -28,6 +28,27 @@ class TreeTest(unittest.TestCase):
         tree = CommandHead()
         tree.add_child(tree1)
         self.assertEqual(tree.get_subbranch("Hello"), ["World", "Again"])
+
+    def test_in_tree(self):
+        """ tests in tree """
+        tree4 = CommandBranch("CB1")
+        tree3 = CommandBranch("Again")
+        tree2 = CommandBranch("World")
+        tree2.add_child(tree3)
+        tree2.add_child(tree4)
+        tree1 = CommandBranch("Hello")
+        tree1.add_child(tree2)
+        tree = CommandHead()
+        tree.add_child(tree1)
+        self.assertTrue(in_tree(tree3, 'Again'))
+        self.assertTrue(in_tree(tree2, 'World Again'))
+        self.assertTrue(in_tree(tree1, 'Hello World Again'))
+        self.assertTrue(in_tree(tree1, 'Hello World CB1'))
+
+        self.assertFalse(in_tree(tree1, 'World Hello CB1'))
+        self.assertFalse(in_tree(tree, 'World Hello CB1'))
+        self.assertFalse(in_tree(tree, 'Hello World Again CB1'))
+
 
 if __name__ == '__main__':
     unittest.main()

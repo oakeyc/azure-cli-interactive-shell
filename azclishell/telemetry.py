@@ -24,15 +24,9 @@ def my_context(tel_client):
     tel_client.context.instrumentation_key = INSTRUMENTATION_KEY
 
 
-def generate_data():
-    """ gets the data to return """
-    return ' '.join(TC.keys)
-
-
 class Telemetry(TelemetryClient):
     """ base telemetry sessions """
 
-    keys = []
     start_time = None
     end_time = None
 
@@ -42,7 +36,6 @@ class Telemetry(TelemetryClient):
 
     def track_key(self, key):
         """ tracks the special key bindings """
-        self.keys.append(key)
         self.track_event('Key Press', {"key": key})
 
     def start(self):
@@ -54,10 +47,6 @@ class Telemetry(TelemetryClient):
         self.end_time = str(datetime.datetime.now())
         self.track_event('Run', {'start time' : self.start_time,
                                  'end time' : self.end_time})
-        payload = generate_data()
-        # if payload:
-        #     import subprocess
-        #     subprocess.Popen([sys.executable, os.path.realpath(telemetry_core.__file__), payload])
         self.flush()
 
 

@@ -139,13 +139,3 @@ def _dict_path(keyword, dictionary, list_of_options):
             if isinstance(item, dict):
                 list_of_options.extend(dict_path(keyword, item))
 
-
-shell_help = \
-    "#[cmd]          : use commands outside the application\n" +\
-    "?[path]         : query previous command using jmespath syntax\n" +\
-    "[cmd] :: [num]  : do a step by step tutorial of example\n" +\
-    "$               : get the exit code of the previous command\n" +\
-    "%%              : default a scope\n" +\
-    "^^              : undefault a scope\n" + \
-    "Crtl+N          : Scroll down the documentation\n" +\
-    "Crtl+Y          : Scroll up the documentation"

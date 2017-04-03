@@ -8,11 +8,22 @@ from six.moves import configparser
 SELECT_SYMBOL = {
     'outside' : '#',
     'query' : '?',
-    'exit_code' : '$',
     'example' : '::',
+    'exit_code' : '$',
     'default' : '%%',
     'undefault' : '^^'
 }
+
+
+SHELL_HELP = \
+    SELECT_SYMBOL['outside'] + "[cmd]          : use commands outside the application\n" +\
+    SELECT_SYMBOL['query'] + "[path]         : query previous command using jmespath syntax\n" +\
+    "[cmd] " + SELECT_SYMBOL['example'] + " [num]  : do a step by step tutorial of example\n" +\
+    SELECT_SYMBOL['exit_code'] + "               : get the exit code of the previous command\n" +\
+    SELECT_SYMBOL['default'] + "              : default a scope\n" +\
+    SELECT_SYMBOL['undefault'] + "              : undefault a scope\n" + \
+    "Crtl+N          : Scroll down the documentation\n" +\
+    "Crtl+Y          : Scroll up the documentation"
 
 
 class Configuration():

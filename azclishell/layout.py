@@ -242,7 +242,6 @@ def get_descript(lexer):
         content=BufferControl(
             buffer_name="description",
             lexer=lexer
-
             ),
         )
 

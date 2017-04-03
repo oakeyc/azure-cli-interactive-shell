@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import azclishell.configuration
 from azclishell.argfinder import ArgsFinder
+from azclishell.command_tree import in_tree
 from azclishell.layout import get_scope
 from azclishell.util import parse_quotes
 
@@ -63,8 +64,8 @@ class AzCompleter(Completer):
         return  param.lower().startswith(words.lower()) and \
                 param.lower() != words.lower() and\
                 param not in text_before_cursor.split()\
-                and not text_before_cursor[-1].isspace()\
-                and (not (double and param in self.same_param_doubles)\
+                and not text_before_cursor[-1].isspace() and\
+                (not (double and param in self.same_param_doubles)\
                 or self.same_param_doubles[param] not in text_before_cursor.split())
 
     def dynamic_param_logic(self, text):
@@ -117,6 +118,9 @@ class AzCompleter(Completer):
 
         for val in self.gen_dynamic_completions(text):
             yield val
+
+        for param in self.gen_global_param_completions(text):
+            yield param
 
     def gen_dynamic_completions(self, text):
         """ generates the dynamic values, like the names of resource groups """
@@ -187,9 +191,6 @@ class AzCompleter(Completer):
                                     except TypeError:
                                         print("TypeError: " + TypeError.message)
 
-            global_params = self.gen_global_param_completions(text)
-            for param in global_params:
-                yield param
         except CLIError:  # if the user isn't logged in
             pass
 
@@ -223,37 +224,48 @@ class AzCompleter(Completer):
     def gen_cmd_and_param_completions(self, text):
         """ generates command and parameter completions """
 
-        for words in text.split():
-            # this is for single char parameters
-            if words.startswith("-") and not words.startswith("--"):
+        for word in text.split():
+            if word.startswith("-"):
                 self._is_command = False
 
-                if self.has_parameters(self.curr_command):
-                    for param in self.command_parameters[self.curr_command]:
-                        if self.validate_completion(param, words, text) and\
-                        not param.startswith("--"):
-                            yield Completion(param, -len(words), display_meta=\
-                            self.get_param_description(
+            if self.branch.has_child(word):
+                self.branch = self.branch.get_child(word, self.branch.children)
+            if self._is_command:
+                if self.curr_command:
+                    temp_command = self.curr_command + " " + str(word)
+                else:
+                    temp_command = str(word)
+
+        if len(text) > 0 and text[-1].isspace():
+            if in_tree(self.command_tree, temp_command):
+                self.curr_command = temp_command
+            else:
+                self._is_command = False
+        else:
+            self.curr_command = temp_command
+
+        last_word = text.split()[-1]
+        # this is for single char parameters
+        if last_word.startswith("-") and not last_word.startswith("--"):
+            self._is_command = False
+
+            if self.has_parameters(self.curr_command):
+                for param in self.command_parameters[self.curr_command]:
+                    if self.validate_completion(param, last_word, text) and\
+                    not param.startswith("--"):
+                        yield Completion(param, -len(last_word), display_meta=\
+                        self.get_param_description(
+                            self.curr_command + " " + str(param)).replace('\n', ''))
+        elif last_word.startswith("--"):  # for regular parameters
+            self._is_command = False
+
+            if self.has_parameters(self.curr_command):  # Everything should, map to empty list
+                for param in self.command_parameters[self.curr_command]:
+                    if self.validate_completion(param, last_word, text):
+                        yield Completion(
+                            param, -len(last_word),
+                            display_meta=self.get_param_description(
                                 self.curr_command + " " + str(param)).replace('\n', ''))
-            # for regular parameters
-            elif words.startswith("--"):
-                self._is_command = False
-
-                if self.has_parameters(self.curr_command):  # Everything should, map to empty list
-                    for param in self.command_parameters[self.curr_command]:
-                        if self.validate_completion(param, words, text):
-                            yield Completion(
-                                param, -len(words),
-                                display_meta=self.get_param_description(
-                                    self.curr_command + " " + str(param)).replace('\n', ''))
-            else:  # otherwises it's a command
-                if self.branch.has_child(words):
-                    self.branch = self.branch.get_child(words, self.branch.children)
-                    if self._is_command:
-                        if self.curr_command:
-                            self.curr_command += " " + str(words)
-                        else:
-                            self.curr_command += str(words)
 
         if self.branch.children is not None and self._is_command: # all underneath commands
             for kid in self.branch.children:
