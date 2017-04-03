@@ -9,7 +9,7 @@ import os.path
 import sys
 from subprocess import call
 
-import automation.utilities.path as automation_path
+import linter.path as automation_path
 
 
 def run_pylint(modules):
