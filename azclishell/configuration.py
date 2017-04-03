@@ -14,17 +14,29 @@ SELECT_SYMBOL = {
     'undefault' : '^^'
 }
 
+GESTURE_INFO = {
+    SELECT_SYMBOL['outside'] + "[cmd]" : "use commands outside the application",
+    SELECT_SYMBOL['query'] + "[path]" : "query previous command using jmespath syntax",
+    "[cmd] " + SELECT_SYMBOL['example'] + " [num]" : "do a step by step tutorial of example",
+    SELECT_SYMBOL['exit_code'] : "get the exit code of the previous command",
+    SELECT_SYMBOL['default'] : "default a scope",
+    SELECT_SYMBOL['undefault'] : "undefault a scope",
+    "Crtl+N" : "Scroll down the documentation",
+    "Crtl+Y" : "Scroll up the documentation"
+}
 
-SHELL_HELP = \
-    SELECT_SYMBOL['outside'] + "[cmd]          : use commands outside the application\n" +\
-    SELECT_SYMBOL['query'] + "[path]         : query previous command using jmespath syntax\n" +\
-    "[cmd] " + SELECT_SYMBOL['example'] + " [num]  : do a step by step tutorial of example\n" +\
-    SELECT_SYMBOL['exit_code'] + "               : get the exit code of the previous command\n" +\
-    SELECT_SYMBOL['default'] + "              : default a scope\n" +\
-    SELECT_SYMBOL['undefault'] + "              : undefault a scope\n" + \
-    "Crtl+N          : Scroll down the documentation\n" +\
-    "Crtl+Y          : Scroll up the documentation"
+CONFIG_FILE_NAME = 'shell-config'
 
+GESTURE_LENGTH = 20
+
+def help_text(values):
+    result = ""
+    for key in values:
+        result += key + ' '.join('' for x in range(GESTURE_LENGTH - len(key))) +\
+                  ': ' + values[key] + '\n'
+    return result
+
+SHELL_HELP = help_text(GESTURE_INFO)
 
 class Configuration():
     """ configuration for program """
@@ -49,11 +61,11 @@ class Configuration():
         azure_folder = self.get_config_dir()
         if not os.path.exists(azure_folder):
             os.makedirs(azure_folder)
-        if not os.path.exists(os.path.join(self.get_config_dir(), 'config')):
-            with open(os.path.join(self.get_config_dir(), 'config'), 'w') as config_file:
+        if not os.path.exists(os.path.join(self.get_config_dir(), CONFIG_FILE_NAME)):
+            with open(os.path.join(self.get_config_dir(), CONFIG_FILE_NAME), 'w') as config_file:
                 self.config.write(config_file)
         else:
-            with open(os.path.join(self.get_config_dir(), 'config'), 'r') as config_file:
+            with open(os.path.join(self.get_config_dir(), CONFIG_FILE_NAME), 'r') as config_file:
                 self.config.readfp(config_file)
                 self.update()
 
@@ -88,7 +100,7 @@ class Configuration():
 
     def update(self):
         """ updates the configuration settings """
-        with open(os.path.join(self.get_config_dir(), 'config'), 'w') as config_file:
+        with open(os.path.join(self.get_config_dir(), CONFIG_FILE_NAME), 'w') as config_file:
             self.config.write(config_file)
 
 

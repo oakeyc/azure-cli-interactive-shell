@@ -409,16 +409,17 @@ class Shell(object):
                 continue_flag = True
                 telemetry.track_ssg('exit code', cmd)
 
-            elif SELECT_SYMBOL['query'] in text:  # query previous output
+            elif text[0] == SELECT_SYMBOL['query']:  # query previous output
                 if self.last and self.last.result:
                     if hasattr(self.last.result, '__dict__'):
                         input_dict = dict(self.last.result)
                     else:
                         input_dict = self.last.result
                     try:
-                        if text.partition(SELECT_SYMBOL['query'])[2]:
+                        query_text = text.partition(SELECT_SYMBOL['query'])[2]
+                        if query_text:
                             result = jmespath.search(
-                                text.partition(SELECT_SYMBOL['query'])[2], input_dict)
+                                query_text, input_dict)
                             if isinstance(result, str):
                                 print(result)
                             else:
@@ -461,7 +462,7 @@ class Shell(object):
         return break_flag, continue_flag, outside, cmd
 
     def run(self):
-        """ runs the CLI """
+
         telemetry.start()
 
         from azclishell.configuration import SHELL_HELP

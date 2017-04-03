@@ -5,22 +5,18 @@ import datetime
 from applicationinsights import TelemetryClient
 from applicationinsights.exceptions import enable
 
-from azure.cli.core import __version__ as core_version
+from azclishell import __version__
 
+from azure.cli.core._profile import Profile
 
 INSTRUMENTATION_KEY = '762871d5-45a2-4d67-bf47-e396caf53d9d'
-UA_AGENT = "AZURECLI/{}/{}".format(core_version, 'SHELL')
-# ENV_ADDITIONAL_USER_AGENT = 'SHELL'
-
-PRODUCT_NAME = 'azureclishell'
-TELEMETRY_VERSION = '0.0.1.1'
 
 
 def my_context(tel_client):
     """ context for the application """
-    tel_client.context.application.id = 'Azure Shell'
-    tel_client.context.application.ver = '0.1.1a'
-    tel_client.context.user.id = 't-cooka@microsoft.com'
+    tel_client.context.application.id = 'Azure CLI Shell'
+    tel_client.context.application.ver = __version__
+    tel_client.context.user.id = Profile().get_installation_id()
     tel_client.context.instrumentation_key = INSTRUMENTATION_KEY
 
 
