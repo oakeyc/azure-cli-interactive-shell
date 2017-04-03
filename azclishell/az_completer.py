@@ -235,7 +235,6 @@ class AzCompleter(Completer):
                     else:
                         self.curr_command += str(last_word)
 
-
         last_word = text.split()[-1]
         # this is for single char parameters
         if last_word.startswith("-") and not last_word.startswith("--"):
@@ -248,8 +247,7 @@ class AzCompleter(Completer):
                         yield Completion(param, -len(last_word), display_meta=\
                         self.get_param_description(
                             self.curr_command + " " + str(param)).replace('\n', ''))
-        # for regular parameters
-        elif last_word.startswith("--"):
+        elif last_word.startswith("--"):  # for regular parameters
             self._is_command = False
 
             if self.has_parameters(self.curr_command):  # Everything should, map to empty list
