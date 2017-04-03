@@ -73,9 +73,6 @@ def space_examples(list_examples, rows):
         group = example.split('\n')
         end = int(get_section() * len_of_excerpt)
         begin = int((get_section() - 1) * len_of_excerpt)
-        # group = group[begin:end]
-        print("begin: " + str(begin) + "\nend: " + str(end))
-        print("\nEXAMPLES: " + '\n'.join(group) )
 
         if get_section() * len_of_excerpt < num_newline:
             example = '\n'.join(group[begin:end]) + "\n"
@@ -83,7 +80,7 @@ def space_examples(list_examples, rows):
             example = '\n'.join(group[begin:]) + "\n"
             while ((get_section() - 1) * len_of_excerpt) > num_newline:
                 sub_section()
-    print("In the end: " + example)
+
     return example
 
 

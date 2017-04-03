@@ -6,6 +6,7 @@ import sys
 
 from prompt_toolkit.history import FileHistory
 
+from azclishell import __version__
 import azclishell._dump_help
 import azclishell.configuration
 from azclishell.gather_commands import GatherCommands
@@ -17,12 +18,14 @@ from azclishell.util import default_style
 from azure.cli.core.application import APPLICATION
 from azure.cli.core._session import ACCOUNT, CONFIG, SESSION
 from azure.cli.core._environment import get_config_dir as cli_config_dir
+from azure.cli.core.commands.client_factory import ENV_ADDITIONAL_USER_AGENT
 
 AZCOMPLETER = AzCompleter(GatherCommands())
 SHELL_CONFIGURATION = azclishell.configuration.CONFIGURATION
 
 
 def main(args):
+    os.environ[ENV_ADDITIONAL_USER_AGENT] = 'AZURECLISHELL/' + __version__
 
     parser = argparse.ArgumentParser(prog='az-shell')
     parser.add_argument(
