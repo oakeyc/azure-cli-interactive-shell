@@ -6,8 +6,8 @@ import sys
 
 from prompt_toolkit.history import FileHistory
 
-import azclishell.configuration
 import azclishell._dump_help
+import azclishell.configuration
 from azclishell.gather_commands import GatherCommands
 from azclishell.app import Shell
 from azclishell.az_completer import AzCompleter

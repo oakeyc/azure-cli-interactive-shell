@@ -452,8 +452,9 @@ class Shell(object):
                 self.default_command = ""
                 set_scope("", add=False)
                 print('undefaulting all')
-            elif len(value) == 1 and value[0] in self.default_command:
-                self.default_command = " " + self.default_command.replace(value[0], '')
+            elif len(value) == 1 and len(self.default_command.split()) > 0\
+                 and value[0] == self.default_command.split()[-1]:
+                self.default_command = ' ' + ' '.join(self.default_command.split()[:-1])
                 if not self.default_command.strip():
                     self.default_command = self.default_command.strip()
                 set_scope(self.default_command, add=False)
