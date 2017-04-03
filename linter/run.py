@@ -12,11 +12,10 @@ from subprocess import call
 import linter.path as automation_path
 
 
-def run_pylint(modules):
+def run_pylint():
     print('\n\nRun pylint')
-    print('Modules: {}'.format(', '.join(name for name, _ in modules)))
 
-    modules_list = ' '.join(os.path.join(path, 'azure') for _, path in modules)
+    modules_list = ' '.join(os.path.join('azclishell'))
     arguments = '{} --rcfile={} -j {} -r n -d I0013'.format(
         modules_list,
         os.path.join(automation_path.get_repo_root(), 'pylintrc'),
@@ -61,35 +60,6 @@ if __name__ == '__main__':
                              'except azure-cli, azure-cli-core and azure-cli-nspkg')
     args = parser.parse_args()
 
-    if args.ci:
-        # When the command is run in CI mode all the other parameters are ignored
-        selected_modules = automation_path.filter_user_selected_modules(None)
-
-        # Run pylint on all modules
-        return_code_sum = run_pylint(selected_modules)
-
-        # Run flake8 on modules
-        pep8_ready_modules = automation_path.filter_blacklisted_modules(
-            ['acr', 'batch', 'configure', 'container', 'datalake', 'documentdb', 'find', 'iot',
-             'keyvault', 'network', 'redis', 'resource'])
-
-        return_code_sum += run_pep8(pep8_ready_modules)
-
-        sys.exit(return_code_sum)
-
-    selected_modules = automation_path.filter_user_selected_modules(args.modules)
-    if not selected_modules:
-        parser.print_help()
-        sys.exit(1)
-
-    if not args.suites or not any(args.suites):
-        return_code_sum = run_pylint(selected_modules)
-    else:
-        return_code_sum = 0
-        if 'pep8' in args.suites:
-            return_code_sum += run_pep8(selected_modules)
-
-        if 'pylint' in args.suites:
-            return_code_sum += run_pylint(selected_modules)
+    return_code_sum = run_pylint()
 
     sys.exit(return_code_sum)

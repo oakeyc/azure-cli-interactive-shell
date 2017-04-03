@@ -20,7 +20,8 @@ def get_window_dim():
 
 def _size_27():
     """ works for python """
-    return os.popen('stty size', 'r').read().split()
+    dim = os.popen('stty size', 'r').read().split()
+    return dim[0], dim[1]
 
 
 def _size_36_windows():

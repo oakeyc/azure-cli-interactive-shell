@@ -66,12 +66,16 @@ def space_examples(list_examples, rows):
         list_examples[i][1])
 
     example = "".join(exam for exam in examples_with_index)
+
     num_newline = example.count('\n')
     if num_newline > rows * PART_SCREEN_EXAMPLE:
         len_of_excerpt = math.floor(rows * PART_SCREEN_EXAMPLE)
         group = example.split('\n')
         end = int(get_section() * len_of_excerpt)
         begin = int((get_section() - 1) * len_of_excerpt)
+        # group = group[begin:end]
+        print("begin: " + str(begin) + "\nend: " + str(end))
+        print("\nEXAMPLES: " + '\n'.join(group) )
 
         if get_section() * len_of_excerpt < num_newline:
             example = '\n'.join(group[begin:end]) + "\n"
@@ -79,6 +83,7 @@ def space_examples(list_examples, rows):
             example = '\n'.join(group[begin:]) + "\n"
             while ((get_section() - 1) * len_of_excerpt) > num_newline:
                 sub_section()
+    print("In the end: " + example)
     return example
 
 
@@ -230,12 +235,9 @@ class Shell(object):
         for part in settings_items:
             counter += len(part)
         spacing = empty_space[:int(math.floor((cols - counter) / (len(settings_items) - 1)))]
-        settings = ""
-        for i in range(len(settings_items)):
-            if i != len(settings_items) - 1:
-                settings += settings_items[i] + spacing
-            else:
-                settings += settings_items[i]
+
+        settings = spacing.join(settings_items)
+
         empty_space = empty_space[len(NOTIFICATIONS) + len(settings) + 1:]
         return settings, empty_space
 
@@ -302,7 +304,7 @@ class Shell(object):
         return value
 
     def handle_example(self, text):
-        """ parses for the tutortial """
+        """ parses for the tutorial """
         cmd = text.partition(SELECT_SYMBOL['example'])[0].rstrip()
         num = text.partition(SELECT_SYMBOL['example'])[2].strip()
         example = ""
