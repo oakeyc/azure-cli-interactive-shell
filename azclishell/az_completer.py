@@ -223,7 +223,7 @@ class AzCompleter(Completer):
 
     def gen_cmd_and_param_completions(self, text):
         """ generates command and parameter completions """
-
+        temp_command = ''
         for word in text.split():
             if word.startswith("-"):
                 self._is_command = False
@@ -231,8 +231,8 @@ class AzCompleter(Completer):
             if self.branch.has_child(word):
                 self.branch = self.branch.get_child(word, self.branch.children)
             if self._is_command:
-                if self.curr_command:
-                    temp_command = self.curr_command + " " + str(word)
+                if temp_command:
+                    temp_command += " " + str(word)
                 else:
                     temp_command = str(word)
 

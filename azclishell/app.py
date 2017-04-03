@@ -335,8 +335,7 @@ class Shell(object):
 
     def example_repl(self, text, example, start_index):
         """ REPL for interactive tutorials """
-        global EXAMPLE_REPL
-        EXAMPLE_REPL = True
+
         if start_index:
             start_index = start_index + 1
             cmd = ' '.join(text.split()[:start_index])
@@ -372,7 +371,6 @@ class Shell(object):
         else:
             cmd = text
 
-        EXAMPLE_REPL = False
         return cmd
 
     def _special_cases(self, text, cmd, outside):
@@ -435,7 +433,6 @@ class Shell(object):
                 cmd = "az " + cmd
 
             elif SELECT_SYMBOL['example'] in text:
-                global NOTIFICATIONS
                 cmd = self.handle_example(cmd)
                 telemetry.track_ssg('tutorial', text)
 

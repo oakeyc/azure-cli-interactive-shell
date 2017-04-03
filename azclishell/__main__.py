@@ -17,15 +17,13 @@ from azclishell.util import default_style
 from azure.cli.core.application import APPLICATION
 from azure.cli.core._session import ACCOUNT, CONFIG, SESSION
 from azure.cli.core._environment import get_config_dir as cli_config_dir
-# from azure.cli.core.commands.client_factory import ENV_ADDITIONAL_USER_AGENT
 
 AZCOMPLETER = AzCompleter(GatherCommands())
 SHELL_CONFIGURATION = azclishell.configuration.CONFIGURATION
 
 
 def main(args):
-    """ the main function """
-    # os.environ([ENV_ADDITIONAL_USER_AGENT]) = os.environ([ENV_ADDITIONAL_USER_AGENT]) + ' Shell'
+
     parser = argparse.ArgumentParser(prog='az-shell')
     parser.add_argument(
         '--no-style', dest='style', action='store_true', help='the colors of the shell')

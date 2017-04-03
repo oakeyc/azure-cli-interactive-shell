@@ -88,23 +88,23 @@ def get_tutorial_tokens(cli):
     return [(Token.Toolbar, 'In Tutorial Mode: Press [Enter] after typing each part')]
 
 
-def get_lexers(mainLex, examLex, toolLex):
+def get_lexers(main_lex, exam_lex, tool_lex):
     """ gets all the lexer wrappers """
-    if not mainLex:
+    if not main_lex:
         return None, None, None
     lexer = None
-    if issubclass(mainLex, PromptLex):
-        lexer = mainLex
-    elif issubclass(mainLex, PygLex):
-        lexer = PygmentsLexer(mainLex)
+    if issubclass(main_lex, PromptLex):
+        lexer = main_lex
+    elif issubclass(main_lex, PygLex):
+        lexer = PygmentsLexer(main_lex)
 
-    if examLex:
-        if issubclass(examLex, PygLex):
-            examLex = PygmentsLexer(examLex)
-    if toolLex:
-        if issubclass(toolLex, PygLex):
-            toolLex = PygmentsLexer(toolLex)
-    return lexer, examLex, toolLex
+    if exam_lex:
+        if issubclass(exam_lex, PygLex):
+            exam_lex = PygmentsLexer(exam_lex)
+    if tool_lex:
+        if issubclass(tool_lex, PygLex):
+            tool_lex = PygmentsLexer(tool_lex)
+    return lexer, exam_lex, tool_lex
 
 
 def create_tutorial_layout(lex):
@@ -151,19 +151,19 @@ def create_tutorial_layout(lex):
     return layout_full
 
 
-def create_layout(lex, examLex, toolbarLex):
+def create_layout(lex, exam_lex, toolbar_lex):
     """ creates the layout """
     config = azclishell.configuration.CONFIGURATION
-    lexer, examLex, toolbarLex = get_lexers(lex, examLex, toolbarLex)
+    lexer, exam_lex, toolbar_lex = get_lexers(lex, exam_lex, toolbar_lex)
 
     input_processors.append(DefaultPrompt(get_prompt_tokens))
 
     layout_lower = ConditionalContainer(
         HSplit([
             get_anyhline(config),
-            get_descriptions(config, examLex, lexer),
+            get_descriptions(config, exam_lex, lexer),
             get_examplehline(config),
-            get_example(config, examLex),
+            get_example(config, exam_lex),
 
             ConditionalContainer(
                 get_hline(),
@@ -186,7 +186,7 @@ def create_layout(lex, examLex, toolbarLex):
                 Window(
                     content=BufferControl(
                         buffer_name='symbols',
-                        lexer=examLex
+                        lexer=exam_lex
                     )
                 ),
                 filter=ShowSymbol()
@@ -194,7 +194,7 @@ def create_layout(lex, examLex, toolbarLex):
             Window(
                 content=BufferControl(
                     buffer_name='bottom_toolbar',
-                    lexer=toolbarLex
+                    lexer=toolbar_lex
                 ),
             ),
         ]),
@@ -256,13 +256,13 @@ def get_param(lexer):
         )
 
 
-def get_example(config, examLex):
+def get_example(config, exam_lex):
     """ example description window """
     if config.BOOLEAN_STATES[config.config.get('Layout', 'examples')]:
         return Window(
             content=BufferControl(
                 buffer_name="examples",
-                lexer=examLex
+                lexer=exam_lex
                 ),
             )
     else:
@@ -300,17 +300,17 @@ def get_vline():
         content=FillControl('*', token=Token.Line))
 
 
-def get_descriptions(config, examLex, lexer):
+def get_descriptions(config, exam_lex, lexer):
     """ based on the configuration settings determines which windows to include """
     if config.BOOLEAN_STATES[config.config.get('Layout', 'command_description')]:
         if config.BOOLEAN_STATES[config.config.get('Layout', 'param_description')]:
             return VSplit([
-                get_descript(examLex),
+                get_descript(exam_lex),
                 get_vline(),
                 get_param(lexer),
             ])
         else:
-            return get_descript(examLex)
+            return get_descript(exam_lex)
     elif config.BOOLEAN_STATES[config.config.get('Layout', 'param_description')]:
         return get_param(lexer)
     else:
