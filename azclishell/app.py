@@ -60,9 +60,10 @@ def handle_cd(cmd):
 def space_examples(list_examples, rows):
     """ makes the example text """
     examples_with_index = []
-    for i in range(len(list_examples)):
-        examples_with_index.append("[" + str(i + 1) + "] " + list_examples[i][0] +\
-        list_examples[i][1])
+
+    for count, _ in list(enumerate(list_examples)):
+        examples_with_index.append("[" + str(count + 1) + "] " + list_examples[count][0] +\
+        list_examples[count][1])
 
     example = "".join(exam for exam in examples_with_index)
     num_newline = example.count('\n')
