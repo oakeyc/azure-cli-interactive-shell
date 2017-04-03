@@ -2,6 +2,7 @@
 
 import collections
 import os
+import sys
 import platform
 
 from prompt_toolkit.styles import style_from_dict
@@ -10,9 +11,9 @@ from pygments.token import Token
 
 def get_window_dim():
     """ gets the dimensions depending on python version and os"""
-    if platform.system() == 'Windows':
-        return _size_36_windows()
-    if platform.python_version() == "3.6.0":
+    version = sys.version_info
+
+    if platform.system() == 'Windows' or version >= (3, 3):
         return _size_36_windows()
     else:
         return _size_27()
@@ -20,7 +21,8 @@ def get_window_dim():
 
 def _size_27():
     """ works for python """
-    return os.popen('stty size', 'r').read().split()
+    dim = os.popen('stty size', 'r').read().split()
+    return dim[0], dim[1]
 
 
 def _size_36_windows():
@@ -113,29 +115,3 @@ def parse_quotes(cmd, quotes=True):
     else:
         args = words.split()
     return args
-
-
-def dict_path(keyword, dictionaries):
-    """ finds the path to the keyword """
-    list_of_options = []
-    if isinstance(dictionaries, list):
-        for dictionary in dictionaries:
-            _dict_path(keyword, dictionary, list_of_options)
-    elif isinstance(dictionaries, dict):
-        _dict_path(keyword, dictionaries, list_of_options)
-    return list_of_options
-
-
-def _dict_path(keyword, dictionary, list_of_options):
-    if not isinstance(dictionary, collections.Iterable):
-        list_of_options.append(dictionary)
-    elif keyword in dictionary:
-        if isinstance(dictionary, dict):
-            list_of_options.append(dictionary[keyword])
-        else:
-            list_of_options.append(keyword)
-    else:
-        for item in dictionary:
-            if isinstance(item, dict):
-                list_of_options.extend(dict_path(keyword, item))
-

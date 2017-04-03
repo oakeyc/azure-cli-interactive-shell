@@ -60,11 +60,13 @@ def handle_cd(cmd):
 def space_examples(list_examples, rows):
     """ makes the example text """
     examples_with_index = []
-    for i in range(len(list_examples)):
+
+    for i, _ in list(enumerate(list_examples)):
         examples_with_index.append("[" + str(i + 1) + "] " + list_examples[i][0] +\
         list_examples[i][1])
 
     example = "".join(exam for exam in examples_with_index)
+
     num_newline = example.count('\n')
     if num_newline > rows * PART_SCREEN_EXAMPLE:
         len_of_excerpt = math.floor(rows * PART_SCREEN_EXAMPLE)
@@ -78,6 +80,7 @@ def space_examples(list_examples, rows):
             example = '\n'.join(group[begin:]) + "\n"
             while ((get_section() - 1) * len_of_excerpt) > num_newline:
                 sub_section()
+
     return example
 
 
@@ -229,12 +232,9 @@ class Shell(object):
         for part in settings_items:
             counter += len(part)
         spacing = empty_space[:int(math.floor((cols - counter) / (len(settings_items) - 1)))]
-        settings = ""
-        for i in range(len(settings_items)):
-            if i != len(settings_items) - 1:
-                settings += settings_items[i] + spacing
-            else:
-                settings += settings_items[i]
+
+        settings = spacing.join(settings_items)
+
         empty_space = empty_space[len(NOTIFICATIONS) + len(settings) + 1:]
         return settings, empty_space
 
@@ -301,7 +301,7 @@ class Shell(object):
         return value
 
     def handle_example(self, text):
-        """ parses for the tutortial """
+        """ parses for the tutorial """
         cmd = text.partition(SELECT_SYMBOL['example'])[0].rstrip()
         num = text.partition(SELECT_SYMBOL['example'])[2].strip()
         example = ""
@@ -409,16 +409,17 @@ class Shell(object):
                 continue_flag = True
                 telemetry.track_ssg('exit code', cmd)
 
-            elif SELECT_SYMBOL['query'] in text:  # query previous output
+            elif text[0] == SELECT_SYMBOL['query']:  # query previous output
                 if self.last and self.last.result:
                     if hasattr(self.last.result, '__dict__'):
                         input_dict = dict(self.last.result)
                     else:
                         input_dict = self.last.result
                     try:
-                        if text.partition(SELECT_SYMBOL['query'])[2]:
+                        query_text = text.partition(SELECT_SYMBOL['query'])[2]
+                        if query_text:
                             result = jmespath.search(
-                                text.partition(SELECT_SYMBOL['query'])[2], input_dict)
+                                query_text, input_dict)
                             if isinstance(result, str):
                                 print(result)
                             else:
@@ -461,7 +462,7 @@ class Shell(object):
         return break_flag, continue_flag, outside, cmd
 
     def run(self):
-        """ runs the CLI """
+
         telemetry.start()
 
         from azclishell.configuration import SHELL_HELP

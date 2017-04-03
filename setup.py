@@ -29,7 +29,7 @@ setup(
     author_email='azpycli@microsoft.com',
     scripts=['az-shell.bat', 'az-shell'],
     packages=[
-        "azclishell"
+        "azclishell", "linter"
     ],
     url='https://github.com/oakeyc/azure-cli-interactive-shell',
     install_requires=DEPENDENCIES,

@@ -50,7 +50,7 @@ def enter_(event):
 
 
 @registry.add_binding(Keys.ControlY, eager=True)
-def pan_up_(event):
+def pan_up(event):
     """ Pans the example pan up"""
     global _SECTION
     telemetry.track_key('ControlY')
@@ -60,7 +60,7 @@ def pan_up_(event):
 
 
 @registry.add_binding(Keys.ControlN, eager=True)
-def pan_down_(event):
+def pan_down(event):
     """ Pans the example pan down"""
     global _SECTION
     telemetry.track_key('ControlN')
@@ -70,7 +70,7 @@ def pan_down_(event):
 
 
 @registry.add_binding(Keys.F1, eager=True)
-def config_settings_(event):
+def config_settings(event):
     """ opens the configuration """
     global PROMPTING
     telemetry.track_key('F1')
@@ -95,7 +95,7 @@ def config_settings_(event):
 
 
 @registry.add_binding(Keys.F2, eager=True)
-def show_default_(event):
+def toggle_default(event):
     """ shows the defaults"""
     global SHOW_DEFAULT
     telemetry.track_key('F2')
@@ -104,7 +104,7 @@ def show_default_(event):
 
 
 @registry.add_binding(Keys.F3, eager=True)
-def show_symboles(event):
+def toggle_symbols(event):
     """ shows the symbol bindings"""
     global SYMBOLS
     telemetry.track_key('F3')

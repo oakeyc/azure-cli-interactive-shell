@@ -14,9 +14,9 @@ from prompt_toolkit.completion import Completer, Completion
 
 
 SELECT_SYMBOL = azclishell.configuration.SELECT_SYMBOL
-GLOBAL_PARAM = ['--output', '-o', '--verbose', '--debug']
 OUTPUT_CHOICES = ['json', 'tsv', 'table', 'jsonc']
 OUTPUT_OPTIONS = ['--output', '-o']
+GLOBAL_PARAM = OUTPUT_OPTIONS + ['--verbose', '--debug']
 
 
 class AzCompleter(Completer):
@@ -44,11 +44,9 @@ class AzCompleter(Completer):
         self.branch = self.command_tree
         self.curr_command = ""
 
-        if not global_params:
-            global GLOBAL_PARAM, OUTPUT_CHOICES, OUTPUT_OPTIONS
-            GLOBAL_PARAM = []
-            OUTPUT_CHOICES = []
-            OUTPUT_OPTIONS = []
+        self.global_param = GLOBAL_PARAM if global_params else []
+        self.output_choices = OUTPUT_CHOICES if global_params else []
+        self.output_options = OUTPUT_OPTIONS if global_params else []
 
         self.global_parser = AzCliCommandParser(add_help=False)
         self.global_parser.add_argument_group('global', 'Global Arguments')
@@ -276,7 +274,7 @@ class AzCompleter(Completer):
     def gen_global_param_completions(self, text):
         """ Global parameter stuff hard-coded in """
         if text.split() and len(text.split()) > 0:
-            for param in GLOBAL_PARAM:
+            for param in self.global_param:
                 if text.split()[-1].startswith('-') \
                     and not text.split()[-1].startswith('--') and \
                     param.startswith('-') and not param.startswith('--') and\
@@ -287,12 +285,12 @@ class AzCompleter(Completer):
                     self.validate_completion(param, text.split()[-1], text, double=False):
                     yield Completion(param, -len(text.split()[-1]))
 
-            if text.split()[-1] in OUTPUT_OPTIONS:
-                for opt in OUTPUT_CHOICES:
+            if text.split()[-1] in self.output_options:
+                for opt in self.output_choices:
                     yield Completion(opt)
             if len(text.split()) > 1 and\
-            text.split()[-2] in OUTPUT_OPTIONS:
-                for opt in OUTPUT_CHOICES:
+            text.split()[-2] in self.output_options:
+                for opt in self.output_choices:
                     if self.validate_completion(opt, text.split()[-1], text, double=False):
                         yield Completion(opt, -len(text.split()[-1]))
 
