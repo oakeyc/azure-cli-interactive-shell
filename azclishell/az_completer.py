@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import azclishell.configuration
 from azclishell.argfinder import ArgsFinder
+from azclishell.command_tree import in_tree
 from azclishell.layout import get_scope
 from azclishell.util import parse_quotes
 
@@ -223,17 +224,25 @@ class AzCompleter(Completer):
     def gen_cmd_and_param_completions(self, text):
         """ generates command and parameter completions """
 
-        for last_word in text.split():
-            if last_word.startswith("-"):
+        for word in text.split():
+            if word.startswith("-"):
                 self._is_command = False
 
-            if self.branch.has_child(last_word):
-                self.branch = self.branch.get_child(last_word, self.branch.children)
-                if self._is_command:
-                    if self.curr_command:
-                        self.curr_command += " " + str(last_word)
-                    else:
-                        self.curr_command += str(last_word)
+            if self.branch.has_child(word):
+                self.branch = self.branch.get_child(word, self.branch.children)
+            if self._is_command:
+                if self.curr_command:
+                    temp_command = self.curr_command + " " + str(word)
+                else:
+                    temp_command = str(word)
+
+        if len(text) > 0 and text[-1].isspace():
+            if in_tree(self.command_tree, temp_command):
+                self.curr_command = temp_command
+            else:
+                self._is_command = False
+        else:
+            self.curr_command = temp_command
 
         last_word = text.split()[-1]
         # this is for single char parameters
