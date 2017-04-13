@@ -2,6 +2,6 @@
 setlocal
 
 SET PYTHONPATH=%~dp0/src;%PYTHONPATH%
-python -m azclishell
+python -m azclishell %*
 
 endlocal

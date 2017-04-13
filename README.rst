@@ -1,5 +1,6 @@
 Azure CLI Interactive Shell
-****************************
+***************************
+
 The interactive shell for Microsoft Azure CLI (Command Line Interface)
 ######################################################################
 
@@ -7,6 +8,7 @@ The interactive shell for Microsoft Azure CLI (Command Line Interface)
 * Lightweight Drop Down Completions 
 * Auto Cached Suggestions 
 * Dynamic parameter completion 
+* Defaulting scopes of commands
 * On the fly descriptions of the commands AND parameters 
 * On the fly examples of how to utilize each command 
 * Optional "az" component 
@@ -20,16 +22,18 @@ Installation
 ############
 .. code-block:: console
 
-   $ pip install azure-cli-shell
+   $ pip install --user azure-cli-shell
+
 
 Running
-########
+#######
 
 To start the application
 
 .. code-block:: console
 
    $ az-shell
+
 
 Then type your commands and hit [Enter]
 
@@ -39,12 +43,14 @@ To use commands outside the application
 
    $ #[command]
 
+
 To Search through the last command as json
 jmespath format for querying
 
 .. code-block:: console
 
    $ ? [param]
+
 
 *Note: Only if the previous command dumps out json, e.g. vm list*
 
@@ -54,6 +60,7 @@ To only see the commands for a command
 
    $ %% [top-level command]
 
+
 To undefault a value
 
 .. code-block:: console
@@ -62,7 +69,7 @@ To undefault a value
 
 
 Use Examples
-########
+############
 
 Type a command, for example:
 
@@ -70,9 +77,10 @@ Type a command, for example:
 
    $ vm create
 
+
 Look at the examples
 
-*Scroll through the pane with Control H for up and Control N for down #*
+*Scroll through the pane with Control Y for up and Control N for down #*
 
 Pick the example you want with:
 
@@ -80,8 +88,9 @@ Pick the example you want with:
 
    $ vm create :: [Example Number]
 
+
 Dev Setup
-########
+#########
 
 Fork and clone repository
 
@@ -89,11 +98,13 @@ Fork and clone repository
 
    $ . dev_setup.py
 
+
 To get the Exit Code of the previous command:
 
 .. code-block:: console
 
    $ $
+
 
 Docker Image
 ############
@@ -102,10 +113,7 @@ There is a docker image on docker hub
 
 .. code-block:: console
 
-   $ docker run -i -t oakeyc/az-cli-shell:latest
-   root:/# az-shell
-   
-Windows Usage
-#############
+   $ docker pull oakeyc/az-cli-shell:latest
+   $ docker run -it oakeyc/az-cli-shell:latest
+   root#: az-shell
 
-To backspace on Windows Powershell, use ShiftBackspace or ControlBackspace

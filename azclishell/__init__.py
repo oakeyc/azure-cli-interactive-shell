@@ -1,1 +1,1 @@
-""" Welcome to Azure CLI Interactive Shell """
+__version__ = '0.1.1a27'

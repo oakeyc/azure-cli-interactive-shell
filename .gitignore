@@ -21,6 +21,8 @@ shell/
 # installation things #
 dist/
 az_cli_shell.egg-info/
+azure_cli_shell.egg-info/
 build/
 install_script.sh
 .cache/
+release.sh

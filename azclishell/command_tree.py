@@ -8,9 +8,9 @@ class CommandTree(object):
         else:
             self.children = children
 
-    def get_child(self, child_name, tree):
+    def get_child(self, child_name, kids):
         """ returns the object with the name supplied """
-        for kid in tree:
+        for kid in kids:
             if kid.data == child_name:
                 return kid
         raise ValueError("Value not in this tree")
@@ -27,6 +27,7 @@ class CommandTree(object):
         if not self.children:
             return False
         return any(kid.data == name for kid in self.children)
+
 
 class CommandHead(CommandTree):
     """ represents the head of the tree, no data"""
@@ -58,17 +59,12 @@ class CommandHead(CommandTree):
         self._get_subbranch_help(check_next, acc)
         return acc
 
-    def get_all_subcommands(self):
-        """ returns all the subcommands """
-        subcommands = []
-        for command in self.children:
-            subcommands.append(list(set(self.get_subbranch(command.data))))
-        return subcommands
 
 class CommandBranch(CommandTree):
     """ represents a branch of the tree """
     def __init__(self, data, children=None):
         CommandTree.__init__(self, data, children)
+
 
 def generate_tree(commands):
     """ short cut to make a tree """
@@ -84,3 +80,28 @@ def generate_tree(commands):
         else:
             node.add_child(prev)
     return node
+
+def in_tree(tree, cmd):
+    """ if a command is in the tree """
+    data = cmd.split()
+    if not data:
+        return True
+    try:
+        if tree.data:
+            if data[0] == tree.data:
+                for datum in data[1:]:
+                    if tree.has_child(datum):
+                        tree = tree.get_child(datum, tree.children)
+                    else:
+                        return False
+            else:
+                return False
+        else:
+            for datum in data:
+                if tree.has_child(datum):
+                    tree = tree.get_child(datum, tree.children)
+                else:
+                    return False
+    except ValueError:
+        return False
+    return True

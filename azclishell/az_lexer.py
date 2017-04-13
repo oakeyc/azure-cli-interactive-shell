@@ -1,13 +1,14 @@
 """ highlighting and colors """
+from azclishell.gather_commands import GatherCommands
+
 from pygments.lexer import RegexLexer, words
 from pygments.token import Name, Keyword, Operator, Text, Number
-
-from azclishell.gather_commands import GatherCommands
 
 class AzLexer(RegexLexer):
     """
     A custom lexer for Azure CLI
     """
+
     commands = GatherCommands()
     tokens = {
         'root': [
@@ -31,6 +32,7 @@ class AzLexer(RegexLexer):
         ]
     }
 
+
 class ExampleLexer(RegexLexer):
     """ Lexer for the example description """
     tokens = {
@@ -39,6 +41,7 @@ class ExampleLexer(RegexLexer):
             (r'.', Number),
         ]
     }
+
 
 class ToolbarLexer(RegexLexer):
     """ Lexer for the the toolbar """
